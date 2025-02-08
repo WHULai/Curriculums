@@ -1,0 +1,737 @@
+%!TEX program = xelatex
+\documentclass{article}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{ctex}
+\usepackage{indentfirst}
+\usetikzlibrary{automata,positioning,shapes.geometric,arrows.meta,patterns,calc}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+
+\setlength{\parindent}{2em}  % 2em代表首行缩进两个字符
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Planar Force System}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Theoretical Mechanics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{WHU}
+\newcommand{\hmwkAuthorName}{\textbf{Lai Wei}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Date： \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% 我的newcommand
+\newcommand{\degree}{^{\circ}}
+\newcommand{\arrow}{-{Stealth[length=4mm,width=2mm]}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+    一重为$50{\rm kN}$的圆柱搁置在倾角\(\theta = 30 \degree\)的光滑斜面上，并用撑架支承如图所示。
+    假设\(A\)、\(B\)、\(C\)处均为光滑铰链，接触处的摩擦不计，接触点\(D\)刚好在构件\(AB\)的中央，
+    求撑件\(AC\)的受力及铰链\(B\)的约束力（不计撑架构件自重）。
+
+    \[
+        \begin{tikzpicture}[scale=0.6]
+        \draw (0,0) -- (10,0);
+        \draw (0,0) -- (10,10/1.732);
+        \draw (1.5,0) arc (0:30:1.5);
+        \coordinate [label=right:$\theta$] (theta) at (1.5,0.5);
+        \coordinate [label=below:$C$] (C) at (1,1/1.732);
+        \draw (C) circle (0.08);
+        \coordinate [label=below:$B$] (B) at (4,4/1.732);
+        \draw (B) circle (0.08);
+        \coordinate [label=above:$A$] (A) at (4-3/1.732,4/1.732+3);
+        \draw (A) circle (0.08);
+        \coordinate [label=left:$D$] (D) at (4-1.5/1.732,4/1.732+1.5);
+        \coordinate [label=below:$E$] (E) at (5.5,5.5/1.732);
+        \coordinate [label=right:$O$] (O) at (5.5-1.5/1.732,5.5/1.732+1.5);
+        \coordinate [label=right:$P$] (P) at (5.5-1.5/1.732,5.5/1.732+0.5);
+        \fill (O) circle (0.05);
+        \draw (O) circle (3/1.732);
+        % \draw (D) circle (0.08);
+        \draw[line width=4pt] (C) -- (A);
+        \draw[line width=4pt] (B) -- (A);
+        \draw[\arrow, line width=1pt] (O) -- (P);
+        \end{tikzpicture}
+    \]
+
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    取圆柱为分离体，\(D\)，\(E\)处为光滑接触，圆柱受主动力\(P\)，约束力\(F_ND\)及\(F_NE\)作用，
+    汇交于圆柱中心\(O\)点，受力图：
+
+    \[
+    \begin{tikzpicture}[scale=0.6]
+        \draw (0,0) -- (10,0);
+        \coordinate [label=right:$x$] (x) at (10,10/1.732);
+        \coordinate [label=right:$y$] (y) at (4-4/1.732,4/1.732+4);
+        \draw[->, dashed] (0,0) -- (x);
+        \draw[->, dashed] (4,4/1.732) -- (y);
+        \draw[dashed] (D) -- (7-1.5/1.732,7/1.732+1.5);
+        \draw[dashed] (E) -- (5.5-3/1.732,5.5/1.732+3);
+        \coordinate [label=right:$D$] (D) at (4-1.5/1.732,4/1.732+1.5);
+        \coordinate [label=left:$F_{ND}$] (F_ND) at (2.5-1.5/1.732,2.5/1.732+1.5);
+        \coordinate [label=below:$E$] (E) at (5.5,5.5/1.732);
+        \coordinate [label=below:$F_{NE}$] (F_NE) at (5.5+1.5/1.732,5.5/1.732-1.5);
+        \coordinate [label=right:$O$] (O) at (5.5-1.5/1.732,5.5/1.732+1.5);
+        \coordinate [label=right:$P$] (P) at (5.5-1.5/1.732,5.5/1.732+0.5);
+        \fill (O) circle (0.05);
+        \draw (O) circle (3/1.732);
+        \draw[\arrow, line width=1pt] (O) -- (P);
+        \draw[\arrow, line width=1pt] (F_ND) -- (D);
+        \draw[\arrow, line width=1pt] (F_NE) -- (E);
+    \end{tikzpicture}
+    \]
+
+    取如图所示坐标轴，由平衡条件\(\sum F_x = 0\)，即
+
+    \[
+    F_{ND} - P \sin \theta = 0
+    \]
+
+    解得
+
+    \[
+    F_{ND} = 25 {\rm kN}
+    \]
+
+    \textbf{Part Two}
+
+    \(AC\)为二力构件，受力图：
+
+    \[
+    \begin{tikzpicture}[scale=0.8]
+        \coordinate [label=right:$C$] (C) at (0,4);
+        \draw (C) circle (0.08);
+        \coordinate [label=right:$A$] (A) at (0,0);
+        \draw (A) circle (0.08);
+        \draw[line width=4pt] (A) -- (C);
+        \coordinate [label=right:$F_{NA}^{'}$] (F_NA_) at (0,5);
+        \coordinate [label=right:$F_{NC}^{'}$] (F_NC_) at (0,-1);
+        \draw[\arrow, line width=1pt] (F_NA_) -- (C);
+        \draw[\arrow, line width=1pt] (F_NC_) -- (A);
+    \end{tikzpicture}
+    \]
+
+    \textbf{Part Three}
+
+    取构件\(AB\)为分离体，$F_{ND}^{'}$与$F_{NA}$的作用线交于\(G\)点，由\textbf{三力平衡汇交}，
+    \(B\)铰约束力一定过\(G\)点，受力图：
+
+    \[
+        \begin{tikzpicture}[scale=0.6]
+        \draw (0,0) -- (10,0);
+        \draw[dashed] (0,0) -- (10,10/1.732);
+        \draw (1.5,0) arc (0:30:1.5);
+        \coordinate [label=right:$\theta$] (theta) at (1.5,0.5);
+        \coordinate [label=below:$C$] (C) at (1,1/1.732);
+        \draw (C) circle (0.08);
+        \coordinate [label=below:$B$] (B) at (4,4/1.732);
+        \draw (B) circle (0.08);
+        \coordinate [label=above:$A$] (A) at (4-3/1.732,4/1.732+3);
+        \draw (A) circle (0.08);
+        \coordinate [label=left:$G$] (G) at (2.5-1.5/1.732,2.5/1.732+1.5);
+        \coordinate [label=left:$D$] (D) at (4-1.5/1.732,4/1.732+1.5);
+        \coordinate [label=right:$F_{ND}^{'}$] (F_ND_) at (5.5-1.5/1.732,5.5/1.732+1.5);
+        \coordinate [label=left:$F_{NA}$] (F_NA) at (4-3/1.732,4/1.732+3);
+        \coordinate [label=left:$F_{NB}$] (F_NB) at (4,4/1.732);
+        \draw[\arrow, line width=1pt] (G) -- (F_NA);
+        \draw[\arrow, line width=1pt] (G) -- (F_NB);
+        \draw[\arrow, line width=1pt] (F_ND_) -- (D);
+        \draw[dashed] (C) -- (A);
+        \draw[line width=4pt] (B) -- (A);
+        \draw[dashed] (D) -- (G);
+        \end{tikzpicture}
+    \]
+
+    由\(\sum F_y = 0\)，即
+
+    \[
+    F_{NA}\sin 45\degree - F_{NB} \sin 45\degree = 0
+    \]
+
+    解得
+
+    \[
+    F_{NA} = F_{NB}
+    \]
+
+    由\(\sum F_x = 0\)，即
+
+    \[
+    F_{NA}\cos 45\degree + F_{NB}\cos 45\degree - F_{ND}^{'} = 0
+    \]
+
+    解得
+
+    \[
+    F_{NA} = F_{NB} = \frac{1}{\sqrt{2}} F_{ND}^{'} = 17.68 {\rm kN}
+    \]
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    如图所示机构自重不计，圆轮上的销子\textit{A}放置在摇杆\textit{BC}上的光滑导槽内。
+    圆轮上作用有一力偶$M_1$，其力偶矩为$2 {\rm kN \cdot m}$，$OA = r = 0.5 {\rm m}$，
+    图示位置时$OA$与$OB$垂直，$\theta = 30^{\circ}$，且系统平衡。求作用在摇杆上的力偶矩
+    $M_2$及铰链\textit{O}，\textit{B}处的约束力。
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[scale=0.3]{images/pic1.png}
+        % \caption{}
+        \label{pic1}
+    \end{figure}
+        
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    取圆轮为研究对象。
+
+    注意到圆轮受到$A$点的光滑接触约束，因此约束力$F_A$是垂直于摇杆的。
+
+    已知圆轮受到力偶$M_1$和力$F_A$、$F_O$的作用。因为\textbf{力偶只能由力偶来平衡}，
+    所以力$F_A$和$F_O$大小相等、方向相反。
+
+
+    \[
+    \begin{tikzpicture}
+    \coordinate [label=below:$F_A$] (F_A) at (-1.5,1.5);
+    \coordinate [label=below:$F_O$] (F_O) at (-1.5,-1);
+    \draw (0,0) circle (3);
+    \coordinate [label=left:$A$] (A) at (-3,0);
+    \fill (-3,0) circle (0.05);
+    \coordinate [label=below:$O$] (O) at (0,0);
+    \fill (0,0) circle (0.05);
+    \draw[\arrow] (A) -- (-1, 1);
+    \draw[\arrow] (O) -- (-2, -1);
+    \coordinate [label=left:$M_1$] (M_1) at (1.5,0);
+    \draw[dashed] (A) -- (O);
+    \coordinate [label=above:$r$] (r) at (-1.5,0);
+    \draw[\arrow] (1.3,-1.3) arc (-50:45:1.5);
+    \end{tikzpicture}
+    \]
+
+    由平衡条件$\sum M_i = 0$：
+    
+    \[
+        M_1 - F_A r \sin\theta = 0
+    \]
+
+    解得：
+    \[
+        F_A = \frac{M_1}{r \sin 30^{\circ}} = 8 {\rm kN}
+    \]
+
+
+    \textbf{Part Two}
+
+    取摇杆为研究对象，分析受力。
+
+    $B$点是光滑铰链约束，因为\textbf{力偶只能由力偶来平衡}，所以力$F_B$和$F_A^{'}$大小相等、
+    方向相反。
+
+    \[
+        \begin{tikzpicture}
+        \draw[dash dot] (0,0) -- (0,5);
+        \draw[line width=4pt] (0,0) -- (-4/1.73,4);
+        \coordinate [label=above:$C$] (C) at (-4/1.73,4);
+        \draw[<->] (0,1) arc (90:115:1);
+        \coordinate [label=above:$\theta$] (theta) at (-0.25,1);
+        \draw[{Stealth[length=4mm,width=2mm]}-] (-1.5,4) arc (100:130:3);
+        \coordinate [label=above:$M_2$] (M_2) at (-1.5,4);
+        \coordinate [label=below:$B$] (B) at (-0.25,0);
+        \coordinate [label=above:$A$] (A) at (-1,1.8);
+        \coordinate [label=below:$F_A^{'}$] (F_A_) at (-1-1.732,0.8);
+        \draw[\arrow] (A) -- (F_A_);
+        \draw[\arrow] (0,0) -- (1.732, 1);
+        \coordinate [label=below:$F_B$] (F_B) at (1.732, 1);
+        \end{tikzpicture}
+    \]
+
+    由平衡条件$\sum M_i = 0$：
+
+    \[
+        -M_2 + F_A^{'} \frac{r}{\sin \theta} = 0
+    \]
+
+    解得：
+    \[
+        M_2 = 8 {\rm kN \cdot m}
+    \]
+    \[
+    F_O = F_B = F_A = 8 {\rm kN}
+    \]
+
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+
+    两齿轮的节圆半径分别为\(r_1\)、\(r_2\)，作用于轮\uppercase\expandafter{\romannumeral1}上的主动力偶的力偶矩为\(M_1\)，
+    齿轮压力角为\(\theta\)，不计两齿轮的重量。求是两齿轮维持匀速转动时齿轮\uppercase\expandafter{\romannumeral2}
+    的阻力偶之矩\(M_2\)与轴承\(O_1\)，\(O_2\)的约束力大小和方向。
+
+    \[
+        \begin{tikzpicture}[scale=0.7]
+        \coordinate[label=right:$O_1$] (O_1) at (2,0);
+        \coordinate[label=right:$O_2$] (O_2) at (-3,0);
+        \draw (O_1) circle (2);
+        \draw (O_2) circle (3);
+        \fill (O_1) circle (0.08);
+        \fill (O_2) circle (0.08);
+        \draw (O_1) -- (1.8,-0.3);
+        \draw (O_1) -- (2.2,-0.3);
+        \draw (O_2) -- (-3.2,-0.3);
+        \draw (O_2) -- (-2.8,-0.3);
+        \draw[line width=2pt] (1.6,-0.3) -- (2.4,-0.3);
+        \draw[line width=2pt] (-3.4,-0.3) -- (-2.6,-0.3);
+        \coordinate [label=above:\uppercase\expandafter{\romannumeral1}] (I) at (2,1.5);
+        \coordinate [label=above:\uppercase\expandafter{\romannumeral2}] (II) at (-3,1.5);
+        \draw[\arrow] (O_1) -- (2+2/1.414,2/1.414);
+        \draw[\arrow] (O_2) -- (-3+3/1.414,3/1.414);
+        \coordinate [label=left:$r_1$] (r_1) at (2+1/1.414,1/1.414);
+        \coordinate [label=left:$r_2$] (r_2) at (-3+1.5/1.414,1.5/1.414);
+        \coordinate [label=above:$M_1$] (M_1) at (3.25,1.25*1.732);
+        \coordinate [label=above:$M_2$] (M_2) at (-1.25,1.75*1.732);
+        \draw[\arrow] (M_1) arc (60:120:2.5);
+        \draw[\arrow] (M_2) arc (60:120:3.5);
+        \end{tikzpicture}
+    \]
+
+    \textbf{Solution}
+    \\
+
+    {\color{BrickRed} \textbf{压力角}是指不计算摩擦力的情况下，受力方向和运动方向所夹的锐角。}
+    \\
+
+    \textbf{Part One}
+
+    对轮\uppercase\expandafter{\romannumeral1} 进行受力分析：
+
+    \[
+        \begin{tikzpicture}[scale=0.7]
+        \coordinate[label=right:$O_1$] (O_1) at (2,0);
+        \draw[dashed] (-1,0) -- (5,0);
+        \draw[dashed] (2,-3) -- (2,3);
+        \draw (O_1) circle (2);
+        \fill (O_1) circle (0.08);
+        \coordinate [label=left:$r_1$] (r_1) at (2-1.732,1);
+        \draw[\arrow] (O_1) -- (r_1);
+        \coordinate [label=above:$M_1$] (M_1) at (3.25,1.25*1.732);
+        \draw[\arrow] (M_1) arc (60:120:2.5);
+        \coordinate [label=right:$F^{'}$] (F_) at (1,2);
+        \coordinate [label=left:$F_{O1}$] (F_O1) at (1,-2);
+        \draw[\arrow] (0,0) -- (F_);
+        \draw[\arrow] (2,0) -- (F_O1);
+        \draw[dashed] (0,-2) -- (0,2);
+        \draw (0.25,0.5) arc (60:90:0.6);
+        \coordinate [label=above:$\theta$] (theta) at (0.2,0.4);
+        \end{tikzpicture}
+    \]
+
+    由平衡条件$\sum M_i = 0$：
+
+    \[
+    M_1 - F_{O1} r_1 \cos \theta = 0
+    \]
+
+    解得
+
+    \[
+        F_{O1} = \frac{M_1}{r_1 \cos \theta}
+    \]
+
+    （方向如图）
+
+    \textbf{Part Two}
+
+    同理可得轴承\(O_2\)约束力
+
+    \[
+        F_{O2} = \frac{M_2}{r_2 \cos \theta}
+    \]
+
+    \[
+        M_{2} = \frac{r_2}{r_1} M_1
+    \]
+
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+
+    如图所示，梯形的水坝可以看作由左边的矩形部分和右边的三角形部分组合而成。
+    左边部分的重力\(P_{1} = 450 \mathrm{kN}\)，右边部分的重力\(P_{2} = 200 \mathrm{kN}\)，
+    上游水库给水坝的压力\(F_{1} = 300 \mathrm{kN}\)，下游河流给水坝的压力\(F_{2} = 70 \mathrm{kN}\)。
+    各力的作用方向、位置如图所示。
+    
+    \[
+        \begin{tikzpicture}[scale=0.6]
+        \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=above:$A$] (A) at (5.7,0);
+        \coordinate[label=below:$B$] (B) at (3,0);
+        \coordinate[label=right:$C$] (C) at (3,9);
+        \draw (-1,0) -- (6,0);
+        \fill[pattern=north east lines, pattern color=gray!50] (-1,0) rectangle (6.2,-0.5);
+        \draw[dashed] (B) -- (C);
+        \draw (O) -- (0,9);
+        \draw (C) -- (0,9);
+        \draw (C) -- (A);
+        % 右侧河流
+        \draw (4.4,4.5) -- (6,4.5);
+        \draw (4.8,4.3) -- (5.6,4.3);
+        \draw (5.1,4.1) -- (5.3,4.1);
+        \draw[fill=black!30] (5.2,4.5) -- (5,4.9) -- (5.4,4.9) -- cycle;
+        % 左侧水库
+        \draw (-2,9) -- (0,9);
+        \draw (-1.6,8.8) -- (-0.4,8.8);
+        \draw (-1.3,8.6) -- (-0.7,8.6);
+        \draw[fill=black!30] (-1,9) -- (-1.2,9.4) -- (-0.8,9.4) -- cycle;
+        % 尺寸标注
+        \draw[|<->|] (-2.2,0) -- (-2.2,9) node[midway, left] {$\mathrm{9 m}$};
+        \coordinate[label=above:$F_1$] (F_1) at (-1.2,3);  % 力标注
+        \draw[|<->|] (-1.2,0) -- (F_1) node[midway, left] {$\mathrm{3 m}$};
+        \draw[|<->|] (0,9.2) -- (3,9.2) node[midway, above] {$\mathrm{3 m}$};
+        \draw[|<->|] (0,6) -- (1.5,6) node[midway, above] {$\mathrm{1.5 m}$};
+        \draw[|<->|] (0,3.2) -- (3.9,3.2) node[midway, above] {$\mathrm{3.9 m}$};
+        \draw[|<->|] (0,-1) -- (5.7,-1) node[midway, below] {$\mathrm{5.7 m}$};
+        % 力标注
+        \coordinate[label=above:$F_2$] (F_2) at (7.8435,2.3535);
+        \draw[dashed] (O) -- (5.229,1.569);
+        \draw[\arrow] (F_2) -- (5.229,1.569);
+        \coordinate[label=right:$P_1$] (P_1) at (1.5,5);
+        \draw[\arrow] (1.5,6.4) -- (1.5,3.6);
+        \coordinate[label=right:$P_2$] (P_2) at (3.9,3);
+        \draw[\arrow] (3.9,4.2) -- (3.9,2);
+        \draw[\arrow] (-2,3) -- (0,3);
+        % 垂直符号
+        \draw (5.7519,1.7259) arc (30:120:0.5);
+        \coordinate[label=above:$ 90 \degree $] (vertical) at (5.7519,1.7259);
+        \end{tikzpicture}
+    \]
+
+    求
+
+    \begin{enumerate}
+        \item 力系的合力\(F_{R}\)
+        \item 合力与\(OA\)的交点到点\(O\)的距离\(x\)
+        \item 合力的作用线方程
+    \end{enumerate}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    建立如图所示的坐标系，向\(O\)点简化，求主矢和主矩。
+
+    \[
+        \begin{tikzpicture}[scale=0.6]
+        \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=above:$A$] (A) at (5.7,0);
+        \coordinate[label=below:$B$] (B) at (3,0);
+        \coordinate[label=right:$C$] (C) at (3,9);
+        % 地面阴影
+        \draw (-1,0) -- (6,0);
+        \fill[pattern=north east lines, pattern color=gray!50] (-1,0) rectangle (6.2,-0.5);
+        \draw[dashed] (B) -- (C);
+        \draw (O) -- (0,9);
+        \draw (C) -- (0,9);
+        \draw (C) -- (A);
+        % 右侧河流
+        \draw (4.4,4.5) -- (6,4.5);
+        \draw (4.8,4.3) -- (5.6,4.3);
+        \draw (5.1,4.1) -- (5.3,4.1);
+        \draw[fill=black!30] (5.2,4.5) -- (5,4.9) -- (5.4,4.9) -- cycle;
+        % 左侧水库
+        \draw (-2,9) -- (0,9);
+        \draw (-1.6,8.8) -- (-0.4,8.8);
+        \draw (-1.3,8.6) -- (-0.7,8.6);
+        \draw[fill=black!30] (-1,9) -- (-1.2,9.4) -- (-0.8,9.4) -- cycle;
+        % 尺寸标注
+        \draw[|<->|] (-2.2,0) -- (-2.2,9) node[midway, left] {$\mathrm{9 m}$};
+        \coordinate[label=above:$F_1$] (F_1) at (-1.2,3);  % 力标注
+        \draw[|<->|] (-1.2,0) -- (F_1) node[midway, left] {$\mathrm{3 m}$};
+        \draw[|<->|] (0,9.2) -- (3,9.2) node[midway, above] {$\mathrm{3 m}$};
+        \draw[|<->|] (0,6) -- (1.5,6) node[midway, above] {$\mathrm{1.5 m}$};
+        \draw[|<->|] (0,3.2) -- (3.9,3.2) node[midway, above] {$\mathrm{3.9 m}$};
+        \draw[|<->|] (0,-1) -- (5.7,-1) node[midway, below] {$\mathrm{5.7 m}$};
+        % 力标注
+        \coordinate[label=above:$F_2$] (F_2) at (7.8435,2.3535);
+        \draw[dashed] (O) -- (5.229,1.569);
+        \draw[\arrow] (F_2) -- (5.229,1.569);
+        \coordinate[label=right:$P_1$] (P_1) at (1.5,5);
+        \draw[\arrow] (1.5,6.4) -- (1.5,3.6);
+        \coordinate[label=right:$P_2$] (P_2) at (3.9,3);
+        \draw[\arrow] (3.9,4.2) -- (3.9,2);
+        \draw[\arrow] (-2,3) -- (0,3);
+        % 垂直符号
+        \draw (5.7519,1.7259) arc (30:120:0.5);
+        \coordinate[label=above:$ 90 \degree $] (vertical) at (5.7519,1.7259);
+        % 建立坐标系
+        \coordinate[label=right:$x$] (x) at (7,0);
+        \coordinate[label=above:$y$] (y) at (0,10);
+        \draw[->,dashed] (O) -- (x);
+        \draw[->,dashed] (O) -- (y);
+        % 夹角
+        \coordinate[label=above:$\theta$] (theta) at (1.8,0);
+        \end{tikzpicture}
+    \]
+
+    先计算主矢。注意到只有力$F_2$的方向较为特殊，记$F_2$与水平方向夹角为\(\theta\)，则
+
+    \[
+    \theta = \angle ACB = \arctan \frac{AB}{BC} = \arctan 0.3 \approx 16.7 \degree 
+    \]
+
+    于是
+
+    \[
+    F_{Rx}^{'} = \sum F_{ix} = F_{1} - F_{2} \cos \theta \approx 232.9 \mathrm{kN}
+    \]
+
+    \[
+    F_{Ry}^{'} = \sum F_{iy} = -P_{1} -P_{2} - F_{2} \sin \theta \approx -670.1 \mathrm{kN}
+    \]
+
+    所以
+
+    \[
+    F_{R}^{'} = \sqrt{\left(\sum F_{ix}\right)^2 + \left(\sum F_{iy}\right)^2} \approx 709.1 \mathrm{kN}
+    \]
+
+    于是\(F_{R}^{'}\)的方向余弦
+
+    \[
+    \cos\left( \vec{F_{R}^{'}}, \vec{i}\right) = \frac{\sum F_{ix}}{F_{R}^{'}} \approx 0.3283
+    \]
+
+
+    \[
+    \cos\left( \vec{F_{R}^{'}}, \vec{j}\right) = \frac{\sum F_{iy}}{F_{R}^{'}} \approx -0.9446
+    \]
+
+    所以主矢与\(x\)轴正向夹角
+
+    \[
+    \alpha \approx 70.84 \degree
+    \]
+
+    主矢与\(y\)轴负向夹角
+
+    \[
+    \beta \approx 19.16 \degree
+    \]
+
+    在图中表示：
+
+    \[
+        \begin{tikzpicture}[scale=0.6]
+        \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=above:$A$] (A) at (5.7,0);
+        \coordinate[label=below:$B$] (B) at (3,0);
+        \coordinate[label=right:$C$] (C) at (3,9);
+        % 地面阴影
+        \draw (-1,0) -- (6,0);
+        \fill[pattern=north east lines, pattern color=gray!50] (-1,0) rectangle (6.2,-0.5);
+        \draw[dashed] (B) -- (C);
+        \draw (O) -- (0,9);
+        \draw (C) -- (0,9);
+        \draw (C) -- (A);
+        % 右侧河流
+        \draw (4.4,4.5) -- (6,4.5);
+        \draw (4.8,4.3) -- (5.6,4.3);
+        \draw (5.1,4.1) -- (5.3,4.1);
+        \draw[fill=black!30] (5.2,4.5) -- (5,4.9) -- (5.4,4.9) -- cycle;
+        % 左侧水库
+        \draw (-2,9) -- (0,9);
+        \draw (-1.6,8.8) -- (-0.4,8.8);
+        \draw (-1.3,8.6) -- (-0.7,8.6);
+        \draw[fill=black!30] (-1,9) -- (-1.2,9.4) -- (-0.8,9.4) -- cycle;
+        % 尺寸标注
+        \draw[|<->|] (-2.2,0) -- (-2.2,9) node[midway, left] {$\mathrm{9 m}$};
+        \coordinate[label=above:$F_1$] (F_1) at (-1.2,3);  % 力标注
+        \draw[|<->|] (-1.2,0) -- (F_1) node[midway, left] {$\mathrm{3 m}$};
+        \draw[|<->|] (0,9.2) -- (3,9.2) node[midway, above] {$\mathrm{3 m}$};
+        \draw[|<->|] (0,6) -- (1.5,6) node[midway, above] {$\mathrm{1.5 m}$};
+        \draw[|<->|] (0,3.2) -- (3.9,3.2) node[midway, above] {$\mathrm{3.9 m}$};
+        \draw[|<->|] (0,-1) -- (5.7,-1) node[midway, below] {$\mathrm{5.7 m}$};
+        % 力标注
+        \coordinate[label=above:$F_2$] (F_2) at (7.8435,2.3535);
+        \draw[dashed] (O) -- (5.229,1.569);
+        \draw[\arrow] (F_2) -- (5.229,1.569);
+        \coordinate[label=right:$P_1$] (P_1) at (1.5,5);
+        \draw[\arrow] (1.5,6.4) -- (1.5,3.6);
+        \coordinate[label=right:$P_2$] (P_2) at (3.9,3);
+        \draw[\arrow] (3.9,4.2) -- (3.9,2);
+        \draw[\arrow] (-2,3) -- (0,3);
+        % 垂直符号
+        \draw (5.7519,1.7259) arc (30:120:0.5);
+        \coordinate[label=above:$ 90 \degree $] (vertical) at (5.7519,1.7259);
+        % 建立坐标系
+        \coordinate[label=right:$x$] (x) at (7,0);
+        \coordinate[label=above:$y$] (y) at (0,10);
+        \draw[->,dashed] (O) -- (x);
+        \draw[->,dashed] (O) -- (y);
+        % 夹角
+        \coordinate[label={[BrickRed]above:$\theta$}] (theta) at (1.8,0);
+        % 主矢
+        \draw[\arrow,BrickRed] (O) -- (1.3128,-3.7784);
+        \coordinate[label={[BrickRed]below:$70.84\degree$}] (degree) at (1.8,-0.4);
+        \draw[<->,BrickRed] (1,0) arc (0:-70.84:1);
+        \end{tikzpicture}
+    \]
+
+    再计算主矩：
+
+    \[
+    M_{O} = \sum M_{O} \left(\overline{F}\right) = -3\mathrm{m} \cdot F_{1} - 1.5\mathrm{m} \cdot P_{1}
+    - 3.9\mathrm{m} \cdot P_{2} = -2355 \mathrm{kN \cdot m}
+    \]
+    
+\end{homeworkProblem}
+
+\pagebreak
+
+\end{document}
