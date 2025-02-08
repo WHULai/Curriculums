@@ -615,7 +615,7 @@
         \draw[->,dashed] (O) -- (x);
         \draw[->,dashed] (O) -- (y);
         % 夹角
-        \coordinate[label=above:$\theta$] (theta) at (1.8,0);
+        \coordinate[label={[BrickRed]above:$\theta$}] (theta) at (1.8,0);
         \end{tikzpicture}
     \]
 
@@ -726,10 +726,146 @@
     再计算主矩：
 
     \[
-    M_{O} = \sum M_{O} \left(\overline{F}\right) = -3\mathrm{m} \cdot F_{1} - 1.5\mathrm{m} \cdot P_{1}
+    M_{O} = \sum M_{O} \left(\vec{F}\right) = -3\mathrm{m} \cdot F_{1} - 1.5\mathrm{m} \cdot P_{1}
     - 3.9\mathrm{m} \cdot P_{2} = -2355 \mathrm{kN \cdot m}
     \]
+
+    \textbf{Part Two}
+
+    向\(O\)点简化的主矢和主矩如图：
+
+    \[
+        \begin{tikzpicture}[scale=0.5]
+        \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=above:$A$] (A) at (5.7,0);
+        \coordinate[label=below:$B$] (B) at (3,0);
+        \coordinate[label=right:$C$] (C) at (3,9);
+        % 地面阴影
+        \draw (-1,0) -- (6,0);
+        \fill[pattern=north east lines, pattern color=gray!50] (-1,0) rectangle (6.2,-0.5);
+        \draw[dashed] (B) -- (C);
+        \draw (O) -- (0,9);
+        \draw (C) -- (0,9);
+        \draw (C) -- (A);
+        \coordinate[label=right:$x$] (x) at (7,0);
+        \coordinate[label=above:$y$] (y) at (0,10);
+        \draw[->,dashed] (O) -- (x);
+        \draw[->,dashed] (O) -- (y);
+        % 主矢
+        \coordinate[label={[BrickRed]below:$F_{R}^{'}$}] (F_R_) at (1.3128,-3.7784);
+        \draw[\arrow,BrickRed] (O) -- (F_R_);
+        \coordinate[label={[BrickRed]below:$70.84\degree$}] (degree) at (1.8,-0.4);
+        \draw[<->,BrickRed] (0.8,0) arc (0:-70.84:0.8);
+        % 主矢分解
+        \coordinate[label={[BrickRed]right:$F_{Rx}^{'}$}] (F_Rx_) at (1.3128,0);
+        \coordinate[label={[BrickRed]below:$F_{Ry}^{'}$}] (F_Ry_) at (0,-3.7784);
+        \draw[\arrow,BrickRed] (O) -- (F_Rx_);
+        \draw[\arrow,BrickRed] (O) -- (F_Ry_);
+        \draw[dashed,BrickRed] (F_Rx_) -- (F_R_);
+        \draw[dashed,BrickRed] (F_Ry_) -- (F_R_);
+        % 主矩
+        \draw[\arrow,BrickRed] (-1,1.5) arc (120:60:2);
+        \coordinate[label={[BrickRed]above:$M_{O}$}] (M_O) at (0,2);
+        \end{tikzpicture}
+    \]
+
+    求合力及其作用线位置。合力\(F_{R}\)的大小和方向与主矢$F_{R}^{'}$相同，其作用线位置\(x\)值
+    依据合力矩定理求得：
+
+    \[
+        \begin{tikzpicture}[scale=0.5]
+        \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=above:$A$] (A) at (5.7,0);
+        \coordinate[label=below:$B$] (B) at (3,0);
+        \coordinate[label=right:$C$] (C) at (3,9);
+        % 地面阴影
+        \draw (-1,0) -- (6,0);
+        \fill[pattern=north east lines, pattern color=gray!50] (-1,0) rectangle (6.2,-0.5);
+        \draw[dashed] (B) -- (C);
+        \draw (O) -- (0,9);
+        \draw (C) -- (0,9);
+        \draw (C) -- (A);
+        \coordinate[label=right:$x$] (x) at (7,0);
+        \coordinate[label=above:$y$] (y) at (0,10);
+        \draw[->,dashed] (O) -- (x);
+        \draw[->,dashed] (O) -- (y);
+        % 合力
+        \coordinate[label={[BrickRed]below:$F_{R}$}] (F_R) at (3.514+1.3128,-3.7784);
+        \draw[\arrow,BrickRed] (3.514,0) -- (F_R);
+        \coordinate[label={[BrickRed]below:$70.84\degree$}] (degree) at (3.514+1.8,-0.4);
+        \draw[<->,BrickRed] (3.514+0.8,0) arc (0:-70.84:0.8);
+        \draw[dashed,BrickRed] (3.514,0) -- (3.514-1.3128,3.7784);
+        % 标注
+        \draw[|<->|] (0,-1) -- (3.514,-1) node[midway, below] {$x$};
+        \draw[dashed,BrickRed] (3.13547,1.0894) -- (O);
+        \coordinate[label={[BrickRed]above:$d$}] (d) at (1.8,0.8);
+        \end{tikzpicture}
+    \]
+
+    由
+
+    \[
+    M_{O} = F_{R} \cdot d
+    \]
+
+    得
+
+    \[
+    d \approx 2.3197 \mathrm{m}
+    \]
     
+    所以
+
+    \[
+    x = \frac{d}{\sin 70.84 \degree} \approx 3.514 \mathrm{m}
+    \]
+
+    
+    \textbf{Part Three}
+
+    由于\textbf{合力可以沿其作用线移动}，设合力作用线上任意一点的坐标为\(\left(x,y\right)\)，将合力作用于此点，
+    则合力对坐标原点的力矩的解析表达式为
+
+    \[
+    M_{O} = \sum M_{O} \left(\vec{F_{R}}\right) = x \cdot F_{Ry}^{'} - y \cdot F_{Rx}^{'}
+    \]
+
+    \[
+        \begin{tikzpicture}[scale=0.5]
+        \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=above:$A$] (A) at (5.7,0);
+        \coordinate[label=below:$B$] (B) at (3,0);
+        \coordinate[label=right:$C$] (C) at (3,9);
+        % 地面阴影
+        \draw (-1,0) -- (6,0);
+        \fill[pattern=north east lines, pattern color=gray!50] (-1,0) rectangle (6.2,-0.5);
+        \draw[dashed] (B) -- (C);
+        \draw (O) -- (0,9);
+        \draw (C) -- (0,9);
+        \draw (C) -- (A);
+        \coordinate[label=right:$x$] (x) at (7,0);
+        \coordinate[label=above:$y$] (y) at (0,10);
+        \draw[->,dashed] (O) -- (x);
+        \draw[->,dashed] (O) -- (y);
+        % 合力
+        \coordinate[label={[BrickRed]below:$F_{R}$}] (F_R) at (3.514+1.3128,-3.7784);
+        \draw[\arrow,BrickRed] (3.514,0) -- (F_R);
+        \coordinate[label={[BrickRed]below:$70.84\degree$}] (degree) at (3.514+1.8,-0.4);
+        \draw[<->,BrickRed] (3.514+0.8,0) arc (0:-70.84:0.8);
+        \draw[dashed,BrickRed] (3.514,0) -- (3.514-1.3128,3.7784);
+        % 标注
+        \coordinate[label={[BrickRed]right:$\left(x,y\right)$}] (xy) at (3.514-1.3128/1.6,3.7784/1.6);
+        \draw[dashed,BrickRed] (xy) -- (3.514-1.3128/1.6,0);
+        \draw[dashed,BrickRed] (xy) -- (0,3.7784/1.6);
+        \end{tikzpicture}
+    \]
+
+    代入数据化简可得合力作用线方程为
+
+    \[
+    670.1x + 232.9y -2355 = 0
+    \]
+
 \end{homeworkProblem}
 
 \pagebreak
