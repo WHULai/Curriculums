@@ -872,4 +872,205 @@
 
 \pagebreak
 
+\begin{homeworkProblem}
+
+    如图所示不计重力的组合梁，由\(AC\)和\(CD\)在\(C\)处铰接而成。已知\(F=20 \mathrm{kN}\)，
+    均布载荷\(q=10 \mathrm{kN / m}\)，\(M=20 \mathrm{kN \cdot m}\)，\(l=1 \mathrm{m}\)，
+    求固定端\(A\)与滚动支架\(B\)的约束力。
+    
+    \[
+        \begin{tikzpicture}[scale=1.4]
+        % \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=below:$A$] (A) at (0,0);
+        \coordinate[label=above:$B$] (B) at (3,0);
+        \coordinate[label=below:$C$] (C) at (2,0);
+        \coordinate[label=right:$D$] (D) at (4,0);
+        \draw (0,-0.6) -- (0,0.6);
+        \fill[pattern=north east lines, pattern color=gray!50] (-0.8,-0.6) rectangle (0,0.6);
+        \draw[fill=white] (-0.5,-0.1) rectangle (4,0.1);
+        \draw[fill=white] (C) circle (0.08);
+        \draw (3+0.4,-0.1-0.4*1.732) -- (3,-0.1);
+        \draw (3+0.44+0.15*1.732,-0.1-0.44*1.732+0.15) -- (3+0.44-0.15*1.732,-0.1-0.44*1.732-0.15);        \draw[fill=white] (3,-0.1) circle (0.08);
+        \draw[fill=white] (3+0.4,-0.1-0.4*1.732) circle (0.08);
+        % 尺寸标注
+        \draw[black!50] (0,-0.1) -- (0,-2.2);
+        \draw[black!50] (1,-0.1) -- (1,-2.2);
+        \draw[black!50] (2,-0.1) -- (2,-2.2);
+        \draw[black!50] (3,-0.1-0.08) -- (3,-2.2);
+        \draw[black!50] (4,-0.1) -- (4,-2.2);
+        \draw[<->] (0,-2) -- (1,-2) node[midway, above] {$l$};
+        \draw[<->] (1,-2) -- (2,-2) node[midway, above] {$l$};
+        \draw[<->] (2,-2) -- (3,-2) node[midway, above] {$l$};
+        \draw[<->] (3,-2) -- (4,-2) node[midway, above] {$l$};
+        \draw[black!50] (D) -- (4,1.2);
+        \draw[<->] (4.3,0.3*1.732) arc (60:90:0.6);
+        \coordinate[label=below:$30\degree$] (angelA) at (4.2,1);
+        \draw[<->] (3.3,-0.1) arc (0:-60:0.3);
+        \coordinate[label=below:$60\degree$] (angelB) at (3.5,-0.15);
+        % 力和力矩标注
+        \coordinate[label=right:$F$] (F) at (4.2,0.5);
+        % \draw[dashed] (O) -- (5.229,1.569);
+        \draw[\arrow] (4.5,0.5*1.732) -- (D);
+        \draw[{Stealth[length=3mm,width=1.5mm]}-{Stealth[length=3mm,width=1.5mm]}] (0.2,-0.8) -- (0.6,-0.8) -- (0.6,0.8) -- (1,0.8);
+        \coordinate[label=above:$M$] (M) at (0.8,0.8);
+        % 载荷区间
+        \draw (1,0.6) -- (3,0.6);
+        \foreach \i in {0,...,10}
+        {
+            \draw[\arrow] (1+0.2*\i,0.6) -- (1+0.2*\i,0.1);
+        }
+        \coordinate[label=above:$q$] (q) at (2,0.7);
+        \end{tikzpicture}
+    \]
+    \\
+
+    \textbf{Solution}
+    
+    先画出系统所受约束力。平面任意力系，4个未知量，无法求解？\(C\)点铰链这个因素（条件）没有考虑。
+    把这个因素考虑进去再分析，会发现这实质上仍是一个\textbf{静定}问题。
+    \\
+
+    \textbf{Part One}
+
+    以\(CD\)为研究对象，画受力图。
+    
+    \[
+        \begin{tikzpicture}[scale=1.4]
+        \coordinate[label=above:$B$] (B) at (3,0);
+        \coordinate[label=below:$C$] (C) at (2,0);
+        \coordinate[label=right:$D$] (D) at (4,0);
+        \draw[fill=white] (2,-0.1) rectangle (4,0.1);
+        \draw[fill=white] (C) circle (0.08);
+        \draw (3+0.4,-0.1-0.4*1.732) -- (3,-0.1);
+        \draw (3+0.44+0.15*1.732,-0.1-0.44*1.732+0.15) -- (3+0.44-0.15*1.732,-0.1-0.44*1.732-0.15);        \draw[fill=white] (3,-0.1) circle (0.08);
+        \draw[fill=white] (3+0.4,-0.1-0.4*1.732) circle (0.08);
+        % 尺寸标注
+        \draw[black!50] (2,-0.1) -- (2,-2.2);
+        \draw[black!50] (3,-0.1-0.08) -- (3,-2.2);
+        \draw[black!50] (4,-0.1) -- (4,-2.2);
+        \draw[<->] (2,-2) -- (3,-2) node[midway, above] {$l$};
+        \draw[<->] (3,-2) -- (4,-2) node[midway, above] {$l$};
+        \draw[black!50] (D) -- (4,1.2);
+        \draw[<->] (4.3,0.3*1.732) arc (60:90:0.6);
+        \coordinate[label=below:$30\degree$] (angelA) at (4.2,1);
+        \draw[<->] (3.3,-0.1) arc (0:-60:0.3);
+        \coordinate[label=below:$60\degree$] (angelB) at (3.5,-0.15);
+        % 力和力矩标注
+        \coordinate[label=right:$F$] (F) at (4.2,0.5);
+        \coordinate[label={[BrickRed]right:$F_{B}$}] (F_B) at (2.4,0.6*1.732);
+        \draw[\arrow,BrickRed] (B) -- (F_B);
+        \draw[\arrow] (4.5,0.5*1.732) -- (D);
+        \coordinate[label={[BrickRed]below:$F_{Cx}$}] (F_Cx) at (2.6,0);
+        \coordinate[label={[BrickRed]above:$F_{Cy}$}] (F_Cy) at (2,1);
+        \draw[\arrow,BrickRed] (C) -- (F_Cx);
+        \draw[\arrow,BrickRed] (C) -- (F_Cy);
+        % 载荷区间
+        \draw (2,0.6) -- (3,0.6);
+        \foreach \i in {5,...,10}
+        {
+            \draw[\arrow] (1+0.2*\i,0.6) -- (1+0.2*\i,0.1);
+        }
+        \coordinate[label=above:$q$] (q) at (2.3,0.6);
+        \end{tikzpicture}
+    \]
+    
+    由\(\sum M_{C} = 0\)得
+
+    \[
+    F_{B}\sin 60\degree \cdot l - ql \cdot \frac{l}{2} - F\cos 30\degree \cdot 2l = 0
+    \]
+
+    解得
+
+    \[
+    F_{B} = 455.77 \mathrm{kN}
+    \]
+    \\
+
+    \textbf{Part Two}
+
+    取整体为研究对象，画受力图：
+
+    \[
+        \begin{tikzpicture}[scale=1.4]
+        \coordinate[label=below:$A$] (A) at (0,0);
+        \coordinate[label=above:$B$] (B) at (3,0);
+        \coordinate[label=below:$C$] (C) at (2,0);
+        \coordinate[label=right:$D$] (D) at (4,0);
+        \draw (0,-0.6) -- (0,0.6);
+        \fill[pattern=north east lines, pattern color=gray!50] (-0.8,-0.6) rectangle (0,0.6);
+        \draw[fill=white] (-0.5,-0.1) rectangle (4,0.1);
+        \draw[fill=white] (C) circle (0.08);
+        \draw (3+0.4,-0.1-0.4*1.732) -- (3,-0.1);
+        \draw (3+0.44+0.15*1.732,-0.1-0.44*1.732+0.15) -- (3+0.44-0.15*1.732,-0.1-0.44*1.732-0.15);        \draw[fill=white] (3,-0.1) circle (0.08);
+        \draw[fill=white] (3+0.4,-0.1-0.4*1.732) circle (0.08);
+        % 尺寸标注
+        \draw[black!50] (0,-0.1) -- (0,-2.2);
+        \draw[black!50] (1,-0.1) -- (1,-2.2);
+        \draw[black!50] (2,-0.1) -- (2,-2.2);
+        \draw[black!50] (3,-0.1-0.08) -- (3,-2.2);
+        \draw[black!50] (4,-0.1) -- (4,-2.2);
+        \draw[<->] (0,-2) -- (1,-2) node[midway, above] {$l$};
+        \draw[<->] (1,-2) -- (2,-2) node[midway, above] {$l$};
+        \draw[<->] (2,-2) -- (3,-2) node[midway, above] {$l$};
+        \draw[<->] (3,-2) -- (4,-2) node[midway, above] {$l$};
+        \draw[black!50] (D) -- (4,1.2);
+        \draw[<->] (4.3,0.3*1.732) arc (60:90:0.6);
+        \coordinate[label=below:$30\degree$] (angelA) at (4.2,1);
+        \draw[<->] (3.3,-0.1) arc (0:-60:0.3);
+        \coordinate[label=below:$60\degree$] (angelB) at (3.5,-0.15);
+        % 力和力矩标注
+        \coordinate[label=above:$M$] (M) at (0.8,0.8);
+        \coordinate[label={[BrickRed]right:$F_{B}$}] (F_B) at (2.4,0.6*1.732);
+        \draw[\arrow,BrickRed] (B) -- (F_B);
+        \draw[\arrow] (4.5,0.5*1.732) -- (D);
+        \draw[{Stealth[length=3mm,width=1.5mm]}-{Stealth[length=3mm,width=1.5mm]}] (0.2,-0.8) -- (0.6,-0.8) -- (0.6,0.8) -- (1,0.8);
+        \coordinate[label=above:$M$] (M) at (0.8,0.8);
+        \coordinate[label={[BrickRed]left:$F_{Ay}$}] (F_Ay) at (0,0.8);
+        \coordinate[label={[BrickRed]above:$F_{Ax}$}] (F_Ax) at (0.6,0);
+        \coordinate[label={[BrickRed]above:$M_{A}$}] (M_A) at (-0.6,0.05);
+        \draw[\arrow,BrickRed] (A) -- (F_Ax);
+        \draw[\arrow,BrickRed] (A) -- (F_Ay);
+        \draw[\arrow,BrickRed] (0.1,0.5) arc (90:210:0.4);
+        % 载荷区间
+        \draw (1,0.6) -- (3,0.6);
+        \foreach \i in {0,...,10}
+        {
+            \draw[\arrow] (1+0.2*\i,0.6) -- (1+0.2*\i,0.1);
+        }
+        \coordinate[label=above:$q$] (q) at (2,0.7);
+        \end{tikzpicture}
+    \]
+
+    由\(\sum F_{x} = 0\)，
+
+    \[
+    F_{Ax} - F_{B}\cos60\degree - F\sin30\degree = 0
+    \]
+
+    由\(\sum F_{y} = 0\)，
+
+    \[
+    F_{Ay} + F_{B}\sin60\degree - 2ql - F\cos30\degree = 0
+    \]
+
+    由\(\sum M_{A} = 0\)，
+
+    \[
+    M_{A} - M - 2ql \cdot 2l + F_{B}\sin60 \degree \cdot 3l - F\cos30\degree \cdot 4l = 0
+    \]
+
+    分别解得
+
+    \[
+    M_{A} = 10.37\mathrm{kN \cdot m}, \;
+    F_{Ax} = 32.89\mathrm{kN}, \;
+    F_{Ay} = -2.32\mathrm{kN}
+    \]
+
+
+\end{homeworkProblem}
+
+\pagebreak
+
 \end{document}
