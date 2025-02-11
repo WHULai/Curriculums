@@ -109,7 +109,7 @@
     \vspace{2in}
     \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
     \normalsize\vspace{0.1in}\small{Date： \hmwkDueDate}\\
-    \vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{0.1in}\large{\textit{Wuhan University}}
     \vspace{3in}
 }
 
@@ -1068,7 +1068,189 @@
     F_{Ay} = -2.32\mathrm{kN}
     \]
 
+\end{homeworkProblem}
 
+\pagebreak
+
+\begin{homeworkProblem}
+
+    图示结构中，已知重物重力为\(P\)，\(DC=CE=AC=CB=2l\)，定滑轮半径为\(R\)，动滑轮半径为\(r\)，
+    且\(R=2r=l\)，\(\theta=45\degree\)。试求\(A\)、\(E\)支座的约束力以及\(BD\)杆所受到的力。
+
+    \[
+    \begin{tikzpicture}[scale=0.8]
+        \draw (3,0) circle (1.5);
+        \coordinate[label=left:$K$] (K) at (0,1.5);
+        \draw (K) -- (3,1.5);
+        \coordinate[label=above:$C$] (C) at (-0.3,0.1);
+        \draw[fill=white] (-0.1,-3) rectangle (0.1,3);
+        \draw[fill=white] (-3,-0.1) rectangle (3,0.1);
+        \fill (0,0) circle (0.05);
+        \draw[fill=white,rotate=-45] (-3*1.414/2-0.1,3/1.414+0.1) rectangle (3*1.414/2+0.1,3/1.414-0.1);
+        \coordinate[label=left:$E$] (E) at (-0.2,-3.1);
+        \coordinate[label=left:$D$] (D) at (0,3);
+        \draw[fill=white] (D) circle (0.1);
+        \coordinate[label=right:$B$] (B) at (3,0);
+        \draw[fill=white] (B) circle (0.1);
+        \coordinate[label=above:$A$] (A) at (-3,0);
+        \coordinate[label=left:\uppercase\expandafter{\romannumeral2}] (II) at (3.75,-3);
+        \coordinate[label=below:\uppercase\expandafter{\romannumeral1}] (I) at (3.5,-0.2);
+        \draw (II) circle (0.75);
+        \draw (3,-0.1) -- (3,-3);
+        \draw (4.5,0) -- (4.5,-3);
+        % 重物
+        \coordinate[label=right:$P$] (P) at (3.75,-5);
+        \draw[\arrow] (II) -- (P);
+        % 固定铰支座
+        \draw (-0.3,-3.3) -- (-0.1,-3);
+        \draw (0.3,-3.3) -- (0.1,-3);
+        \fill (0,-3.1) circle (0.05);
+        \draw (-0.5,-3.3) -- (0.5,-3.3);
+        \fill[pattern=north east lines, pattern color=gray!50] (-0.5,-3.5) rectangle (0.5,-3.3);
+        % 滑动铰支座
+        \draw (-2.4,0) arc (0:45:0.6);
+        \coordinate[label=above:$\theta$] (theta) at (-2.2,0.1);
+        \draw[dashed,rotate around={45:(A)}] (-3.5,0) -- (-0.2,0);
+        \draw[rotate around={45:(A)}] (-3,0.1) -- (-3.3,0.3) -- (-3.3,-0.3) -- (-3,-0.1);
+        \draw[rotate around={45:(A)}] (-3.4,0.2) circle (0.1);
+        \draw[rotate around={45:(A)}] (-3.4,-0.2) circle (0.1);
+        \draw[rotate around={45:(A)}] (-3.5,0.5) -- (-3.5,-0.5);
+        \fill[pattern=north east lines, pattern color=gray!50, rotate around={45:(A)}] (-3.5,0.5) rectangle (-3.7,-0.5);
+        \fill (A) circle (0.05);
+    \end{tikzpicture}
+    \]
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    取整体为研究对象，画出其受力图：
+
+    \[
+        \begin{tikzpicture}[scale=0.8]
+            \draw (3,0) circle (1.5);
+            \coordinate[label=left:$K$] (K) at (0,1.5);
+            \draw (K) -- (3,1.5);
+            \coordinate[label=above:$C$] (C) at (-0.3,0.1);
+            \draw[fill=white] (-0.1,-3) rectangle (0.1,3);
+            \draw[fill=white] (-3,-0.1) rectangle (3,0.1);
+            \fill (0,0) circle (0.05);
+            \draw[fill=white,rotate=-45] (-3*1.414/2-0.1,3/1.414+0.1) rectangle (3*1.414/2+0.1,3/1.414-0.1);
+            \coordinate[label=left:$E$] (E) at (-0.2,-3.1);
+            \coordinate[label=left:$D$] (D) at (0,3);
+            \draw[fill=white] (D) circle (0.1);
+            \coordinate[label=right:$B$] (B) at (3,0);
+            \draw[fill=white] (B) circle (0.1);
+            \coordinate[label=above:$A$] (A) at (-3,0);
+            \coordinate[label=left:\uppercase\expandafter{\romannumeral2}] (II) at (3.75,-3);
+            \coordinate[label=below:\uppercase\expandafter{\romannumeral1}] (I) at (3.5,-0.2);
+            \draw (II) circle (0.75);
+            \draw (3,-0.1) -- (3,-3);
+            \draw (4.5,0) -- (4.5,-3);
+            % 重物
+            \coordinate[label=right:$P$] (P) at (3.75,-5);
+            \draw[\arrow] (II) -- (P);
+            % 固定铰支座
+            \draw (-0.3,-3.3) -- (-0.1,-3);
+            \draw (0.3,-3.3) -- (0.1,-3);
+            \fill (0,-3.1) circle (0.05);
+            \draw (-0.5,-3.3) -- (0.5,-3.3);
+            \fill[pattern=north east lines, pattern color=gray!50] (-0.5,-3.5) rectangle (0.5,-3.3);
+            % 滑动铰支座
+            \draw (-2.4,0) arc (0:45:0.6);
+            \coordinate[label=above:$\theta$] (theta) at (-2.2,0.1);
+            \draw[rotate around={45:(A)}] (-3,0.1) -- (-3.3,0.3) -- (-3.3,-0.3) -- (-3,-0.1);
+            \draw[rotate around={45:(A)}] (-3.4,0.2) circle (0.1);
+            \draw[rotate around={45:(A)}] (-3.4,-0.2) circle (0.1);
+            \draw[rotate around={45:(A)}] (-3.5,0.5) -- (-3.5,-0.5);
+            \fill[pattern=north east lines, pattern color=gray!50, rotate around={45:(A)}] (-3.5,0.5) rectangle (-3.7,-0.5);
+            \fill (A) circle (0.05);
+            % 受力分析
+            \coordinate[rotate around={45:(A)},label={[BrickRed]above:$F_{A}$}] (F_A) at (-0.2,0);
+            \draw[\arrow,rotate around={45:(A)},BrickRed] (A) -- (F_A);
+            \coordinate[label={[BrickRed]left:$F_{Ey}$}] (F_Ey) at (0,-1);
+            \coordinate[label={[BrickRed]above:$F_{Ex}$}] (F_Ex) at (1.5,-3.1);
+            \draw[\arrow,BrickRed] (0,-3.1) -- (F_Ey);
+            \draw[\arrow,BrickRed] (0,-3.1) -- (F_Ex);
+        \end{tikzpicture}
+        \]
+
+        只有三个未知量，能够求解。
+
+        由\(\sum M_{E}\left(F\right) = 0\)，
+    
+        \[
+        -2\left(F_{A} \cdot \frac{\sqrt{2}}{2} \cdot 2l\right) - P \frac{5}{2} l = 0
+        \]
+
+        由\(\sum F_{x} = 0\)，
+
+        \[
+        F_{A} \cos 45 \degree + F_{Ex} = 0
+        \]
+    
+        由\(\sum F_{y} = 0\)，
+    
+        \[
+        F_{A} \sin 45 \degree + F_{Ey} - P = 0
+        \]
+
+        分别解得
+
+        \[
+        F_{A} = -\dfrac{5\sqrt{2}}{8}P, \;
+        F_{Ex} = \dfrac{5}{8} P, \;
+        F_{Ey} = \dfrac{13}{8} P
+        \]
+        \\
+
+        \textbf{Part Two}
+
+        取\(DE\)杆为研究对象，画出其受力图：
+
+        \[
+            \begin{tikzpicture}[scale=0.8]
+                \coordinate[label=left:$K$] (K) at (0,1.5);
+                \coordinate[label=above:$C$] (C) at (-0.3,0.1);
+                \draw[fill=white] (-0.1,-3) rectangle (0.1,3);
+                \fill (0,0) circle (0.05);
+                \coordinate[label=left:$E$] (E) at (-0.2,-3.1);
+                \coordinate[label=left:$D$] (D) at (0,3);
+                \draw[fill=white] (D) circle (0.1);
+                \draw (-0.3,-3.3) -- (-0.1,-3);
+                \draw (0.3,-3.3) -- (0.1,-3);
+                \fill (0,-3.1) circle (0.05);
+                \draw (-0.5,-3.3) -- (0.5,-3.3);
+                \fill[pattern=north east lines, pattern color=gray!50] (-0.5,-3.5) rectangle (0.5,-3.3);
+                % 受力分析
+                \coordinate[label={[BrickRed]left:$F_{Ey}$}] (F_Ey) at (0,-1);
+                \coordinate[label={[BrickRed]above:$F_{Ex}$}] (F_Ex) at (1.5,-3.1);
+                \draw[\arrow,BrickRed] (0,-3.1) -- (F_Ey);
+                \draw[\arrow,BrickRed] (0,-3.1) -- (F_Ex);
+                \coordinate[label={[BrickRed]right:$F_{BD}$}] (F_BD) at (1,2);
+                \draw[\arrow,BrickRed] (D) -- (F_BD);
+                \coordinate[label={[BrickRed]below:$F_{K} = \frac{P}{2}$}] (F_K) at (1.5,1.5);
+                \draw[\arrow,BrickRed] (K) -- (F_K);
+                \coordinate[label={[BrickRed]left:$F_{Cx}$}] (F_Cx) at (-1,0);
+                \draw[\arrow,BrickRed] (0,0) -- (F_Cx);
+                \coordinate[label={[BrickRed]right:$F_{Cy}$}] (F_Cy) at (0,-0.8);
+                \draw[\arrow,BrickRed] (0,0) -- (F_Cy);
+            \end{tikzpicture}
+            \]
+
+    注意到只求\(F_{BD}\)，因此由\(\sum M_{C}\left(F\right) = 0\)列平衡方程
+
+    \[
+    0 - F_{BD} \cdot \cos 45\degree \cdot 2l - F_{K} \cdot l + F_{Ex} \cdot 2l = 0
+    \]
+
+    解得
+
+    \[
+    F_{BD} = \dfrac{3\sqrt{2}}{8} P
+    \]
+    
 \end{homeworkProblem}
 
 \pagebreak
