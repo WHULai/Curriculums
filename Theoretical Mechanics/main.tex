@@ -1255,4 +1255,127 @@
 
 \pagebreak
 
+\begin{homeworkProblem}
+
+    半径为\(r\)的齿轮由曲柄\(OA\)带动，沿半径为\(R\)的固定齿轮滚动。已知曲柄\(OA\)上作用一力偶矩为\(M_{1}\)的力偶，
+    在齿轮\(A\)上作用一力偶矩为\(M_{2}\)的力偶，其转向如图所示。齿轮的压力角为\(\theta\)，
+    若不计构件的自重和摩擦，求机构平衡时\(M_{1}\)和\(M_{2}\)的关系。
+
+    \[
+    \begin{tikzpicture}[scale=0.5]
+        \coordinate[label=below:$O$] (O) at (0,0);
+        \coordinate[label=below:$A$] (A) at (4.9,1);
+        \coordinate[label=above:$C$] (C) at (4.9*0.7,0.7);
+        \draw[line width=4pt, color=black!50] (O) -- (A);
+        \draw (O) circle (3);
+        \draw (A) circle (2);
+        \coordinate[label=above:$R$] (R) at (-1.5*1.732,-1.5);
+        \draw[\arrow] (O) -- (R);
+        \draw[\arrow] (1.5,0) arc (0:160:1.5);
+        \draw[\arrow] (3.7,1) arc (160:0:1.2);
+        \coordinate[label=above:$M_{1}$] (M_1) at (0,1.5);
+        \coordinate[label=above:$M_{2}$] (M_2) at (4.9,1.6);
+        \coordinate[label=above:$r$] (r) at (4.9+1.414,1-1.414);
+        \draw[\arrow] (A) -- (r);
+    \end{tikzpicture}
+    \]
+
+    \textbf{Solution}
+    \\
+
+    如果选整体为研究对象, 则由于支承处的约束力和齿轮啮合面\(C\)处的约束力未知，
+    无法直接求出\(M_{1}\)与\(M_{2}\)之间的关系。又考虑到主动力系是平面力偶系，
+    故用平面力偶系的平衡条件可方便地求得结果。
+
+    {\color{BrickRed} 易错点：题目所说力偶\(M_{1}\)作用在曲柄\(OA\)上，而非齿轮上。
+    因此，后需要对曲柄\(OA\)进行分析。}
+    \\
+
+    \textbf{Part One}
+
+    先取齿轮\(A\)为研究对象。由于齿轮\(A\)平衡, 所以啮合力\(F\)与约束力\(F\)必组成力偶，
+    其受力图下：
+
+    \[
+    \begin{tikzpicture}[scale=0.5]
+        \coordinate[label=below:$A$] (A) at (4.9,1);
+        \coordinate[label=left:$C$] (C) at (4.9*0.6,0.6);
+        \draw (A) circle (2);
+        \draw[\arrow] (3.7,1) arc (160:0:1.2);
+        \coordinate[label=above:$M_{2}$] (M_2) at (4.9,1.6);
+        \draw (4.9*0.6-0.4,0.6+1.96) -- (4.9*0.6+0.4,0.6-1.96);
+        \coordinate[label=above:$F_{C}$] (F_C) at (1.3,2.8);
+        \draw[\arrow] (F_C) -- (C);
+        \draw (4.9*0.6-0.4*0.6,0.6+1.96*0.6) arc (100:140:0.8);
+        \coordinate[label=above:$\theta$] (theta) at (2.2,1.8);
+        \coordinate[label=above:$r$] (r) at (4.9-1.414,1-1.414);
+        \draw[\arrow] (A) -- (r);
+        \coordinate[label=right:$F_{A}$] (F_A) at (4.9+1.4*1.414,1-1.4*1.414);
+        \draw[\arrow] (F_A) -- (A);
+    \end{tikzpicture}
+    \]
+
+    列平衡方程
+
+    \begin{align}
+    \sum{M} = 0, \;
+    F_{A}r\cos\theta - M_{2} = 0 \tag{1} \label{7-1}
+    \end{align}
+
+    得
+
+    \[
+    F_{A} = \frac{M_{2}}{r\cos\theta}
+    \]
+    \\
+
+    \textbf{Part Two}
+
+    再取曲柄\(OA\)为研究对象。\(A\)，\(O\)处的约束力\(F_{A}^{'}\)，\(F_{O}\)组成力偶，受力图如下：
+
+    \[
+    \begin{tikzpicture}[scale=0.5]
+        \coordinate[label=left:$O$] (O) at (0,0);
+        \coordinate[label=below:$A$] (A) at (4.9,1);
+        \draw[line width=4pt, color=black!50] (O) -- (A);
+        \draw[\arrow] (1.2,-0.8) arc (-20:100:1.5);
+        \coordinate[label=above:$M_{1}$] (M_1) at (0,1.5);
+        \coordinate[label=right:$F_{A}^{'}$] (F_A) at (4.9-1.4*1.414,1+1.4*1.414);
+        \draw[\arrow] (F_A) -- (A);
+        \coordinate[label=below:$F_{O}$] (F_O) at (1.4*1.414,-1.4*1.414);
+        \draw[\arrow] (F_O) -- (O);
+    \end{tikzpicture}
+    \]
+
+    列平衡方程如下：
+
+    \begin{align}
+    \sum{M} = 0, \;
+    -F_{A}^{'}\left(r+R\right)\cos\theta + M_{1} = 0 \tag{2} \label{7-2}
+    \end{align}
+
+    得
+
+    \[
+    F_{A}^{'} = \frac{M_{1}}{\left(r+R\right)\cos\theta}
+    \]
+
+    由公式(\ref{7-1})，(\ref{7-2})，可知
+
+    \[
+    \frac{M_{2}}{r\cos\theta} = \frac{M_{1}}{\left(r+R\right)\cos\theta}
+    \]
+    
+    则
+    
+    \[
+    M_{2} = \frac{r}{R+r}M_{1}
+    \]
+
+    
+\end{homeworkProblem}
+
+\pagebreak
+
+
 \end{document}
