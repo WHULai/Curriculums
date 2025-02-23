@@ -1377,5 +1377,181 @@
 
 \pagebreak
 
+\begin{homeworkProblem}
+    
+    构架由不计自重的杆\(AB\)、\(AC\)和\(DF\)铰接而成，如图所示，杆\(DF\)上的销\(E\)套在杆\(AC\)的光滑槽内。
+    在水平杆\(DF\)的一端作用一铅锤力\(F\)，求杆\(AB\)上铰链\(A\)、\(D\)和\(B\)所受的力。
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[scale=0.4]{images/pic2.png}
+        % \caption{}
+        \label{pic2}
+    \end{figure}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    以整体为研究对象。整个系统所受外力只有\(F\)、\(F_{B}\)和\(F_{C}\)，且\(F\)和\(F_{C}\)作用线均过点\(C\)。
+    
+    对\(C\)点取矩：
+
+    \[
+    \sum M_{C} = 0, \;
+    F_{By} \cdot 2a = 0
+    \]
+
+    所以
+
+    \[
+    F_{By} = 0
+    \]
+    \\
+
+    \textbf{Part Two}
+
+    以杆\(DF\)为研究对象。因为杆\(DF\)上的销\(E\)套在杆\(AC\)的光滑槽内，所以杆\(AC\)对杆\(DF\)的力与杆\(AC\)垂直。
+    受力分析如图：
+
+    \[
+    \begin{tikzpicture}
+        \coordinate[label=below:$D$] (D) at (0,2);
+        \coordinate[label=right:$\overrightarrow{F_{E}}$] (F_E) at (0.5,0.5);
+        \coordinate[label=below:$\overrightarrow{F_{Dx}^{'}}$] (F_Dx) at (0.8,2);
+        \coordinate[label=right:$\overrightarrow{F_{Dy}^{'}}$] (F_Dy) at (0,2.7);
+        \coordinate[label=below:$F$] (F) at (4,2);
+        \coordinate[label=below:$E$] (E) at (2,2);
+        \coordinate[label=right:$\overrightarrow{F}$] (Force) at (4,3.6);
+        \draw[\arrow] (Force) -- (F);
+        \draw[line width=2pt,color=black!50] (D) -- (F);
+        \draw (E) circle (0.06);
+        \draw[\arrow] (E) -- (F_E);
+        \draw[\arrow] (D) -- (F_Dx);
+        \draw[\arrow] (D) -- (F_Dy);
+        \draw (1.8,2) arc (180:225:0.2);
+        \coordinate[label=left:$45 \degree$] (angle) at (1.8,1.8);
+    \end{tikzpicture}
+    \]
+    
+    对\(D\)点取矩，有
+
+    \[
+    F_{E} \cdot \frac{\sqrt{2}}{2} a + F \cdot 2a = 0
+    \]
+
+    解得
+
+    \[
+    F_{E} = -2\sqrt{2} F
+    \]
+
+    又由
+
+    \[
+    \sum F_{x} = 0, \;
+    \sum F_{y} = 0
+    \]
+
+    有
+
+    \[
+    F_{Dx}^{'} - F_{E} \sin 45\degree = 0
+    \]
+
+    \[
+    F_{Dy}^{'} - F - F_{E} \cos 45\degree = 0
+    \]
+
+    解得
+
+    \[
+    F_{Dx} = -2F, \;
+    F_{Dy} = -F
+    \]
+    \\
+    
+    \textbf{Part Three}
+
+    以杆\(AB\)为研究对象。受力分析如图：
+
+    \[
+    \begin{tikzpicture}
+        \coordinate[label=right:$D$] (D) at (0,2);
+        \coordinate[label=below:$B$] (B) at (0,0);
+        \coordinate[label=below:$\overrightarrow{F_{Dx}}$] (F_Dx_) at (-0.8,2);
+        \coordinate[label=right:$\overrightarrow{F_{Dy}}$] (F_Dy_) at (0,1.3);
+        \coordinate[label=below:$A$] (A) at (0,4);
+        \draw[line width=2pt,color=black!50] (A) -- (B);
+        \coordinate[label=right:$\overrightarrow{F_{Ay}}$] (F_Ay) at (0,4.8);
+        \coordinate[label=right:$\overrightarrow{F_{Ax}}$] (F_Ax) at (0.8,4);
+        \coordinate[label=right:$\overrightarrow{F_{Bx}}$] (F_Bx) at (0.8,0);
+        \coordinate[label=left:$\overrightarrow{F_{By}}$] (F_By) at (0,0.7);
+        \draw[\arrow] (A) -- (F_Ax);
+        \draw[\arrow] (A) -- (F_Ay);
+        \draw[\arrow] (B) -- (F_Bx);
+        \draw[\arrow] (B) -- (F_By);
+        \draw[\arrow] (D) -- (F_Dx_);
+        \draw[\arrow] (D) -- (F_Dy_);
+    \end{tikzpicture}
+    \]
+    
+    对\(B\)点取矩，有
+
+    \[
+    F_{Dx} \cdot a - F_{Ax} \cdot 2a = 0
+    \]
+
+    解得
+
+    \[
+    F_{Ax} = -F
+    \]
+
+    又由
+
+    \[
+    \sum F_{x} = 0, \;
+    \sum F_{y} = 0
+    \]
+
+    有
+
+    \[
+    F_{Dx} + F_{Bx} + F_{Ax} = 0
+    \]
+
+    \[
+    F_{Dy} - F_{By} - F_{Ay} = 0
+    \]
+
+    解得
+
+    \[
+    F_{Ay} = -F, \;
+    F_{Bx} = -F
+    \]
+
+    综上所述，
+
+    \[
+    F_{Ax} = -F, \;
+    F_{Ay} = -F
+    \]
+
+    \[
+    F_{Bx} = -F, \;
+    F_{By} = 0
+    \]
+
+    \[
+    F_{Dx} = -2F, \;
+    F_{Dy} = -F
+    \]
+
+\end{homeworkProblem}
+
+\pagebreak
 
 \end{document}
