@@ -1,0 +1,563 @@
+%!TEX program = xelatex
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{ctex}
+\usepackage{indentfirst}
+\usepackage{wrapfig}
+\usetikzlibrary{automata,positioning,shapes.geometric,arrows.meta,patterns,calc}
+\numberwithin{equation}{section}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.2in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength{\parindent}{2em}  % 2em代表首行缩进两个字符
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+% \setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{0}
+% \nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Vector Algebra and Spatial Geometry}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{Advanced Mathematics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\myUniversiy}{Wuhan University}
+\newcommand{\hmwkAuthorName}{\textbf{Lai Wei}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{日期： \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\myUniversiy}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% % For derivatives
+% \newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% 我的newcommand
+\newcommand{\degree}{^{\circ}}
+\newcommand{\arrow}{-{Stealth[length=4mm,width=2mm]}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
+\renewcommand{\parallel}{\mathrel{/\mskip-2.5mu/}}
+\newcommand{\parallelogram}{
+	\mathord
+    {\text
+        {
+			\tikz[baseline]
+			\draw (0,.1ex) -- (.8em,.1ex) -- (1em,1.6ex) -- (.2em,1.6ex) -- cycle;
+        }
+    }
+}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+% 设置页码格式是罗马数字
+\pagenumbering{roman}
+
+% 生成目录
+\tableofcontents
+
+\pagebreak
+
+% 设置页码格式是阿拉伯数字
+\pagenumbering{arabic}
+
+\pagebreak
+
+\section{向量积、混合积}
+
+\subsection{向量积}
+
+\subsubsection{定义}
+
+    设有向量\(\overrightarrow{a}\)、\(\overrightarrow{b}\)，其夹角为\(\theta\)。定义新向量，
+    记作\(\overrightarrow{a} \times \overrightarrow{b}\)，如下：
+
+    \begin{itemize}
+        \item 大小：\(\lvert \overrightarrow{a} \times \overrightarrow{b} \rvert =
+            \lvert \overrightarrow{a} \rvert \cdot \lvert \overrightarrow{b} \rvert \cdot \sin\theta\)；
+        \item 方向：\(\overrightarrow{a} \times \overrightarrow{b}\)与\(\overrightarrow{a}\)、\(\overrightarrow{b}\)
+            都垂直，其指向按右手螺旋定则，由\(\overrightarrow{a}\)沿着不大于\(\mathrm{\pi}\)
+            的角度转向\(\overrightarrow{b}\)确定。
+    \end{itemize}
+
+\subsubsection{性质}
+
+    \begin{enumerate}
+        \item \(\overrightarrow{a} \times \overrightarrow{b} \perp \overrightarrow{a}\)，
+            \(\overrightarrow{a} \times \overrightarrow{b} \perp \overrightarrow{b}\)
+        \item 重要结论：
+        \\
+        \(\overrightarrow{a} \times \overrightarrow{a} = \overrightarrow{0}\)
+        \\
+        对非零向量\(\overrightarrow{a}\)，\(\overrightarrow{b}\)，有\(\overrightarrow{a} \parallel
+        \overrightarrow{b} \leftrightarrow \overrightarrow{a} \times \overrightarrow{b} = 
+        \overrightarrow{0}\)
+        \item 几何意义（向量积的模）：
+            \begin{align*}
+                \lvert \overrightarrow{a} \times \overrightarrow{b} \rvert &=
+                \lvert \overrightarrow{a} \rvert \cdot \lvert \overrightarrow{b} \rvert \cdot \sin\theta
+                \\
+                &= S_{\parallelogram}
+            \end{align*}
+
+            \[
+                \begin{tikzpicture}
+                    \coordinate[label=above:$\overrightarrow{b}$] (b) at (1,1);
+                    \coordinate[label=below:$\overrightarrow{a}$] (a) at (2,0);
+                    \coordinate[label=right:$\theta$] (theta) at (0.2,0.2);
+                    \coordinate[label=right:$h$] (h) at (1,0.5);
+                    \coordinate[label=below:$\lvert\overrightarrow{a}\rvert$] (_a_) at (1,0);
+                    \draw[\arrow] (0,0) -- (a);
+                    \draw[\arrow] (0,0) -- (b);
+                    \draw[dashed] (b) -- (3,1);
+                    \draw[dashed] (a) -- (3,1);
+                    \draw (0.2,0) arc (0:45:0.2);
+                    \draw[dashed] (b) -- (_a_);
+                    \draw (1,0) rectangle (1.15,0.15);
+                \end{tikzpicture}
+            \]
+            即\(\lvert \overrightarrow{a} \times \overrightarrow{b} \rvert\)表示：
+            以\(\overrightarrow{a}\)、\(\overrightarrow{b}\)为邻边的平行四边形的面积。
+    \end{enumerate}
+    
+\subsubsection{运算规律}
+
+    \begin{enumerate}
+        \item 反交换律：\(\overrightarrow{a} \times \overrightarrow{b} = 
+            - \overrightarrow{b} \times \overrightarrow{a}\)
+        \item 分配律：\(\left(\overrightarrow{a} + \overrightarrow{b}\right) \times \overrightarrow{c}
+            = \overrightarrow{a} \times \overrightarrow{c} + \overrightarrow{b} \times \overrightarrow{c}\)
+        \item 结合律：\(\left(\lambda \overrightarrow{a}\right) = \lambda \left(\overrightarrow{a}
+            \times \overrightarrow{b}\right) = \overrightarrow{a} \times \left(\lambda \overrightarrow{b}\right)\)
+    \end{enumerate}
+
+\subsubsection{向量积的坐标表示}
+
+    设有向量\(\overrightarrow{a} = \left(x_1, y_1, z_1\right)\)、\(\overrightarrow{b} = \left(x_2, y_2, z_2\right)\)，
+    则有
+    
+    \begin{align*}
+        \overrightarrow{a} \times \overrightarrow{b} &= \left(x_1\overrightarrow{i} + y_1\overrightarrow{j}
+        + z_1\overrightarrow{k}\right) \times \left(x_2\overrightarrow{i} + y_2\overrightarrow{j} +
+        z_2\overrightarrow{k}\right)
+        \\
+        &= \left(y_1z_2 - z_1y_2\right) \cdot \overrightarrow{i} + \left(z_1x_2 - x_1z_2\right) \cdot \overrightarrow{j}
+        + \left(x_1y_2 - y_1x_2\right) \cdot \overrightarrow{k}
+        \\
+        &= \left(y_1z_2 - z_1y_2,\; z_1x_2 - x_1z_2\,\; x_1y_2 - y_1x_2\right)
+        \\
+        &= \left|
+            \begin{array}{cccc}
+            \overrightarrow{i} & \overrightarrow{j} & \overrightarrow{k} \\
+            x_1 & y_1 & z_1 \\
+            x_2 & y_2 & z_2
+            \end{array}
+        \right|
+    \end{align*}
+
+    同理，
+
+    \[
+        \overrightarrow{b} \times \overrightarrow{a} =
+        \left|
+            \begin{array}{cccc}
+            \overrightarrow{i} & \overrightarrow{j} & \overrightarrow{k} \\
+            x_2 & y_2 & z_2 \\
+            x_1 & y_1 & z_1
+            \end{array}
+        \right|
+    \]
+
+\subsection{混合积}
+
+\subsubsection{定义}
+
+    设有向量\(\overrightarrow{a}\)，\(\overrightarrow{b}\)，\(\overrightarrow{c}\)，称数\(\left(\overrightarrow{a}
+    \times \overrightarrow{b}\right) \cdot \overrightarrow{c}\)为向量\(\overrightarrow{a}\)，\(\overrightarrow{b}\)，
+    \(\overrightarrow{c}\)的混合积，记作\(\left[\overrightarrow{a} \; \overrightarrow{b} \;
+    \overrightarrow{c}\right]\)，即
+
+    \[
+        \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] =
+        \left(\overrightarrow{a} \times \overrightarrow{b}\right) \cdot \overrightarrow{c}
+    \]
+
+\subsubsection{坐标表示}
+
+    设有向量\(\overrightarrow{a} = \left(x_1, y_1, z_1\right)\)、\(\overrightarrow{b} = \left(x_2, y_2, z_2\right)\)、
+    \(\overrightarrow{c} = \left(x_3, y_3, z_3\right)\)，则有
+
+    \[
+        \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] =
+        \left|
+            \begin{array}{cccc}
+            x_1 & y_1 & z_1 \\
+            x_2 & y_2 & z_2 \\
+            x_3 & y_3 & z_3
+            \end{array}
+        \right|
+    \]
+
+\subsubsection{几何意义}
+
+    \(\left|\left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right]\right|\)表示以
+    \(\overrightarrow{a}\)，\(\overrightarrow{b}\)，\(\overrightarrow{c}\)为相邻三条棱的平行六面体的体积。
+    因此，\(\overrightarrow{a}\)，\(\overrightarrow{b}\)，\(\overrightarrow{c}\)共线\(\Leftrightarrow
+    \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] = 0\)。
+
+\subsubsection{运算规律}
+
+    \begin{align*}
+        &\left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] =
+        \left[\overrightarrow{b} \; \overrightarrow{c} \; \overrightarrow{a}\right] =
+        \left[\overrightarrow{c} \; \overrightarrow{a} \; \overrightarrow{b}\right]
+        \\
+        = &- \left[\overrightarrow{a} \; \overrightarrow{c} \; \overrightarrow{b}\right] =
+        - \left[\overrightarrow{c} \; \overrightarrow{b} \; \overrightarrow{a}\right] =
+        - \left[\overrightarrow{b} \; \overrightarrow{a} \; \overrightarrow{c}\right]
+    \end{align*}
+
+    即按照下图沿同一方向（顺时针或逆时针）旋转的混合积组合的值是相等的。
+
+    \[
+        \begin{tikzpicture}
+            \coordinate[label=right:$\overrightarrow{a}$] (a) at (0.6,0.7);
+            \coordinate[label=left:$\overrightarrow{b}$] (b) at (-1,0);
+            \coordinate[label=below:$\overrightarrow{c}$] (c) at (0.2,-1);
+            \draw[\arrow] (1,0) arc (0:100:1);
+            \draw[\arrow] (-0.5,1.732/2) arc (120:220:1);
+            \draw[\arrow] (-0.5,-1.732/2) arc (240:340:1);
+        \end{tikzpicture}
+    \]
+
+\subsubsection{例题}
+
+    已知\((\overrightarrow{a} \times \overrightarrow{b}) \cdot \overrightarrow{c} = 2\)，求\(\left[(\overrightarrow{a} \times \overrightarrow{b}) \times
+    (\overrightarrow{b} + \overrightarrow{c})\right] \cdot (\overrightarrow{c} + \overrightarrow{a})\)。
+
+    \textbf{Solution}
+    \\
+
+
+    \[
+        \begin{split}
+            & \left[(\overrightarrow{a} \times \overrightarrow{b}) \times (\overrightarrow{b} + \overrightarrow{c})\right] \cdot (\overrightarrow{c} + \overrightarrow{a})
+            \\
+            &= \left[\overrightarrow{a} \times \overrightarrow{b} + \overrightarrow{a} \times \overrightarrow{c} + \overrightarrow{b} \times \overrightarrow{b} +
+            \overrightarrow{b} \times \overrightarrow{c}\right] \cdot (\overrightarrow{c} + \overrightarrow{a})
+        \end{split}
+    \]
+
+    由\(\overrightarrow{b} \times \overrightarrow{b} = 0\)，故
+    \\
+
+    \[
+        \begin{split}
+            & \left[(\overrightarrow{a} \times \overrightarrow{b}) \times (\overrightarrow{b} + \overrightarrow{c})\right] \cdot (\overrightarrow{c} + \overrightarrow{a})
+            \\
+            &= \left[\overrightarrow{a} \times \overrightarrow{b} + \overrightarrow{a} \times \overrightarrow{c} + \overrightarrow{b} \times \overrightarrow{c}\right]
+            \cdot (\overrightarrow{c} + \overrightarrow{a})
+            \\
+            &= \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] + \left[\overrightarrow{a} \; \overrightarrow{c} \; \overrightarrow{c}\right] + 
+            \left[\overrightarrow{b} \; \overrightarrow{c} \; \overrightarrow{c}\right] + \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{a}\right] +
+            \left[\overrightarrow{a} \; \overrightarrow{c} \; \overrightarrow{a}\right] + \left[\overrightarrow{b} \; \overrightarrow{c} \; \overrightarrow{a}\right]
+        \end{split}
+    \]
+
+    显然，当混合积中只有不同的两个向量时（可认为这三个向量共面），该混合积值为0。于是
+
+    \[
+        \begin{split}
+            & \left[(\overrightarrow{a} \times \overrightarrow{b}) \times (\overrightarrow{b} + \overrightarrow{c})\right] \times (\overrightarrow{c} + \overrightarrow{a})
+            \\
+            &= \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] + \left[\overrightarrow{b} \; \overrightarrow{c} \; \overrightarrow{a}\right]
+        \end{split}
+    \]
+
+    由于
+
+    \[
+        \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] =
+        \begin{vmatrix}
+        a_{x} & a_{y} & a_{z} \\
+        b_{x} & b_{y} & b_{z} \\
+        c_{x} & c_{y} & c_{z}
+        \end{vmatrix}
+    \]
+
+    而
+
+    \[
+        \left[\overrightarrow{b} \; \overrightarrow{c} \; \overrightarrow{a}\right] =
+        \begin{vmatrix}
+        b_{x} & b_{y} & b_{z} \\
+        c_{x} & c_{y} & c_{z} \\
+        a_{x} & a_{y} & a_{z}
+        \end{vmatrix}
+    \]
+
+    所以
+
+    \[
+    \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right] = \left[\overrightarrow{b} \; \overrightarrow{c} \; \overrightarrow{a}\right]
+    \]
+
+    于是
+
+    \[
+        \begin{split}
+            \left[(\overrightarrow{a} \times \overrightarrow{b}) \times (\overrightarrow{b} + \overrightarrow{c})\right] \times (\overrightarrow{c} + \overrightarrow{a})
+            = 2 \; \left[\overrightarrow{a} \; \overrightarrow{b} \; \overrightarrow{c}\right]
+        \end{split}
+    \]
+
+\section{平面及其方程}
+
+\subsection{曲面方程与空间曲线方程的概念}
+
+\subsubsection{曲面方程}
+
+    设有曲面\(S: F\left(x, y, z\right) = 0\)，满足
+
+    \begin{enumerate}
+        \item 曲面\(S\)上任一点都满足方程；
+        \item 不在曲面\(S\)上的点的坐标不满足方程。
+    \end{enumerate}
+
+\subsubsection{空间曲线方程}
+
+    设有曲面\(S_1: F_1\left(x, y, z\right) = 0\)和设有曲面\(S_2: F_2\left(x, y, z\right) = 0\)，
+    联立两方程：
+
+    \[
+        \begin{cases}
+            F_1\left(x, y, z\right) = 0, \\
+            F_2\left(x, y, z\right) = 0.
+        \end{cases}
+    \]
+
+    满足
+
+    \begin{enumerate}
+        \item 曲面\(S\)上任一点都满足方程；
+        \item 不在曲面\(S\)上的点的坐标不满足方程。
+    \end{enumerate}
+
+\subsection{平面的点法式方程}
+
+    设平面\(\mathit{\Pi}\)上有一点\(M_{0}\left(x_0,y_0,z_0\right)\)，其法向量为\(\overrightarrow{n} = \left(
+    A, B, C\right)\)。（注意：平面的法向量不唯一。）
+    
+    设\(M\left(x,y,z\right)\)，则\(\overrightarrow{M_{0}M} \perp \overrightarrow{n}\)，则
+    \(\overrightarrow{M_{0}M} \cdot \overrightarrow{n} = 0\)，而\(\overrightarrow{M_{0}M} =
+    \left(x-x_0,y-y_0,z-z_0\right)\)。于是
+    
+    \begin{align}
+        A\left(x-x_0\right) + B\left(y-y_0\right) + C\left(z-z_0\right) = 0
+        \label{Point-Normal-Plane}
+    \end{align}
+    
+    即为平面\(\mathit{\Pi}\)的点法式方程。
+
+\subsection{平面的一般方程}
+
+    \begin{align}
+        Ax + By + Cz + D = 0
+        \label{General-Form-Plane}
+    \end{align}
+
+    即为平面的一般方程。
+
+    任一三元一次方程的图形总是一个平面，方程\ref{General-Form-Plane}中\(x\)、\(y\)、\(z\)的系数就是该平面的
+    一个法向量\(\overrightarrow{n}\)的坐标，即\(\overrightarrow{n} = \left(A, B, C\right)\)。
+
+    特殊情况：
+
+    \begin{enumerate}
+        \item \(D=0 \Leftrightarrow \)平面通过原点；
+        \item \(A=0 \Leftrightarrow \)平面平行于（或包含）\(x\)轴；
+            \\
+            \(B=0 \Leftrightarrow \)平面平行于（或包含）\(y\)轴；
+            \\
+            \(C=0 \Leftrightarrow \)平面平行于（或包含）\(z\)轴；
+        \item \(A=B=0 \Leftrightarrow \)平面平行于（或重合于）\(xOy\)平面；
+            \\
+            \(B=C=0 \Leftrightarrow \)平面平行于（或重合于）\(yOz\)平面；
+            \\
+            \(A=C=0 \Leftrightarrow \)平面平行于（或重合于）\(xOz\)平面；
+        \item \(A=D=0 \Leftrightarrow \)平面包含\(x\)轴；
+            \\
+            \(B=D=0 \Leftrightarrow \)平面包含\(y\)轴；
+            \\
+            \(C=D=0 \Leftrightarrow \)平面包含\(z\)轴；
+        \item \(A=B=D=0 \Leftrightarrow z=0\)（\(xOy\)平面）；
+            \\
+            \(B=C=D=0 \Leftrightarrow x=0\)（\(yOz\)平面）；
+            \\
+            \(A=C=D=0 \Leftrightarrow y=0\)（\(xOz\)平面）；
+    \end{enumerate}
+
+\subsection{平面的截距式方程}
+
+    \begin{align}
+        \frac{x}{a} + \frac{y}{b} + \frac{z}{c} = 1
+        \label{Intercept-Form-Plane}
+    \end{align}
+
+    即为平面的截距式方程。方程\ref{Intercept-Form-Plane}中\(a\)，\(b\)，\(c\)即分别为平面在\(x\)，\(y\)，\(z\)
+    轴上的截距。
+
+\subsection{两平面的夹角}
+
+\subsubsection{定义}
+
+    两平面的法线向量的夹角（通常指锐角或直角）称为两平面的夹角。因此\(\cos \theta = \left|\cos
+    \left(\hat{\overrightarrow{n_1}, \overrightarrow{n_2}}\right)\right|\)。
+
+    设平面\(\mathit{\Pi_{1}}\)和\(\mathit{\Pi_{2}}\)的法线向量依次为\(\overrightarrow{n_{1}} = \left(A_{1}, B_{1}, C_{1}\right)\)，
+    \(\overrightarrow{n_{2}} = \left(A_{2}, B_{2}, C_{2}\right)\)。按两向量夹角的余弦的坐标表示式平面\(\mathit{\Pi_{1}}\)
+    和\(\mathit{\Pi_{2}}\)的夹角\(\theta\)可由
+
+    \begin{align}
+        \cos \theta=\frac{\left|A_1 A_2+B_1 B_2+C_1 C_2\right|}
+        {\sqrt{A_1^2+B_1^2+C_1^2} \sqrt{A_2^2+B_2^2+C_2^2}}
+    \end{align}
+
+    来确定。
+
+\subsubsection{结论}
+
+    \begin{enumerate}
+        \item \(\mathit{\Pi_{1}}\)和\(\mathit{\Pi_{2}}\)相互垂直相当于\(A_1 A_2+B_1 B_2+C_1 C_2=0\)
+        \item \(\mathit{\Pi_{1}}\)和\(\mathit{\Pi_{2}}\)相互平行相当于\(\dfrac{A_1}{A_2}=\dfrac{B_1}{B_2}=\dfrac{C_1}{C_2}\)
+    \end{enumerate}
+
+\subsection{点到平面的距离}
+
+    设点\(P_{0}\left(x_0, y_0, z_0\right)\)是平面\(Ax + By + Cz + D = 0\)外一点，则\(P_0\)到该平面的距离为
+
+    \begin{align}
+        d=\frac{\left|A x_0+B y_0+C z_0\right|}{\sqrt{A^2+B^2+C^2}}
+    \end{align}
+
+    设有两平行平面\(\mathit{\Pi_{1}}: Ax + By +Cz +D_1 = 0\)和\(\mathit{\Pi_{1}}: Ax + By +Cz +D_2 = 0\)，则两平面间的距离为
+
+    \begin{align}
+        d=\frac{\left|D_1 - D_2\right|}{\sqrt{A^2+B^2+C^2}}
+    \end{align}
+
+\end{document}
