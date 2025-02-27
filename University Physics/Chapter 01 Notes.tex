@@ -261,9 +261,10 @@
 
     于是其位移
 
-    \[\Delta \overrightarrow{r} = \overrightarrow{r_{B}} - \overrightarrow{r_{A}}
-    = \left(x_{B} - x_{A}\right)\overrightarrow{i} + \left(y_{B} - y_{A}\right)\overrightarrow{j}
-    + \left(z_{B} - z_{A}\right)\overrightarrow{k}
+    \[
+        \Delta \overrightarrow{r} = \overrightarrow{r_{B}} - \overrightarrow{r_{A}}
+        = \left(x_{B} - x_{A}\right)\overrightarrow{i} + \left(y_{B} - y_{A}\right)\overrightarrow{j}
+        + \left(z_{B} - z_{A}\right)\overrightarrow{k}
     \]
     
     方向由\(A\)指向\(B\)。
@@ -314,8 +315,8 @@
 
     \textbf{定义}
     \[
-    \overrightarrow{v} = \frac{\Delta \overrightarrow{r}}{\Delta t} =
-    \frac{\Delta x}{\Delta t} \overrightarrow{i} + \frac{\Delta y}{\Delta y} \overrightarrow{j}
+        \overrightarrow{v} = \frac{\Delta \overrightarrow{r}}{\Delta t} =
+        \frac{\Delta x}{\Delta t} \overrightarrow{i} + \frac{\Delta y}{\Delta y} \overrightarrow{j}
     \]
 
 \subsubsection{瞬时速度}
@@ -335,14 +336,14 @@
     即有，
 
     \[
-    v_{x} = \frac{\rmd x}{\rmd t},\; v_{y} = \frac{\rmd y}{\rmd t},\; v_{z} = \frac{\rmd z}{\rmd t}
+        v_{x} = \frac{\rmd x}{\rmd t},\; v_{y} = \frac{\rmd y}{\rmd t},\; v_{z} = \frac{\rmd z}{\rmd t}
     \]
 
     所以
 
     \[
-    \left|\overrightarrow{v} \right| = \sqrt{\left(\frac{\rmd y}{\rmd t}\right)^2 +
-    \left(\frac{\rmd y}{\rmd t}\right)^2 + \left(\frac{\rmd z}{\rmd t}\right)^2}
+        \left|\overrightarrow{v} \right| = \sqrt{\left(\frac{\rmd y}{\rmd t}\right)^2 +
+        \left(\frac{\rmd y}{\rmd t}\right)^2 + \left(\frac{\rmd z}{\rmd t}\right)^2}
     \]
 
     方向角
@@ -357,10 +358,10 @@
     有\(\left|\overrightarrow{r}\right| = s\)，则
 
     \[
-    v = \left|\overrightarrow{v}\right| =
-    \left|\frac{\rmd \overrightarrow{r}}{\rmd t}\right|
-    = \frac{\left|\rmd \overrightarrow{r}\right|}{\rmd t}
-    = \frac{\rmd s}{\rmd t}
+        v = \left|\overrightarrow{v}\right| =
+        \left|\frac{\rmd \overrightarrow{r}}{\rmd t}\right|
+        = \frac{\left|\rmd \overrightarrow{r}\right|}{\rmd t}
+        = \frac{\rmd s}{\rmd t}
     \]
 
     即有，速度的大小等于速率。
@@ -368,8 +369,8 @@
 \subsubsection{速度在自然坐标系下的表示}
 
     \[
-    \overrightarrow{v} = \frac{\rmd s}{\rmd t}\overrightarrow{e_{t}}
-    = v \overrightarrow{e_{t}}
+        \overrightarrow{v} = \frac{\rmd s}{\rmd t}\overrightarrow{e_{t}}
+        = v \overrightarrow{e_{t}}
     \]
 
     其中，\(\overrightarrow{e_{t}} = 1\)，表示方向，\(v\)表示速度大小。
@@ -405,16 +406,16 @@
     \end{enumerate}
 
     \begin{align*}
-    \overrightarrow{a} &= \lim_{\Delta t \rightarrow 0} \frac{\Delta \overrightarrow{v}}{\Delta t}
-    = \frac{\rmd \overrightarrow{v}}{\rmd t} =
-    \frac{\rmd^2 \overrightarrow{r}}{\rmd t^2}
-    \\
-    &= \frac{\rmd v_{x}}{\rmd t} \overrightarrow{i} +
-    \frac{\rmd v_{y}}{\rmd t} \overrightarrow{j} +
-    \frac{\rmd v_{z}}{\rmd t} \overrightarrow{k}
-    \\
-    &= a_{x}\overrightarrow{i} + a_{y}\overrightarrow{j}
-    + a_{z}\overrightarrow{k}
+        \overrightarrow{a} &= \lim_{\Delta t \rightarrow 0} \frac{\Delta \overrightarrow{v}}{\Delta t}
+        = \frac{\rmd \overrightarrow{v}}{\rmd t} =
+        \frac{\rmd^2 \overrightarrow{r}}{\rmd t^2}
+        \\
+        &= \frac{\rmd v_{x}}{\rmd t} \overrightarrow{i} +
+        \frac{\rmd v_{y}}{\rmd t} \overrightarrow{j} +
+        \frac{\rmd v_{z}}{\rmd t} \overrightarrow{k}
+        \\
+        &= a_{x}\overrightarrow{i} + a_{y}\overrightarrow{j}
+        + a_{z}\overrightarrow{k}
     \end{align*}
 
     方向角\(\alpha\)、\(\beta\)和\(\gamma\)满足
@@ -451,24 +452,24 @@
 
     \[
         \begin{tikzpicture}[scale=0.8]
-        \coordinate[label=left:$O$] (O) at (0,0);
-        \coordinate[label=above:$A$] (A) at (0,2.2);
-        \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
-        \draw (0,-1) -- (0,2);
-        \draw (O) -- (7,0);
-        \draw (0,2) -- (-2,2);
-        \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
-        \draw (A) circle (0.08);
-        % 小船
-        \draw (4.5,0) -- (5.5,0);
-        \draw (4.5,0) -- (4.3,0.5);
-        \draw (5.5,0) -- (5.7,0.5);
-        \draw (4.3,0.5) -- (5.7,0.5);
-        % 绳子
-        \draw (A) -- (4.3,0.5);
-        \draw[->] (A) -- (-1.2,2.2);
-        % 尺寸标注
-        \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=above:$A$] (A) at (0,2.2);
+            \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
+            \draw (0,-1) -- (0,2);
+            \draw (O) -- (7,0);
+            \draw (0,2) -- (-2,2);
+            \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
+            \draw (A) circle (0.08);
+            % 小船
+            \draw (4.5,0) -- (5.5,0);
+            \draw (4.5,0) -- (4.3,0.5);
+            \draw (5.5,0) -- (5.7,0.5);
+            \draw (4.3,0.5) -- (5.7,0.5);
+            % 绳子
+            \draw (A) -- (4.3,0.5);
+            \draw[->] (A) -- (-1.2,2.2);
+            % 尺寸标注
+            \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
         \end{tikzpicture}
     \]
     \\
@@ -482,32 +483,32 @@
 
     \[
         \begin{tikzpicture}[scale=0.8]
-        \coordinate[label=left:$O$] (O) at (0,0);
-        \coordinate[label=above:$A$] (A) at (0,2.2);
-        \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
-        \draw (0,-1) -- (0,2);
-        \draw (O) -- (7,0);
-        \draw (0,2) -- (-2,2);
-        \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
-        \draw (A) circle (0.08);
-        % 小船
-        \draw (4.5,0) -- (5.5,0);
-        \draw (4.5,0) -- (4.3,0.5);
-        \draw (5.5,0) -- (5.7,0.5);
-        \draw (4.3,0.5) -- (5.7,0.5);
-        % 绳子
-        \draw (A) -- (4.3,0.5);
-        \draw[->] (A) -- (-1.2,2.2);
-        \coordinate[label={above:$ l = l_{0} - v_{0}t $}] (rope) at (2.6,1.6);
-        % 尺寸标注
-        \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
-        \draw[|<->|] (0,-1) -- (5,-1) node[midway, below] {$x$};
-        \draw[dashed] (5,-1) -- (5,0);
-        % 坐标系
-        \coordinate[label=right:$x$] (x) at (8,0);
-        \coordinate[label=above:$y$] (y) at (0,3.2);
-        \draw[->,dashed] (O) -- (x);
-        \draw[->,dashed] (O) -- (y);
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=above:$A$] (A) at (0,2.2);
+            \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
+            \draw (0,-1) -- (0,2);
+            \draw (O) -- (7,0);
+            \draw (0,2) -- (-2,2);
+            \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
+            \draw (A) circle (0.08);
+            % 小船
+            \draw (4.5,0) -- (5.5,0);
+            \draw (4.5,0) -- (4.3,0.5);
+            \draw (5.5,0) -- (5.7,0.5);
+            \draw (4.3,0.5) -- (5.7,0.5);
+            % 绳子
+            \draw (A) -- (4.3,0.5);
+            \draw[->] (A) -- (-1.2,2.2);
+            \coordinate[label={above:$ l = l_{0} - v_{0}t $}] (rope) at (2.6,1.6);
+            % 尺寸标注
+            \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
+            \draw[|<->|] (0,-1) -- (5,-1) node[midway, below] {$x$};
+            \draw[dashed] (5,-1) -- (5,0);
+            % 坐标系
+            \coordinate[label=right:$x$] (x) at (8,0);
+            \coordinate[label=above:$y$] (y) at (0,3.2);
+            \draw[->,dashed] (O) -- (x);
+            \draw[->,dashed] (O) -- (y);
         \end{tikzpicture}
     \]
 
@@ -517,25 +518,25 @@
     由题意，\(l = l_{0} - v_{0}t\)，所以
 
     \[
-    v_{0} = - \deriv{l}{t}
+        v_{0} = - \deriv{l}{t}
     \]
 
     又由几何关系
 
     \[
-    l^{2} = x^{2} + h^{2}
+        l^{2} = x^{2} + h^{2}
     \]
 
     对上式两边同时对\(t\)求导，可得
 
     \[
-    2 l \deriv{l}{t} = 2x \deriv{x}{t}
+        2 l \deriv{l}{t} = 2x \deriv{x}{t}
     \]
 
     则船的运动速度为
 
     \[
-    v = \deriv{x}{t} = \frac{l}{x} \deriv{l}{t} = -\frac{l}{x} v_{0}
+        v = \deriv{x}{t} = \frac{l}{x} \deriv{l}{t} = -\frac{l}{x} v_{0}
     \]
     \\
 
@@ -544,8 +545,8 @@
     再将速度对时间\(t\)求导，即可得到船的加速度为
 
     \[
-    a = \deriv{v}{t} = - \frac{v_{0}}{x^{2}} \left(x \deriv{l}{t} - l \deriv{x}{t}\right)
-    = -\frac{v_{0}^{2} h^{2}}{x^{3}}
+        a = \deriv{v}{t} = - \frac{v_{0}}{x^{2}} \left(x \deriv{l}{t} - l \deriv{x}{t}\right)
+        = -\frac{v_{0}^{2} h^{2}}{x^{3}}
     \]
     \\
 
@@ -554,8 +555,14 @@
     令\(x=x_{0}\)，得船在离岸边为\(x_{0}\)时的速度和加速度分别为
 
     \[
-    v = \frac{\sqrt{x_{0}^{2} + h^2}}{x_{0}} v_{0},\;
-    a = -\frac{v_{0}^{2} h^{2}}{x_{0}^{3}}
+        v = \frac{\sqrt{x_{0}^{2} + h^2}}{x_{0}} v_{0},\;
+        a = -\frac{v_{0}^{2} h^{2}}{x_{0}^{3}}
     \]
+
+\section{质点运动}
+
+\subsubsection{一般曲线运动}
+
+
 
 \end{document}
