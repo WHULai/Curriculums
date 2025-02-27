@@ -16,6 +16,7 @@
 \usepackage{indentfirst}
 \usepackage{wrapfig}
 \usetikzlibrary{automata,positioning,shapes.geometric,arrows.meta,patterns,calc}
+\numberwithin{equation}{section}
 
 %
 % Basic Document Settings
@@ -171,15 +172,15 @@
 
 \subsection{参考系、质点}
 
-\subsubsection{参考系}
+\subsubsection*{参考系}
 
     为描述物体运动而选的标准物。
 
-\subsubsection{参考系}
+\subsubsection*{参考系}
 
     物体能否视为质点视具体情况而定。
 
-\subsubsection{坐标系}
+\subsubsection*{坐标系}
 
     定量描述物体运动。坐标系的原点一般固定在参照系上。
 
@@ -192,7 +193,7 @@
 
 \subsection{位置矢量、运动方程、路程、位移}
 
-\subsubsection{位置矢量}
+\subsubsection*{位置矢量}
 
     \begin{wrapfigure}{r}{4cm}
         \centering
@@ -201,17 +202,17 @@
         \label{pic1}
     \end{wrapfigure}
 
-    \begin{align*}
+    \begin{align}
         \overrightarrow{r} &= x\overrightarrow{i} + y\overrightarrow{j} + z\overrightarrow{k} \\
         r &= \left|\overrightarrow{r}\right| = \sqrt{x^2 + y^2 + z^2}
-    \end{align*}
+    \end{align}
 
     \(\overrightarrow{r}\)的方向可以用一组方向角，即\(\overrightarrow{r}\)与\(x\)轴、
     \(y\)轴、\(z\)轴之间的夹角\(\left(\alpha, \beta, \gamma\right)\)来表示。
     \(\cos \alpha = \frac{x}{r}\)、\(\cos \beta = \frac{y}{r}\)、\(\cos \gamma = \frac{z}{r}\)，
     有\(\cos \alpha ^2 + \cos \beta ^2 + \cos \gamma ^2 = 1\)。
 
-\subsubsection{运动方程（直角坐标系下）}
+\subsubsection*{运动方程（直角坐标系下）}
     
     \begin{wrapfigure}{r}{4cm}
         \centering
@@ -220,11 +221,11 @@
         \label{pic2}
     \end{wrapfigure}
 
-    \[
+    \begin{align}
         \overrightarrow{r}\left(t\right) = 
         x\overrightarrow{i}\left(t\right) + y\overrightarrow{j}\left(t\right)
         + z\overrightarrow{k}\left(t\right)
-    \]
+    \end{align}
 
     分量式
 
@@ -240,7 +241,7 @@
 
 \subsection{位移、路程}
 
-\subsubsection{位移\(\Delta \overrightarrow{r}\)（位置矢量的改变量）}
+\subsubsection*{位移\(\Delta \overrightarrow{r}\)（位置矢量的改变量）}
 
 
     \begin{wrapfigure}{r}{4cm}
@@ -261,15 +262,15 @@
 
     于是其位移
 
-    \[
+    \begin{align}
         \Delta \overrightarrow{r} = \overrightarrow{r_{B}} - \overrightarrow{r_{A}}
         = \left(x_{B} - x_{A}\right)\overrightarrow{i} + \left(y_{B} - y_{A}\right)\overrightarrow{j}
         + \left(z_{B} - z_{A}\right)\overrightarrow{k}
-    \]
+    \end{align}
     
     方向由\(A\)指向\(B\)。
 
-\subsubsection{路程\(\Delta s\)实际轨迹}
+\subsubsection*{路程\(\Delta s\)实际轨迹}
 
     \begin{wrapfigure}{r}{4cm}
         \centering
@@ -295,7 +296,7 @@
 
 \subsection{速度}
 
-\subsubsection{平均速度}
+\subsubsection*{平均速度}
 
     \begin{wrapfigure}{r}{4cm}
         \centering
@@ -314,24 +315,26 @@
     \end{align*}
 
     \textbf{定义}
-    \[
+    \begin{align}
         \overrightarrow{v} = \frac{\Delta \overrightarrow{r}}{\Delta t} =
         \frac{\Delta x}{\Delta t} \overrightarrow{i} + \frac{\Delta y}{\Delta y} \overrightarrow{j}
-    \]
+    \end{align}
 
-\subsubsection{瞬时速度}
+\subsubsection*{瞬时速度}
 
     当\(\Delta t \rightarrow 0\)时，
 
-    \begin{align*}
-        \overrightarrow{v} = \lim_{\Delta t \rightarrow 0}\frac{\Delta \overrightarrow{r}}{\Delta t}
-        &= \frac{\rmd \overrightarrow{r}}{\rmd t}
-        \\
-        &= \frac{\rmd x}{\rmd t} \overrightarrow{i} + \frac{\rmd y}{\rmd t} \overrightarrow{j}
-        + \frac{\rmd z}{\rmd t} \overrightarrow{k}
-        \\
-        & = v_{x} \overrightarrow{i} + v_{y} \overrightarrow{j} + v_{z} \overrightarrow{k}
-    \end{align*}
+    \begin{equation}
+        \begin{aligned}
+            \overrightarrow{v} = \lim_{\Delta t \rightarrow 0}\frac{\Delta \overrightarrow{r}}{\Delta t}
+            &= \frac{\rmd \overrightarrow{r}}{\rmd t}
+            \\
+            &= \frac{\rmd x}{\rmd t} \overrightarrow{i} + \frac{\rmd y}{\rmd t} \overrightarrow{j}
+            + \frac{\rmd z}{\rmd t} \overrightarrow{k}
+            \\
+            & = v_{x} \overrightarrow{i} + v_{y} \overrightarrow{j} + v_{z} \overrightarrow{k}
+        \end{aligned}
+    \end{equation}
 
     即有，
 
@@ -341,10 +344,10 @@
 
     所以
 
-    \[
+    \begin{align}
         \left|\overrightarrow{v} \right| = \sqrt{\left(\frac{\rmd y}{\rmd t}\right)^2 +
         \left(\frac{\rmd y}{\rmd t}\right)^2 + \left(\frac{\rmd z}{\rmd t}\right)^2}
-    \]
+    \end{align}
 
     方向角
 
@@ -366,12 +369,12 @@
 
     即有，速度的大小等于速率。
 
-\subsubsection{速度在自然坐标系下的表示}
+\subsubsection*{速度在自然坐标系下的表示}
 
-    \[
+    \begin{align}
         \overrightarrow{v} = \frac{\rmd s}{\rmd t}\overrightarrow{e_{t}}
         = v \overrightarrow{e_{t}}
-    \]
+    \end{align}
 
     其中，\(\overrightarrow{e_{t}} = 1\)，表示方向，\(v\)表示速度大小。
 
@@ -379,7 +382,7 @@
 
     反应速度大小和方向随时间变化快慢。
 
-\subsubsection{平均加速度}
+\subsubsection*{平均加速度}
 
     \begin{wrapfigure}{r}{4cm}
         \centering
@@ -389,13 +392,13 @@
     \end{wrapfigure}
 
 
-    \[
-    \overline{\overrightarrow{a}} = \frac{\Delta \overrightarrow{v}}{\Delta t}
-    \]
+    \begin{align}
+        \overline{\overrightarrow{a}} = \frac{\Delta \overrightarrow{v}}{\Delta t}
+    \end{align}
 
     \(\overrightarrow{a}\)与\(\Delta \overrightarrow{v}\)的方向相同。
 
-\subsubsection{瞬时加速度}
+\subsubsection*{瞬时加速度}
 
     特点：
 
@@ -405,18 +408,20 @@
         \item {\color{Thistle}"相对性"}（相对于某一参考系）
     \end{enumerate}
 
-    \begin{align*}
-        \overrightarrow{a} &= \lim_{\Delta t \rightarrow 0} \frac{\Delta \overrightarrow{v}}{\Delta t}
-        = \frac{\rmd \overrightarrow{v}}{\rmd t} =
-        \frac{\rmd^2 \overrightarrow{r}}{\rmd t^2}
-        \\
-        &= \frac{\rmd v_{x}}{\rmd t} \overrightarrow{i} +
-        \frac{\rmd v_{y}}{\rmd t} \overrightarrow{j} +
-        \frac{\rmd v_{z}}{\rmd t} \overrightarrow{k}
-        \\
-        &= a_{x}\overrightarrow{i} + a_{y}\overrightarrow{j}
-        + a_{z}\overrightarrow{k}
-    \end{align*}
+    \begin{equation}
+        \begin{aligned}
+            \overrightarrow{a} &= \lim_{\Delta t \rightarrow 0} \frac{\Delta \overrightarrow{v}}{\Delta t}
+            = \frac{\rmd \overrightarrow{v}}{\rmd t} =
+            \frac{\rmd^2 \overrightarrow{r}}{\rmd t^2}
+            \\
+            &= \frac{\rmd v_{x}}{\rmd t} \overrightarrow{i} +
+            \frac{\rmd v_{y}}{\rmd t} \overrightarrow{j} +
+            \frac{\rmd v_{z}}{\rmd t} \overrightarrow{k}
+            \\
+            &= a_{x}\overrightarrow{i} + a_{y}\overrightarrow{j}
+            + a_{z}\overrightarrow{k}
+        \end{aligned}
+    \end{equation}
 
     方向角\(\alpha\)、\(\beta\)和\(\gamma\)满足
 
@@ -561,8 +566,218 @@
 
 \section{质点运动}
 
-\subsubsection{一般曲线运动}
+\subsection{一般曲线运动与圆周运动的定义}
 
+\subsubsection*{一般曲线运动}
 
+    特点：曲率半径随时间变化，不是定值。描述曲线运动一般选自然坐标系。
+
+\subsubsection*{圆周运动}
+
+    圆周运动是一种常见的、简单而基本的曲线运动，是研究一般曲线运动的基础
+
+\subsection{圆周运动}
+
+\subsubsection*{位置量的描述}
+
+    \[
+        \begin{tikzpicture}
+            \coordinate[label=right:$x$] (x) at (3,0);
+            \coordinate[label=right:$\theta$] (theta) at (0.3,0.2);
+            \coordinate[label=above:$y$] (y) at (0,1.5);
+            \draw[->] (0,0) -- (x);
+            \draw[->] (0,0) -- (y);
+            \draw (0.1,0.5) .. controls (0.4,1.3) .. (1,1);
+            \draw (1,1) .. controls (2,0.5) .. (3,0.6);
+            \draw[\arrow] (0,0) -- (1,1);
+            \coordinate[label=above:$A$] (A) at (1,1);
+            \draw[dashed] (0,1) -- (A);
+            \draw[dashed] (1,0) -- (A);
+            \draw (0.3,0) arc (0:45:0.3);
+        \end{tikzpicture}
+    \]
+
+    \[
+        \left\{\begin{array}{l}x=r \cos \theta \\ y=r \sin \theta\end{array}\right.
+    \]
+
+    于是
+
+    \[
+        \overrightarrow{r} = x \overrightarrow{i} + y \overrightarrow{j} =
+        r \cos \theta \overrightarrow{i}+ r \sin \theta \overrightarrow{j}
+    \]
+
+\subsubsection*{圆周运动的角量}
+
+    \[
+        \begin{tikzpicture}[scale=0.8]
+            \coordinate[label=right:$x$] (x) at (4,0);
+            \coordinate[label=above:$y$] (y) at (0,3);
+            \coordinate[label=below:$O$] (O) at (0,0);
+            \coordinate[label=right:$A$] (A) at (1.732,1);
+            \coordinate[label=above:$B$] (B) at (1,1.732);
+            \coordinate[label=above:$r$] (r) at (-0.5*1.732,0.5);
+            \coordinate[label={right:$\theta\left(t\right)$}] (theta) at (0.8,0.3);
+            \coordinate[label=right:$\Delta \theta$] (Delta_theta) at (0.5,1);
+            \draw[->] (O) -- (x);
+            \draw[->] (O) -- (y);
+            \draw (O) -- (-1.732,1);
+            \draw[\arrow] (O) -- (A);
+            \draw[\arrow] (O) -- (B);
+            \draw (O) circle (2);
+            \draw (1,0) arc (0:30:1);
+            \draw (0.4*1.732,0.4) arc (30:60:0.8);
+        \end{tikzpicture}
+    \]
+
+    角坐标\(\theta\left(t\right)\)，角位移\(\Delta \theta = \theta\left(t\right) -
+    \theta\left(t_0\right)\)。
+
+    平均角速度
+    
+    \begin{align}
+        \overline{\omega} = \frac{\Delta \theta}{\Delta t}
+    \end{align}
+    
+    角速度
+    
+    \begin{align}
+        \omega = \lim_{\Delta t \rightarrow 0} \frac{\Delta \theta}{\Delta t}
+        = \deriv{\theta}{t}
+    \end{align}
+
+    \(\omega\)是\textbf{赝矢量}，方向与\(\rmd \theta\)一致，由右手螺旋定则确定，
+    且总是垂直于圆平面，沿着圆周的轴线方向。
+
+    平均角加速度
+    
+    \begin{align}
+        \overline{\alpha} = \frac{\Delta \omega}{\Delta t}
+    \end{align}
+    
+    角加速度
+    
+    \begin{align}
+        \alpha = \lim_{\Delta t \rightarrow 0} \frac{\Delta \omega}{\Delta t}
+        = \deriv{\omega}{t} = \frac{\rmd^2 \theta}{\rmd t^2}
+    \end{align}
+
+\subsubsection*{角量与线量的关系}
+
+    路程与角距离的关系
+
+    \begin{align}
+        \Delta s = r \Delta \theta
+    \end{align}
+
+    速率与角速度的关系
+
+    \begin{align*}
+        b = \lim_{\Delta t \rightarrow 0} \frac{\Delta s}{\Delta t}
+        = r \lim_{\Delta t \rightarrow 0} \frac{\Delta \theta}{\Delta t}
+    \end{align*}
+
+    故
+
+    \begin{align}
+        v \left(t\right) = r \omega \left(t\right)
+    \end{align}
+
+    速度
+
+    \begin{equation}
+        \begin{aligned}
+            \overrightarrow{v} &= \deriv{s}{t} \overrightarrow{e_t} \\
+            &= v \overrightarrow{e_t} \\
+            &= r \omega \overrightarrow{e_t}
+        \end{aligned}
+    \end{equation}
+
+\subsubsection*{圆周运动的切向加速度和法向加速度}
+
+    \[
+        \begin{tikzpicture}
+            \coordinate[label=below:$O$] (O) at (0,0);
+            \coordinate[label=right:$\rmd \theta$] (dtheta) at (0.4,0.25);
+            \coordinate[label=below:$\overrightarrow{r}$] (r) at (1,0);
+            \coordinate[label=right:$\overrightarrow{e_{t_1}}$] (e_t_1) at (2,0);
+            \coordinate[label=left:$\overrightarrow{e_{t_2}}$] (e_t_2) at (1.732,2.5);
+            \draw (O) circle (2);
+            \draw[\arrow] (O) -- (e_t_1);
+            \draw[\arrow] (O) -- (1.732,1);
+            \draw[\arrow] (e_t_1) -- (2,2);
+            \draw[\arrow] (1.732,1) -- (1.732-1.5,1+1.5*1.732);
+            \draw (0.4,0) arc (0:30:0.4);
+        \end{tikzpicture}
+    \]
+
+    质点做变速圆周运动时
+
+    \begin{equation}
+        \overrightarrow{\alpha}=\deriv{\overrightarrow{v}}{t}=
+        \frac{\rmd}{\rmd t}\left(v \overrightarrow{e}_t\right)=\deriv{\overrightarrow{v}}{t}
+        \overrightarrow{e}_t+\overrightarrow{v} \deriv{\overrightarrow{e}_t}{t}
+    \end{equation}
+
+    \begin{equation}
+        \alpha_{t} = \deriv{v}{t} = r \deriv{\omega}{t} = r \alpha
+    \end{equation}
+
+    因为\(\left|e_{t1}\right| = \left|e_{t1}\right| =1\)，所以\(\left|\rmd \overrightarrow{e}\right|
+    = \left|\overrightarrow{e_{t_1}}\right| \cdot \rmd \theta = \rmd \theta\)。
+
+    当\(\rmd \theta \rightarrow 0\)时，\(\rmd \overrightarrow{e_{t}} \perp \overrightarrow{e_{t_1}}\)，
+    故\(\rmd \overrightarrow{e_{t}}\)的方向与\(\overrightarrow{e_{n}}\)方向相同，即
+
+    \begin{align}
+        \rmd \overrightarrow{e_{t}} = \rmd \theta \overrightarrow{e_n}
+    \end{align}
+
+    所以
+
+    \[
+        v \deriv{\overrightarrow{e_t}}{t} = v \deriv{\theta}{t} \overrightarrow{e_{n}} = v \omega
+    \]
+
+    于是
+
+    \begin{align}
+        \alpha_n &= \omega v \\
+        &= \frac{v^2}{r}
+    \end{align}
+
+    综上所述，切向加速度\(\overrightarrow{\alpha_t} = \deriv{v}{t} \overrightarrow{e_t}, \;
+    \alpha_t = \deriv{v}{t}\)；法向加速度\(\overrightarrow{\alpha_t} = \frac{v^2}{r} \overrightarrow{e_n},
+    \; \alpha_n = \frac{v^2}{r} = \omega^2r = \omega v\)。
+
+\subsection{一般曲线运动}
+
+    同圆周运动理知，
+
+    \begin{align}
+        \alpha_t = \deriv{v}{t}
+    \end{align}
+
+    \begin{align}
+        \alpha_n = \frac{v^2}{\rho}\; \text{（\(\rho\)是曲率半径）}
+    \end{align}
+
+    而\(\overrightarrow{\alpha} = \overrightarrow{\alpha_t} + \overrightarrow{\alpha_n}\)，所以
+
+    \begin{align}
+        \left|\overrightarrow{\alpha}\right| = \sqrt{\alpha_t^2 + \alpha_n^2}
+    \end{align}
+
+    自然坐标系下的加速度表达式：
+    
+    \begin{align}
+        \overrightarrow{\alpha_t} = \deriv{v}{t} \overrightarrow{e_t} =
+        \frac{\rmd^2 s}{\rmd t^2} \overrightarrow{e_t}
+    \end{align}
+
+    \begin{align}
+        \overrightarrow{\alpha_n} = \frac{v^2}{\rho} \overrightarrow{e_n}
+    \end{align}
 
 \end{document}
