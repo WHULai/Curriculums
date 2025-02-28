@@ -713,6 +713,87 @@
         \overrightarrow{\alpha_n} = \frac{v^2}{\rho} \overrightarrow{e_n}
     \end{align}
 
+\section{相对运动}
+
+\subsection{时间与空间}
+
+    在两个相对作直线运动的参考系中，时间的测量是绝对的，空间的测量也是绝对的，与参考系无关。
+
+    时间和长度的的绝对性是经典力学或牛顿力学的基础。
+
+    在两个相对作直线运动的参考系中， 时间的测量是绝对的，空间的测量也是绝对的， 与参考系无关， 时间和长度的的绝对性是经典力学或牛顿力学的基础。
+
+\subsection{相对运动公式}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.3]{"Chapter 01 images/pic8.png"}
+        % \caption{}
+        \label{pic8}
+    \end{wrapfigure}
+
+    如右图，\(\overrightarrow{r_{OP}} = \overrightarrow{r_{OO^{'}}} + \overrightarrow{r_{O^{'}P}}\)，
+
+    对方程两边对时间求导数，得
+
+    \begin{align*}
+        \deriv{\overrightarrow{r_{OP}}}{t} = \deriv{\overrightarrow{r_{OO^{'}}}}{t} +
+        \deriv{\overrightarrow{r_{O^{'}P}}}{t}
+    \end{align*}
+
+    即
+
+    \begin{align}
+        \overrightarrow{v_{P \rightarrow O}} = \overrightarrow{v_{P \rightarrow O^{'}}} +
+        \overrightarrow{v_{O^{'} \rightarrow O}}
+    \end{align}
+
+    （绝对速度 = 相对速度 + 牵连速度）
+
+    方程两边对时间求导数，得
+
+    \begin{align}
+        \overrightarrow{a_{P \rightarrow O}} = \overrightarrow{a_{P \rightarrow O^{'}}} +
+        \overrightarrow{a_{O^{'} \rightarrow O}}
+    \end{align}
+
+    （绝对加速度 = 相对加速度 + 牵连加速度）
+
+    如果\(\overrightarrow{u}\)是恒矢量，则\(\deriv{\overrightarrow{u}}{t} = 0\)，
+    \(\overrightarrow{a_{PO}} = \overrightarrow{a_{PO^{'}}}\)，\(\overrightarrow{a_{O^{'}O}} = 0\)。
+
+    注意：
+
+    \begin{enumerate}
+        \item 当\(\overrightarrow{u}\)接近光速时，速度变换、加速度变换不成立；
+        \item 仅仅讨论\(\overrightarrow{u} = u_x \overrightarrow{i}\)的情况（\(u_x\)为常数），
+        即水平方向有变换，其他方向上没有变换。
+    \end{enumerate}
+
+\subsection{伽利略速度变换}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.4]{"Chapter 01 images/pic9.png"}
+        % \caption{}
+        \label{pic9}
+    \end{wrapfigure}
+
+    \begin{align}
+        \overrightarrow{v} = \overrightarrow{v}^{'} + \overrightarrow{u}
+    \end{align}
+
+    绝对速度\(\overrightarrow{v} = \deriv{\overrightarrow{r}}{t}\)，相对速度\(\overrightarrow{v}^{'} =
+    \deriv{\overrightarrow{r}^{'}}{t}\)，牵连速度\(\overrightarrow{u}\)。
+
+    加速度关系：
+
+    \begin{align}
+        \deriv{\overrightarrow{v}}{t} = \deriv{\overrightarrow{v}^{'}}{t} + \deriv{\overrightarrow{u}}{t}
+    \end{align}
+
+    若\(\deriv{\overrightarrow{u}}{t} = 0\)，则\(\overrightarrow{a} = \overrightarrow{a}^{'}\)
+
 %----------------------------------------------------------------------------------------
 %	PRESENTING INFORMATION/RESULTS EXAMPLES CHAPTER
 %----------------------------------------------------------------------------------------
