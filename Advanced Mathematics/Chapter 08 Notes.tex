@@ -6,6 +6,7 @@
 \usepackage{fancyhdr}
 \usepackage{extramarks}
 \usepackage{amsmath}
+\usepackage{empheq}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{tikz}
@@ -578,5 +579,310 @@
     \begin{align}
         d=\frac{\left|D_1 - D_2\right|}{\sqrt{A^2+B^2+C^2}}
     \end{align}
+
+\section{空间直线及其方程}
+
+\subsection{空间直线的一般方程}
+
+    \begin{equation}
+        L:\left\{\begin{array}{l}
+        A_1 x+B_1 y+C_1 z+D_1=0 \\
+        A_2 x+B_2 y+C_2 z=D_2=0
+        \end{array}\right.
+    \end{equation}
+
+    注意：空间直线的方程是不唯一的。
+
+\subsection{空间直线的对称式方程}
+
+    \(L\)上有一点\(M_0\left(x_0, y_0, z_0\right)\)，非零方向向量\(\overrightarrow{s} =
+    \left(m, n, p\right)\)，设\(L\)上任一点\(M_0\left(x, y, z\right)\)，则
+    \(\overrightarrow{M_{0}M} \parallel \overrightarrow{s}\)，而\(\overrightarrow{M_{0}M} =
+    \left(x-x_0, y-y_0, z-z_0\right)\)，所以
+
+    \begin{align}
+        \frac{x-x_0}{m}=\frac{y-y}{n}=\frac{z-z_0}{p}
+    \end{align}
+
+    即为直线的对称式方程（或称点向式方程）
+    
+    注意
+
+    \begin{enumerate}
+        \item 非零向量\(\overrightarrow{s} = \left(m, n, p\right)\)称为\(L\)的方向向量（不唯一）；
+        \item 直线上任一方向向量\(\overrightarrow{s}\)的坐标\(m, n, p\)称为一组方向数；
+        \item \(\overrightarrow{s}\)的方向余弦叫做\(L\)的方向余弦；
+        \item 当\(m = 0\)时，
+            \begin{align}
+                \left\{\begin{array}{l}
+                x-x_0=0 \\
+                \dfrac{y-y_0}{n}=\dfrac{z-z_0}{p}
+                \end{array}\right.
+            \end{align}
+        \item 当\(m = n = 0\)时，
+            \begin{equation}
+                \left\{\begin{array}{l}
+                x-x_0=0 \\
+                y-y_0=0
+                \end{array}\right.
+            \end{equation}
+
+            此时，直线与\(z\)轴平行。
+    \end{enumerate}
+
+\subsection{空间直线的参数方程}
+
+    令$\dfrac{x-x_0}{m}=\dfrac{y-y_0}{n}=\dfrac{z-z_0}{p}=t$，则
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+        x=x_0+m t \\
+        y=y_0+n t \\
+        z=z_0+p t
+        \end{array}\right.
+    \end{equation}
+
+    注意：
+
+    \begin{enumerate}
+        \item \(t\)取定每一个值，对应\(x, y, z\)为\(L\)上一点的坐标；
+        \item 参数式方程一般用来求直线与平面的交点。
+    \end{enumerate}
+
+\subsection{空间直线的两点式方程}
+
+    过\(M_1\left(x_1, y_1, z_1\right)\)和\(M_2\left(x_2, y_2, z_2\right)\)两点的直线方程，
+    则方向向量\(\overrightarrow{s} = \overrightarrow{M_{1}M_{2}} = \\
+    \left(x_2-x_1, y_2-y_1, z_2-z_1\right)\)。
+
+    所以方程为
+
+    \begin{equation}
+        \frac{x-x_1}{x_2-x_1}=\frac{y-y_1}{y_2-y_1}=\frac{z-z_1}{z_2-z_1}
+    \end{equation}
+
+    即为直线的两点式方程。
+
+\subsection{两直线的夹角}
+
+\subsubsection{定义}
+
+    两直线的方向向量的夹角（通常指锐角或直角）。
+
+\subsubsection{夹角的余弦公式}
+
+    设直线的方向向量为\(\overrightarrow{s} = \left(m, n, p\right)\)，平面的法线向量为
+    \(\overrightarrow{n} = \left(A, B, C\right)\)，则直线和平面的夹角\(\varphi\)
+    可由
+
+    \begin{equation}
+        \cos \varphi=\frac{\left|m_1 m_2+n_1 n_2+p_1 p_2\right|}{\sqrt{m_1^2+n_1^2+p_1^2} \sqrt{m_2^2+n_2^2+p_2^2}}
+    \end{equation}
+
+    来确定。
+
+    于是可知：
+
+    \begin{enumerate}
+        \item \(L_1 \perp L_2 \Leftrightarrow \overrightarrow{s_1} \perp \overrightarrow{s_2}
+            \Leftrightarrow \overrightarrow{s_1} \cdot \overrightarrow{s_2} \Leftrightarrow
+            m_1 m_2+n_1 n_2+p_1 p_2 = 0\)
+        \item \(L_1 \parallel L_2 \Leftrightarrow \overrightarrow{s_1} \parallel \overrightarrow{s_2}
+        \Leftrightarrow \dfrac{m_1}{m_2}=\dfrac{n_1}{n_2}=\dfrac{p_1}{p_2}\)
+    \end{enumerate}
+
+\subsection{直线与平面的夹角}
+
+\subsubsection{定义}
+
+    直线\(L\)与其在平面上投影直线所形成的夹角。
+
+\subsubsection{夹角的正弦公式}
+
+    设直线\(L_1\)和\(L_2\)的方向向量依次为\(\overrightarrow{s_1} = \left(m_1, n_1, p_1\right)\)和
+    \(\overrightarrow{s_2} = \left(m_2, n_2, p_2\right)\)，则直线\(L_1\)和\(L_2\)的夹角\(\varphi\)
+    可由
+
+    \begin{equation}
+        \sin \varphi=\frac{|A m+B n+C p|}{\sqrt{A^2+B^2+C^2} \sqrt{m^2+n^2+p^2}}
+    \end{equation}
+
+    来确定。
+
+    于是可知
+
+    \begin{enumerate}
+        \item $ L \parallel \mathit{\Pi} \Leftrightarrow \overrightarrow{s} \perp \overrightarrow{x} \Leftrightarrow
+            \overrightarrow{s} \cdot \overrightarrow{n}=0 \Leftrightarrow Amn+Bn+Cp=0$
+        \item $L \perp \mathit{\Pi} \Leftrightarrow \overrightarrow{s} \parallel \overrightarrow{x} \Leftrightarrow
+            \dfrac{A}{m}=\dfrac{B}{n}=\dfrac{c}{p}$.
+    \end{enumerate}
+
+\subsection{平面束方程}
+
+    设直线\(L\)由方程
+
+    \begin{empheq}[left=\empheqlbrace]{align}
+        A_1 x + B_1 y + C_1 z + D_1 &= 0 \\
+        A_2 x + B_2 y + C_2 z + D_2 &= 0 \label{Pencil-Planes-2}
+    \end{empheq}
+
+    给出，其中\(A_1, B_1, C_1\)与\(A_2, B_2, C_2\)不成比例，则
+
+    \begin{equation}
+        A_1 x+B_1 y+C_1 z+D_1+\lambda\left(A_2x+B_2y+C_2z+D_2\right) = 0
+    \end{equation}
+
+    能表示通过直线\(L\)的所有平面（除平面\ref{Pencil-Planes-2}外）。则称之为直线\(L\)的平面束方程。
+
+\subsection{例题}
+
+\subsubsection{Problem 1}
+
+    将一般方程$L:\left\{\begin{array}{l}x+y+z+1=0 \\ 2 x-y+3z+4=0\end{array}\right.$
+    化为对称式、参数式并求\(L\)与平面\(\mathit{\Pi}: x + y =0\)的交点。
+    \\
+
+    \textbf{Solution}
+    \\
+
+    取\(y = 0\)，代入方程中，得\(x=1,\; z=-2\)，则点\(M_{0}\left(1,0,-2\right)\)为\(L\)上一点；
+    取\(z = 0\)，代入方程中，得\(x=-\frac{5}{3},\; y=\frac{2}{3}\)，
+    则点\(M_{0}\left(-\frac{5}{3},\frac{2}{3},0\right)\)为\(L\)上一点。
+
+    则\(\overrightarrow{M_{0}M_{1}} = \left(-\frac{8}{3},\frac{2}{3},2\right)\)，
+    取\(\overrightarrow{s} = \left(4,1,3\right)\)，则\(L\)的对称式方程为
+
+    \[
+        \frac{x-1}{-4}=\frac{y-0}{1}=\frac{z+2}{3}
+    \]
+
+    则\(L\)的参数式方程为
+
+    $$
+        \left\{\begin{array}{l}
+        x=-4 t \\
+        y=t \\
+        z=-2+3 t
+        \end{array}\right.
+    $$
+
+    将参数式方程代入平面\(\mathit{\Pi}: x + y =0\)中，则有\(\left(1-4t\right) + t = 0\)，所以
+    \(t = \frac{1}{3}\)。
+
+    所以\(L\)与平面\(\mathit{\Pi}: x + y =0\)的交点为\(\left(-\frac{1}{3},\frac{1}{3},-1\right)\)。
+
+\subsubsection{Problem 2}
+
+    求过点\(\left(2,1,3\right)\)且与直线$\dfrac{x+1}{3}=\dfrac{y-1}{2}=\dfrac{z}{-1}$垂直相交的
+    直线的方程。
+    \\
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.08]{"Chapter 08 images/pic1.png"}
+        % \caption{}
+        \label{pic1}
+    \end{wrapfigure}
+
+    要求过点\(M_{0}\left(2,1,3\right)\)且与直线$L$垂直相交的直线，关键在于求垂足\(M_1\)。
+    可以作过点\(M_{0}\)且垂直于直线$L$的平面。
+
+    则该平面的对称式方程为
+
+    \[
+        3(x-2)+2(y-1)-(z-3)=0
+    \]
+
+    即
+
+    \[
+        3x + 2y -z -5 =0
+    \]
+
+    \textbf{Part Two}
+
+    再求直线与垂直平面的交点：
+
+    令$\dfrac{x+1}{3}=\dfrac{y-1}{2}=\dfrac{z}{1}=t$
+
+    得
+
+    $$
+        \left\{\begin{array}{l}
+        x=-1+3 t \\
+        y=1+2 t \\
+        z=-t
+        \end{array}\right.
+    $$
+
+    解得\(t=\dfrac{3}{7}\)
+
+    代入得交点坐标为$\left(\dfrac{2}{7}, \dfrac{13}{7},-\dfrac{3}{7}\right)$
+
+    \textbf{Part Three}
+
+    所以所求直线的一个方向向量为
+
+    $$
+        \left(\frac{2}{7}-2, \frac{13}{7}-1,-\frac{3}{7}-3\right)=-\frac{6}{7}(2,-1,4)
+    $$
+
+    所以所求的直线方程为
+
+    $$
+        \frac{x-2}{2}=\frac{y-1}{-1}=\frac{z-3}{4}
+    $$
+
+\subsubsection{Problem 3}
+
+    求直线$\left\{\begin{array}{l}x+y-z-1=0 \\ x-y+z+1=0\end{array}\right.$在平面\(x+y+z=0\)上投影
+    直线的方程。
+    \\
+
+    \textbf{Solution}
+    \\
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.08]{"Chapter 08 images/pic2.png"}
+        % \caption{}
+        \label{pic2}
+    \end{wrapfigure}
+
+    过直线$\left\{\begin{array}{l}x+y-z-1=0 \\ x-y+z+1=0\end{array}\right.$的平面束方程为
+
+    $$
+        (x+y-z-1)+\lambda(x-y+z+1)=0
+    $$
+
+    整理得
+
+    $$
+        (1+\lambda) x+(1-\lambda) y+(-1+\lambda) z+(-1+\lambda)=0
+    $$
+
+    由于此平面与平面\(x+y+z=0\)垂直，则两平面法向量也相互垂直。即
+
+    $$
+        (1+\lambda) \cdot 1+(1-\lambda) \cdot 1+(-1+\lambda) \cdot 1=0
+    $$
+
+    解得\(\lambda=-1\)。
+
+    代入平面束方程中，知投影直线的方程为
+
+    $$
+        \left\{\begin{array}{l}
+        y-z-1=0 \\
+        x+y+z=0
+        \end{array}\right.
+    $$
+
 
 \end{document}
