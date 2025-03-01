@@ -449,121 +449,6 @@
     在变速曲线运动中，加速度的方向总是指向轨迹凹的一侧。与\(\overrightarrow{v}\)呈锐角时，运动变快；
     与\(\overrightarrow{v}\)呈钝角时，运动变快。（因为\(\Delta \overrightarrow{v}\)必定指向曲线凹的一侧。）
 
-\subsection{例题}
-
-
-    在离水面高为\(h\)的岸上，有人用绳拉船靠岸，如图所示。设人以匀速率\(v_{0}\)收绳，试求：
-    当船距岸边\(x_{0}\)时，船的速度和加速度的大小各是多少？
-
-    \[
-        \begin{tikzpicture}[scale=0.8]
-            \coordinate[label=left:$O$] (O) at (0,0);
-            \coordinate[label=above:$A$] (A) at (0,2.2);
-            \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
-            \draw (0,-1) -- (0,2);
-            \draw (O) -- (7,0);
-            \draw (0,2) -- (-2,2);
-            \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
-            \draw (A) circle (0.08);
-            % 小船
-            \draw (4.5,0) -- (5.5,0);
-            \draw (4.5,0) -- (4.3,0.5);
-            \draw (5.5,0) -- (5.7,0.5);
-            \draw (4.3,0.5) -- (5.7,0.5);
-            % 绳子
-            \draw (A) -- (4.3,0.5);
-            \draw[->] (A) -- (-1.2,2.2);
-            % 尺寸标注
-            \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
-        \end{tikzpicture}
-    \]
-    \\
-
-    \textbf{Solution}
-    \\
-
-    \textbf{Part One}
-
-    建立如图所示的坐标系。
-
-    \[
-        \begin{tikzpicture}[scale=0.8]
-            \coordinate[label=left:$O$] (O) at (0,0);
-            \coordinate[label=above:$A$] (A) at (0,2.2);
-            \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
-            \draw (0,-1) -- (0,2);
-            \draw (O) -- (7,0);
-            \draw (0,2) -- (-2,2);
-            \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
-            \draw (A) circle (0.08);
-            % 小船
-            \draw (4.5,0) -- (5.5,0);
-            \draw (4.5,0) -- (4.3,0.5);
-            \draw (5.5,0) -- (5.7,0.5);
-            \draw (4.3,0.5) -- (5.7,0.5);
-            % 绳子
-            \draw (A) -- (4.3,0.5);
-            \draw[->] (A) -- (-1.2,2.2);
-            \coordinate[label={above:$ l = l_{0} - v_{0}t $}] (rope) at (2.6,1.6);
-            % 尺寸标注
-            \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
-            \draw[|<->|] (0,-1) -- (5,-1) node[midway, below] {$x$};
-            \draw[dashed] (5,-1) -- (5,0);
-            % 坐标系
-            \coordinate[label=right:$x$] (x) at (8,0);
-            \coordinate[label=above:$y$] (y) at (0,3.2);
-            \draw[->,dashed] (O) -- (x);
-            \draw[->,dashed] (O) -- (y);
-        \end{tikzpicture}
-    \]
-
-    设初始时刻，船与岸上\(A\)点之间的绳长为\(l_{0}\)。在任意时刻船离岸边的距离为\(x\)，
-    绳长为\(l_{0}\)。船在运动过程中，\(l\)和\(x\)均是时间\(t\)的函数。
-
-    由题意，\(l = l_{0} - v_{0}t\)，所以
-
-    \[
-        v_{0} = - \deriv{l}{t}
-    \]
-
-    又由几何关系
-
-    \[
-        l^{2} = x^{2} + h^{2}
-    \]
-
-    对上式两边同时对\(t\)求导，可得
-
-    \[
-        2 l \deriv{l}{t} = 2x \deriv{x}{t}
-    \]
-
-    则船的运动速度为
-
-    \[
-        v = \deriv{x}{t} = \frac{l}{x} \deriv{l}{t} = -\frac{l}{x} v_{0}
-    \]
-    \\
-
-    \textbf{Part Two}
-
-    再将速度对时间\(t\)求导，即可得到船的加速度为
-
-    \[
-        a = \deriv{v}{t} = - \frac{v_{0}}{x^{2}} \left(x \deriv{l}{t} - l \deriv{x}{t}\right)
-        = -\frac{v_{0}^{2} h^{2}}{x^{3}}
-    \]
-    \\
-
-    \textbf{Part Three}
-
-    令\(x=x_{0}\)，得船在离岸边为\(x_{0}\)时的速度和加速度分别为
-
-    \[
-        v = \frac{\sqrt{x_{0}^{2} + h^2}}{x_{0}} v_{0},\;
-        a = -\frac{v_{0}^{2} h^{2}}{x_{0}^{3}}
-    \]
-
 \section{质点运动}
 
 \subsection{一般曲线运动与圆周运动的定义}
@@ -861,4 +746,119 @@
 
     若\(\deriv{\overrightarrow{u}}{t} = 0\)，则\(\overrightarrow{a} = \overrightarrow{a}^{'}\)
 
+\section{例题}
+
+\subsection{Problem 1}
+
+    在离水面高为\(h\)的岸上，有人用绳拉船靠岸，如图所示。设人以匀速率\(v_{0}\)收绳，试求：
+    当船距岸边\(x_{0}\)时，船的速度和加速度的大小各是多少？
+
+    \[
+        \begin{tikzpicture}[scale=0.8]
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=above:$A$] (A) at (0,2.2);
+            \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
+            \draw (0,-1) -- (0,2);
+            \draw (O) -- (7,0);
+            \draw (0,2) -- (-2,2);
+            \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
+            \draw (A) circle (0.08);
+            % 小船
+            \draw (4.5,0) -- (5.5,0);
+            \draw (4.5,0) -- (4.3,0.5);
+            \draw (5.5,0) -- (5.7,0.5);
+            \draw (4.3,0.5) -- (5.7,0.5);
+            % 绳子
+            \draw (A) -- (4.3,0.5);
+            \draw[->] (A) -- (-1.2,2.2);
+            % 尺寸标注
+            \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
+        \end{tikzpicture}
+    \]
+    \\
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+
+    建立如图所示的坐标系。
+
+    \[
+        \begin{tikzpicture}[scale=0.8]
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=above:$A$] (A) at (0,2.2);
+            \fill[pattern=north east lines, pattern color=gray!50] (0,0) rectangle (7,-0.3);
+            \draw (0,-1) -- (0,2);
+            \draw (O) -- (7,0);
+            \draw (0,2) -- (-2,2);
+            \fill[pattern=grid, pattern color=gray!50] (0,-1) rectangle (-2,2);
+            \draw (A) circle (0.08);
+            % 小船
+            \draw (4.5,0) -- (5.5,0);
+            \draw (4.5,0) -- (4.3,0.5);
+            \draw (5.5,0) -- (5.7,0.5);
+            \draw (4.3,0.5) -- (5.7,0.5);
+            % 绳子
+            \draw (A) -- (4.3,0.5);
+            \draw[->] (A) -- (-1.2,2.2);
+            \coordinate[label={above:$ l = l_{0} - v_{0}t $}] (rope) at (2.6,1.6);
+            % 尺寸标注
+            \draw[|<->|] (-0.8,0) -- (-0.8,2.2) node[midway, left] {$h$};
+            \draw[|<->|] (0,-1) -- (5,-1) node[midway, below] {$x$};
+            \draw[dashed] (5,-1) -- (5,0);
+            % 坐标系
+            \coordinate[label=right:$x$] (x) at (8,0);
+            \coordinate[label=above:$y$] (y) at (0,3.2);
+            \draw[->,dashed] (O) -- (x);
+            \draw[->,dashed] (O) -- (y);
+        \end{tikzpicture}
+    \]
+
+    设初始时刻，船与岸上\(A\)点之间的绳长为\(l_{0}\)。在任意时刻船离岸边的距离为\(x\)，
+    绳长为\(l_{0}\)。船在运动过程中，\(l\)和\(x\)均是时间\(t\)的函数。
+
+    由题意，\(l = l_{0} - v_{0}t\)，所以
+
+    \[
+        v_{0} = - \deriv{l}{t}
+    \]
+
+    又由几何关系
+
+    \[
+        l^{2} = x^{2} + h^{2}
+    \]
+
+    对上式两边同时对\(t\)求导，可得
+
+    \[
+        2 l \deriv{l}{t} = 2x \deriv{x}{t}
+    \]
+
+    则船的运动速度为
+
+    \[
+        v = \deriv{x}{t} = \frac{l}{x} \deriv{l}{t} = -\frac{l}{x} v_{0}
+    \]
+    \\
+
+    \textbf{Part Two}
+
+    再将速度对时间\(t\)求导，即可得到船的加速度为
+
+    \[
+        a = \deriv{v}{t} = - \frac{v_{0}}{x^{2}} \left(x \deriv{l}{t} - l \deriv{x}{t}\right)
+        = -\frac{v_{0}^{2} h^{2}}{x^{3}}
+    \]
+    \\
+
+    \textbf{Part Three}
+
+    令\(x=x_{0}\)，得船在离岸边为\(x_{0}\)时的速度和加速度分别为
+
+    \[
+        v = \frac{\sqrt{x_{0}^{2} + h^2}}{x_{0}} v_{0},\;
+        a = -\frac{v_{0}^{2} h^{2}}{x_{0}^{3}}
+    \]
 \end{document}
