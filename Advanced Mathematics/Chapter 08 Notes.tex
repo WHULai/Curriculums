@@ -178,6 +178,10 @@
 % 生成目录
 \tableofcontents
 
+\newpage 
+\mbox{}
+\newpage
+
 \pagebreak
 
 % 设置页码格式是阿拉伯数字
@@ -486,7 +490,7 @@
 
 \subsection{平面的点法式方程}
 
-    设平面\(\mathit{\Pi}\)上有一点\(M_{0}\left(x_0,y_0,z_0\right)\)，其法向量为\(\overrightarrow{n} = \left(
+    设平面\(\Pi\)上有一点\(M_{0}\left(x_0,y_0,z_0\right)\)，其法向量为\(\overrightarrow{n} = \left(
     A, B, C\right)\)。（注意：平面的法向量不唯一。）
     
     设\(M\left(x,y,z\right)\)，则\(\overrightarrow{M_{0}M} \perp \overrightarrow{n}\)，则
@@ -498,7 +502,7 @@
         \label{Point-Normal-Plane}
     \end{align}
     
-    即为平面\(\mathit{\Pi}\)的点法式方程。
+    即为平面\(\Pi\)的点法式方程。
 
 \subsection{平面的一般方程}
 
@@ -555,9 +559,9 @@
     两平面的法线向量的夹角（通常指锐角或直角）称为两平面的夹角。因此\(\cos \theta = \left|\cos
     \left(\hat{\overrightarrow{n_1}, \overrightarrow{n_2}}\right)\right|\)。
 
-    设平面\(\mathit{\Pi_{1}}\)和\(\mathit{\Pi_{2}}\)的法线向量依次为\(\overrightarrow{n_{1}} = \left(A_{1}, B_{1}, C_{1}\right)\)，
-    \(\overrightarrow{n_{2}} = \left(A_{2}, B_{2}, C_{2}\right)\)。按两向量夹角的余弦的坐标表示式平面\(\mathit{\Pi_{1}}\)
-    和\(\mathit{\Pi_{2}}\)的夹角\(\theta\)可由
+    设平面\(\Pi_{1}\)和\(\Pi_{2}\)的法线向量依次为\(\overrightarrow{n_{1}} = \left(A_{1}, B_{1}, C_{1}\right)\)，
+    \(\overrightarrow{n_{2}} = \left(A_{2}, B_{2}, C_{2}\right)\)。按两向量夹角的余弦的坐标表示式平面\(\Pi_{1}\)
+    和\(\Pi_{2}\)的夹角\(\theta\)可由
 
     \begin{align}
         \cos \theta=\frac{\left|A_1 A_2+B_1 B_2+C_1 C_2\right|}
@@ -569,8 +573,8 @@
 \subsubsection{结论}
 
     \begin{enumerate}
-        \item \(\mathit{\Pi_{1}}\)和\(\mathit{\Pi_{2}}\)相互垂直相当于\(A_1 A_2+B_1 B_2+C_1 C_2=0\)
-        \item \(\mathit{\Pi_{1}}\)和\(\mathit{\Pi_{2}}\)相互平行相当于\(\dfrac{A_1}{A_2}=\dfrac{B_1}{B_2}=\dfrac{C_1}{C_2}\)
+        \item \(\Pi_{1}\)和\(\Pi_{2}\)相互垂直相当于\(A_1 A_2+B_1 B_2+C_1 C_2=0\)
+        \item \(\Pi_{1}\)和\(\Pi_{2}\)相互平行相当于\(\dfrac{A_1}{A_2}=\dfrac{B_1}{B_2}=\dfrac{C_1}{C_2}\)
     \end{enumerate}
 
 \subsection{点到平面的距离}
@@ -581,7 +585,7 @@
         d=\frac{\left|A x_0+B y_0+C z_0\right|}{\sqrt{A^2+B^2+C^2}}
     \end{align}
 
-    设有两平行平面\(\mathit{\Pi_{1}}: Ax + By +Cz +D_1 = 0\)和\(\mathit{\Pi_{1}}: Ax + By +Cz +D_2 = 0\)，则两平面间的距离为
+    设有两平行平面\(\Pi_{1}: Ax + By +Cz +D_1 = 0\)和\(\Pi_{1}: Ax + By +Cz +D_2 = 0\)，则两平面间的距离为
 
     \begin{align}
         d=\frac{\left|D_1 - D_2\right|}{\sqrt{A^2+B^2+C^2}}
@@ -719,9 +723,9 @@
     于是可知
 
     \begin{enumerate}
-        \item $ L \parallel \mathit{\Pi} \Leftrightarrow \overrightarrow{s} \perp \overrightarrow{x} \Leftrightarrow
+        \item $ L \parallel \Pi \Leftrightarrow \overrightarrow{s} \perp \overrightarrow{x} \Leftrightarrow
             \overrightarrow{s} \cdot \overrightarrow{n}=0 \Leftrightarrow Amn+Bn+Cp=0$
-        \item $L \perp \mathit{\Pi} \Leftrightarrow \overrightarrow{s} \parallel \overrightarrow{x} \Leftrightarrow
+        \item $L \perp \Pi \Leftrightarrow \overrightarrow{s} \parallel \overrightarrow{x} \Leftrightarrow
             \dfrac{A}{m}=\dfrac{B}{n}=\dfrac{C}{p}$.
     \end{enumerate}
 
@@ -747,7 +751,7 @@
 \subsubsection{Problem 1}
 
     将一般方程$L:\left\{\begin{array}{l}x+y+z+1=0 \\ 2 x-y+3z+4=0\end{array}\right.$
-    化为对称式、参数式并求\(L\)与平面\(\mathit{\Pi}: x + y =0\)的交点。
+    化为对称式、参数式并求\(L\)与平面\(\Pi: x + y =0\)的交点。
     \\
 
     \textbf{Solution}
@@ -774,10 +778,10 @@
         \end{array}\right.
     $$
 
-    将参数式方程代入平面\(\mathit{\Pi}: x + y =0\)中，则有\(\left(1-4t\right) + t = 0\)，所以
+    将参数式方程代入平面\(\Pi: x + y =0\)中，则有\(\left(1-4t\right) + t = 0\)，所以
     \(t = \frac{1}{3}\)。
 
-    所以\(L\)与平面\(\mathit{\Pi}: x + y =0\)的交点为\(\left(-\frac{1}{3},\frac{1}{3},-1\right)\)。
+    所以\(L\)与平面\(\Pi: x + y =0\)的交点为\(\left(-\frac{1}{3},\frac{1}{3},-1\right)\)。
 
 \subsubsection{Problem 2}
 
@@ -1054,7 +1058,7 @@
     \end{figure}
 
     直线\(L\)与另一条与\(L\)相交的直线旋转一周，所得曲面叫做圆锥面。两直线的交点称为顶点，
-    两直线的夹角\(\alpha \; \left(0 < \alpha \dfrac{\mathrm{\pi}}{2}\right)\)叫做圆锥面的
+    两直线的夹角\(\alpha \; \left(0 < \alpha < \dfrac{\mathrm{\pi}}{2}\right)\)叫做圆锥面的
     半顶角。
 
     则顶点在原点，轴为\(z\)轴，则半顶角为\(\alpha\)的圆锥面的方程为
@@ -1088,7 +1092,7 @@
     \(yOz\)平面上曲线\(z = a y^2\; \left(a > 0\right)\)绕\(z\)轴旋转一周而得的旋转体的方程为
 
     \begin{align}
-        z_2 = a \left(x^2 + y^2\right)
+        z = a \left(x^2 + y^2\right)
     \end{align}
 
     该曲面称为旋转抛物面。
