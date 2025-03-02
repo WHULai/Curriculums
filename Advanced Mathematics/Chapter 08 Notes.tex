@@ -10,14 +10,22 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{tikz}
+\usepackage{tikz-3dplot}
 \usepackage[plain]{algorithm}
 \usepackage{algpseudocode}
 
 \usepackage{ctex}
 \usepackage{indentfirst}
 \usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{pgfplots}
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{colormaps}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{compat=1.18}
 \usetikzlibrary{automata,positioning,shapes.geometric,arrows.meta,patterns,calc}
 \numberwithin{equation}{section}
+\CTEXoptions[today=old]
 
 %
 % Basic Document Settings
@@ -95,7 +103,6 @@
 %
 
 \newcommand{\hmwkTitle}{Vector Algebra and Spatial Geometry}
-\newcommand{\hmwkDueDate}{\today}
 \newcommand{\hmwkClass}{Advanced Mathematics}
 \newcommand{\hmwkClassTime}{}
 \newcommand{\myUniversiy}{Wuhan University}
@@ -108,13 +115,13 @@
 \title{
     \vspace{2in}
     \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
-    \normalsize\vspace{0.1in}\small{日期： \hmwkDueDate}\\
-    \vspace{0.1in}\large{\textit{\myUniversiy}}
+    \vspace{0.4in}
+    \large{\textit{\myUniversiy}}
     \vspace{3in}
 }
 
 \author{\hmwkAuthorName}
-\date{}
+\date{March 2, 2025}
 
 \renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
 
@@ -884,5 +891,544 @@
         \end{array}\right.
     $$
 
+\section{曲面及其方程}
+
+\subsection{曲面研究的基本问题}
+
+\subsubsection{曲面的方程}
+
+    若曲面\(S\)和三元方程\(F\left(x,y,z\right) = 0\)满足：
+
+    \begin{enumerate}
+        \item \(S\)上的点皆满足三元方程；
+        \item 不在\(S\)上的点皆不满足三元方程；
+    \end{enumerate}
+
+    则称\(F\left(x,y,z\right) = 0\)为\(S\)的方程，\(S\)称为方程\(F\left(x,y,z\right) = 0\)的图形。
+
+\subsubsection{两类基本问题}
+
+    \begin{enumerate}
+        \item 已知一曲面作为点的几何轨迹时，建立这曲面的方程；
+        \item 已知坐标\(x\)、\(y\)和\(z\)间的一个方程时，研究这方程所表示的曲面的形状。
+    \end{enumerate}
+
+    \textbf{要求}：掌握常见的曲面及其方程。
+
+    球心在点\(M_{0}\left(x_0,y_0,z_0\right)\)、半径为\(R\)的球面的方程为
+
+    \begin{align}
+        \left(x-x_0\right)^2+\left(y-y_0\right)^2+\left(z-z_0\right)^2=R^2
+        \label{sphere-equation}
+    \end{align}
+
+    一般地，设有三元一次方程
+
+    \[
+        A x^2+A y^2+A z^2+D x+E y+F z+G=0
+    \]
+
+    方程中缺少\(x y, y z, z x\)各项，且平方项系数相同，只要经过配方可以化成方程\ref{sphere-equation}的形式，
+    则它的图形就是一个球面。
+
+\subsection{旋转曲面}
+
+\subsubsection{定义}
+
+    以一条平面曲线绕其平面上的一条直线旋转一周所成的曲面叫做旋转曲面，
+    旋转曲线和定直线依次叫做旋转曲面的母线和轴。
+
+    例如：
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[scale=0.08]{"Chapter 08 images/pic3.png"}
+    \end{figure}
+
+    其中，\(C\)为旋转曲面的母线，\(L\)为旋转曲面的轴。
+
+    \begin{figure}[htbp]
+        \centering
+        \subfigure[]
+        {
+            \begin{minipage}[b]{.3\linewidth}
+                \centering
+                \includegraphics[scale=0.08]{"Chapter 08 images/pic4.png"}
+            \end{minipage}
+        }
+        \subfigure[]
+        {
+             \begin{minipage}[b]{.3\linewidth}
+                \centering
+                \includegraphics[scale=0.08]{"Chapter 08 images/pic5.png"}
+            \end{minipage}
+        }
+        \subfigure[]
+        {
+             \begin{minipage}[b]{.3\linewidth}
+                \centering
+                \includegraphics[scale=0.08]{"Chapter 08 images/pic6.png"}
+            \end{minipage}
+        }
+    \end{figure}
+
+    则图(a)中母线：\(z = a y^2\)，轴：\(z\)轴；图(b)中母线：\(z = b y\)，轴：\(z\)轴；
+    图(c)中母线：\(y^2 + z^2 = R^2\)，轴：\(z\)轴。
+        
+\subsubsection{旋转曲面的方程}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.1]{"Chapter 08 images/pic7.png"}
+        % \caption{}
+        \label{pic7}
+    \end{wrapfigure}
+
+    设在\(yOz\)平面坐标面上有一已知曲线\(C: f\left(y,z\right) = 0\)，则其以\(z\)轴为轴的旋转曲面的方程如下
+
+    \begin{align}
+        S: f\left(\pm \sqrt{x^2 + y^2},\; z\right) = 0
+    \end{align}
+
+    \textbf{推导：}
+
+    \(\forall M\left(x,y,z\right) \in S\)，设其由\(M_1 \in C\)转到某位置而得到。
+    设\(M\left(x_1,y_1,z_1\right)\)，则
+
+    \begin{align}
+        f\left(y_1, z_1\right) = 0
+        \label{rotational-surface-2}
+    \end{align}
+
+    又\(M\)、\(M_1\)满足
+
+    \begin{align*}
+        \left\{\begin{aligned}
+        z_1 & =z \cdot \\
+        \left|y_1\right| & =\sqrt{x^2+y^2} \Rightarrow y_1= \pm \sqrt{x^2+y^2}
+        \end{aligned}\right.
+    \end{align*}
+
+    代入式，得
+
+    \begin{align*}
+        f\left(\pm \sqrt{x^2 + y^2},\; z\right) = 0
+    \end{align*}
+
+    即为\(S\)上任一点\(M\left(x,y,z\right)\)满足的方程。
+
+    总之，母线\(f\left(y, z\right) = 0\)
+
+    \begin{align*}
+        \left\{\begin{aligned}
+        \text{绕\(z\)轴旋转}\rightarrow & S: f\left(\pm \sqrt{x^2 + y^2},\; z\right) = 0 \\
+        \text{绕\(y\)轴旋转}\rightarrow & S: f\left(y,\; \pm \sqrt{z^2 + x^2}\right) = 0
+        \end{aligned}\right.
+    \end{align*}
+
+    若母线\(f\left(z, x\right) = 0\)
+
+    \begin{align*}
+        \left\{\begin{aligned}
+        \text{绕\(z\)轴旋转}\rightarrow & S: f\left(z,\; \pm \sqrt{x^2 + y^2}\right) = 0 \\
+        \text{绕\(x\)轴旋转}\rightarrow & S: f\left(\pm \sqrt{y^2 + z^2},\; x\right) = 0
+        \end{aligned}\right.
+    \end{align*}
+
+    若母线\(f\left(x, y\right) = 0\)
+
+    \begin{align*}
+        \left\{\begin{aligned}
+        \text{绕\(x\)轴旋转}\rightarrow & S: f\left(x,\; \pm \sqrt{y^2 + z^2}\right) = 0 \\
+        \text{绕\(y\)轴旋转}\rightarrow & S: f\left(\pm \sqrt{x^2 + z^2},\; y\right) = 0
+        \end{aligned}\right.
+    \end{align*}
+
+\subsubsection{圆锥面}
+
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[scale=0.15]{"Chapter 08 images/pic8.png"}
+        % \caption{}
+        \label{pic8}
+    \end{figure}
+
+    直线\(L\)与另一条与\(L\)相交的直线旋转一周，所得曲面叫做圆锥面。两直线的交点称为顶点，
+    两直线的夹角\(\alpha \; \left(0 < \alpha \dfrac{\mathrm{\pi}}{2}\right)\)叫做圆锥面的
+    半顶角。
+
+    则顶点在原点，轴为\(z\)轴，则半顶角为\(\alpha\)的圆锥面的方程为
+
+    \begin{align}
+        z^2 = \cot^2 \alpha \left(x^2 + y^2\right)
+    \end{align}
+
+    令\(a = \cot \alpha\)则圆锥面的方程为
+
+    \begin{align}
+        z^2 = a^2 \left(x^2 + y^2\right)
+    \end{align}
+
+    当\(a > 0\)时，有\(z = a \sqrt{x^2 + y^2}\)（上半锥面），\(z = -a \sqrt{x^2 + y^2}\)（下半锥面）。
+
+    \textbf{常见锥面}
+
+    \begin{enumerate}
+        \item \(z = \sqrt{x^2 + y^2}\)（\(a = 1\)）：半顶角为\(\alpha = \dfrac{\mathrm{\pi}}{4}\)上半锥面；
+        \item \(z = -\sqrt{x^2 + y^2}\)（\(a = 1\)）：半顶角为\(\alpha = \dfrac{\mathrm{\pi}}{4}\)下半锥面；
+        \item \(z = \sqrt{3\left(x^2 + y^2\right)}\)（\(a = \sqrt{3}\)）：半顶角为\(\alpha = \dfrac{\mathrm{\pi}}{6}\)上半锥面；
+        \item \(z = 1- \sqrt{x^2 + y^2}\)（\(a = \sqrt{3}\)）：顶点为\(\left(0,1\right)\)、开口向下、
+            半顶角为\(\alpha = \dfrac{\mathrm{\pi}}{4}\)的上半锥面；
+        \item \(z = \sqrt{x^2 + z^2}\)（\(a = \sqrt{3}\)）：半顶角为\(\alpha = \dfrac{\mathrm{\pi}}{4}\)，以\(y\)轴
+            为轴的锥面。
+    \end{enumerate}
+
+\subsubsection{旋转抛物面}
+
+    \(yOz\)平面上曲线\(z = a y^2\; \left(a > 0\right)\)绕\(z\)轴旋转一周而得的旋转体的方程为
+
+    \begin{align}
+        z_2 = a \left(x^2 + y^2\right)
+    \end{align}
+
+    该曲面称为旋转抛物面。
+
+\subsubsection{旋转单叶/双叶双曲面}
+
+    平面\(xOz\)平面上双曲线$\frac{x^2}{a^2}-\frac{z^2}{c^2}=1$
+
+    绕\(z\)轴旋转一周，称为旋转单叶双曲面，其方程为：
+    
+    \begin{equation}
+        \frac{x^2+y^2}{a^2}-\frac{z^2}{c^2}=1
+    \end{equation}
+
+    绕\(x\)轴旋转一周，称为旋转双叶双曲面，其方程为：
+
+    \begin{equation}
+        \frac{x^2}{a^2}-\frac{y^2+z^2}{c^2}=1
+    \end{equation}
+
+\subsection{柱面}
+
+\subsubsection{分类讨论}
+
+    \begin{enumerate}
+        \item 一般地、只含\(x\)、\(y\)而缺\(z\)的方程\(F\left(x,y\right) =0\)在空间直角坐标系中表示母线
+            平行于\(z\)轴的柱面，其准线是\(xOy\)面上的曲线\(C:F\left(x,y\right) =0\)；
+        \item 一般地、只含\(y\)、\(z\)而缺\(x\)的方程\(F\left(y,z\right) =0\)在空间直角坐标系中表示母线
+            平行于\(x\)轴的柱面，其准线是\(xOy\)面上的曲线\(C:F\left(y,z\right) =0\)；
+        \item 一般地、只含\(z\)、\(x\)而缺\(y\)的方程\(F\left(z,x\right) =0\)在空间直角坐标系中表示母线
+            平行于\(y\)轴的柱面，其准线是\(xOy\)面上的曲线\(C:F\left(z,x\right) =0\)；
+    \end{enumerate}
+    
+\subsection{二次曲面}
+
+    与平面解析几何中规定的二次曲线相类似,我们把三元二次方程\(F\left(x,y,z\right) =0\)
+    所表示的曲面称为二次曲面，把平面称为一次曲面。
+
+\subsubsection{研究曲面的两种方法}
+
+    \textbf{截痕法}
+
+    以平面\(z=t\)（或\(x=t\)，\(y=t\)）去截曲面\(S\)得截痕，研究截痕随\(t\)变化规律，从而
+    了解曲面的形状。
+
+    \textbf{伸缩变形法}
+
+    若原曲线方程为\(C: F\left(x,y,z\right) = 0\)，将其沿着\(z\)轴伸缩\(\lambda\)倍，得方程为
+
+    \begin{align}
+        S^{'}: F\left(x, y, \frac{z}{\lambda}\right) = 0
+    \end{align}
+
+\subsection{九种二次曲面}
+
+% TikZ图像代码来自https://blog.csdn.net/Daniel_tanxz/article/details/129889345
+
+\subsubsection{椭圆锥面\(\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=z^2\)}
+
+    圆锥面方程：
+
+    \[
+        z^2 = x^2 + y^2
+    \]
+
+    沿\(x\)轴伸缩\(a\)倍：
+
+    $$
+        z^2=\frac{x^2}{a^2}+y^2
+    $$
+
+    沿\(y\)轴伸缩\(b\)倍：
+
+    \begin{align}
+        z^2=\frac{x^2}{a^2}+\frac{y^2}{b^2}
+    \end{align}
+
+    用平面\(z=t\)去截曲面得截痕为椭圆
+
+    % 圆锥面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic9.pdf"}
+    \end{center}
+
+\subsubsection{椭球面$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}+\dfrac{z^2}{c^2}=1$}
+
+
+    球面方程：
+
+    \[
+        x^2 + y^2 + z^2 = 1
+    \]
+
+    分别沿\(x\)、\(y\)、\(z\)轴伸缩\(a\)、\(b\)、\(c\)倍得
+
+    \begin{equation}
+        \frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1
+    \end{equation}
+
+    % 椭球面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic10.pdf"}
+    \end{center}
+    
+\subsubsection{单叶双曲面$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}-\dfrac{z^2}{c^2}=1$}
+
+    旋转单叶双曲面方程：
+
+    $$
+        \frac{x^2}{a^2}+\frac{y^2}{a^2}-\frac{z^2}{c^2}=1
+    $$
+
+    沿\(y\)轴伸缩\(\frac{b}{a}\)倍：
+
+    $$
+        \frac{x^2}{a^2}+\frac{\left(\frac{a}{b} y\right)^2}{a^2}-\frac{z^2}{c^2}=1
+    $$
+
+    即：
+
+    \begin{align}
+        \dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}-\dfrac{z^2}{c^2}=1
+    \end{align}
+
+    % 单叶双曲面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic11.pdf"}
+    \end{center}
+  
+\subsubsection{双叶双曲面$\dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}-\dfrac{z^2}{c^2}=1$}
+    旋转单叶双曲面方程：
+
+    $$
+        \frac{x^2}{a^2}-\frac{y^2}{b^2}-\frac{z^2}{b^2}=1
+    $$
+
+    沿\(z\)轴伸缩\(\frac{c}{b}\)倍：
+
+    $$
+        \frac{x^2}{a^2}-\frac{y^2}{b^2}-\frac{\left(\frac{b}{c} z\right)^2}{b^2}=1
+    $$
+
+    即：
+
+    \begin{align}
+        \dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}-\dfrac{z^2}{c^2}=1
+    \end{align}
+
+    % 双叶双曲面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic12.pdf"}
+    \end{center}
+    
+\subsubsection{椭圆抛物面$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=z$}
+
+    参考旋转抛物面方程：
+
+    $$
+        z=\frac{x^2+y^2}{a^2}
+    $$
+
+    伸缩可得
+
+    \begin{equation}
+        \frac{x^2}{a^2}+\frac{y^2}{b^2}=z
+    \end{equation}
+
+    % 椭圆抛物面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic13.pdf"}
+    \end{center}
+
+\subsubsection{双曲抛物面$\dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}=z$}
+    
+    % 双曲抛物面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic14.pdf"}
+    \end{center}
+    
+\subsubsection{椭圆柱面$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$}
+
+    % 椭圆柱面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic15.pdf"}
+    \end{center}
+
+\subsubsection{双曲柱面$\dfrac{x^2}{a^2}-\dfrac{y^2}{b^2}=1$}
+    
+    % 双曲柱面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic16.pdf"}
+    \end{center}
+
+\subsubsection{抛物柱面$x^2=ay$}
+
+    % 抛物柱面
+    \begin{center}
+        \includegraphics[height=6cm]{"Chapter 08 images/pic17.pdf"}
+    \end{center}
+
+\section{空间曲线及其方程}
+
+\subsection{空间曲线的一般方程}
+
+    \textbf{定义}
+
+    设有空间曲线\(C\)，以及过\(C\)的两张曲面\(S_1: F\left(x,y,z\right)\)和\(S_2: G\left(x,y,z\right)\)，
+    则称方程组
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+        F(x, y, z)=0 \\
+        G(x, y, z)=0
+        \end{array}\right.
+    \end{equation}
+
+    为空间曲线\(C\)的一般方程。
+
+    注意：
+
+    \begin{enumerate}
+        \item \(C\)的一般方程不唯一；
+        \item 平面曲线\(C: f\left(x,y\right)=0\)可以看作空间曲线，其一般方程为
+            \begin{align*}
+                \left\{\begin{array}{l}
+                f(x, y)=0 \\
+                z=0
+                \end{array}\right.
+            \end{align*}
+    \end{enumerate}
+
+\subsection{空间曲线的参数方程}
+
+    \textbf{定义}
+
+    若有方程
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+        x=\varphi\left(t\right) \\
+        y=\phi\left(t\right) \\
+        z=\omega\left(t\right)
+        \end{array}\right.
+        \label{Parametric equations of a space curve}
+    \end{equation}
+
+    其中\(t \in \left[\alpha, \beta\right]\)，即空间曲线\(C\)，若满足
+
+    \begin{enumerate}
+        \item \(\forall t \in \left[\alpha, \beta\right]\)，点\(\left(
+            \varphi\left(t\right),\phi\left(t\right),\omega\left(t\right)\right)\)
+            在曲线\(C\)上；
+        \item 对\(C\)上任意一点\(M\left(x,y,z\right)\)，存在\(t_0 \in \left[\alpha, \beta\right]\),
+            使得x\(=\varphi\left(t\right),\; y=\phi\left(t\right),\; z=\omega\left(t\right)\)。
+    \end{enumerate}
+
+    则称方程\ref{Parametric equations of a space curve}为空间曲线的参数方程。
+
+    例如，空间曲线$\left\{\begin{array}{c}x+y-z=1 \\ z=x^2\end{array}\right.$
+    的参数方程为$\left\{\begin{array}{l}x=t \\ y=1-t+t^2 \\ z=t^2\end{array}\right.$。
+
+\subsection{空间曲线在坐标面上的投影}
+
+    设有空间曲线$C: \left\{\begin{array}{l} F(x, y, z)=0 \\ G(x, y, z)=0 \end{array}\right.$，
+    要求其在\(xOy\)面上的投影。
+
+    注意到\(xOy\)面上的都不显含\(z\)。从方程组中消去变量\(z\)得
+
+    \begin{align}
+        H\left(x,y\right) = 0
+        \label{H equals 0}
+    \end{align}
+
+    研究方程\ref{H equals 0}知：该方程表示母线平行与\(z\)轴的柱面，且该方程通过曲线\(C\)。
+    于是\textbf{定义}曲面\ref{H equals 0}为曲线\(C\)关于\(xOy\)面的投影柱面。
+
+    联立方程
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+        H\left(x,y\right) = 0 \\
+        z=0
+        \end{array}\right.
+    \end{equation}
+
+    即得到曲线\(C\)的投影曲线。
+
+    同理，消去方程中的变量\(x\)或变量\(y\)，再分别和\(x=0\)或\(y=0\)联立，即可得到曲线\(C\)
+    在\(yOz\)面或\(xOz\)上的投影的曲线方程：
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+        R\left(y,z\right) = 0 \\
+        x=0
+        \end{array}\right.
+    \end{equation}
+
+    或
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+        T\left(x,z\right) = 0 \\
+        y=0
+        \end{array}\right.
+    \end{equation}
+
+\subsection{例题}
+
+    设一个立体由上半球面\(z = \sqrt{4-x^2-y^2}\)和锥面\(z = \sqrt{6\left(x^2+y^2\right)}\)所围成
+    （如下图所示），求它在\(xOy\)面上的投影。
+
+    \begin{center}
+        \includegraphics[height=3cm]{"Chapter 08 images/pic18.jpg"}
+    \end{center}
+
+    \textbf{Solution}
+    \\
+
+    两曲面交线为
+
+    $$
+        \left\{\begin{array}{l}
+        z=\sqrt{4-x^2-y^2} \\
+        z=\sqrt{3\left(x^2+y^2\right)}
+        \end{array}\right.
+    $$
+
+    从中消去\(z\)得投影柱面\(x^2 + y^2 = 1\)，将其与\(z=0\)联立，得投影曲线
+
+    $$
+        \left\{\begin{array}{l}
+        x^2+y^2=1 \\
+        z=0
+        \end{array}\right.
+    $$
+
+    从而得投影区域为\(xOy\)面上的圆域
+
+    $$
+    D_{xy}: x^2 + y^2 \leq 1
+    $$
 
 \end{document}
