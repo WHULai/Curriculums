@@ -470,4 +470,119 @@
     当\(t = 3 \frac{b}{m}\)时，\(v = v_{L}\left(1-0.05\right) = 0.95 v_{L}\)。
     一般认为\(t \leq 3 \frac{b}{m}\)时，\(v = v_{L}\)
 
+\subsection{Problem 2}
+
+    质量为\(m\)的物体，由地面以初速度\(v_{0}\)竖直向上发射，物体受到空气阻力大小\(F_{r} = kv\)。
+    试求：
+
+    \begin{enumerate}
+        \item 物体发射到最大高度所需要的时间；
+        \item 物体能到达的最大高度。
+    \end{enumerate}
+
+    \textbf{Solution}
+    \\
+
+    \textbf{Part One}
+    \\
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.3]{"Chapter 02 images/pic4.png"}
+        % \caption{}
+        \label{pic4}
+    \end{wrapfigure}
+
+    物体在向上发射的过程中，受到重力和阻力作用，方向均与速度方向相反。以竖直向上作为正方向，
+    由牛顿运动定律可得
+
+    \begin{equation}
+        -m g-k v=m \frac{\mathrm{~d} v}{\mathrm{~d} t}
+        \label{Problem-2-1}
+    \end{equation}
+
+    对上式分离变量并取定积分，同时注意到物体到达最大高度时\(v=0\)，即
+
+    $$
+        \int_0^t \mathrm{~d} t=\int_{v_0}^0-\frac{m}{m g+k v} \mathrm{~d} v
+    $$
+
+    积分得物体达到最大高度所需的时间为
+
+    $$
+        t=\frac{m}{k} \ln \frac{m g+k v_0}{m g}
+    $$
+
+    \textbf{Part Two}
+    \\
+
+    利用$\dfrac{\mathrm{d} v}{\mathrm{~d} t}=v \dfrac{\mathrm{~d} v}{\mathrm{~d} y}$代入\ref{Problem-2-1}式，可得
+
+    $$
+        -m g-k v=m \frac{\mathrm{~d} v}{\mathrm{~d} t}
+    $$
+
+    分离变量并取定积分，即
+
+    $$
+        \int_0^y \mathrm{~d} y=\int_{v_0}^0-\frac{m v}{m g+k v} \mathrm{~d} v
+    $$
+
+    所以物体可达到的最大高度为
+
+    $$
+        y=\frac{m}{k}\left(v_0-\frac{m g}{k} \ln \frac{m g+k v_0}{m g}\right)
+    $$
+
+\subsection{Problem 3}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.18]{"Chapter 02 images/pic5.png"}
+        % \caption{}
+        \label{pic5}
+    \end{wrapfigure}
+
+    一条质量均匀分布的绳子，总质量为\(M\)、长度为\(L\)，一端拴在竖直转轴\(OO^{'}\)上，
+    并以恒定的角速度\(\omega\)在水平面上旋转。设转动过程中绳子始终伸直不打弯，
+    且忽略重力的影响，求距离转轴为\(r\)处绳中的张力\(T\left(r\right)\)。
+    \\
+
+    \textbf{Solution}
+    \\
+
+    在距离转轴为\(r\)处，取一个长为\(\rmd r\)的一小段绳子，其质量为\(\frac{M}{L} \rmd r\)，
+    其两端受力如图所示，由于该段绳子作圆周运动，所以由牛顿第二定律得
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.18]{"Chapter 02 images/pic6.png"}
+        % \caption{}
+        \label{pic6}
+    \end{wrapfigure}
+
+    $$
+        T(r)-T(r+\rmd r)=\rmd m \cdot a_n=\frac{M}{L} \rmd r
+    $$
+
+    令
+
+    $$
+        T(r)-T(r+\rmd r)=\rmd m \cdot a_n=\frac{M}{L} \rmd r
+    $$
+
+    得
+
+    $$
+        \rmd T=-\frac{M \omega^2}{L} r \rmd r
+    $$
+
+    式中\(\rmd T\)就是该小段绳子所受的合外力，“\(-\)”号表示该段绳子受到的合外力的方向与矢径
+    \(r\)相反，指向圆心。根据力的叠加原理，离轴\(r\)处绳中的张力就是\(r\)以外所有小段绳子所受的
+    合力的绝对值之和，即
+
+    $$
+        T(r)=\int|\mathrm{d} T|=\int_r^L \frac{M \omega^2}{L} r \mathrm{~d} r=\frac{M \omega^2}{2 L}\left(L^2-r^2\right)
+    $$
+
 \end{document}
