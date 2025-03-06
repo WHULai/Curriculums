@@ -1436,4 +1436,167 @@
     D_{xy}: x^2 + y^2 \leq 1
     $$
 
+\section{例题}
+
+\subsection{Problem 1}
+
+    过点\(M\left(1,1,1\right)\)和直线\(x=y-1=z+1\)的平面方程。
+    \\
+
+    \textbf{Solution}
+    \\
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.06]{"Chapter 08 images/pic19.png"}
+        % \caption{}
+        \label{pic19}
+    \end{wrapfigure}
+
+    显然，直线过点\(M_{0}\left(0,1,-1\right)\)，则\(\overrightarrow{M_{0}M} = \left(1,0,2\right)\)
+    平行于平面。
+
+    又直线的方向向量\(\overrightarrow{s} = \left(1,1,1\right)\)也平行于平面，于是可取法向量为
+
+    \begin{align*}
+        \overrightarrow{n} &= \overrightarrow{M_{0}M} \times \overrightarrow{s} \\
+        &= \left(1,0,2\right) \times \left(1,1,1\right) \\
+        &= \left(-2,1,1\right)
+    \end{align*}
+
+    于是平面方程为
+
+    \[
+        -2 \cdot \left(x-1\right) + 1 \cdot \left(y-1\right) + 1 \cdot \left(z-1\right) = 0
+    \]
+
+    即
+
+    \[
+        2x-y-z=0
+    \]
+
+\subsection{Problem 2}
+
+    求直线$L: \dfrac{x+1}{1}=\dfrac{y+2}{2}=\dfrac{z-1}{1}$在平面\(\Pi: 4x-y + 2z = 8\)
+    上的投影的直线方程。
+    \\
+
+    \textbf{提示}
+    \\
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.06]{"Chapter 08 images/pic20.png"}
+        % \caption{}
+        \label{pic20}
+    \end{wrapfigure}
+
+    如图所示，可以求已知直线\(L\)的方向向量\(\overrightarrow{s}\)和已知平面的法向量
+    \(\overrightarrow{n_1}\)，利用向量积求出直线\(L\)和其投影直线组成的平面的法向量
+    \(\overrightarrow{n}\)，于是可得该平面的点法式方程。最后两平面的交线即为所求直线。
+
+    下面用平面束给出另一种解法。
+    \\
+
+    \textbf{Solution}
+    \\
+
+    由题，直线\(L: \left\{\begin{array}{l}\dfrac{x+1}{1}=\dfrac{y+2}{2} \\
+    \dfrac{x+1}{1}=\dfrac{z-1}{1}\end{array}\right.\)，即为
+
+    $$
+        L:\left\{\begin{array}{l}
+        2 x-y=0 \\
+        x-z+2=0
+        \end{array}\right.
+    $$
+
+    过\(L\)的平面束方程为
+
+    \[
+        \left(2x-y\right) + \lambda \left(x-z+2\right) = 0
+    \]
+
+    即
+
+    \[
+        (2+\lambda) x-y-\lambda z+2 \lambda=0
+    \]
+
+    其法向量为
+
+    $$
+        \overrightarrow{n}_\lambda=(2+\lambda,-1,-\lambda) .
+    $$
+
+    令\(\overrightarrow{n}_\lambda\)与\(\overrightarrow{n} = \left(4,-1,2\right)\)垂直，
+    即
+
+    $$
+        (2+\lambda,-1,-\lambda) \cdot(4,-1,2)=0
+    $$
+
+    从而
+
+    $$
+        4(2+\lambda)+1-2 \lambda=0
+    $$
+
+    解得
+
+    \[
+        \lambda = -\frac{9}{2}
+    \]
+
+    于是，平面束中与已知平面垂直的平面为
+
+    $$
+        \left\{\begin{array}{l}
+        5 x+2y-9 z+18=0 \\
+        4 x-y+2 z-8=0
+        \end{array}\right.
+    $$
+
+\subsection{Problem 3}
+
+    求直线$\dfrac{x-1}{1}=\dfrac{y}{-1}=\dfrac{z}{-1}$绕\(z\)轴旋转一周形成的旋转曲面方程。
+    \\
+
+    \textbf{Solution}
+    \\
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.1]{"Chapter 08 images/pic21.png"}
+        % \caption{}
+        \label{pic21}
+    \end{wrapfigure}
+
+    任取曲面\(\Sigma\)上一点\(M\left(x,y,z\right)\)，它是由\(L\)上一点
+    \(M_{1}\left(x_1,y_1,z_1\right)\)，则
+
+    $$
+        \left\{\begin{array}{l}
+        z_1=z . \\
+        x_1^2+y_1^2=x^2+y^2 .
+        \end{array}\right.
+    $$
+
+    且\(M_{1}\left(x_1,y_1,z_1\right)\)满足：
+
+    $$
+        \frac{x_1-1}{1}=\frac{y_1}{-1}=\frac{z_1}{-1}
+    $$
+
+    将\(z_1 = z\)代入上式，则\(x_1 = 1 - z\)，\(y_1 = z\)。
+
+    于是有
+
+    $$
+        x^2+y^2=(1-z)^2+z^2
+    $$
+
+    即为旋转曲面方程。
+
 \end{document}
