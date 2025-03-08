@@ -1,0 +1,274 @@
+%!TEX program = xelatex
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{empheq}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{ctex}
+\usepackage{upgreek}
+\usepackage{indentfirst}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{pgfplots}
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{colormaps}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{automata,positioning,shapes.geometric,arrows.meta,patterns,calc}
+\numberwithin{equation}{section}
+\CTEXoptions[today=old]
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.2in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength{\parindent}{2em}  % 2em代表首行缩进两个字符
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+% \setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{0}
+% \nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{The Method of Differentiation of Multivariate Functions and Its Applications}
+\newcommand{\hmwkClass}{Advanced Mathematics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\myUniversiy}{Wuhan University}
+\newcommand{\hmwkAuthorName}{\textbf{Lai Wei}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \vspace{0.4in}
+    \large{\textit{\myUniversiy}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{\today}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% % For derivatives
+% \newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% 我的newcommand
+\newcommand{\degree}{^{\circ}}
+\newcommand{\arrow}{-{Stealth[length=4mm,width=2mm]}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
+\renewcommand{\parallel}{\mathrel{/\mskip-2.5mu/}}
+\newcommand{\parallelogram}{
+	\mathord
+    {\text
+        {
+			\tikz[baseline]
+			\draw (0,.1ex) -- (.8em,.1ex) -- (1em,1.6ex) -- (.2em,1.6ex) -- cycle;
+        }
+    }
+}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+% 设置页码格式是罗马数字
+\pagenumbering{roman}
+
+% 生成目录
+\tableofcontents
+
+\pagebreak
+
+% 设置页码格式是阿拉伯数字
+\pagenumbering{arabic}
+
+\pagebreak
+
+\section{多元函数的基本概念}
+
+\subsection{平面点集}
+
+\subsubsection{坐标平面}
+
+    建立了坐标系的平面。二元有序实数组\(\left(x,y\right)\)
+    的全体，即$\mathbf{R}^2=\mathbf{R} \times \mathbf{R}=\{(x, y) 
+    \mid x, y \in \mathbf{R}\}$就表示坐标平面。
+
+\subsubsection{平面点集}
+
+    坐标平面上具有某种性质\(P\)的点的几何，称作平面点集，记作
+
+    \[
+        E = \left\{\left(x,y\right) \mid \left(x,y\right)
+        \text{具有某种性质}P\right\}
+    \]
+
+\subsubsection{邻域}
+
+    设\(P_{0}\left(x_0,y_0\right)\)是\(xOy\)平面上一点，
+    \(\delta\)是某一正数，与点\(P_{0}\left(x_0,y_0\right)\)
+    距离小于\(\delta\)的点\(P\left(x,y\right)\)的全体，称为
+    \(P_{0}\)的\(\delta\)邻域，记作\(U\left(P_0,\delta\right)\)，
+    即
+
+    \[
+        U\left(P_0,\delta\right) = \left\{\left(x,y\right)
+        \mid \left|PP_0\right| < \delta\right\}
+    \]
+
+    或
+
+    \[
+        U\left(P_0,\delta\right) = \left\{\left(x,y\right)
+        \mid \sqrt{\left(x-x_0\right)^2 + \left(y-y_0\right)^2} < \delta\right\}
+    \]
+
+\subsubsection{注意}
+
+    \begin{enumerate}
+        \item 点\(P_0\)的去心邻域，记作$\stackrel{\circ}{U}\left(P_0, \delta\right)$，即
+            $$
+                \stackrel{\circ}{U}\left(P_0, \delta\right)=\left\{P\mid0<\left|P P_0\right|<\delta\right\}
+            $$
+        \item 若不强调\(\delta\)，也可记作\(U\left(P_0\right)\)，
+            \(\stackrel{\circ}{U}\left(P_0\right)\)
+    \end{enumerate}
+
+\subsubsection{利用点与点集的关系}
+
+    若有一点\(P \in \mathbf{R}^2\)，任意点集\(E \subset \mathbf{R}^2\)
+
+    \begin{enumerate}
+        \item 内点：\(\exists U\left(P\right)\)，使\(U\left(P\right) \subset E\)，
+            则\(P\)为\(E\)的内点。
+        \item 外点：\(\exists U\left(P\right)\)，使\(U\left(P\right) \cap E = \phi\)，
+            则\(P\)为\(E\)的内点。
+        \item 边界点：\(\forall U\left(P\right)\)，若\(U\left(P\right)\)
+            即有属于\(E\)的点，又有不属于\(E\)的点，则\(P\)为\(E\)的边界点。
+        \item \(E\)的边界：\(E\)的边界点的全体，记作\(\partial E\)
+    \end{enumerate}
+
+\subsubsection{聚点}
+
+    如果对于任意给定的\(\delta>0\)，点\(P\)的去心邻域
+    \(\stackrel{\circ}{U}\left(P,\delta\right)\)内总有\(E\)
+    中的点，那么称\(P\)是\(E\)的聚点。
+
+    例如，若\(E = \left\{\left(x,y\right) \mid
+    1 < x^2+y^2 \leq 2\right\}\)。则\(x^2+y^2=1\)
+    和\(x^2+y^2=2\)都是\(E\)的聚点。
+
+\subsubsection{由点集所属类的特征分类}
+
+    \begin{enumerate}
+        \item 开集：若点集\(E\)中的所有点都是\(E\)的内点，则称\(E\)为开集；
+        \item 闭集：若点集\(E\)的边界\(\partial E \in E\)，则称\(E\)为闭集。
+    \end{enumerate}
+
+    例如，\(\left\{\left(x,y\right) \mid 1 < x^2+y^2 < 2\right\}\)为开集，
+    \(\left\{\left(x,y\right) \mid 1 \leq x^2+y^2 \leq 2\right\}\)为闭集，\\
+    \(\left\{\left(x,y\right) \mid 1 < x^2+y^2 \leq 2\right\}\)
+
+\end{document}
