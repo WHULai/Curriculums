@@ -225,7 +225,7 @@
         \mid \sqrt{\left(x-x_0\right)^2 + \left(y-y_0\right)^2} < \delta\right\}
     \]
 
-\subsubsection{注意}
+    \textbf{注意}
 
     \begin{enumerate}
         \item 点\(P_0\)的去心邻域，记作$\stackrel{\circ}{U}\left(P_0, \delta\right)$，即
@@ -236,7 +236,7 @@
             \(\stackrel{\circ}{U}\left(P_0\right)\)
     \end{enumerate}
 
-\subsubsection{利用点与点集的关系}
+    利用点与点集的关系，可知
 
     若有一点\(P \in \mathbf{R}^2\)，任意点集\(E \subset \mathbf{R}^2\)
 
@@ -270,5 +270,168 @@
     例如，\(\left\{\left(x,y\right) \mid 1 < x^2+y^2 < 2\right\}\)为开集，
     \(\left\{\left(x,y\right) \mid 1 \leq x^2+y^2 \leq 2\right\}\)为闭集，\\
     \(\left\{\left(x,y\right) \mid 1 < x^2+y^2 \leq 2\right\}\)
+
+    \begin{figure}[htbp]
+        \centering
+        \subfigure[]
+        {
+            \begin{minipage}[b]{.3\linewidth}
+                \centering
+                \includegraphics[scale=0.08]{"Chapter 09 images/pic1.png"}
+            \end{minipage}
+        }
+        \subfigure[]
+        {
+             \begin{minipage}[b]{.3\linewidth}
+                \centering
+                \includegraphics[scale=0.08]{"Chapter 09 images/pic2.jpg"}
+            \end{minipage}
+        }
+    \end{figure}
+
+    \begin{enumerate}
+        \item 连通集：如上图(a)；
+        \item 非连通集：如上图(b)。
+    \end{enumerate}
+
+    \begin{enumerate}
+        \item 开区域（也简称区域）：连通的开集；
+        \item 闭区域：开区域连同其边界一起构成的点集。
+    \end{enumerate}
+
+    如\(\left\{\left(x,y\right) \mid 1 < x^2+y^2 < 2\right\}\)
+    为(开)区域；\(\left\{\left(x,y\right) \mid 1 \leq x^2+y^2 \leq 2\right\}\)
+    为闭区域。
+
+    \begin{enumerate}
+        \item 有界集：对于集合\(E\)，若\(\exists r > 0\)，使\(E \subset U\left(0,r\right)\)，
+            则称\(E\)是有界的。（就是说能找到一个“圆”把集合\(E\)包裹起来）
+        \item 无界集：若一个集合不是有界集，则称其为无界集。
+    \end{enumerate}
+
+    \begin{figure}[htbp]
+        \centering
+        \subfigure
+        {
+        \begin{tikzpicture}
+            \coordinate[label=right:$x$] (x) at (2,0);
+            \coordinate[label=above:$y$] (y) at (0,2);
+            \draw[->] (-2,0) -- (x);
+            \draw[->] (0,-2) -- (y);
+            \draw[dashed, domain=-2:2] plot(\x,{-\x});
+            \fill[pattern=north east lines] (-1.8,1.8) -- (1.8,1.8) -- (1.8,-1.8);
+        \end{tikzpicture}
+        }
+        \subfigure
+        {
+        \begin{tikzpicture}
+            \coordinate[label=right:$x$] (x) at (2,0);
+            \coordinate[label=above:$y$] (y) at (0,2);
+            \draw[->] (-2,0) -- (x);
+            \draw[->] (0,-2) -- (y);
+            \draw[domain=-2:2] plot(\x,{-\x});
+            \fill[pattern=north east lines] (-1.8,1.8) -- (1.8,1.8) -- (1.8,-1.8);
+        \end{tikzpicture}
+        }
+    \end{figure}
+
+    例如，\(\left\{\left(x,y\right) \mid x + y > 0\right\}\)为无界开区域；
+    \(\left\{\left(x,y\right) \mid x + y \geq 0\right\}\)为无界闭区域。
+
+\subsection{多元函数的概念}
+
+    \subsubsection{二元函数}
+
+    设\(D\)是\(\mathbf{R}^2\)的一个非空子集，称映射\(f: D \rightarrow \mathbf{R}\)为定义在\(D\)上的二元函数，
+    通常记为
+
+    \begin{equation}
+        z = f\left(x,y\right),\; \left(x,y\right) \in D
+    \end{equation}
+
+    或
+
+    \begin{equation}
+        z = f\left(P\right),\; P \in D
+    \end{equation}
+
+    \subsubsection{值域}
+
+    上述定义中，与自变量\(x\)和y\(\)的一对值（即二元有序实数组）\(\left(x,y\right)\) 相对应的因变量\(z\)的值，
+    也称为\(f\)在点\(\left(x,y\right)\)处的函数值，记作\(f\left(x,y\right)\)，即\(z=f\left(x,y\right)\)
+    函数值\(f\left(x,y\right)\)的全体所构成的集合为函数\(f\)的值域，记作\(f\left(D\right)\)，即
+
+    \begin{align}
+        f\left(D\right) = \left\{z \mid z=f\left(x,y\right),\; \left(x,y\right) \in D\right\}
+    \end{align}
+
+    \subsubsection{推广}
+
+    三元函数：\(u = f\left(x,y,z\right),\; \left(x,y,z\right) \in D\)；
+
+    \(n\)元函数：\(u = f\left(x_1,x_2,x_3,\ldots,x_n\right),\; \left(x_1,x_2,x_3,\ldots,x_n\right) \in D\)
+
+    \subsubsection{自然定义域}
+
+    使算式有意义的点的集合。
+    
+    例如\(z = \ln \left(x+y\right)\)的自然定义域为
+    \(D = \left\{\left(x,y\right) \mid x + y > 0\right\}\)。\(z = \arcsin \left(x+y\right)\)
+    的自然定义域为\(D = \left\{\left(x,y\right) \mid x^2 + y^2 \leq 1\right\}\)。
+
+    \subsubsection{二元函数的图形}
+
+    设函数\(z=f\left(x,y\right)\)的定义域为\(D\)。对于任意取定的点\(P(x,y) \in D\)，
+    对应的函数值为\(z=f\left(x,y\right)\)。这样，以\(x\)为横坐标，\(y\)为纵坐标和
+    \(z=f\left(x,y\right)\)为竖坐标在空间就确定一点\(M\left(x,y,z\right)\)。
+    当\(x,y\)遍取\(D\)上的一切点时，得到一个空间点集
+
+    \begin{align}
+        \left\{\left(x,y,z\right) \mid z=f\left(x,y\right),\; \left(x,y\right) \in D\right\}
+    \end{align}
+    
+    这个点集称为二元函数\(z=f\left(x,y\right)\)的图形，通常我们也说二元函数的图形是一张曲面。
+
+    例如，由空间解析几何知道，线性函数$z=ax+by+c$
+    的图形是一张平面，而函数$z=x^2+y^2$的图形是旋转抛物面。
+
+\subsection{多元函数的极限}
+
+\subsubsection{二元函数的极限}
+
+    如果在\(P\left(x,y\right) \rightarrow P_0\left(x_0,y_0\right)\)（即\(\left|PP_0\right| =
+    \sqrt{\left(x-x_0\right)^2 + \left(y-y_0\right)^2} \rightarrow 0\)）过程中，对应的函数值
+    无限接近于一个确定的常数\(A\)，那么就说\(A\)是函数\(f\left(x,y\right)\)当
+    \(\left(x,y\right) \rightarrow \left(x_0,y_0\right)\)时的极限。
+
+    \textbf{定义}：“\(\varepsilon - \delta\)”语言
+
+    设二元函数 $f(P)=f(x, y)$ 的定义域为 $D$，$P_0\left(x_0, y_0\right)$
+    是$D$的聚点。如果存在常数$A$，对于任意给定的正数$\varepsilon$，总存在正数$\delta$，
+    使得当点$P(x, y) \in D \cap \ddot{U}\left(P_0, \delta\right)$ 时，都有
+
+    \begin{equation}
+        \left|f(P)-A\right|=\left|f(x, y)-A\right|<\varepsilon
+    \end{equation}
+
+    成立，那么就称常数\(A\)为函数\(f\left(x,y\right)\)当\(\left(x,y\right) \rightarrow \left(x_0,y_0\right)\)
+    的极限，记作
+
+    \begin{equation}
+        \lim _{P \rightarrow P_0} f(P)=A \quad
+    \end{equation}
+
+    或
+
+    \begin{equation}
+        f(P) \rightarrow A\left(P \rightarrow P_0\right)
+    \end{equation}
+
+    \textbf{注意}：
+
+    \begin{enumerate}
+        \item \(P_0\)是\(D\)的聚点；
+        \item 证明过程中，核心在于寻找\(\delta = \delta\left(\varepsilon\right)\)。
+    \end{enumerate}
 
 \end{document}
