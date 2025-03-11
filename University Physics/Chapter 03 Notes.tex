@@ -695,4 +695,366 @@
         \item 在无相对位移或相对位移与一对力垂直的情况下，一对力的功必为零。
     \end{enumerate}
 
+\section{功能原理、机械能守恒定律}
+
+\subsection{质点系功能原理}
+
+    \textbf{系统的机械能}：动能与势能的综合称为机械能，即
+
+    \[
+        E = E_{\mathrm{k}} + E_{\mathrm{p}}
+    \]
+
+    \textbf{内力的功可分为}：保守内力的功和非保守内力功
+
+    \[
+        W^{\mathrm{in}} = \sum_{i} W_{i}^{\mathrm{in}} =
+        W_{\mathrm{c}}^{\mathrm{in}} + W_{\mathrm{nc}}^{\mathrm{in}}
+    \]
+
+    由势能的定义，保守内力的功总等于系统势能的减少：
+
+    \[
+        W_{\mathrm{c}}^{\mathrm{in}} = - \Delta E_{\mathrm{p}}
+    \]
+
+    \textbf{系统的功能原理}
+
+    （由质点系的动能定理）
+
+    \[
+        W^{\mathrm{ex}} + W^{\mathrm{in}} = W^{\mathrm{ex}} + W_{\mathrm{c}}^{\mathrm{in}}
+        + W_{\mathrm{nc}}^{\mathrm{in}} = W^{\mathrm{ex}} - \Delta E_{\mathrm{p}} +
+        W_{\mathrm{nc}}^{\mathrm{in}} = \Delta E_{\mathrm{k}}
+    \]
+
+    于是，
+
+    \begin{align}
+        \Delta E = \Delta E_{\mathrm{k}} + \Delta E_{\mathrm{p}} =
+        W^{\mathrm{ex}} + W_{\mathrm{nc}}^{\mathrm{in}}
+    \end{align}
+
+    在选定的质点系内，在任一过程中，质点系总机械能的增量等于\textbf{所有外力}的功与\textbf{非保守内力}的功的代数和。
+
+    非保守内力的功将导致机械能与其他形式的能量转换。
+
+\subsection{机械能守恒定律}
+
+    由功能原理：$\Delta E = \Delta E_{\mathrm{k}} + \Delta E_{\mathrm{p}} =
+    W^{\mathrm{ex}} + W_{\mathrm{nc}}^{\mathrm{in}}$。
+
+    如果$W^{\mathrm{ex}} + W_{\mathrm{nc}}^{\mathrm{in}} = 0$，则
+
+    \[
+        \Delta E = \Delta E_{\mathrm{k}} + \Delta E_{\mathrm{p}} = 0
+    \]
+
+    即，如是系统内只有保守内力做功，其他内力和一切外力都不做功，或元功之和为零，
+    则系统内各物体的动能和势能可以相互转换，但总机械能保持不变。
+
+    \begin{enumerate}
+        \item 质点系的机械能守恒的条件是：在一个过程中，既没有外力做功，也没有非保守内力（如摩擦力、爆炸力、流体的黏性阻力等耗散力）做功，或者外力和非保守内力做的总功为零。
+        \item 在满足守恒条件时，质点系的总机械能可以在动能和系统势能之间转化，也可以在系统内各物体之问转移，但在转化和转移过程中保特总机械能不变。
+    \end{enumerate}
+
+\subsection{能量守恒定律}
+
+    对于一个不受外界影响的封闭系统（有时也称为狐立系统），系统内各种不同形式的能量可以互相转化，也可以从系统的一部分转移到另一部分，
+    但不论系统内发生什么过程，能量既不会消失也不会产生，系统的总能量恒定不变。这就是能量守恒定律 (law of conservation of energy)。
+
+\subsection{动量与能量的比较}
+
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{|l|ll|}
+            \hline
+            \textbf{物理量} & \multicolumn{1}{l|}{\textbf{动量(momentum)}}                    & \textbf{能量(kinetic energy)}      \\ \hline
+            表达式          & \multicolumn{1}{l|}{\(\overrightarrow{p} = m\overrightarrow{v}\)} & \(E_{\mathrm{k}} = \frac{1}{2}mv^2\) \\ \hline
+            单位  & \multicolumn{1}{l|}{\(\mathrm{kg \cdot m / s}\)} & \(\mathrm{J}\)                  \\ \hline
+            性质  & \multicolumn{1}{l|}{矢量}                      & 标量                          \\ \hline
+            关系  & \multicolumn{2}{c|}{\(\dfrac{p^2}{2m} = E_{\mathrm{k}}\)}                       \\ \hline
+            变化量 & \multicolumn{1}{l|}{\(\Delta p\)由力的冲量决定}         & \(\Delta E_{\mathrm{k}}\)由力的功决定 \\ \hline
+        \end{tabular}
+    \end{table}
+
+    另外，\(\Delta p\)与惯性系的选择无关，\(\Delta E_{\mathrm{k}}\)随惯性系的不同而不同。
+
+\section{碰撞、碰撞定律、质心运动定律}
+
+\subsection{碰撞}
+
+    \textbf{定义}
+
+    两个或两个以上的物体相遇，相遇时物体之间的相互作用，仅持续极为短暂的时间。
+
+    \textbf{特点}
+
+    \begin{enumerate}
+        \item 作用时间极短；
+        \item 作用力变化极快；
+        \item 作用力峰值极大；
+        \item 过程中物体发生形变；
+        \item 可认为碰撞过程中只受内力（\(\overrightarrow{F}^{\mathrm{ex}} \ll \overrightarrow{F}^{\mathrm{in}}\)），故遵守动量守恒定律（\(\sum_{i} \overrightarrow{p}_{i} = \overrightarrow{C}\)）。
+    \end{enumerate}
+
+\subsection{碰撞定律}
+
+    \begin{align}
+        e = \frac{v_2 - v_1}{v_{10} - v_{20}}
+    \end{align}
+
+    即
+
+    $$
+    e = \frac{\text{分离速度}}{\text{接近速度}}
+    $$
+
+    （\(e\)称恢复系数，由材料性质决定。）
+
+\subsection{碰撞的分类}
+
+\subsubsection{完全弹性碰撞}
+
+    恢复系数\(e=1\)，\(v_2-v_1=v_{10} - v_{20}\)。
+    
+    碰撞后形变能完全恢复，没有机械能的损失，系统碰撞前后机械能守恒。
+
+    动量守恒，机械能守恒。
+
+    对于\textbf{完全弹性对心碰撞}：
+
+    $$
+        \left\{\begin{array}{l}
+        m_1 v_{10}+m_2 v_{20}=m_1 v_1+m_2 v_2 \\
+        \dfrac{1}{2} m_1 v_{10}^2+\dfrac{1}{2} m_2 v_{20}^2=\dfrac{1}{2} m_1 v_1^3+\dfrac{1}{2} m_2 v_2^2
+        \end{array}\right.
+    $$
+
+    联立方程解得
+
+    \begin{align}
+        \left\{\begin{array}{l}
+            v_1=\dfrac{m_1-m_2}{m_1+m_2} v_{10}+\dfrac{2 m_2}{m_1+m_2} v_{20} \\
+            v_2=\dfrac{2 m_1}{m_1+m_2} v_{10}+\dfrac{m_2-m_1}{m_1+m_2} v_{20}
+        \end{array}\right.
+    \end{align}
+
+\subsubsection{完全非弹性碰撞}
+
+    恢复系数\(e=0\)，\(v_2=v_1=v\)。
+    
+    碰撞后二者没有分开，并以共同的速度一起运动。物体碰撞后已经完全不可能恢复形变。
+
+    动量守恒，机械能不守恒。
+
+    对于\textbf{完全非弹性对心碰撞}：
+
+    由
+
+    $$
+        m_1 v_{10}+m_2 v_{20}=\left(m_1+m_2\right) v
+    $$
+
+    解得
+
+    \begin{equation}
+        v=\frac{m_1 v_{10}+m_2 v_{20}}{m_1+m_2}
+    \end{equation}
+
+    损失能量
+
+    \begin{equation}
+        \Delta E=\frac{1}{2} m_1 v_{10}^2+\frac{1}{2} m_2 v_{20}^2-\frac{1}{2}\left(m_1+m_2\right) v^2
+    \end{equation}
+
+\subsubsection{非完全弹性碰撞}
+
+    恢复系数\(0<e<1\)，\(v_2=v_1=e\left(v_{10} - v_{20}\right)\)。
+
+    碰撞后形变不能完全恢复，一部分机械能将被转变为其他形式的能量（如热能）。
+
+    动量守恒，机械能不守恒。
+
+\subsubsection{斜碰撞}
+
+    碰撞前与碰撞后的速度不在一条直线上。
+
+    例如，一光滑球与另外静止的光滑球相碰。如果两者均为弹性球，且碰后两者的运动方向垂直，
+    则两小球质量必然相等
+
+\subsection{质心}
+
+\subsubsection{定义}
+
+    在研究质点系统问题中，与质点系统质量分布有关的一个代表点，它的位置在平均意义上代表
+    着质量分布中心。
+
+\subsubsection{质心位置}
+
+    \begin{align}
+        \overrightarrow{r}_{\mathrm{C}} = \frac{\sum_{i} m_ir_i}{M}
+    \end{align}
+
+    即
+
+    $$
+        \left\{\begin{array}{l}
+        x_C=\frac{\sum m_i x_i}{M} \\
+        y_C=\frac{\sum m_i y_i}{M} \\
+        z_C=\frac{\sum m_i z_i}{M}
+        \end{array}\right.
+    $$
+
+    则质量连续分布的系统的质心位置
+
+    $$
+        \overrightarrow{r}_C=\int \overrightarrow{r} \rmd m / M
+    $$
+
+    即
+
+    $$
+        \left\{\begin{array}{l}
+            x_c=\frac{\int x \mathrm{~d} m}{M} \\
+            y_c=\frac{\int y \mathrm{~d} m}{M} \\
+            z_c=\frac{\int z \mathrm{~d} m}{M}
+        \end{array}\right.
+    $$
+
+    \textbf{注意}
+
+    \begin{enumerate}
+        \item 质心不同于重心，物体体积不太大时，两者重和；物体远离地球时不受重力，"重心"失去意义，"质心"仍在。
+        \item 当外力的作用线通过质心时，物体只作平动，没有转动，就好像物体的质量都集中在质心这一点上。
+    \end{enumerate}
+
+\subsubsection{质心速度}
+
+    \begin{equation}
+        \overrightarrow{v}_C=\frac{\rmd \overrightarrow{r}_C}{\rmd t}=\frac{\sum m_i \frac{\rmd \overrightarrow{r}_i}{\rmd t}}{M}=\frac{\sum m_i \overrightarrow{v}_i}{M}
+    \end{equation}
+
+\subsubsection{质心加速度}
+
+    \begin{equation}
+        \overrightarrow{v}_C=\frac{\rmd \overrightarrow{r}_C}{\rmd t}=\frac{\sum m_i \frac{\rmd \overrightarrow{r}_i}{\rmd t}}{M}=\frac{\sum m_i \overrightarrow{v}_i}{M}
+    \end{equation}
+
+\subsection{质心运动定律}
+
+    质心的加速度与质点系所受外力的矢量和成正比，与质点系的总质量成反比，质心的加速度与内力无关。
+
+    \begin{equation}
+        \overrightarrow{a}_C=\frac{\sum \overrightarrow{F}_i}{\sum m_i}=\frac{\sum \overrightarrow{F}_i}{M}
+    \end{equation}
+
+
+\section{例题}
+
+\subsection{Problem 1}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.12]{"Chapter 03 images/pic7.png"}
+        % \caption{}
+        \label{pic7}
+    \end{wrapfigure}
+
+    在宇宙中有密度为\(\rho\)的尘埃,这些尘埃相对惯性参考系是静止的。有一质量为\(m_0\)的宇宙飞船以初速度\(v_0\)
+    穿过宇宙尘埃，由于尘埃粘贴到飞船上，致使飞船的速度发生改变。求飞船的速度与其在尘埃中飞行时间的关系。
+    (设想飞船的外形是截面积为\(S\)的圆柱体)
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    尘埃与飞船作完全非弹性碰撞，把它们作为一个系统，则动量守恒：
+
+    $$
+        m_0 v_0+\left(m-m_0\right) \times 0=m v
+    $$
+
+    解得
+
+    \[
+        m = \frac{m_0v_0}{v}
+    \]
+
+    所有与飞船迎面相撞的尘埃都会粘贴到飞船上。考查\(\rmd t\)时间内与飞船迎面相撞的尘埃：
+
+    \[
+        \rmd m = \rho Sv\rmd t
+    \]
+
+    又因为
+
+    \[
+        m = \frac{m_0v_0}{v}
+    \]
+
+    所以
+
+    \[
+        \rmd m = -\frac{m_0v_0}{v^2} \rmd v = \rho Sv\rmd t
+    \]
+
+    由
+
+    $$
+        -\int_{v_0}^v \frac{d v}{v^3}=\frac{\rho S}{m_0 v_0} \int_0^t d t
+    $$
+
+    得
+
+    $$
+        v=v_0\sqrt{\frac{m_0}{2 \rho S v_0 t+m_0}}
+    $$
+
+\subsection{Problem 2}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \begin{tikzpicture}[scale=0.8]
+            \coordinate[label=below:$x$] (x) at (2,0);
+            \coordinate[label=above:$y$] (y) at (0,2);
+            \coordinate[label=below:$O$] (O) at (0,0);
+            \draw[->] (O) -- (y);
+            \draw[->] (-2,0) -- (x);
+            \draw[BrickRed, line width=2pt] (1.5,0) arc (0:180:1.5);
+            \draw[Black, line width=2pt] (0.75*1.732,0.75) arc (30:45:1.5);
+            \draw[dashed] (O) -- (0.75*1.414,0.75*1.414);
+            \draw (O) -- (0.75*1.732,0.75);
+            \coordinate[label=above:$\theta$] (theta) at (1,0);
+            \coordinate[label=above:$R$] (R) at (0.5,0.6);
+            \coordinate[label=above:$\rmd \theta$] (dtheta) at (0.8,1.5);
+            \draw (0.5,0.4) -- (dtheta);
+            \coordinate[label=right:$\rmd m$] (dm) at (1,0.8);
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    已知一圆环半径为\(R\)，质量为\(M\)，求它的质心位置。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    建坐标系如图，取一小段长度\(\rmd l\)则其质量为\(\rmd m = \lambda \rmd l\)。
+
+    又\(\rmd l = R \rmd \theta\)，故\(\rmd m = \frac{M}{\uppi R} R \rmd \theta\)
+
+    而\(x = R\cos \theta\)，\(y = R\sin \theta\)
+
+    故
+
+    $$
+        y_c=\frac{\int y \mathrm{~d} m}{M}=\frac{\int_0^\pi R \sin \theta \frac{M}{\pi R} R \mathrm{~d} \theta}{M}=\frac{2 R}{\pi}
+    $$
+
+    由对称性可知，
+
+    $$
+        x_c = 0
+    $$
+
 \end{document}
