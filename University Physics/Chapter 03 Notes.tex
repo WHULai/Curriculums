@@ -16,6 +16,7 @@
 \usepackage{indentfirst}
 \usepackage{wrapfig}
 \usepackage{upgreek}
+\usepackage{subfigure}
 \ctexset {today=old}
 \usetikzlibrary{automata,positioning,shapes.geometric,arrows.meta,patterns,calc}
 \numberwithin{equation}{section}
@@ -320,7 +321,7 @@
 
     \begin{equation}
         \begin{aligned}
-        W & =F \cos \theta \cdot|\Delta \overrightarrow{r}| \\
+        W & =F \cos \alpha \cdot|\Delta \overrightarrow{r}| \\
         & =\overrightarrow{F} \cdot \Delta \overrightarrow{r}
         \end{aligned}
     \end{equation}
@@ -401,13 +402,13 @@
         \centering
         \includegraphics[scale=0.2]{"Chapter 03 images/pic3.png"}
         % \caption{}
-        \label{pic1}
+        \label{pic3}
     \end{wrapfigure}
 
     $$
     \begin{aligned}
-        W & =\int \stackrel{\rightharpoonup}{F} \cdot \mathrm{~d} \stackrel{\rightharpoonup}{r} \\
-        & =\int F_{\mathrm{t}}|\mathrm{~d} \vec{r}|=\int F_{\mathrm{t}} \mathrm{~d} s
+        W & =\int \overrightarrow{F} \cdot \mathrm{~d} \overrightarrow{r} \\
+        & =\int F_{\mathrm{t}}|\mathrm{~d} \overrightarrow{r}|=\int F_{\mathrm{t}} \mathrm{~d} s
     \end{aligned}
     $$
 
@@ -460,5 +461,238 @@
     \end{equation}
 
     意义：合外力所做的功等于系统动能的增量。
+
+\section{保守力、势能、成对力的功}
+
+\subsection{保守力}
+
+\subsubsection{万有引力}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 03 images/pic4.png"}
+        % \caption{}
+        \label{pic4}
+    \end{wrapfigure}
+
+    \(m_{E}\)对\(m\)的万有引力为
+
+    $$
+        \overrightarrow{F}=-G \frac{m_{E} m}{r^2} \overrightarrow{e}_r
+    $$
+
+    \(m\)移动\(\rmd \overrightarrow{r}\)时，\(\overrightarrow{F}\)做元功为
+
+    $$
+        \rmd W = \overrightarrow{F} \cdot \rmd \overrightarrow{r}
+        =-G \frac{m_{E} m}{r^2} \overrightarrow{e}_r \cdot \rmd \overrightarrow{r}
+    $$
+
+    \(m\)从\(A\)到\(B\)时，\(\overrightarrow{F}\)做功为
+
+    $$
+    W=\int \overrightarrow{F} \cdot \rmd \overrightarrow{r}
+    =\int_A^B-G \frac{m_{E} m}{r^2} \overrightarrow{e}_r \cdot \rmd \overrightarrow{r}
+    $$
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.15]{"Chapter 03 images/pic6.png"}
+        % \caption{}
+        \label{pic6}
+    \end{wrapfigure}
+
+    其中，$\overrightarrow{e}_r \cdot \mathrm{~d} \overrightarrow{r}=
+    \left|\overrightarrow{e}_r\right| \cdot|\mathrm{d} \overrightarrow{r}| \cos \alpha=\mathrm{d} r$
+
+    即
+
+    $$
+        W=\int_{r_A}^{r_B} \left(-G \frac{m_E m}{r^2}\right) \rmd r
+    $$
+
+    于是
+
+    \begin{equation}
+        W=G m_{E} m\left(\frac{1}{r_B}-\frac{1}{r_A}\right)
+    \end{equation}
+
+    \textbf{做功特点}：做功大小只与物体的始末位置有关，与路径无关。
+
+\subsubsection{弹性力做功}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.12]{"Chapter 03 images/pic5.png"}
+        % \caption{}
+        \label{pic5}
+    \end{wrapfigure}
+
+    弹性力\(\overrightarrow{F} = -kx\overrightarrow{i}\)，则元功
+
+    \[
+        \rmd W = -kx \rmd x
+    \]
+
+    于是
+
+    \begin{equation}
+        W=\int_{x_a}^{x_b} F \mathrm{~d} x=\int_{x_a}^{x_b}-k x \mathrm{~d} x=-\left(\frac{1}{2} k x_b^2-\frac{1}{2} k x_a^2\right)
+    \end{equation}
+
+    \textbf{做功特点}：做功大小只与物体的始末位置有关，与路径无关。
+
+\subsubsection{保守力与非保守力的定义}
+
+    \textbf{保守力}：作功与路径无关，仅决定于始、末位置的力。
+
+    质点沿任意闭合路径运动一周时，保守力对它作功为零。
+
+    \textbf{非保守力}：所作的功与路径有关的力。（如摩擦力）
+
+\subsection{势能}
+
+\subsubsection{定义}
+
+    因相对位置而具有的作功本领称为势能或位能（因有速度而具有的作功本领称为动能）。
+    势能与质点的位置有关。
+
+    如引力势能
+
+    \[
+        E_{\mathrm{p}} = -G \frac{m_{E}m}{r}
+    \]
+
+    如弹性势能
+
+    \[
+        E_{\mathrm{p}} = \frac{1}{2}kx^2
+    \]
+
+\subsubsection{保守力做功}
+
+    \textbf{保守力做的功等于势能的减少}，即
+
+    \begin{equation}
+        W =-\left(E_{\mathrm{p} 2}-E_{\mathrm{p} 1}\right)=-\Delta E_{\mathrm{p}}
+    \end{equation}
+
+\subsubsection{保守力做功势能的计算}
+
+    令\(E_{\mathrm{p0}} = 0\)，则
+
+    \begin{equation}
+        E_{\mathrm{p}}(x, y, z)=\int_{(x, y, z)}^{E_{\mathrm{p} 0}=0} \overrightarrow{F} \cdot \mathrm{~d} \overrightarrow{r}
+    \end{equation}
+
+    \begin{enumerate}
+        \item 势能是\textbf{状态的函数}，$E_{\mathrm{p}}=E_{\mathrm{p}}(x, y, z)$；
+        \item 势能具有\textbf{相对性}，势能大小与势能零点的选取有关；
+        \item 势能是\textbf{属于系统}的；
+        \item \textbf{势能差}与势能零点的选取无关。
+    \end{enumerate}
+
+\subsubsection{势能曲线}
+
+    \begin{figure}[htbp]
+        \centering
+        \subfigure
+        {
+            \begin{tikzpicture}
+                \coordinate[label=left:$E_{\mathrm{p}}$] (E_p) at (0,2);
+                \coordinate[label=above:$z$] (z) at (2,0);
+                \coordinate[label=left:$O$] (O) at (0,0);
+                \coordinate[label={above:$E_{\mathrm{p}} = mg z$}] (formula) at (0,3);
+                \draw[->] (O) -- (z);
+                \draw[->] (O) -- (E_p);
+                \draw[domain=0:2,BrickRed] plot(\x,{\x});
+            \end{tikzpicture}
+        }
+        \subfigure
+        {
+            \begin{tikzpicture}
+                \coordinate[label=left:$E_{\mathrm{p}}$] (E_p) at (0,2);
+                \coordinate[label=above:$x$] (x) at (2,0);
+                \coordinate[label=left:$O$] (O) at (0,0);
+                \coordinate[label={above:$E_{\mathrm{p}} = \frac{1}{2}kx^2$}] (formula) at (0,3);
+                \draw[->] (-2,0) -- (x);
+                \draw[->] (O) -- (E_p);
+                \draw[domain=-1.5:1.5,BrickRed] plot(\x,{\x*\x});
+            \end{tikzpicture}
+        }
+        \subfigure
+        {
+            \begin{tikzpicture}
+                \coordinate[label=left:$E_{\mathrm{p}}$] (E_p) at (0,0.5);
+                \coordinate[label=above:$x$] (x) at (2,0);
+                \coordinate[label=left:$O$] (O) at (0,0);
+                \coordinate[label={above:$E_{\mathrm{p}} = -G \frac{m_{E}m}{r}$}] (formula) at (0,1.5);
+                \draw[->] (O) -- (x);
+                \draw[->] (0,-1.5) -- (E_p);
+                \draw[domain=0.1:2,BrickRed] plot(\x,{-0.15/\x});
+            \end{tikzpicture}
+        }
+        % \caption{}
+    \end{figure}
+
+    把势能和相对位置的关系绘成曲线，便得到势能曲线。
+            
+    通过势能曲线，可以显示出系统总机械能，动能和势能间的关系
+    $E=E_k+E_p$，由 $E_{\mathrm{k}} \geq 0$ ，可以根据曲线的形状讨论物体的运动。
+
+\subsubsection{由势能求表达式}
+
+    可以根据势能\(E_{\mathrm{p}}\left(x,y,z\right)\)的情况，判断物体在各个位置所受保守力的大小和方向：
+
+    $$
+        \rmd W=F_x \rmd x=-\rmd E_p
+    $$
+
+    则
+
+    \begin{equation}
+        F_x=-\frac{\rmd E_p}{\rmd x}
+    \end{equation}
+
+    如果势能是位置\(\left(x,y,z\right)\)的多元函数，则
+
+    \begin{equation}
+        \overrightarrow{F}=F_x \overrightarrow{i}+F_y \overrightarrow{j}+F_z \overrightarrow{k}=
+        -\left(\frac{\partial E_p}{\partial x} \overrightarrow{i}+\frac{\partial E_p}{\partial y} \overrightarrow{j}+\frac{\partial E_p}{\partial z} \overrightarrow{k}\right)
+    \end{equation}
+
+\subsection{成对的力的功}
+
+    力总是成对的，无论是保守力还是非保守力。
+    
+    设质量为$m_1$和$m_2$的两个物体分别受到 $F_1$ 和 $F_2$ 的力，
+    且 $\overrightarrow{F}_1=-\overrightarrow{F}_2$在$\rmd t$时间内位移为 $\rmd r_1$
+    和 $\rmd r_2$ ，质点 2 相对于质点 1 的相对位移 $\rmd \overrightarrow{r}^{\prime}$有
+    $\rmd \overrightarrow{r}_2=d \overrightarrow{r}_1+\rmd r^{\prime}$ 则元功为：
+    
+    $$
+        \begin{aligned}
+        & \rmd W_1=\overrightarrow{F}_1 \cdot \rmd \overrightarrow{r}_1 \\
+        & \rmd W_2=\overrightarrow{F}_2 \cdot \rmd \overrightarrow{r}_2
+        \end{aligned}
+    $$
+
+    这一对力所作元功之和为：
+
+    $$
+    \begin{aligned}
+        & \rmd W=\overrightarrow{F}_1 \cdot \rmd \overrightarrow{r}_1+\overrightarrow{F}_2 \cdot \rmd \overrightarrow{r}_2=\overrightarrow{F}_1 \cdot\rmd\overrightarrow{r}_1+\overrightarrow{F}_2 \cdot\left(d \overrightarrow{r}_1+d \overrightarrow{r}^{\prime}\right) \\
+        & =\left(-\overrightarrow{F}_2+\overrightarrow{F}_2\right) \cdot\rmd\overrightarrow{r}_1+\overrightarrow{F}_2 \cdot\rmd\overrightarrow{r}^{\prime} \quad \\
+        & =\overrightarrow{F}_2 \cdot\rmd\overrightarrow{r}^{\prime}
+    \end{aligned}
+    $$
+
+    \begin{enumerate}
+        \item 成对力的功只与作用力和相对位移有关；
+        \item 成对力的总功具有与参考系选择无关的不变性质。\\
+            为方便起见，计算时常认为其中一个质点静止，并以该质点所在位置为原点，
+            再计算另一质点受力所做的功，这就是一对力的功。
+        \item 在无相对位移或相对位移与一对力垂直的情况下，一对力的功必为零。
+    \end{enumerate}
 
 \end{document}
