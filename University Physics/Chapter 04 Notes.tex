@@ -336,7 +336,7 @@
     \textbf{定义}
 
     \begin{align}
-        J = mr^2
+        I = mr^2
     \end{align}
 
     为质点\(m\)对\(O\)点的“转动惯量”。
@@ -344,10 +344,12 @@
     于是
 
     \begin{align}
-        M = J \alpha
+        M = I \alpha
     \end{align}
 
 \subsection{刚体的转动惯量}
+
+\subsubsection{定义}
 
     \begin{wrapfigure}{r}{4cm}
         \centering
@@ -376,10 +378,10 @@
         \sum_j M_{\mathrm{e} j}=\left(\sum \Delta m_j r_j^2\right) \alpha
     \end{equation}
 
-    \textbf{定义}
+    于是\textbf{定义}
 
     \begin{align}
-        J=\sum_j \Delta m_j r_j^2
+        I=\sum_j \Delta m_j r_j^2
     \end{align}
 
     为刚体对\(O\)点的“转动惯量”。
@@ -387,26 +389,367 @@
     积分形式即为
 
     \begin{equation}
-        J=\int r^2 \mathrm{~d} m
+        I=\int r^2 \mathrm{~d} m
     \end{equation}
+
+\subsubsection{例}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=right:$x$] (x_axis) at (5,0);
+            \coordinate[label=below:$x$] (x) at (1.3,-0.2);
+            \coordinate[label=$l$] (l) at (2,0.5);
+            \coordinate[label=below:$\rmd x$] (x) at (2.3,-0.2);
+            \draw (0,-2) -- (0,2);
+            \draw[->] (O) -- (x_axis);
+            \draw (4,0) -- (4,1.5);
+            \draw[->] (1.8,0.5) -- (0,0.5);
+            \draw[->] (2.2,0.5) -- (4,0.5);
+            \draw[line width=2pt, color=black!70] (O) -- (4,0);
+            \draw[line width=2pt, color=BrickRed] (2.1,0) -- (2.4,0);
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例1 \quad}均匀杆\(m\)对\(O\)轴（通过杆的端点与杆垂直）的转动惯量：
+
+    运用微积分的思想和方法，
+
+    \begin{align}
+        I_{O} = \int x^2 \rmd m = \int_{0}^{l} x^2 \rmd x \lambda = \frac{\lambda l^3}{3} = \frac{1}{3} m l^2
+    \end{align}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=below:$C$] (C) at (2,0);
+            \coordinate[label=above:$\frac{l}{2}$] (l-1) at (1,0.5);
+            \coordinate[label=above:$\frac{l}{2}$] (l-2) at (3,0.5);
+            \draw (O) -- (0,1.5);
+            \draw (4,0) -- (4,1.5);
+            \draw (2,-2) -- (2,2);
+            \draw[<->] (2,0.5) -- (0,0.5);
+            \draw[<->] (2,0.5) -- (4,0.5);
+            \draw[line width=2pt, color=black!70] (O) -- (4,0);
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例2 \quad}均匀杆\(m\)对\(C\)轴（通过杆的端点与杆垂直）的转动惯量：
+
+    \begin{align}
+        J_C & =\int x^2 d m=\int_{-l / 2}^{l / 2} x^2 d x \lambda =\frac{1}{12} \lambda l^3=\frac{1}{12} m l^2
+    \end{align}
+
+    运用微积分的思想和方法，
+
+    $$
+        I_{O} = \int x^2 \rmd m = \int_{0}^{l} x^2 \rmd x \lambda = \frac{\lambda l^3}{3} = \frac{1}{3} m l^2
+    $$
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+            %Shape: Can [id:dp17410052803948828] 
+            \draw   (167.4,90.33) -- (211.46,90.07) .. controls (218.62,90.03) and (224.5,103.43) .. (224.6,120) ..
+                controls (224.69,136.57) and (218.96,150.03) .. (211.8,150.07) -- (167.74,150.33) .. controls
+                (160.58,150.37) and (154.7,136.97) .. (154.6,120.4) .. controls (154.51,103.83) and (160.24,90.37) .. (167.4,90.33) ..
+                controls (174.56,90.29) and (180.45,103.68) .. (180.54,120.25) .. controls (180.64,136.82) and (174.91,150.29) .. (167.74,150.33) ;
+            %Straight Lines [id:da06354151922433426] 
+            \draw    (125.4,120.6) -- (166.38,120.54) ;
+            %Straight Lines [id:da03453199583434419] 
+            \draw    (224.6,120) -- (256.2,120.2) ;
+            \draw   (167.91,98.31) -- (173.02,93.94) -- (174.33,100.53) ;
+            %Straight Lines [id:da7464924546039589] 
+            \draw    (165.62,120.54) -- (173,94.08) ;
+            % Text Node
+            \draw (156.77,121.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+            % Text Node
+            \draw (142.15,101.63) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例3 \quad}均匀圆柱\(m\)对转轴（圆柱体的轴线）的转动惯量：
+
+    $$
+        I = \frac{1}{2} m R^2
+    $$
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp023285849196069686] 
+        \draw   (169.6,97.35) .. controls (159.81,97.3) and (151.94,81.59) .. (152.04,62.26)
+            .. controls (152.13,42.93) and (160.15,27.3) .. (169.94,27.35) .. controls (179.73,27.39) and (187.59,43.1)
+            .. (187.5,62.43) .. controls (187.41,81.76) and (179.39,97.39) .. (169.6,97.35) -- cycle ;
+        %Shape: Arc [id:dp152216816696912] 
+        \draw  [draw opacity=0] (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) ..
+            (178.45,28.08) .. controls (184.62,28.11) and (189.55,43.64) .. (189.45,62.78) .. controls
+            (189.36,81.88) and (184.3,97.35) .. (178.14,97.37) -- (178.28,62.72) -- cycle ;
+        \draw (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) .. (178.45,28.08) ..
+            controls (184.62,28.11) and (189.55,43.64) .. (189.45,62.78) .. controls (189.36,81.88) and (184.3,97.35) .. (178.14,97.37) ;  
+        %Straight Lines [id:da15998039992585622] 
+        \draw    (169.94,27.35) -- (178.39,28.08) ;
+        %Straight Lines [id:da9421417261902603] 
+        \draw    (169.6,97.35) -- (178.14,97.37) ;
+        %Straight Lines [id:da023543911373016257] 
+        \draw    (127.15,62.23) -- (169.77,62.35) ;
+        %Straight Lines [id:da05591836369536707] 
+        \draw    (189.77,62.23) -- (213.77,62.23) ;
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (169.77,62.35) -- (182.54,39.62) ;
+        \draw   (177.34,42.47) -- (182.49,39.5) -- (182.45,45.45) ;
+        % Text Node
+        \draw (163.23,41.28) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (165.85,65.74) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例4 \quad}均匀圆盘\(m\)对转轴（通过盘心垂直于盘面）的转动惯量：
+
+    $$
+        I = \frac{1}{2} m R^2
+    $$
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp023285849196069686] 
+        \draw   (169.6,97.35) .. controls (159.81,97.3) and (151.94,81.59) .. (152.04,62.26) ..
+            controls (152.13,42.93) and (160.15,27.3) .. (169.94,27.35) .. controls (179.73,27.39) and (187.59,43.1)
+            .. (187.5,62.43) .. controls (187.41,81.76) and (179.39,97.39) .. (169.6,97.35) -- cycle ;
+        %Shape: Arc [id:dp152216816696912] 
+        \draw  [draw opacity=0] (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) .. (178.45,28.08)
+            .. controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89) and (185.02,97.36)
+            .. (178.14,97.37) -- (178.28,62.72) -- cycle ; \draw   (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08)
+            .. (178.45,28.08) .. controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89) and (185.02,97.36) .. (178.14,97.37) ;  
+        %Straight Lines [id:da15998039992585622] 
+        \draw    (169.94,27.35) -- (178.39,28.08) ;
+        %Straight Lines [id:da9421417261902603] 
+        \draw    (169.6,97.35) -- (178.14,97.37) ;
+        %Straight Lines [id:da023543911373016257] 
+        \draw    (127.15,62.23) -- (187.5,62.43) ;
+        %Straight Lines [id:da05591836369536707] 
+        \draw    (191.31,62.23) -- (213.77,62.23) ;
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (169.77,62.35) -- (182.54,39.62) ;
+        \draw   (177.34,42.47) -- (182.49,39.5) -- (182.45,45.45) ;
+        %Shape: Arc [id:dp47532243106850425] 
+        \draw  [draw opacity=0] (169.5,96.99) .. controls (169.48,96.99) and (169.46,96.99) ..
+            (169.44,96.99) .. controls (162.54,96.93) and (157.1,81.36) .. (157.28,62.23) .. controls (157.47,43.12)
+            and (163.19,27.68) .. (170.07,27.7) -- (169.77,62.35) -- cycle ; \draw   (169.5,96.99) ..
+            controls (169.48,96.99) and (169.46,96.99) .. (169.44,96.99) .. controls (162.54,96.93) and (157.1,81.36)
+            .. (157.28,62.23) .. controls (157.47,43.12) and (163.19,27.68) .. (170.07,27.7) ;  
+        % Text Node
+        \draw (163.23,41.28) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (165.85,65.74) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例5 \quad}均匀圆环\(m\)对转轴（通过环心垂直于盘面）的转动惯量：
+
+    $$
+        I = m R^2
+    $$
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp023285849196069686] 
+        \draw   (169.6,97.35) .. controls (159.81,97.3) and (151.94,81.59) .. (152.04,62.26)
+            .. controls (152.13,42.93) and (160.15,27.3) .. (169.94,27.35) .. controls (179.73,27.39) and (187.59,43.1)
+            .. (187.5,62.43) .. controls (187.41,81.76) and (179.39,97.39) .. (169.6,97.35) -- cycle ;
+        %Shape: Arc [id:dp152216816696912] 
+        \draw  [draw opacity=0] (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) .. (178.45,28.08) ..
+            controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89) and (185.02,97.36)
+            .. (178.14,97.37) -- (178.28,62.72) -- cycle ; \draw   (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08)
+            .. (178.45,28.08) .. controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89)
+            and (185.02,97.36) .. (178.14,97.37) ;  
+        %Straight Lines [id:da15998039992585622] 
+        \draw    (169.94,27.35) -- (178.39,28.08) ;
+        %Straight Lines [id:da9421417261902603] 
+        \draw    (169.6,97.35) -- (178.14,97.37) ;
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (169.77,62.35) -- (182.54,39.62) ;
+        \draw   (177.34,42.47) -- (182.49,39.5) -- (182.45,45.45) ;
+        %Shape: Arc [id:dp47532243106850425] 
+        \draw  [draw opacity=0] (169.5,96.99) .. controls (169.48,96.99) and (169.46,96.99) ..
+            (169.44,96.99) .. controls (162.54,96.93) and (157.1,81.36) .. (157.28,62.23) ..
+            controls (157.47,43.12) and (163.19,27.68) .. (170.07,27.7) -- (169.77,62.35) -- cycle ;
+        \draw (169.5,96.99) .. controls (169.48,96.99) and (169.46,96.99) .. (169.44,96.99) ..
+            controls (162.54,96.93) and (157.1,81.36) .. (157.28,62.23) .. controls (157.47,43.12) and (163.19,27.68) .. (170.07,27.7) ;  
+        %Straight Lines [id:da7330715455990151] 
+        \draw    (170.96,11.25) -- (171.04,113.44) ;
+        % Text Node
+        \draw (174.31,51.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (157.69,61.74) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例6 \quad}均匀圆环\(m\)对转轴（沿圆环直径）的转动惯量：
+
+    $$
+        I = \frac{1}{2} m R^2
+    $$
+    \vspace{2em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (171,61.56) -- (178.11,47.51) -- (182.54,39.62) ;
+        \draw   (177.34,42.77) -- (182.49,39.81) -- (182.45,45.76) ;
+        %Straight Lines [id:da7330715455990151] 
+        \draw    (171,17.81) -- (171,35.62) ;
+        %Shape: Circle [id:dp7000744143017317] 
+        \draw   (146,60.62) .. controls (146,46.81) and (157.19,35.62) ..
+            (171,35.62) .. controls (184.81,35.62) and (196,46.81) .. (196,60.62) .. controls
+            (196,74.42) and (184.81,85.62) .. (171,85.62) .. controls (157.19,85.62)
+            and (146,74.42) .. (146,60.62) -- cycle ;
+        %Straight Lines [id:da5423143354957887] 
+        \draw    (171,98.31) -- (171,85.62) ;
+        %Straight Lines [id:da1925163091022266] 
+        \draw    (171,35.62) -- (171,40.69) ;
+        %Straight Lines [id:da49186666744211105] 
+        \draw    (171,42.62) -- (171,47.69) ;
+        %Straight Lines [id:da6273845348478542] 
+        \draw    (170.88,49.87) -- (170.88,54.94) ;
+        %Straight Lines [id:da5600475408875403] 
+        \draw    (170.63,59.62) -- (170.63,64.69) ;
+        %Straight Lines [id:da3768869837055404] 
+        \draw    (170.75,67.12) -- (170.75,72.19) ;
+        %Straight Lines [id:da21244422124496465] 
+        \draw    (170.88,73.62) -- (170.88,78.69) ;
+        %Straight Lines [id:da19418219961056882] 
+        \draw    (171,80.54) -- (171,85.62) ;
+        % Text Node
+        \draw (174.46,51.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (154.6,60.92) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例7 \quad}薄球壳\(m\)对转轴（沿直径）的转动惯量：
+    \vspace{1em}
+
+    $$
+        I = \frac{2}{3} m R^2
+    $$
+    \vspace{2em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Straight Lines [id:da23564039281617188] 
+        \draw (171,61.56) -- (178.11,47.51) -- (182.54,39.62) ;
+        \draw (177.34,42.77) -- (182.49,39.81) -- (182.45,45.76) ;
+        %Straight Lines [id:da7330715455990151] 
+        \draw (171,17.81) -- (171,35.62) ;
+        %Shape: Circle [id:dp7000744143017317] 
+        \draw (146,60.62) .. controls (146,46.81) and (157.19,35.62) ..
+            (171,35.62) .. controls (184.81,35.62) and (196,46.81) .. (196,60.62) .. controls
+            (196,74.42) and (184.81,85.62) .. (171,85.62) .. controls (157.19,85.62)
+            and (146,74.42) .. (146,60.62) -- cycle ;
+        %Straight Lines [id:da5423143354957887] 
+        \draw (171,98.31) -- (171,85.62) ;
+        %Straight Lines [id:da1925163091022266] 
+        \draw (171,35.62) -- (171,40.69) ;
+        %Straight Lines [id:da49186666744211105] 
+        \draw (171,42.62) -- (171,47.69) ;
+        %Straight Lines [id:da6273845348478542] 
+        \draw (170.88,49.87) -- (170.88,54.94) ;
+        %Straight Lines [id:da5600475408875403] 
+        \draw (170.63,59.62) -- (170.63,64.69) ;
+        %Straight Lines [id:da3768869837055404] 
+        \draw (170.75,67.12) -- (170.75,72.19) ;
+        %Straight Lines [id:da21244422124496465] 
+        \draw (170.88,73.62) -- (170.88,78.69) ;
+        %Straight Lines [id:da19418219961056882] 
+        \draw (171,80.54) -- (171,85.62) ;
+        % Text Node
+        \draw (174.46,51.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (154.6,60.92) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例8 \quad}均匀实心球体\(m\)对转轴（沿直径）的转动惯量：
+
+    $$
+        I = \frac{2}{5} m R^2
+    $$
+    \vspace{2em}
 
 \subsection{转动定律}
 
+\subsubsection{定律}
+
     \begin{align}
-        M = J \alpha
+        M = I \alpha
     \end{align}
 
 \subsubsection{讨论}
 
     \begin{enumerate}
         \item 若\(M=0\)，则\(\alpha=0\)，即\(\omega\)不变；
-        \item \(\alpha \)与\(\frac{M}{J}\)成反比；
-        \item \(M = J\alpha = J\deriv{\omega}{t}\)；
+        \item \(\alpha \)与\(\frac{M}{I}\)成反比；
+        \item \(M = I\alpha = I\deriv{\omega}{t}\)；
         \item 转动惯量的单位为\(\mathrm{kg} \cdot \mathrm{m^2}\)；
         \item 转动惯量的是对某一转轴而言的；
         \item 转动惯量是转动惯性的量度；
         \item 转动惯量具有可叠加性；
         \item 转动惯量与刚体的质量、质量的分布以及转轴的位置有关。
     \end{enumerate}
+
+\subsubsection{平行轴定理}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic6.png"}
+        % \caption{}
+        \label{pic4-6}
+    \end{wrapfigure}
+
+    质量为\(m\)的刚体，如果对其质心轴的转动惯量为\(I_{C}\)，则对任一与该轴平行，
+    相对\(d\)的转轴的转动惯量
+
+    \begin{align}
+        I = I_{C} + md^2
+    \end{align}
+
+\subsubsection{垂直轴定理（正交轴定理）}
+
+    对\textbf{薄板状}刚体：对板面内相互垂直的两个定轴的转动惯量之和
+    等于该刚体对通过两轴交点且垂直于板面的定轴的转动惯量。
+
+    \begin{align}
+        I_{z} = I_{x} + I_{y}
+    \end{align}
+
+    证明：
+
+    \begin{align*}
+        \begin{aligned}
+            I_{z} &= \sum \Delta m_{i}r_{i}^2 \\
+            &= \sum \Delta m_{i}\left(x_{i}^2 + y_{i}^2\right) \\
+            &= I_{x} + I_{y}
+        \end{aligned}
+    \end{align*}
 
 \end{document}
