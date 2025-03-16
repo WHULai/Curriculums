@@ -756,4 +756,66 @@
         \end{aligned}
     \end{align*}
 
+\subsection{例题}
+
+\subsubsection{problem 1}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic7.png"}
+        % \caption{}
+        \label{pic4-7}
+    \end{wrapfigure}
+
+    质量为\(M\)的匀质圆盘，可绕通过盘中心并垂直于盘面的固定光滑轴转动，转动惯量为
+    \(\frac{1}{2}Mr^2\)。一根长为\(l\)，质量为\(m\)的匀质柔软绳索挂在圆盘上，如图所示。
+    设绳与圆盘间无相对滑动，试求当圆盘两侧绳长之差为\(S\)时，绳的加速度的大小。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    设某一时刻圆盘两侧的绳长分别为\(x_1\)、\(x_2\)（\(x_1 > x_2\)），如图所示。
+    可将绳分为三段，即长度分别为\(x1\)、\(x2\)的两段绳和绕在盘上的一段，
+    由于绕在盘上的一段谁盘一起转动，所以可将它和盘作为一个整体来讨论。
+    假设在 1、2 两点处绳中的张力分别为\(T_1\)、\(T_2\)，则由牛顿定律和转动定律可得
+
+    \[
+        x_2 \rho g - T_2 = x_2 \rho a
+    \]
+
+    \[
+        T_1 - x_1 \rho g = x_1 \rho a
+    \]
+
+    \[
+        T_2r - T_1r = I \alpha
+    \]
+
+    且
+
+    \[
+        a = r\alpha
+    \]
+
+    式中，
+
+    \[
+        \rho = \frac{m}{l}
+    \]
+
+    是绳的线密度，
+
+    \[
+        I = \frac{1}{2}Mr^2 + \uppi r \rho \cdot r^2
+    \]
+
+    是绕在盘上的绳与盘作为整体的转动惯量。
+
+    联立以上方程，并取\(x_2-x_1=S\)，可得绳的加速度为
+
+    $$
+        a=\frac{2 m g S}{(2 m+M) l}
+    $$
+
 \end{document}
