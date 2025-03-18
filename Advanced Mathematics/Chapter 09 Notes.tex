@@ -137,7 +137,7 @@
 % \newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
 
 % For partial derivatives
-\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% \newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
 
 % Integral dx
 \newcommand{\dx}{\mathrm{d}x}
@@ -157,6 +157,7 @@
 \newcommand{\rmd}{\mathrm{d}}
 \newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
 \renewcommand{\parallel}{\mathrel{/\mskip-2.5mu/}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\parallelogram}{
 	\mathord
     {\text
@@ -567,5 +568,135 @@
         &= 1 \times 2 \\
         &= 2
     \end{align*}
+
+\section{偏导数}
+
+\subsection{偏导数的定义及其计算法}
+
+\subsubsection{定义}
+
+    设函数\(z=f\left(x,y\right)\)在点\(\left(x_0,y_0\right)\)的某一邻域内有定义，
+    当\(y\)固定在\(y_0\)而\(x\)在\(x_0\)处有增量\\ \(\Delta x\)时，相应的函数有增量
+
+    $$
+        f\left(x_0+\Delta x, y_0\right)-f\left(x_0, y_0\right)
+    $$
+
+    如果
+
+    \begin{equation}
+        \lim _{\Delta x \rightarrow 0} \frac{f\left(x_0+\Delta x, y_0\right)-f\left(x_0, y_0\right)}{\Delta x}
+        \label{9-4-1}
+    \end{equation}
+
+    存在，那么称此极限为函数\(z=f\left(x,y\right)\)在点\(\left(x_0,y_0\right)\)处\textbf{对\(x\)的偏导数}，记作
+
+    $$
+        \left.\frac{\partial z}{\partial x}\right|_{\substack{x=x_0 \\ y=y_0}},\;
+        \left.\frac{\partial f}{\partial x}\right|_{\substack{x=x_0 \\ y=y_0}},\;
+        \left.z_x\right|_{\substack{x=x_0 \\ y=y_0}}\; \text{或}\;
+        f_x\left(x_0, y_0\right) \text {. (1) }
+    $$
+
+    例如，方程\ref{9-4-1}可以表为
+
+    \begin{equation}
+        f_x\left(x_0, y_0\right)=\lim _{\Delta x \rightarrow 0} \frac{f\left(x_0+\Delta x, y_0\right)-f\left(x_0, y_0\right)}{\Delta x}
+    \end{equation}
+
+    类似地，函数\(z=f\left(x,y\right)\)在点\(\left(x_0,y_0\right)\)处\textbf{对\(y\)的偏导数}定义为
+
+    \begin{equation}
+        \lim _{\Delta y \rightarrow 0} \frac{f\left(x_0, y_0+\Delta y\right)-f\left(x_0, y_0\right)}{\Delta y}
+    \end{equation}
+
+    记作
+
+    $$
+        \left.\frac{\partial z}{\partial y}\right|_{\substack{x=x_0 \\ y=y_0}},\;
+        \left.\frac{\partial f}{\partial y}\right|_{\substack{x=x_0 \\ y=y_0}},\;
+        \left.z_y\right|_{\substack{x=x_0 \\ y=y_0}}\; \text{或}\;
+        f_y\left(x_0, y_0\right)
+    $$
+
+    如果函数\(z=f\left(x,y\right)\)在区域\(D\)内每一点\(\left(x,y\right)\)处对\(x\)的偏导数都存在，
+    那么这个偏导数就是\(x\)、\(y\)的函数，它就称为函数\(z=f\left(x,y\right)\)\textbf{对自变量\(x\)的偏导函数}，
+    记作
+
+    $$
+        \pderiv{z}{x},\;
+        \pderiv{f}{x},\;
+        z_x\; \text{或}\;
+        f_x\left(x, y\right)
+    $$
+
+    类似地，可以定义函数\(z=f\left(x,y\right)\)\textbf{对自变量\(y\)的偏导函数}，
+    记作
+
+    $$
+        \pderiv{z}{y},\;
+        \pderiv{f}{y},\;
+        z_y\; \text{或}\;
+        f_y\left(x, y\right)
+    $$
+
+    由概念可知，函数\(z=f\left(x,y\right)\)在点\(\left(x_0,y_0\right)\)处对\(x\)的偏导数
+    \(f_x\left(x_0, y_0\right)\)显然就是偏导函数\(f_x\left(x, y\right)\)在点\(\left(x_0,y_0\right)\)
+    处的函数值；\(f_y\left(x_0, y_0\right)\)就是偏导函数\(f_y\left(x, y\right)\)在点
+    \(\left(x_0,y_0\right)\)处的函数值。
+
+\subsubsection{偏导数的求法}
+
+    求\(\pderiv{f}{x}\)时，只要把\(y\)暂时看作常量而对\(x\)求导数；
+    求\(\pderiv{f}{y}\)时，只要把\(x\)暂时看作常量而对\(y\)求导数。
+
+    推广：三元函数\(u=f\left(x,y,z\right)\)在点\(\left(x,y,z\right)\)
+    处对\(x\)的偏导数定义为
+
+    \begin{equation}
+        f_x(x, y, z)=\lim _{\Delta x \rightarrow 0} \frac{f(x+\Delta x, y, z)-f(x, y, z)}{\Delta x}
+    \end{equation}
+
+    \textbf{注意}：
+
+    \begin{enumerate}
+        \item \(z=f\left(x,y\right)\)的偏导数有2个：\(\pderiv{z}{x}\) 、\(\pderiv{z}{y}\)，
+            \(u=f\left(x,y,z\right)\)的偏导数有3个：\(\pderiv{u}{x}\) 、\(\pderiv{u}{y}\) 、\(\pderiv{u}{z}\)；
+        \item \(\pderiv{z}{x}\)是一个整体、一个符号。
+    \end{enumerate}
+
+
+\subsubsection{偏导数的几何意义}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.15]{"Chapter 09 images/pic3.jpg"}
+        % \caption{}
+        \label{pic9-3}
+    \end{wrapfigure}
+
+    设\(M_0\left(x_0,y_0,z_0\right)\)为曲面\(z=f\left(x,y\right)\)上的一点，
+    过\(M_0\)作平面\(y=y_0\)，截此曲面得一平面，此曲线在平面\(y=y_0\)上的方程为
+    \(z=f\left(x,y_0\right)\)，
+    则导数\(\left.\dfrac{\rmd}{\rmd x} f\left(x,y_0\right)\right|_{x=x_0}\)，
+    即偏导数\(f_x\left(x_0,y_0\right)\)，就是这曲线在点\(M_0\)处的切线\(M_0T_x\)
+    对\(x\)轴的斜率（如右图所示）。同样，偏导数\(f_y\left(x_0,y_0\right)\)
+    的几何意义是曲面被平面\(x=x_0\)所截得的曲线在点\(M_0\)处的切线\(M_0T_y\)
+    对\(y\)轴的斜率。
+    \vspace{1em}
+
+    \textbf{注意}：
+
+    对多元函数，若函数连续，则偏导数\textbf{不}一定存在；若偏导数存在，
+    则函数也\textbf{不}一定连续。例如，函数
+
+    $$
+        z=f(x, y)= \begin{cases}\frac{x y}{x^2+y^2}, & x^2+y^2 \neq 0 \\ 0, & x^2+y^2=0\end{cases}
+    $$
+
+    在\(\left(0,0\right)\)处是不连续的，而\(f_x\left(0,0\right)=0\)，\(f_y\left(0,0\right)=0\)，
+    即函数在\(\left(0,0\right)\)处的偏导数存在。
+
+\subsection{高阶偏导数}
 
 \end{document}
