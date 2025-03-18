@@ -675,8 +675,8 @@
         \label{pic9-3}
     \end{wrapfigure}
 
-    设\(M_0\left(x_0,y_0,z_0\right)\)为曲面\(z=f\left(x,y\right)\)上的一点，
-    过\(M_0\)作平面\(y=y_0\)，截此曲面得一平面，此曲线在平面\(y=y_0\)上的方程为
+    设\(M_0\left(x_0,y_0,f\left(x_0,y_0\right)\right)\)为曲面\(z=f\left(x,y\right)\)上的一点，
+    过\(M_0\)作平面\(y=y_0\)，截此曲面得一曲线，此曲线在平面\(y=y_0\)上的方程为
     \(z=f\left(x,y_0\right)\)，
     则导数\(\left.\dfrac{\rmd}{\rmd x} f\left(x,y_0\right)\right|_{x=x_0}\)，
     即偏导数\(f_x\left(x_0,y_0\right)\)，就是这曲线在点\(M_0\)处的切线\(M_0T_x\)
@@ -698,5 +698,71 @@
     即函数在\(\left(0,0\right)\)处的偏导数存在。
 
 \subsection{高阶偏导数}
+
+    设函数\(z=f\left(x,y\right)\)在区域\(D\)内具有偏导数
+
+    $$
+        \pderiv{z}{x}=f_x\left(x,y\right),\; \pderiv{z}{y}=f_y\left(x,y\right)
+    $$
+
+    于是在\(D\)内\(f_x\left(x,y\right)\)，\(f_y\left(x,y\right)\)都是\(x\)，\(y\)
+    的函数。如果这两个函数的偏导数也存在，那么称它们是函数\(z=f\left(x,y\right)\)
+    的\textbf{二阶偏导数}。按照对变量求导次序的不同有下列四个二阶偏导数：
+
+    \begin{align}
+        \begin{aligned}
+            & \frac{\partial}{\partial x}\left(\frac{\partial z}{\partial x}\right)=\frac{\partial^2 z}{\partial x^2}=f_{x x}(x, y) \\
+            & \frac{\partial}{\partial y}\left(\frac{\partial z}{\partial x}\right)=\frac{\partial^2 z}{\partial x \partial y}=f_{x y}(x, y) \\
+            & \frac{\partial}{\partial x}\left(\frac{\partial z}{\partial y}\right)=\frac{\partial^2 z}{\partial y \partial x}=f_{y x}(x, y) \\
+            & \frac{\partial}{\partial y}\left(\frac{\partial z}{\partial y}\right)=\frac{\partial^2 z}{\partial y^2}=f_{y y}(x, y)
+        \end{aligned}
+    \end{align}
+    
+    其中第二、三个偏导数称为\textbf{混合偏导数}。同样可得三阶、四阶……以及\(n\)阶偏导数。二阶以及二阶以上的偏导数统称为
+    \textbf{高阶偏导数}。
+
+    \textbf{定理 \quad} 如果函数\(z=f\left(x,y\right)\)的两个二阶混合偏导数相等，即\(\frac{\partial^2 z}{\partial y \partial x}\)
+    及\(\frac{\partial^2 z}{\partial x \partial y}\)在区域\(D\)内连续，那么在该区域这两个二阶混合偏导数必相等。
+
+    换句话说，二阶混合偏导数在连续的条件下与求导的次序无关。推广：高阶混合偏导数在偏导数连续的条件下也与求导的次序无关。
+
+\subsection{例题}
+
+\subsubsection{Problem 1}
+
+    证明函数\(u=\dfrac{1}{r}\)满足方程
+
+    $$
+        \frac{\partial^2 u}{\partial x^2}+\frac{\partial^2 u}{\partial y^2}+\frac{\partial^2 u}{\partial z^2}=0
+    $$
+
+    其中\(r=\sqrt{x^2+y^2+z^2}\)。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    $$
+        \begin{aligned}
+        & \frac{\partial u}{\partial x}=-\frac{1}{r^2} \frac{\partial r}{\partial x}=-\frac{1}{r^2} \cdot \frac{x}{r}=-\frac{x}{r^3}, \\
+        & \frac{\partial^2 u}{\partial x^2}=-\frac{1}{r^3}+\frac{3 x}{r^4} \cdot \frac{\partial r}{\partial x}=-\frac{1}{r^3}+\frac{3 x^2}{r^5}
+        \end{aligned}
+    $$
+
+    因为函数关于自变量的对称性，所以
+
+    $$
+        \frac{\partial^2 u}{\partial y^2}=-\frac{1}{r^3}+\frac{3 y^2}{r^5}, \quad \frac{\partial^2 u}{\partial z^2}=-\frac{1}{r^3}+\frac{3 z^2}{r^5} .
+    $$
+
+    因此，
+
+    $$
+        \frac{\partial^2 u}{\partial x^2}+\frac{\partial^2 u}{\partial y^2}+\frac{\partial^2 u}{\partial z^2}=
+        -\frac{3}{r^3}+\frac{3\left(x^2+y^2+z^2\right)}{r^5}=-\frac{3}{r^3}+\frac{3 r^2}{r^5}=0
+    $$
+    \vspace{1em}
+
+    \textbf{注：\quad}例中的方程叫做\textbf{拉普拉斯 (Laplace) 方程}，它是数学物理方法中的一种很重要的方程。
 
 \end{document}
