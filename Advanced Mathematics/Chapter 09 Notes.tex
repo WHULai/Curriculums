@@ -765,4 +765,195 @@
 
     \textbf{注：\quad}例中的方程叫做\textbf{拉普拉斯 (Laplace) 方程}，它是数学物理方法中的一种很重要的方程。
 
+\section{全微分}
+
+    \textbf{实质}：寻找多元函数增量的一种\textbf{线性近似}表达。（局部）
+
+\subsection{全微分的定义}
+
+\subsubsection{偏增量、偏微分}
+
+    由偏导数的定义知道，二元函数对某个自变量的偏导数表示当另一个自变量固定时，
+    因变量相对于该自变最的变化率。根据一元函数微分学中增量与微分的关系，可得
+
+    $$
+        \begin{aligned}
+            & f(x+\Delta x, y)-f(x, y) \approx f_x(x, y) \Delta x \\
+            & f(x, y+\Delta y)-f(x, y) \approx f_y(x, y) \Delta y
+        \end{aligned}
+    $$
+
+    上面两式的左端分别叫做二元函数对\(x\)和对\(y\)的偏增量，
+    而右端分别叫做二元函数对\(x\)\\和对\(y\)的偏微分。
+
+\subsubsection{全增量}
+
+    设函数\(z=f\left(x,y\right)\)在点\(P\left(x, y\right)\)的某邻域内有定义，
+    \(P^{\prime}\left(x+\Delta x,y+\Delta y\right)\)为这邻域内任意一点，则称这两点的函数值之差
+    \(f\left(x+\Delta x,y+\Delta y\right)-f\left(x,y\right)\)为函数在点点\(P\)
+    对应于自变量增量\(\Delta x\)和\(\Delta y\)的全增量，记作\(\Delta z\)，即
+
+    \begin{align}
+        \Delta z=f(x+\Delta x, y+\Delta y)-f(x, y)
+    \end{align}
+
+\subsubsection{全微分的定义}
+
+    设函数\(z=f\left(x,y\right)\)在点\(\left(x, y\right)\)的某邻域内有定义，
+    如果函数在点\(\left(x, y\right)\)的全增量
+
+    $$
+        \Delta z=f(x+\Delta x, y+\Delta y)-f(x, y)
+    $$
+
+    可表示为
+
+    \begin{align}
+        \Delta z=A \Delta x+B \Delta y+o(\rho)
+    \end{align}
+
+    其中\(A\)和\(B\)不依赖于\(\Delta x\)和\(\Delta y\)而仅与\(x\)和\(y\)有关，
+    \(\rho = \sqrt{\left(\Delta x\right)^2+\left(\Delta y\right)^2}\)，
+    那么称函数\(z=f\left(x,y\right)\)在点\(\left(x, y\right)\)\textbf{可微分}，
+    而\(A\Delta x + B\Delta y\)称为函数\(z=f\left(x,y\right)\)在点\(\left(x, y\right)\)
+    的\textbf{全微分}，记作\(\rmd z\)，即
+
+    $$
+        \mathrm{d} z=A \Delta x+B \Delta y
+    $$
+
+    如果函数在区域\(D\)内各点处都可微分，那么称函数在\(D\)内可微分。
+
+    如果函数\(z=f\left(x,y\right)\)在点\(\left(x, y\right)\)可微分，
+    那么这函数在该点必定连续。
+    
+\subsubsection{例题}
+
+    若已知如果函数\(f\left(x,y\right)\)在点\(\left(0, 0\right)\)处连续，且
+
+    $$
+        \lim _{(x, y) \rightarrow(0,0)} \frac{f(x, y)-3 x+4 y}{\sqrt{x^2+y^2}}=0
+    $$
+
+    问：\(f\left(x,y\right)\)在点\(\left(0, 0\right)\)处是否可微？若可微，求
+
+    $$
+        \rmd f\left|_{\left(0,0\right)}\right.
+    $$
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    由题意
+
+    $$
+        \lim _{(x, y) \rightarrow(0,0)}\left[f(x, y)-3 x+4 y\right]=0
+    $$
+
+    所以
+
+    $$
+        \lim _{(x, y) \rightarrow(0,0)} f(x, y)=0
+    $$
+
+    又函数\(f\left(x,y\right)\)在点\(\left(0, 0\right)\)处连续，由上式得
+
+    $$
+        f\left(0,0\right)=0
+    $$
+
+    由原式
+
+    $$
+        f(x, y)-3 x+4 y=o(\rho)
+    $$
+
+    即
+
+    $$
+        f\left(x,y\right) - f\left(0,0\right) = 3 x-4 y+o(\rho),\quad
+        \rho = \sqrt{x^2+y^2}
+    $$
+
+    亦即
+
+    $$
+        f\left(\Delta x,\Delta y\right) - f\left(0,0\right) = 3 \Delta x-4 \Delta y+o(\rho),\quad
+        \rho = \sqrt{\left(\Delta x\right)^2+\left(\Delta y\right)^2}
+    $$
+
+    由定义，函数\(f\left(x,y\right)\)在点\(\left(0, 0\right)\)处可微，且
+
+    $$
+        \rmd f\left|_{\left(0,0\right)}\right. = 3 \Delta x-4 \Delta y
+    $$
+
+\subsection{可微分的条件}
+
+    \textbf{定理1（必要条件）}：如果函数\(z=f\left(x,y\right)\)在点\(\left(x, y\right)\)可微分，
+    那么函数在点\(\left(x, y\right)\)的偏导数\(\pderiv{z}{x}\)和\(\pderiv{z}{y}\)必定存在，
+    且函数\(z=f\left(x,y\right)\)在点\(\left(x, y\right)\)的全微分为
+
+    \begin{equation}
+        \mathrm{d} z=\frac{\partial z}{\partial x} \Delta x+\frac{\partial z}{\partial y} \Delta y
+    \end{equation}
+
+    利用定义判断可微的方法：
+
+    \begin{enumerate}
+        \item 先求\(f^{\prime}_x\left(x_0,y_0\right)\)、\(f^{\prime}_y\left(x_0,y_0\right)\)，若不存在，则不可微；
+        \item 判断
+            $$
+                \lim _{\substack{\Delta x \rightarrow 0 \\ \Delta y \rightarrow 0}}
+                \frac{\Delta z-f_x^{\prime}\left(x_0, y_0\right) \Delta x-f_y^{\prime}\left(x_0, y_0\right) \Delta y}
+                {\sqrt{(\Delta x)^2+(\Delta y)^2}}=0
+            $$
+            是否成立。其中，
+
+            $$
+                \Delta z =f\left(x_0+\Delta x, y_0+\Delta y\right)-f\left(x_0, y_0\right)
+            $$
+            
+            若成立，则可微；反之，则不可微。
+    \end{enumerate}
+
+    \textbf{注意}：与一元函数不同，各偏导数的存在只是全微分存在的必要条件而不是充分条件。
+
+    \textbf{定理2（充分条件）}：如果函数\(z=f\left(x,y\right)\)的偏导数\(\pderiv{z}{x}\)、\(\pderiv{z}{y}\)
+    在点\(\left(x, y\right)\)连续，那么函数在该点可微分。
+
+    偏导连续，即
+
+    $$
+        \lim _{\substack{x \rightarrow x_0 \\ y \rightarrow y_0}} f_x^{\prime}(x, y)=f_x^{\prime}\left(x_0, y_0\right)
+    $$
+
+    （\(f_x^{\prime}\)在点\(\left(x_0, y_0\right)\)处连续）
+
+    $$
+        \lim _{\substack{x \rightarrow x_0 \\ y \rightarrow y_0}} f_y^{\prime}(x, y)=f_y^{\prime}\left(x_0, y_0\right)
+    $$
+
+    （\(f_y^{\prime}\)在点\(\left(x_0, y_0\right)\)处连续）
+
+\subsection{全微分公式}
+
+    \begin{equation}
+        \rmd z=\frac{\partial z}{\partial x} \rmd x+\frac{\partial z}{\partial y} \rmd y
+    \end{equation}
+
+    特别地，
+
+    \begin{equation}
+        \left.d z\right|_{\left(x_0, y_0\right)}=
+        f_x^{\prime}\left(x_0, y_0\right) \cdot d x+f_y^{\prime}\left(x_0, y_0\right) \cdot d y
+    \end{equation}
+
+    \textbf{推广}：
+
+    \begin{equation}
+        \rmd u=\frac{\partial u}{\partial x} \rmd x+\frac{\partial u}{\partial y} \rmd y+\frac{\partial u}{\partial z} \rmd z
+    \end{equation}
+
 \end{document}
