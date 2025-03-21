@@ -416,9 +416,9 @@
 
     运用微积分的思想和方法，
 
-    \begin{align}
+    \begin{align*}
         I_{O} = \int x^2 \rmd m = \int_{0}^{l} x^2 \rmd x \lambda = \frac{\lambda l^3}{3} = \frac{1}{3} m l^2
-    \end{align}
+    \end{align*}
     \vspace{1em}
 
     \begin{wrapfigure}{r}{4cm}
@@ -439,9 +439,39 @@
 
     \textbf{例2 \quad}均匀杆\(m\)对\(C\)轴（通过杆的端点与杆垂直）的转动惯量：
 
-    \begin{align}
-        I_C & =\int x^2 d m=\int_{-l / 2}^{l / 2} x^2 d x \lambda =\frac{1}{12} \lambda l^3=\frac{1}{12} m l^2
-    \end{align}
+    $$
+        I_C =\frac{1}{12} m l^2
+    $$
+
+    \textbf{证}（方法1）
+
+    $$
+        \begin{aligned}
+            I_C &=\int x^2 \rmd m \\
+            &=\int_{-\frac{l}{2}}^{\frac{l}{2}} x^2 d x \lambda\\
+            &=\frac{1}{12} \lambda l^3\\
+            &=\frac{1}{12} m l^2
+        \end{aligned}
+    $$
+
+    \textbf{证}（方法2：平行轴定理）
+
+    由平行轴定理，
+
+    $$
+        I_O = I_C + m \left(\frac{l}{2}\right)^2
+    $$
+
+    于是
+
+    $$
+        \begin{aligned}
+            I_C &=I_O - m \left(\frac{l}{2}\right)^2 \\
+            &=\frac{1}{3} m l^2 - m \left(\frac{l}{2}\right)^2 \\
+            &=\frac{1}{12} m l^2
+        \end{aligned}
+    $$
+
     \vspace{2em}
 
     \begin{wrapfigure}{r}{4cm}
@@ -513,7 +543,116 @@
     $$
         I = \frac{1}{2} m R^2
     $$
-    \vspace{2em}
+
+    \textbf{证}（方法1）
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp6022616866424968] 
+        \draw   (213,137.17) .. controls (213,123.82) and (234.19,113) .. (260.33,113) .. controls (286.47,113) and (307.67,123.82) .. (307.67,137.17) .. 
+            controls (307.67,150.51) and (286.47,161.33) .. (260.33,161.33) .. controls (234.19,161.33) and (213,150.51) .. (213,137.17) -- cycle ;
+        %Straight Lines [id:da33799420686761406] 
+        \draw    (260.33,137.17) -- (259.89,83.31) ;
+        %Straight Lines [id:da8541013949511429] 
+        \draw    (260.29,179.31) -- (260.33,161.33) ;
+        %Straight Lines [id:da3324794336188084] 
+        \draw    (260.33,137.17) -- (241.12,128.77) ;
+        \draw [shift={(239.29,127.96)}, rotate = 23.62] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Shape: Chord [id:dp96440595365312] 
+        \draw   (238.98,130.36) .. controls (238.71,130.32) and (238.44,130.24) .. (238.18,130.11) .. controls (236.97,129.48) and (236.48,128.01)
+            .. (237.09,126.83) .. controls (237.7,125.65) and (239.18,125.2) .. (240.39,125.82) .. controls (240.65,125.96) and (240.87,126.13) .. (241.06,126.33) -- cycle ;
+        % Text Node
+        \draw (239.86,117.95) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$\mathrm{d} r$};
+        \draw (248.36,135.7) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$r$};
+        \end{tikzpicture}
+    \]
+
+    设圆盘的面密度为\(\sigma\)，则\(\sigma = \dfrac{m}{\uppi R^2}\)
+
+    如图，取微元\(\rmd m\)：
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Block Arc [id:dp4642247634663095] 
+        \draw   (206.87,95.84) .. controls (212.07,92.22) and (218.33,90.11) .. (225.06,90.11) .. controls (229.14,90.11) and (233.06,90.89)
+            .. (236.66,92.31) -- (232.18,104.64) .. controls (229.97,103.72) and (227.57,103.22) .. (225.06,103.22) .. controls (220.94,103.22)
+            and (217.11,104.57) .. (213.95,106.88) -- cycle ;
+        %Straight Lines [id:da4857653535391253] 
+        \draw    (232.18,104.64) -- (225.06,124.2) ;
+        %Straight Lines [id:da18026998140759942] 
+        \draw    (213.95,106.88) -- (225.06,124.2) ;
+        % Text Node
+        \draw (211.49,111.51) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$r$};
+        \draw (200.69,100.71) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$\mathrm{d} r$};
+        \draw (230.62,117.82) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$\mathrm{d} \theta $};
+        \end{tikzpicture}
+    \]
+
+    则
+
+    \[
+        \rmd m = \sigma r \rmd \theta \rmd r
+    \]
+
+    于是
+
+    $$
+        \begin{aligned}
+            I & =\int r^2 \rmd m\\
+            & =\int r^2 \sigma r \rmd \theta \rmd r \\
+            & =\iint \sigma r^3 \rmd r \rmd \theta \\
+            & =\sigma \int_0^R r^3 \rmd r \int_0^{2 \uppi} \rmd \theta \\
+            & =\sigma \frac{1}{4} R^4 \cdot 2 \uppi \\
+            & =\frac{1}{2} m R^2
+        \end{aligned}
+    $$
+
+    \textbf{证}（方法2）
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp6022616866424968] 
+        \draw   (213,137.17) .. controls (213,123.82) and (234.19,113) .. (260.33,113) .. controls (286.47,113) and (307.67,123.82)
+            .. (307.67,137.17) .. controls (307.67,150.51) and (286.47,161.33) .. (260.33,161.33) .. controls (234.19,161.33) and (213,150.51) .. (213,137.17) -- cycle ;
+        %Straight Lines [id:da33799420686761406] 
+        \draw    (260.33,137.17) -- (259.89,83.31) ;
+        %Straight Lines [id:da8541013949511429] 
+        \draw    (260.29,179.31) -- (260.33,161.33) ;
+        %Straight Lines [id:da3324794336188084] 
+        \draw    (260.33,137.17) -- (244.12,130.12) ;
+        \draw [shift={(242.29,129.32)}, rotate = 23.49] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75] (10.93,-3.29) .. controls
+            (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Shape: Ellipse [id:dp4379584317489489] 
+        \draw   (235.53,137.17) .. controls (235.53,130.17) and (246.64,124.5) .. (260.33,124.5) .. controls (274.03,124.5) and
+            (285.13,130.17) .. (285.13,137.17) .. controls (285.13,144.16) and (274.03,149.83) .. (260.33,149.83) .. controls (246.64,149.83) and (235.53,144.16) .. (235.53,137.17) -- cycle ;
+        % Text Node
+        \draw (248.36,135.7) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$r$};
+        \end{tikzpicture}
+    \]
+
+    同样，设圆盘的面密度为\(\sigma = \dfrac{m}{\uppi R^2}\)。取距离圆心\(r\)的某一圆环
+    （宽\(\rmd r\)）为\(\rmd m\)，则
+
+    \[
+        \rmd m = \sigma 2 \uppi r \rmd r
+    \]
+
+    于是
+
+    $$
+        \begin{aligned}
+            I &= \int r^2 \rmd m \\
+            &= \int_{0}^{R} r^2 \cdot \sigma 2 \uppi r \rmd r \\
+            & =\frac{1}{2} m R^2
+        \end{aligned}
+    $$
 
     \begin{wrapfigure}{r}{4cm}
         \centering
