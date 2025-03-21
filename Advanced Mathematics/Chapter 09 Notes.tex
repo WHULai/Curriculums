@@ -956,4 +956,190 @@
         \rmd u=\frac{\partial u}{\partial x} \rmd x+\frac{\partial u}{\partial y} \rmd y+\frac{\partial u}{\partial z} \rmd z
     \end{equation}
 
+\section{多元复合函数求导法则}
+
+\subsection{中间变量为一元函数情形}
+
+    \textbf{定理1}：如果函数\(u=\varphi\left(t\right)\)及\(v=\psi\left(t\right)\)都在点\(t\)可导，
+    函数\(z=f\left(u,v\right)\)在对应点\(\left(u,v\right)\)\\具有连续偏导数，那么复合函数\(z=
+    f\left[\varphi\left(t\right), \psi\left(t\right)\right]\)在点\(t\)可导，且有
+
+    \begin{equation}
+        \frac{\mathrm{d} z}{\mathrm{~d} t}=\frac{\partial z}{\partial u} \frac{\mathrm{~d} u}{\mathrm{~d} t}
+        +\frac{\partial z}{\partial v} \frac{\mathrm{~d} v}{\mathrm{~d} t}
+    \end{equation}
+    \vspace{1em}
+
+    复合关系图：
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Straight Lines [id:da10650359767783146] 
+        \draw    (278.14,129.29) -- (312.91,84.86) ;
+        \draw [shift={(314.14,83.29)}, rotate = 128.05] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
+        %Straight Lines [id:da08370320770247508] 
+        \draw    (355.14,128.29) -- (323.34,85.89) ;
+        \draw [shift={(322.14,84.29)}, rotate = 53.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
+        %Straight Lines [id:da6078309854266968] 
+        \draw    (326.14,200.29) -- (353.12,155) ;
+        \draw [shift={(354.14,153.29)}, rotate = 120.78] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
+        %Straight Lines [id:da19651881359339796] 
+        \draw    (310.14,201.29) -- (282.16,154.01) ;
+        \draw [shift={(281.14,152.29)}, rotate = 59.38] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
+        % Text Node
+        \draw (311,66.4) node [anchor=north west][inner sep=0.75pt] {$z$};
+        \draw (271,133.4) node [anchor=north west][inner sep=0.75pt] {$u$};
+        \draw (350,134.4) node [anchor=north west][inner sep=0.75pt] {$v$};
+        \draw (314,194.4) node [anchor=north west][inner sep=0.75pt] {$t$};
+        \draw (270,82.4) node [anchor=north west][inner sep=0.75pt] [font=\footnotesize] {$\frac{\partial z}{\partial u}$};
+        \draw (349,83.4) node [anchor=north west][inner sep=0.75pt] [font=\footnotesize] {$\frac{\partial z}{\partial v}$};
+        \draw (273,173.4) node [anchor=north west][inner sep=0.75pt] [font=\footnotesize] {$\frac{\mathrm{d} u}{\mathrm{d} t}$};
+        \draw (342,167.4) node [anchor=north west][inner sep=0.75pt] [font=\footnotesize] {$\frac{\mathrm{d} v}{\mathrm{d} t}$};
+        \end{tikzpicture}
+    \]
+
+    \textbf{证}
+
+    由于\(z=f\left(x,y\right)\)在\(\left(u,v\right)\)可微，故
+
+    $$
+        \Delta z=\frac{\partial f}{\partial u} \cdot \Delta u+\frac{\partial f}{\partial v} \cdot \Delta v+o(\rho), \rho=\sqrt{(\Delta u)^2+(\Delta v)^2}
+    $$
+
+    上式两端同时除以\(\Delta t\)：
+
+    $$
+        \begin{aligned}
+            \frac{\Delta z}{\Delta t} & =\frac{\partial f}{\partial u} \cdot \frac{\Delta u}{\Delta t}+\frac{\partial t}{\partial v} \cdot \frac{\Delta v}{\Delta t}+\frac{o(\rho)}{\Delta t} \\
+            & =\frac{\partial f}{\partial t} \cdot \frac{\Delta u}{\Delta t}+\frac{\partial f}{\partial v} \cdot \frac{\Delta v}{\Delta t}+\frac{o(\rho)}{\rho} \cdot \frac{\sqrt{(\Delta u)^2+(\Delta v)^2}}{\Delta t} \\
+            & =\frac{\partial f}{\partial u} \cdot \frac{\Delta u}{\Delta t}+\frac{\partial f}{\partial v} \cdot \frac{\partial v}{\Delta t}+\frac{o(\rho)}{\rho} \cdot \sqrt{\left(\frac{\Delta u}{\Delta t}\right)^2+\left(\frac{\Delta v}{\Delta t}\right)^2}
+        \end{aligned}
+    $$
+
+    由于\(u\)，\(v\)是可导的，故二者连续，从而：
+
+    当\(\Delta t \rightarrow 0\)时，\(\Delta u \rightarrow 0\)，\(\Delta v \rightarrow 0\)；
+
+    从而也有\(\rho \rightarrow 0\)，于是\(\dfrac{o(\rho)}{\rho} \rightarrow 0\)。
+
+    令\(\Delta t \rightarrow 0\)，得全导数
+
+    $$
+        \deriv{z}{t}=\frac{\partial z}{\partial u} \frac{\mathrm{~d} u}{\mathrm{~d} t}+\frac{\partial z}{\partial v} \frac{\mathrm{~d} v}{\mathrm{~d} t} .
+    $$
+    
+    证毕。
+
+    推广：若$z=f\left[\varphi(t), \psi(t), \omega(t)\right]$，则全导数
+
+    \begin{equation}
+        \deriv{z}{t}=\frac{\partial f}{\partial u} \cdot \deriv{u}{t}+\frac{\partial f}{\partial v} \cdot \deriv{v}{t}+\frac{\partial f}{\partial w} \cdot \deriv{w}{t}
+    \end{equation}
+
+\subsection{中间变量为多元函数情形}
+
+    \textbf{定理2}：如果函数\(u=\varphi\left(x,y\right)\)及\(v=\psi\left(x,y\right)\)都在点\(\left(x,y\right)\)
+    具有对\(x\)及对\(y\)的偏导数，函数\(z=f\left(u,v\right)\)在对应点\(\left(u,v\right)\)具有连续偏导数，
+    那么复合函数\(z=f\left[\varphi\left(x,y\right), \psi\left(x,y\right)\right]\)在点\\\(\left(x,y\right)\)
+    的两个偏导数都存在，且有
+
+    \begin{equation}
+        \frac{\partial z}{\partial x}=\frac{\partial z}{\partial u} \frac{\partial u}{\partial x}
+        +\frac{\partial z}{\partial v} \frac{\partial v}{\partial x}
+    \end{equation}
+
+    \begin{equation}
+        \frac{\partial z}{\partial y}=\frac{\partial z}{\partial u} \frac{\partial u}{\partial y}
+        +\frac{\partial z}{\partial v} \frac{\partial v}{\partial y}
+    \end{equation}
+
+    类似地，设\(u=\varphi\left(x,y\right)\)、\(v=\psi\left(x,y\right)\)、\(w=\omega\left(x,y\right)\)都在点
+    \(\left(x,y\right)\)具有对\(x\)及对\(y\)的偏导数，函数$f\left(u,v,w\right)$在对应点\(\left(u,v,w\right)\)具有
+    连续偏导数，则复合函数
+    
+    $$
+        z=f\left[\varphi(x,y), \psi(x,y), \omega(x,y)\right]
+    $$
+
+    在点\(\left(x,y\right)\)的两个偏导数都存在，且可用下列公式计算：
+
+    \begin{equation}
+        \frac{\partial z}{\partial x}=\frac{\partial z}{\partial u} \frac{\partial u}{\partial x}+
+        \frac{\partial z}{\partial v} \frac{\partial v}{\partial x}+\frac{\partial z}{\partial w} \frac{\partial w}{\partial x}
+    \end{equation}
+
+    \begin{equation}
+        \frac{\partial z}{\partial y}=\frac{\partial z}{\partial u} \frac{\partial u}{\partial y}+
+        \frac{\partial z}{\partial v} \frac{\partial v}{\partial y}+\frac{\partial z}{\partial w} \frac{\partial w}{\partial y}
+    \end{equation}
+
+\subsection{混合情形}
+
+    \textbf{定理3}：如果函数\(u=\varphi\left(x,y\right)\)在点\(\left(x,y\right)\)具有\(x\)对\(y\)的偏导数，函数
+    \(v=\psi\left(y\right)\)在\(y\)点可到，函数\(z=f\left(u,v\right)\)在对应点\(\left(u,v\right)\)具有连续偏导数，
+    那么复合函数\(z=f\left[\varphi\left(x,y\right), \psi\left(t\right)\right]\)在点\(\left(x,y\right)\)都存在，
+    且有
+
+    \begin{equation}
+        \frac{\partial z}{\partial x}=\frac{\partial z}{\partial u} \frac{\partial u}{\partial x}
+    \end{equation}
+
+    \begin{equation}
+        \frac{\partial z}{\partial y}=\frac{\partial z}{\partial u} \frac{\partial u}{\partial y}+\frac{\partial z}{\partial v} \frac{\mathrm{~d} v}{\mathrm{~d} y}
+    \end{equation}
+
+    其他情形，如函数\(z=f\left(u, v, x\right)\)，\(u=\varphi\left(x,y\right)\)，\(v=\psi\left(y\right)\)，即
+    \(z=f\left[\varphi\left(x,y\right), \psi\left(y\right), x\right]\)，则
+
+    \begin{equation}
+        \begin{aligned}
+            \frac{\partial z}{\partial x} & =\frac{\partial f}{\partial u} \cdot \frac{\partial u}{\partial x}+
+            \frac{\partial f}{\partial v} \cdot 0+\frac{\partial f}{\partial x} \cdot 1 \\
+            & =\frac{\partial f}{\partial u} \cdot \frac{\partial u}{\partial x}+\frac{\partial f}{\partial x}
+        \end{aligned}
+    \end{equation}
+
+    \begin{equation}
+        \frac{\partial z}{\partial y}=\frac{\partial f}{\partial u} \cdot \frac{\partial u}{\partial y}+\frac{\partial f}{\partial v} \cdot \deriv{v}{y}
+    \end{equation}
+
+\subsection{抽象复合函数求偏导}
+
+    为了写法和计算上的方便，引入记号（若有函数\(z=f\left(u,v\right)\)）:
+
+    $$
+        \begin{aligned}
+            \left\{\begin{array}{ll}
+                f_u^{\prime} \rightarrow f_1^{\prime}, &f_v^{\prime} \rightarrow f_2^{\prime} \\
+                f_{u u}^{\prime \prime} \rightarrow f_{11}^{\prime \prime}, &f_{u v}^{\prime \prime} \rightarrow f_{12}^{\prime \prime} \\
+                \ldots
+            \end{array}\right.
+        \end{aligned}
+    $$
+
+\subsection{全微分的形式不变性}
+
+    设函数\(z=f\left(u, v\right)\)具有连续偏导数，且\(u=\varphi\left(x,y\right)\)，\(v=\psi\left(x,y\right)\)，
+    则有全微分
+
+    \begin{equation}
+        \begin{aligned}
+            \mathrm{d} z&=\frac{\partial z}{\partial u} \mathrm{~d} u+\frac{\partial z}{\partial v} \mathrm{~d} v \\
+            &=\left(\frac{\partial z}{\partial u} \frac{\partial u}{\partial x}+\frac{\partial z}{\partial v} \frac{\partial v}{\partial x}\right) \mathrm{d} x+\left(\frac{\partial z}{\partial u} \frac{\partial u}{\partial y}+
+                \frac{\partial z}{\partial v} \frac{\partial v}{\partial y}\right) \mathrm{d} y \\
+            &=\frac{\partial z}{\partial u}\left(\frac{\partial u}{\partial x} \mathrm{~d} x+\frac{\partial u}{\partial y} \mathrm{~d} y\right)+\frac{\partial z}{\partial v}\left(\frac{\partial v}{\partial x} \mathrm{~d} x
+                +\frac{\partial v}{\partial y} \mathrm{~d} y\right) \\
+            &=\frac{\partial z}{\partial u} \rmd u+\frac{\partial z}{\partial v} \rmd v
+        \end{aligned}
+    \end{equation}
+
+    可见，无论\(u\)和\(v\)是自变量还是中间变量，函数\(z=f\left(u,v\right)\)的全微分形式是一样的。
+    这个性质叫做\textbf{全微分的形式不变性}。
+
 \end{document}
