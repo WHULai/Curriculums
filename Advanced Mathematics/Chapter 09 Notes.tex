@@ -978,19 +978,19 @@
         %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
         %Straight Lines [id:da10650359767783146] 
         \draw    (278.14,129.29) -- (312.91,84.86) ;
-        \draw [shift={(314.14,83.29)}, rotate = 128.05] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+        \draw [shift={(314.14,83.29)}, rotate = 128.05] [color={rgb, 255:red, 0; green, 0; blue, 0}][line width=0.75]
             (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
         %Straight Lines [id:da08370320770247508] 
         \draw    (355.14,128.29) -- (323.34,85.89) ;
-        \draw [shift={(322.14,84.29)}, rotate = 53.13] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+        \draw [shift={(322.14,84.29)}, rotate = 53.13] [color={rgb, 255:red, 0; green, 0; blue, 0}][line width=0.75]
             (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
         %Straight Lines [id:da6078309854266968] 
         \draw    (326.14,200.29) -- (353.12,155) ;
-        \draw [shift={(354.14,153.29)}, rotate = 120.78] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+        \draw [shift={(354.14,153.29)}, rotate = 120.78] [color={rgb, 255:red, 0; green, 0; blue, 0}][line width=0.75]
             (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
         %Straight Lines [id:da19651881359339796] 
         \draw    (310.14,201.29) -- (282.16,154.01) ;
-        \draw [shift={(281.14,152.29)}, rotate = 59.38] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    
+        \draw [shift={(281.14,152.29)}, rotate = 59.38] [color={rgb, 255:red, 0; green, 0; blue, 0}][line width=0.75]    
             (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29);
         % Text Node
         \draw (311,66.4) node [anchor=north west][inner sep=0.75pt] {$z$};
@@ -1141,5 +1141,316 @@
 
     可见，无论\(u\)和\(v\)是自变量还是中间变量，函数\(z=f\left(u,v\right)\)的全微分形式是一样的。
     这个性质叫做\textbf{全微分的形式不变性}。
+
+\section{隐函数的求导公式}
+
+\subsection{隐函数的类型}
+
+\subsubsection{一个方程的情形}
+
+    二元方程：
+
+    \[
+        F\left(x,y\right)=0 \Longrightarrow y=y\left(x\right) \text{或} x=x\left(y\right)
+    \]
+    
+    三元方程：
+
+    \[
+        F\left(x,y,z\right)=0 \Longrightarrow z=z\left(x,y\right) \text{或} y=y\left(x,z\right)
+        \text{或} x=x\left(y,z\right)
+    \]
+    
+\subsubsection{方程组的情形}
+
+    三元方程组：
+
+    $$
+        \left\{\begin{array} {l} 
+        {F(x,y,z) = 0} \\
+        {G(x,y,z) = 0}
+        \end{array} \Longrightarrow \left\{\begin{array}{l} 
+        {y=y(x)} \\
+        {z=z(x)}
+        \end{array} \text{或} \left\{\begin{array}{l}
+        x=x(y) \\
+        z=z(y)
+        \end{array}\text{或} \left\{\begin{array}{l}
+        x=x(z) \\
+        y=y(z)
+        \end{array}\right.\right.\right.\right.
+    $$
+
+    四元方程组：
+
+    $$
+        \left\{\begin{array} {l} 
+        {F( x,y,u,v)=0} \\
+        {G(x,y,u,v)=0}
+        \end{array} \Longrightarrow \left\{\begin{array}{l}
+        u=U(x, y) \\
+        v=V(x, y)
+        \end{array} \quad \cdots
+        \right.\right.
+    $$
+
+    统一：
+
+    $$
+        \text{总变量个数} - \text{方程个数（约束）} = \text{自变量个数}
+    $$
+
+\subsection{一个方程的情形}
+
+\subsubsection{定理}
+
+    \textbf{隐函数存在定理1}：设函数\(F\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right)\)的某一邻域内
+    具有连续偏导数，且\\\(F\left(x_0,y_0\right)=0\)，\(F_y\left(x_0,y_0\right)\neq0\)，则方程
+    \(F\left(x,y\right)=0\)在点\(\left(x_0,y_0\right)\)的某一邻域内恒能唯一确定一个连续且具有连续导数的函数
+    \(y=f\left(x\right)\)，它满足条件\(y_0=f\left(x_0\right)\)，并有
+
+    \begin{equation}
+        \frac{\mathrm{d} y}{\mathrm{~d} x}=-\frac{F_x}{F_y}
+        \label{9-5-1}
+    \end{equation}
+
+    （交叉对应添负号）
+
+    该定理要求的三个条件：
+
+    \begin{enumerate}
+        \item 在点\(P_0\left(x_0,y_0\right)\)的某一邻域内具有连续偏导数；
+        \item \(F\left(x_0,y_0\right)=0\)；
+        \item \(F_y\left(x_0,y_0\right)\neq0\)（\(F_y \neq 0 \Rightarrow y = y(x)\)，相应地，
+            \(F_x \neq 0 \Rightarrow x = x(y)\)）。
+    \end{enumerate}
+
+    就方程\ref{9-5-1}作如下推导：
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Straight Lines [id:da8751139333655369] 
+        \draw    (163.52,114.26) -- (163.37,149.82);
+        \draw [shift={(163.36,151.82)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0}][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Straight Lines [id:da425976278970581] 
+        \draw    (163.57,179.82) -- (162.13,232.32);
+        \draw [shift={(162.07,234.32)}, rotate = 270] [color={rgb, 255:red, 0; green, 0; blue, 0}][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        % Text Node
+        \draw (144.33,91.73) node [anchor=north west][inner sep=0.75pt]    {$F(x,y) =0\ \Longrightarrow y=y(x)$};
+        \draw (177,119) node [anchor=north west][inner sep=0.75pt]   [align=left] {关于$\displaystyle x$求导};
+        \draw (143.83,145.4) node [anchor=north west][inner sep=0.75pt]    {$F_{x} \cdot 1+F_{y} \ \cdot \dfrac{\mathrm{d} y}{\mathrm{d} x} =0$};
+        \draw (177.5,194.5) node [anchor=north west][inner sep=0.75pt]   [align=left] {从中解出$\displaystyle \frac{\mathrm{d} y}{\mathrm{d} x}$};
+        \draw (145.83,239.23) node [anchor=north west][inner sep=0.75pt]    {$\dfrac{\mathrm{d} y}{\mathrm{d} x} =-\dfrac{F_{x}}{F_{y}} \ (F_{y} =0)$};
+        \end{tikzpicture}
+    \]
+
+    隐函数的高阶导数：
+
+    \(\dfrac{\rmd y}{\rmd x}\)再对\(x\)求导数时，\(y\)不能当作常数，应作为\(x\)的函数\(y=y(x)\)对待。
+
+    \vspace{1em}
+    \textbf{隐函数存在定理2}（三元方程）：设函数\(F\left(x,y,z\right)\)在点\(P_0\left(x_0,y_0,z_0\right)\)的某一邻域内
+    具有连续偏导数，且\(F\left(x_0,y_0,z_0\right)=0\)，\(F_z\left(x_0,y_0,z_0\right)\neq0\)，则方程
+    \(F\left(x,y,z\right)=0\)在点\(\left(x_0,y_0,z_0\right)\)\\的某一邻域内恒能唯一确定一个连续且具有连续偏导数的函数
+    \(z=f\left(x,y\right)\)，它满足条件\(z_0=f\left(x_0,y_0\right)\)，并有
+
+    \begin{equation}
+        \frac{\partial z}{\partial x}=-\frac{F_x}{F_z}, \frac{\partial z}{\partial y}=-\frac{F_y}{F_z}
+        \label{9-5-2}
+    \end{equation}
+
+    （交叉对应添负号）
+
+    该定理要求的三个条件：
+
+    \begin{enumerate}
+        \item 在点\(P_0\left(x_0,y_0,z_0\right)\)的某一邻域内具有连续偏导数；
+        \item \(F\left(x_0,y_0,z_0\right)=0\)；
+        \item \(F_y\left(x_0,y_0,z_0\right)\neq0\)（\(F_z \neq 0 \Rightarrow z = z(x,y)\)，相应地，
+            \(F_x \neq 0 \Rightarrow x = x(y,z)\)、\(F_y \neq 0 \Rightarrow y = y(z,x)\)）。
+    \end{enumerate}
+
+    就方程\ref{9-5-2}作如下推导：
+    
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Straight Lines [id:da8751139333655369] 
+        \draw    (163.52,114.26) -- (163.37,149.82) ;
+        \draw [shift={(163.36,151.82)}, rotate = 270.25] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Straight Lines [id:da425976278970581] 
+        \draw    (163.57,179.82) -- (163.78,232.54) ;
+        \draw [shift={(163.79,234.54)}, rotate = 269.78] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        % Text Node
+        \draw (144.33,91.73) node [anchor=north west][inner sep=0.75pt]    {$F( x,y,z) =0\ \Longrightarrow z=z( x,y)$};
+        \draw (177,119) node [anchor=north west][inner sep=0.75pt]   [align=left] {关于$\displaystyle x$求导};
+        \draw (143.33,145.4) node [anchor=north west][inner sep=0.75pt]    {$F_{x} \cdot 1+F_{y} \cdot 0+F_{z} \ \cdot \dfrac{\partial z}{\partial x} =0$};
+        \draw (177.5,193) node [anchor=north west][inner sep=0.75pt]   [align=left] {从中解出$\displaystyle \frac{\partial z}{\partial x}$};
+        \draw (145.83,239.23) node [anchor=north west][inner sep=0.75pt]    {$\dfrac{\partial z}{\partial x} =-\dfrac{F_{x}}{F_{z}} \ ( F_{z} =0)$};
+        \end{tikzpicture}
+    \]
+
+    求\(F\left(x,y,z\right)=0\)所确定的函数\(z\)的偏导数的方法：
+
+    \begin{enumerate}
+        \item 方程直接关于\(x\)或\(y\)求偏导（\(z\)看作\(x\)，\(y\)的函数），解出\(\pderiv{z}{x}\)、\(\pderiv{z}{y}\)（复合函数求导法）；
+        \item 公式法：求出\(F_x\)，\(F_x\)，\(F_x\)代入公式。
+    \end{enumerate}
+
+\subsubsection{例题}
+
+    \textbf{例1}
+    \vspace{1em}
+
+    验证方程\(x^2+y^2-1=0\)在点\(\left(0,1\right)\)的某一邻域内恒能唯一确定一个有连续的导数，
+    当\(x=0\)，\(y=1\)时的隐函数\(y=f\left(x\right)\)，并求这函数的一阶与二阶导数在\(x=0\)
+    的值。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    记\(F\left(x,y\right)=x^2+y^2-1\)，
+
+    \begin{enumerate}
+        \item 显然\(F\left(x,y\right)\)处处连续且具有偏导数；
+        \item \(F\left(0,1\right)=0\)；
+        \item \(F_y=2y\)，所以\(F_y\left(0,10\right)=2\neq0\)。
+    \end{enumerate}
+
+    利用隐函数存在定理1，满足条件的隐函数\(y=f\left(x\right)\)存在。
+
+    由
+
+    $$
+        F_x=2x,\; F_y = 2y
+    $$
+
+    所以
+
+    $$
+        \begin{aligned}
+            &\frac{\mathrm{d} y}{\mathrm{~d} x}=-\frac{F_x}{F_y}=-\frac{x}{y},\left.\quad
+                \frac{\mathrm{~d} y}{\mathrm{~d} x}\right|_{\substack{x=0 \\ y=1}}=0; \\
+            & \frac{\mathrm{d}^2 y}{\mathrm{~d} x^2}=-\frac{y-x y^{\prime}}{y^2}=-\frac{y-x\left(-\frac{x}{y}\right)}{y^2}
+                =-\frac{y^2+x^2}{y^3}=-\frac{1}{y^3}, \\
+            & \left.\frac{\mathrm{~d}^2 y}{\mathrm{~d} x^2}\right|_{x=0}=-1 .
+        \end{aligned}
+    $$
+
+    \textbf{例2}
+    \vspace{1em}
+
+    设\(z=z\left(x,y\right)\)由\(F\left(x-z,y+z\right)=0\)确定，\(F\)可微，求证
+
+    \[
+        \pderiv{z}{x} - \pderiv{z}{y} = 1
+    \]
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    记\(G\left(x,y,z\right)=F\left(x-z,y+z\right)\)，则
+
+    $$
+        \begin{aligned}
+            & G_x=F_1^{\prime} \cdot(1-0)+F_2^{\prime} \cdot 0=F_1^{\prime} ; \\
+            & G_y=F_1^{\prime} \cdot 0+F_2^{\prime} \cdot(1+0)=F_2^{\prime} ; \\
+            & G_z=F_1^{\prime} \cdot(0-1)+F_2^{\prime} \cdot(0+1)=F_2^{\prime}-F_1^{\prime} ;
+        \end{aligned}
+    $$
+
+    所以
+
+    $$
+        \begin{aligned}
+            & \frac{\partial z}{\partial x}=-\frac{G_x}{G_z}=-\frac{F^{\prime}}{F_2^{\prime}-F_1^{\prime}}=\frac{F_1^{\prime}}{F_1^{\prime}-F_2^{\prime}} \\
+            & \frac{\partial z}{\partial y}=-\frac{G_y}{G_z}=-\frac{F_2^{\prime}}{F_2-F_1^{\prime}}=\frac{F_2^{\prime}}{F_1^{\prime}-F_2}
+        \end{aligned}
+    $$
+
+    代入原式：
+
+    $$
+        \text{左边} = \frac{\partial z}{\partial x}-\frac{\partial z}{\partial y}=\frac{F_1^{\prime}-F_2^{\prime}}{F_1^{\prime}-F_2^{\prime}}=1 = \text{右边}
+    $$
+
+    证毕。
+
+\subsection{方程组的情形}
+
+\subsubsection{定理}
+
+    \textbf{隐函数存在定理3}：设函数\(F\left(x,y,u,v\right)\)、\(G\left(x,y,u,v\right)\)在点\(P_0\left(x_0,y_0,u_0,v_0\right)\)
+    的某一邻域内具有对各个变量的连续偏导数，又\(F\left(x_0,y_0,u_0,v_0\right)=0\)，\(G\left(x,y,u,v\right)=0\)，
+    且偏导数所组成的函数行列式（或称雅可比(Jacobi)式）
+
+    $$
+        J=\frac{\partial(F, G)}{\partial(u, v)}=\left|\begin{array}{ll}
+        \dfrac{\partial F}{\partial u} & \dfrac{\partial F}{\partial v} \\ \\
+        \dfrac{\partial G}{\partial u} & \dfrac{\partial G}{\partial v}
+        \end{array}\right|
+    $$
+
+    在点\(P_0\left(x_0,y_0,u_0,v_0\right)\)处不为零，则方程组\(F\left(x,y,u,v\right)\)、\(G\left(x,y,u,v\right)\)
+    在点\(\left(x_0,y_0,u_0,v_0\right)\)的某一邻域内恒能唯一确定一组连续且具有连续偏导数的函数
+    \(u=u\left(x,y\right)\)，\(v=v\left(x,y\right)\)，它们满足条件\(u_0=u\left(x_0,y_0\right)\)，
+    \(v_0=v\left(x_0,y_0\right)\)，并有
+
+    \begin{equation}
+        \begin{aligned}
+            & \frac{\partial u}{\partial x}=-\frac{1}{J} \frac{\partial(F, G)}{\partial(x, v)}=-\frac{\left|\begin{array}{ll}
+            F_x & F_v \\
+            G_x & G_v
+            \end{array}\right|}{\left|\begin{array}{ll}
+            F_u & F_v \\
+            G_u & G_v
+            \end{array}\right|}, \\
+            & \frac{\partial v}{\partial x}=-\frac{1}{J} \frac{\partial(F, G)}{\partial(u, x)}=-\frac{\left|\begin{array}{ll}
+            F_u & F_x \\
+            G_u & G_x
+            \end{array}\right|}{\left|\begin{array}{ll}
+            F_u & F_v \\
+            G_u & G_v
+            \end{array}\right|}, \\
+            & \frac{\partial u}{\partial y}=-\frac{1}{J} \frac{\partial(F, G)}{\partial(y, v)}=-\frac{\left|\begin{array}{ll}
+            F_y & F_v \\
+            G_y & G_v
+            \end{array}\right|}{\left|\begin{array}{ll}
+            F_u & F_v \\
+            G_u & G_v
+            \end{array}\right|}, \\
+            & \frac{\partial v}{\partial y}=-\frac{1}{J} \frac{\partial(F, G)}{\partial(u, y)}=-\frac{\left|\begin{array}{ll}
+            F_u & F_v \\
+            G_u & G_y
+            \end{array}\right|}{\left|\begin{array}{ll}
+            F_u & F_v \\
+            G_u & G_v
+            \end{array}\right|}.
+        \end{aligned}
+    \end{equation}
+
+    该定理要求的三个条件：
+
+    \begin{enumerate}
+        \item 在点\(P_0\left(x_0,y_0,u_0,v_0\right)\)的某一邻域内具有连续偏导数；
+        \item \(F\left(x_0,y_0,u_0,v_0\right)=0\)，\(G\left(x,y,u,v\right)=0\)；
+        \item 函数行列式（或称雅可比(Jacobi)式）
+            $$
+                J=\frac{\partial(F, G)}{\partial(u, v)}=\left|\begin{array}{ll}
+                \dfrac{\partial F}{\partial u} & \dfrac{\partial F}{\partial v} \\ \\
+                \dfrac{\partial G}{\partial u} & \dfrac{\partial G}{\partial v}
+                \end{array}\right|
+            $$
+            在点\(P_0\left(x_0,y_0,u_0,v_0\right)\)处不为零
+    \end{enumerate}
 
 \end{document}
