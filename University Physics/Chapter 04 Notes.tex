@@ -951,4 +951,134 @@
         a=\frac{2 m g S}{(2 m+M) l}
     $$
 
+\section{刚体的角动量、角动量定理、角动量守恒定律}
+
+    \textbf{力}的时间累积效应：冲量、动量、动量定理。
+
+    \textbf{力矩}的时间累积效应：冲量矩、角动量、角动量定理。
+
+\subsection{刚体定轴转动的角动量}
+
+\subsubsection{质点的角动量}
+
+    质量为\(m\)的质点以速度\(\overrightarrow{v}\)在空间运动，某时刻对\(O\)的位矢为
+    \(\overrightarrow{r}\)，则质点对\(O\)的角动量定义为
+
+    \begin{equation}
+        \overrightarrow{L} = \overrightarrow{r} \times \overrightarrow{p}
+        = \overrightarrow{r} \times m \overrightarrow{v}
+    \end{equation}
+
+    \[
+        \includegraphics[scale=0.12]{"Chapter 04 images/pic8.png"}
+        % \caption{}
+        \label{pic4-8}
+    \]
+
+    当质点以角速度\(\omega\)作半径为\(r\)的圆运动时，
+    相对圆心的角动量：
+
+    \begin{equation}
+        L = r m v = r^2 m \omega
+    \end{equation}
+    
+    （方向按右手螺旋法则确定）
+
+\subsubsection{刚体的角动量}
+
+    对于绕\(z\)轴转动的刚体（质点系，每个质点做圆周运动）：
+
+    \begin{equation}
+        L_z =\sum_i L_{z i}=\sum_i r_i^2 \Delta m_i \omega
+        =\left(\sum_i r_i^2 \Delta m_i\right) \omega=I_z \omega
+    \end{equation}
+
+\subsection{刚体定轴转动的角动量定理}
+
+\subsubsection{质点的角动量定理}
+
+    \begin{equation}
+        \overrightarrow{M} = \deriv{\overrightarrow{L}}{t}
+    \end{equation}
+
+    作用于质点的合外力对参考点0的力矩，等于质点对该点\(O\)的角动量随时间的变化率。
+
+    微分形式：
+
+    \begin{equation}
+        \overrightarrow{M} \rmd t = \rmd L
+    \end{equation}
+
+    积分形式：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} \overrightarrow{M} \rmd t = \overrightarrow{L}_2 - \overrightarrow{L}_1
+    \end{equation}
+
+    定义\textbf{冲量矩}：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} \overrightarrow{M} \rmd t
+    \end{equation}
+
+    质点的角动量定理另一表述：对同一参考点\(O\)，
+    质点所受的冲量矩等于质点角动量的增量。
+
+\subsubsection{质点的角动量守恒定律}
+
+    由质点的角动量定理：
+
+    如果\(\overrightarrow{M}=\overrightarrow{0}\)，则
+
+    \begin{equation}
+        \overrightarrow{L} = \overrightarrow{r} \times m \overrightarrow{v}
+        = \text{恒矢量}
+    \end{equation}
+
+    若质点所受外力对某给定点\(O\)的力矩为零，则质点对\(O\)点的角动量保持不变。
+
+\subsubsection{刚体定轴转动的角动量定理}
+
+    刚体也是质点系，刚体定轴转动的角动量定理的微分形式应为
+
+    \begin{equation}
+        M \rmd t = \rmd \left(I \omega\right)
+    \end{equation}
+
+    \textbf{注意}：这两式对非刚体（转动惯量会发生变化）也成立。
+
+    而刚体绕定轴的转动定律：
+
+    \begin{equation}
+        M = I \deriv{\omega}{t}
+    \end{equation}
+
+    （\(I\)是常数，仅对刚体成立）
+
+    刚体（非刚体）定轴转动的角动量定理的积分形式：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} M \mathrm{~d} t=\int_{\left(I \omega\right)_1}^{\left(I \omega\right)_2} \rmd \left(I \omega\right)
+        =I_2 \omega_2-I_1 \omega_1
+    \end{equation}
+
+\subsection{刚体定轴转动的角动量守恒定律}
+
+    如果\(\overrightarrow{M}=\overrightarrow{0}\)，则
+
+    \begin{equation}
+        L = I \omega = \text{常量}
+    \end{equation}
+
+    若物体所受的合外力矩为零，则物体的角动量保持不变。
+
+    \begin{enumerate}
+        \item 若\(I\)不变，\(\omega\)不变；
+        \item 若\(I\)变，\(\omega\)也变，但\(L = I \omega\)不变。
+    \end{enumerate}
+
+    即内力矩不改变系统的角动量。
+
+    在冲击等问题中，\(M^{\text{in}} \gg  M^{\text{ex}}\)，可认为\(L \approx \text{常量}\)。
+
 \end{document}
