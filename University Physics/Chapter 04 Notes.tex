@@ -951,6 +951,69 @@
         a=\frac{2 m g S}{(2 m+M) l}
     $$
 
+\section{刚体定轴转动的功能关系}
+
+\subsection{力矩做功}
+
+    \(\overrightarrow{F}\)在转动平面内，
+
+    \begin{equation*}
+        \mathrm{d} A=\overrightarrow{F} \cdot \mathrm{~d} \overrightarrow{r}=F_\tau \mathrm{d} s=F_\tau r \mathrm{~d} \theta
+        \label{formula-4-3-1}
+    \end{equation*}
+
+    上式也可写成
+
+    \begin{equation}
+        \mathrm{d} A = M \rmd \theta
+    \end{equation}
+
+    于是力矩\(M\)对刚体所做的总功为
+
+    \begin{equation}
+        A=\int \mathrm{d} A=\int_{\theta_0}^\theta M \mathrm{~d} \theta
+    \end{equation}
+
+    由式\ref{formula-4-3-1}还可得出力矩做功的瞬时功率为
+
+    \begin{equation}
+        P=\frac{\mathrm{d} A}{\mathrm{~d} t}=\frac{M \mathrm{~d} \theta}{\mathrm{~d} t}=M \omega
+    \end{equation}
+
+    当\(\overrightarrow{M}\)与\(\overrightarrow{\omega}\)同向，\(W\)、\(P\)为正；
+    当\(\overrightarrow{M}\)与\(\overrightarrow{\omega}\)反向，\(W\)、\(P\)为负。
+
+\subsection{转动动能}
+
+    整个刚体的动能就是所有质元的动能之和：
+
+    \begin{equation}
+        E_{\mathrm{k}}=\sum_i \frac{1}{2} \Delta m_i r_i^2 \omega^2=\frac{1}{2}\left(\sum_i \Delta m_i r_i^2\right) \omega^2
+    \end{equation}
+
+    即
+
+    \begin{equation}
+        E_{\mathrm{k}}=\frac{1}{2} I \omega^2
+    \end{equation}
+
+\subsection{刚体定轴转动的动能定理}
+
+    由
+
+    \begin{equation*}
+        A=\int_{\theta_1}^{\theta_2} M \mathrm{~d} \theta=\int_{\theta_1}^{\theta_2} I \frac{\mathrm{~d} \omega}{\mathrm{~d} t} \mathrm{~d} \theta=\int_{\omega_1}^{\omega_2} I \omega \mathrm{~d} \omega
+    \end{equation*}
+
+    有
+
+    \begin{equation}
+        A=\int_{\theta_1}^{\theta_2} M \mathrm{~d} \theta=\int_{\omega_1}^{\omega_2} I \omega \mathrm{~d} \omega=\frac{1}{2} I \omega_2^2-\frac{1}{2} I \omega_1^2
+    \end{equation}
+
+    即：合外力矩对绕定轴转动的刚体所作的功等于刚体转动动能的增量。
+    ——刚体绕定轴转动的动能定理
+
 \section{刚体的角动量、角动量定理、角动量守恒定律}
 
     \textbf{力}的时间累积效应：冲量、动量、动量定理。
@@ -1080,5 +1143,26 @@
     即内力矩不改变系统的角动量。
 
     在冲击等问题中，\(M^{\text{in}} \gg  M^{\text{ex}}\)，可认为\(L \approx \text{常量}\)。
+
+\subsection{共轴系统定轴转动的角动量定理}
+
+    当一个系统由多个物体和质点组成时，则某段时间内对某轴
+    的合外力矩的冲量矩等于系统绕该轴的角动量的增量：
+
+    $$
+    \int_{t_1}^{t_2} M \mathrm{~d} t=\left(\sum_i I_i \omega_i\right)_2-\left(\sum I_i \omega_i\right)_1
+    $$
+
+    （\(I_i\)、\(\omega_i\)应对同一轴，\(\omega_i\)应对同一惯性系。）
+
+    共轴系统的定轴转动的角动量守恒定律：
+
+    当系统对某轴的合外力矩的冲量矩等于零时，系统绕该轴的角动量守恒，即：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} M \rmd t \text{时，} \sum_{i} I_i \omega_i = \text{恒矢量}
+    \end{equation}
+
+    （\(I_i\)、\(\omega_i\)应对同一轴，\(\omega_i\)应对同一惯性系。）
 
 \end{document}
