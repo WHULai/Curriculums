@@ -1514,4 +1514,67 @@
         \end{array}\right|}=\frac{2(x-z)}{2(y-x)}=\frac{x-z}{y-x}
     $$
 
+    \textbf{例1}
+    \vspace{1em}
+
+    求由$\left\{\begin{array}{l}x=\mathrm{e}^u+u \sin v \\ y=\mathrm{e}^u-u \cos v\end{array}\right.$
+    所确定的函数的导数$\frac{\partial u}{\partial x}, \frac{\partial u}{\partial y},
+    \frac{\partial v}{\partial x}, \frac{\partial v}{\partial y}$。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    原方程组两边求微分，得
+
+    $$
+        \left\{\begin{array}{l}
+            \mathrm{d} x=\left(\mathrm{e}^u+\sin v\right) \mathrm{d} u+u \cos v \mathrm{~d} v \\
+            \mathrm{~d} y=\left(\mathrm{e}^u-\cos v\right) \mathrm{d} u+u \sin v \mathrm{~d} v
+        \end{array}\right.
+    $$
+
+    当雅可比行列式
+
+    $$
+        \left|\begin{array}{ll}
+            \mathrm{e}^u+\sin v & u \cos v \\
+            \mathrm{e}^u-\cos v & u \sin v
+        \end{array}\right|=u \mathrm{e}^u(\sin v-\cos v)+u \neq 0
+    $$
+
+    时，有
+
+    $$
+        \rmd v =\frac{u \sin v \mathrm{~d} x-u \cos v \mathrm{~d} y}{u \mathrm{e}^u(\sin v-\cos v)+u}=
+        \frac{\sin v}{e^u(\sin v-\cos v)+1} \mathrm{~d} x+\frac{-\cos v}{\mathrm{e}^u(\sin v-\cos v)+1} \mathrm{~d} y
+    $$
+
+    $$
+        \begin{aligned}
+            \mathrm{~d} v & =\frac{\left(\mathrm{e}^u+\sin v\right) \mathrm{d} y-\left(\mathrm{e}^u-\cos v\right)
+                \mathrm{d} x}{u \mathrm{e}^u(\sin v-\cos v)+u} \\
+            &=\frac{\mathrm{e}^u+\sin v}{u \mathrm{e}^u(\sin v-\cos v)+u} \mathrm{~d} y+
+                \frac{\cos v-\mathrm{e}^u}{u \mathrm{e}^u(\sin v-\cos v)+u} \mathrm{~d} x
+        \end{aligned}
+    $$
+
+    所以
+
+    $$
+        \frac{\partial u}{\partial x}=\frac{\sin v}{\mathrm{e}^u(\sin v-\cos v)+1}
+    $$
+
+    $$
+        \frac{\partial u}{\partial y}=\frac{-\cos v}{\mathrm{e}^u(\sin v-\cos v)+1}
+    $$
+
+    $$
+        \frac{\partial v}{\partial x}=\frac{\cos v-\mathrm{e}^u}{u \mathrm{e}^u(\sin v-\cos v)+u}
+    $$
+
+    $$
+        \frac{\partial v}{\partial y}=\frac{\mathrm{e}^u+\sin v}{u \mathrm{e}^u(\sin v-\cos v)+u}
+    $$
+
 \end{document}
