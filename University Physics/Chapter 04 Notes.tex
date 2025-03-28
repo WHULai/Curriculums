@@ -164,6 +164,10 @@
 % 生成目录
 \tableofcontents
 
+\newpage 
+\mbox{}
+\newpage
+
 \pagebreak
 
 % 设置页码格式是阿拉伯数字
@@ -1164,5 +1168,118 @@
     \end{equation}
 
     （\(I_i\)、\(\omega_i\)应对同一轴，\(\omega_i\)应对同一惯性系。）
+
+\subsection{例题}
+
+\subsubsection{Problem 1}
+
+    在半径为\(R\)、质量为\(M\)具有光滑竖直固定中心轴的水平圆盘上，
+    有一人静止站立在距转轴为\(\frac{R}{2}\)处，人的质量是圆盘质量的\(\frac{1}{10}\)，
+    开始时载人圆盘对地以角速度\(\omega_0\)匀速转动。现在此人相对于圆盘以速率\(v\)沿与圆盘转动的相反方向绕轴作圆周运动，
+    如图所示。已知圆盘对中心轴的转动惯量为\(\frac{1}{2}MR^2\)。试求：
+
+    \begin{enumerate}
+        \item 圆盘对地的角速度；
+        \item 欲使圆盘对地静止，人在该圆周上相对于圆盘的速度\(v\)的大小及方向。
+    \end{enumerate}
+
+    \[
+        \includegraphics[scale=0.24]{Chapter 04 images/pic9.png}
+    \]
+
+    \vspace{1em}
+    \textbf{Solution}
+    
+    \textbf{Part One}
+
+    当人以速率\(v\)沿相对圆盘转动相反的方向走动时，圆盘对地的角速度为\(\omega\)，
+    则由速度叠加原理可知，人相对于地角速度为
+
+    $$
+        \omega^{\prime}=\omega-\frac{v}{R / 2}=\omega-\frac{2 v}{R}
+    $$
+
+    将人与盘视为一个共轴系统，人在盘上走动时系统受对转轴的合外力矩为零，
+    故系统的角动量守恒，所以有
+
+    $$
+        \left[\frac{1}{2} M R^2+\frac{M}{10}\left(\frac{1}{2} R\right)^2\right] \omega_0=
+        \frac{1}{2} M R^2 \omega+\frac{M}{10}\left(\frac{1}{2} R\right)^2 \omega^{\prime}
+    $$
+
+    联解得
+
+    $$
+        \omega=\omega_0+\frac{2 v}{21 R}
+    $$
+
+    \textbf{Part Two}
+
+    欲使盘对地静止，则\(\omega=0\)必为零，即
+    
+    $$
+        \omega=\omega_0+\frac{2 v}{21 R}=0
+    $$
+
+    由此得，人相对于圆盘的速度为
+
+    $$
+        v=-\frac{21 R \omega_0}{2}
+    $$
+
+    式中负号表示人的走动方向与上一问中人走动的方向相反，即与盘的初始转动方向一致。
+    \vspace{1em}
+
+\subsubsection{Problem 2}
+
+    一块宽\(L=0.60\mathrm{m}\) 、质量\(M=1.0\mathrm{kg}\)的均匀薄木板，
+    可绕水平固定轴\(OO^{\prime}\)无摩擦地自由转动。当木板静止在平衡位置时，有一质量为
+    \(m = 10 \times 10^3 \mathrm{kg}\)的子弹垂直击中木板上的\(A\)点，\(A\)离转轴\(OO^{\prime}\)距离
+    \(l = 0.36\mathrm{m}\)，子弹击中木板前的速度为\(500 m \cdot s^{-1}\)，穿出木板后的速度为\(200 m \cdot s^{-1}\)。
+    试求
+
+    \begin{enumerate}
+        \item 子弹给予木板的冲量；
+        \item 木板获得的角速度。
+    \end{enumerate}
+
+    （已知：木板绕\(OO^{\prime}\)轴的转动惯量\(I=\frac{1}{3}ML^2\)）
+
+    \[
+        \includegraphics[scale=0.24]{Chapter 04 images/pic10.png}
+    \]
+
+    \vspace{1em}
+    \textbf{Solution}
+    
+    \textbf{Part One}
+
+    子弹受到的冲量为
+
+    $$
+        I=\int F \mathrm{~d} t=m\left(v-v_0\right)
+    $$
+    
+    由牛顿第三定律，子弹对木块的冲量为
+
+    $$
+        I^{\prime}=\int F^{\prime} \mathrm{d} t=-\int F \mathrm{~d} t=m\left(v_0-v\right)=3.0 \mathrm{N \cdot m}
+    $$
+
+    \textbf{Part Two}
+
+    若将子弹和木板作为一个共轴系统，则该系统在碰撞过程中满足角动量守恒条件。
+    所以有
+
+    $$
+        m v_0 l=m v l+I \omega
+    $$
+
+    所以木板获得的角速度为
+
+    $$
+        \omega=\frac{m v_0 l-m v l}{I}=\frac{3\left(m v_0 l-m v l\right)}{M L^2}
+        =9.0 \mathrm{rad} \cdot \mathrm{~s}^{-1}
+    $$
 
 \end{document}
