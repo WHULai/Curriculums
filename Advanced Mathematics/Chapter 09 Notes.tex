@@ -1453,4 +1453,65 @@
             在点\(P_0\left(x_0,y_0,u_0,v_0\right)\)处不为零
     \end{enumerate}
 
+\subsubsection{例题}
+
+    \textbf{例1}
+    \vspace{1em}
+
+    求由$\left\{\begin{array}{l}x+y+z=0 \\ x^2+y^2+z^2=1\end{array}\right.$
+    所确定的函数的导数\(\deriv{x}{z}\)、\(\deriv{y}{z}\)。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    方程组对\(z\)求导
+
+    $$
+        \left\{\begin{array}{c}
+            \deriv{x}{z}+\deriv{y}{z}+1=0 \\
+            2 x \deriv{x}{z}+2 y \deriv{y}{z}+2 z=0
+        \end{array}\right.
+    $$
+
+    即
+
+    $$
+        \left\{\begin{array}{c}
+            \deriv{x}{z}+\deriv{y}{z}=-1 \\
+            2 x \deriv{x}{z}+2 y \deriv{y}{z}=-2 z
+        \end{array}\right.
+    $$
+
+    当雅可比行列式
+
+    $$
+        J=\left|\begin{array}{cc}
+            1 & 1 \\
+            2 x & 2 y
+        \end{array}\right|=2(y-x) \neq 0
+    $$
+
+    时，有
+
+    $$
+        \deriv{x}{z}=\frac{\left|\begin{array}{cc}
+        -1 & 1 \\
+        -2 z & 2 y
+        \end{array}\right|}{\left|\begin{array}{cc}
+        1 & 1 \\
+        2 x & 2 y
+        \end{array}\right|}=\frac{2(z-y)}{2(y-x)}=\frac{z-y}{y-x}
+    $$
+
+    $$
+        \deriv{y}{z}=\frac{\left|\begin{array}{cc}
+        1 & -1 \\
+        2 x & -2 z
+        \end{array}\right|}{\left|\begin{array}{cc}
+        1 & 1 \\
+        2 x & 2 y
+        \end{array}\right|}=\frac{2(x-z)}{2(y-x)}=\frac{x-z}{y-x}
+    $$
+
 \end{document}
