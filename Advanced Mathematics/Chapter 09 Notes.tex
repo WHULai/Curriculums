@@ -1706,4 +1706,76 @@
             \(\overrightarrow{r} = \overrightarrow{f}\left(t\right)\)的图形。
     \end{enumerate}
 
+    \textbf{定义2}：设向量值函数\(\overrightarrow{f}\left(t\right)\)在点\(t\)
+    的某一去心邻域内有定义，如果存在一个常向量\(\overrightarrow{r}_0\)，对于任意给定的正数\(\varepsilon\)总存在正数
+    \(\delta\)使得当\(t\)满足\(0<\left|t-t_0\right|<\delta\)时，对应的函数值\(\overrightarrow{f}\left(t\right)\)
+    都满足不等式
+    
+    \[
+        \left|\overrightarrow{f}\left(t\right)-\overrightarrow{r}_0\right| < \varepsilon
+    \]
+
+    那么，常向量\(\overrightarrow{r}_0\)就叫做向量值函数\(\overrightarrow{f}\left(t\right)\)
+    当\(t \rightarrow t_0\)时的极限，记作
+    
+    \begin{equation}
+        \lim_{t \rightarrow t_0} \overrightarrow{f}(t) = \overrightarrow{r}_0 \quad 
+        \text{或} \quad \overrightarrow{f}(t) \rightarrow \overrightarrow{r}_0, t \rightarrow t_0
+    \end{equation}
+
+    \begin{enumerate}
+        \item 向量值函数\(\overrightarrow{f}\left(t\right)\)当\(t \rightarrow t_0\)
+            时的极限存在的充分必要条件是\(f\left(t_1\right)\)，\(f\left(t_2\right)\)，
+            \(f\left(t_3\right)\)当\(t \rightarrow t_0\)时的极限都存在。
+        \item 设向量值函数\(\overrightarrow{f}\left(t\right)\)在点\(t_0\)
+            的某一去心邻域内有定义，若
+            \begin{align}
+                \lim_{t \rightarrow t_0}\overrightarrow{f}\left(t\right) = \overrightarrow{f}\left(t_0\right)
+            \end{align}
+            则称\(\overrightarrow{f}\left(t\right)\)在点\(t_0\)处连续。
+    \end{enumerate}
+
+    \textbf{定义2}：设向量值函数\(\overrightarrow{r} = \overrightarrow{f}\left(t\right)\)在点\(t_0\)
+    的某一去心邻域内有定义，如果
+    
+    \begin{equation}
+        \lim _{\Delta t \rightarrow 0} \frac{\Delta \overrightarrow{r}}{\Delta t}=
+        \lim _{\Delta t \rightarrow 0} \frac{\overrightarrow{f}\left(t_0+\Delta t\right)-\overrightarrow{f}\left(t_0\right)}{\Delta t}
+    \end{equation}
+
+    存在，那么就称这个极限向量为向量值函数\(\overrightarrow{r} = \overrightarrow{f}\left(t\right)\)
+    在\(t_0\)处的导数或导向量，记作\(\overrightarrow{f}^{\prime}\left(t_0\right)\)或
+    \(\left.\dfrac{\rmd \overrightarrow{r}}{\rmd t}\right|_{t=t_0}\)。
+
+    向量函数导数的运算法则如下（\(\overrightarrow{u}\left(t\right)\)、\(\overrightarrow{v}\left(t\right)\)
+    是可导的向量值函数，\(\overrightarrow{C}\)是常向量，\(c\)是任一常数，\(\varphi\left(t\right)\)
+    是可到的数量函数）：
+
+    \begin{enumerate}
+        \item $$
+                \frac{\mathrm{d}}{\mathrm{~d} t} \overrightarrow{C}=\overrightarrow{0}
+            $$
+        \item $$
+                \frac{\mathrm{d}}{\mathrm{~d} t}[c \overrightarrow{u}(t)]=c \overrightarrow{u}^{\prime}(t)
+            $$
+        \item $$
+                \frac{\mathrm{d}}{\mathrm{~d} t}[\overrightarrow{u}(t) \pm \overrightarrow{v}(t)]=\overrightarrow{u}^{\prime}(t) \pm \overrightarrow{v}^{\prime}(t)
+            $$
+        \item $$
+                \frac{\mathrm{d}}{\mathrm{~d} t}[\varphi(t) \overrightarrow{u}(t)]=
+                \varphi^{\prime}(t) \overrightarrow{u}(t)+\varphi(t) \overrightarrow{u}^{\prime}(t)
+            $$
+        \item $$
+                \frac{\mathrm{d}}{\mathrm{~d} t}[\overrightarrow{u}(t) \cdot \overrightarrow{v}(t)]=
+                \overrightarrow{u}^{\prime}(t) \cdot \overrightarrow{v}(t)+\overrightarrow{u}(t) \cdot \overrightarrow{v}^{\prime}(t)
+            $$
+        \item $$
+                \frac{\mathrm{d}}{\mathrm{~d} t}[\overrightarrow{u}(t) \times \overrightarrow{v}(t)]=
+                \overrightarrow{u}^{\prime}(t) \times \overrightarrow{v}(t)+\overrightarrow{u}(t) \times \overrightarrow{v}^{\prime}(t)
+            $$
+        \item $$
+                \frac{\mathrm{d}}{\mathrm{~d} t} \overrightarrow{u}[\varphi(t)]=\varphi^{\prime}(t) \overrightarrow{u}^{\prime}[\varphi(t)]
+            $$
+    \end{enumerate}
+
 \end{document}
