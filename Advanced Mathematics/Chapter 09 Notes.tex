@@ -1577,6 +1577,48 @@
         \frac{\partial v}{\partial y}=\frac{\mathrm{e}^u+\sin v}{u \mathrm{e}^u(\sin v-\cos v)+u}
     $$
 
+    \textbf{例3}
+    \vspace{1em}
+
+    求由$\left\{\begin{array}{l}2 x u+y^2 v=0, \\ y u+3 x v=1,\end{array}\right.$
+    所确定的函数的导数$\frac{\partial u}{\partial x}, \frac{\partial u}{\partial y},
+    \frac{\partial v}{\partial x}, \frac{\partial v}{\partial y}$。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    方程组$\left\{\begin{array}{l}2 x u+y^2 v=0, \\ y u+3 x v=1,\end{array}\right.$
+    两边关于\(x\)求偏导并整理得
+
+    $$
+        \left\{\begin{array}{l}
+            2 x \dfrac{\partial u}{\partial x}+y^2 \dfrac{\partial v}{\partial x}=-2 u \\ \\
+            y \dfrac{\partial u}{\partial x}+3 x \dfrac{\partial v}{\partial x}=-3 v
+        \end{array}\right.
+    $$
+
+    当$\left|\begin{array}{cc}2 x & y^2 \\ y & 3 x\end{array}\right|=6 x^2-y^3 \neq 0$时，
+    由隐函数求导公式即得
+
+    $$
+        \frac{\partial u}{\partial x}=\frac{3 y^2 v-6 x u}{6 x^2-y^3}
+    $$
+
+    $$
+        \frac{\partial v}{\partial x}=\frac{2 y u-6 x v}{6 x^2-y^3}
+    $$
+
+    类似可求得
+
+    $$
+        \frac{\partial u}{\partial y}=\frac{y^2 u-6 x y u}{6 x^2-y^3}
+    $$
+
+    $$
+        \frac{\partial v}{\partial y}=\frac{2 y^2 v-2 x u}{6 x^2-y^3} .
+    $$
+
 \section{多元函数微分学应用}
 
 \subsection{向量值函数及其导数}
