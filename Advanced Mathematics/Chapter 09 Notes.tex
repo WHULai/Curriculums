@@ -1619,6 +1619,37 @@
         \frac{\partial v}{\partial y}=\frac{2 y^2 v-2 x u}{6 x^2-y^3} .
     $$
 
+    \textbf{例4}
+    \vspace{1em}
+
+    设\(\varphi\left(u,v\right)\)为可微函数，证明：由方程\(\varphi\left(cx-az, cy-bz\right)=0\)
+    所确定的隐函数满足方程\(a \dfrac{\partial z}{\partial x}+b \dfrac{\partial z}{\partial y}\)。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    令$F(x, y, z)=\varphi(c x-a z, c y-b z)=0$，则
+
+    $$
+        F_x^{\prime}=c \varphi_1^{\prime}, \quad F_y^{\prime}=c \varphi_2^{\prime}, \quad F_z^{\prime}=-a \varphi_1^{\prime}-b \varphi_2^{\prime}
+    $$
+
+    于是有
+
+    $$
+        \frac{\partial z}{\partial x}=\frac{c \varphi_1^{\prime}}{a \varphi_1^{\prime}+b \varphi_2^{\prime}},
+        \frac{\partial z}{\partial y}=\frac{c \varphi_2^{\prime}}{a \varphi_1^{\prime}+b \varphi_2^{\prime}}
+    $$
+
+    故
+
+    $$
+        a \frac{\partial z}{\partial x}+b \frac{\partial z}{\partial y}=
+        \frac{a c \varphi_1^{\prime}}{a \varphi_1^{\prime}+b \varphi_2^{\prime}}+
+        \frac{b c \varphi_2^{\prime}}{a \varphi_1^{\prime}+b \varphi_2^{\prime}}=c
+    $$
+
 \section{多元函数微分学应用}
 
 \subsection{向量值函数及其导数}
