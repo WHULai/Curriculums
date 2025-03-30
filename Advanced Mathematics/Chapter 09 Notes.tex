@@ -1778,4 +1778,448 @@
             $$
     \end{enumerate}
 
+\subsection{空间曲线的切线与法向量}
+
+\subsubsection{公式}
+
+    设空间曲线\(\varGamma\)的参数方程为
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+            x=\varphi(t), \\
+            y=\psi(t), \\
+            z=\omega(t),
+        \end{array} \quad t \in[\alpha, \beta]. \right.
+        \label{9-6-7}
+    \end{equation}
+
+    这里假定\ref{9-6-7}式的三个函数都在\([\alpha, \beta]\)
+    上可导，且三个导数不同时为零。
+
+    现要求曲线\(\varGamma\)在其上一点\(M\left(x_0,y_0,z_0\right)\)处的切线及法平面方程。
+
+    设点\(M\)对应的参数为\(t_0\)。记$f(t)=(\varphi(t), \psi(t), \omega(t)), t \in[\alpha, \beta]$。
+    则切向量
+
+    $$
+        \overrightarrow{T}=\overrightarrow{f}^{\prime}\left(t_0\right)=
+        \left(\varphi^{\prime}\left(t_0\right), \psi^{\prime}\left(t_0\right), \omega^{\prime}\left(t_0\right)\right)
+    $$
+
+    从而曲线\(\varGamma\)在点\(M\left(x_0,y_0,z_0\right)\)处的切线方程为
+
+    \begin{equation}
+        \frac{x-x_0}{\varphi^{\prime}\left(t_0\right)}=
+        \frac{y-y_0}{\psi^{\prime}\left(t_0\right)}=\frac{z-z_0}{\omega^{\prime}\left(t_0\right)}
+        \label{9-6-8}
+    \end{equation}
+
+    于是法平面方程为
+
+    \begin{equation}
+        \varphi^{\prime}\left(t_0\right)\left(x-x_0\right)+\psi^{\prime}\left(t_0\right)\left(y-y_0\right)+\omega^{\prime}\left(t_0\right)\left(z-z_0\right)=0
+        \label{9-6-9}
+    \end{equation}
+
+\subsubsection{其他情形}
+
+    如果空间曲线\(\varGamma\)的方程以
+
+    $$
+        \left\{\begin{array}{l}
+            y=\varphi(x) \\
+            z=\psi(x)
+        \end{array}\right.
+    $$
+
+    的形式给出，取\(x\)为参数，它就可以表示为参数方程的形式
+
+    $$
+        \left\{\begin{array}{l}
+            x=x \\
+            y=\varphi(x) \\
+            z=\psi(x)
+        \end{array}\right.
+    $$
+
+    如果空间曲线\(\varGamma\)的方程以
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+            F(x, y, z)=0 \\
+            G(x, y, z)=0
+        \end{array}\right.
+        \label{9-6-10}
+    \end{equation}
+
+    的形式给出，\(M\left(x_0,y_0,z_0\right)\)是曲线\(\varGamma\)上一点。
+    又设\(F\)、\(G\)为有对各个变量的连续偏导数，且
+
+    $$
+        \left.\frac{\partial(F, G)}{\partial(y, z)}\right|_{\left(x_0, y_0, z_0\right)} \neq 0
+    $$
+
+    方程\ref{9-6-10}满足隐函数存在定理条件，确定一组函数\(\varphi(x)\)、\(\psi(x)\)，则
+
+    $$
+        \left\{\begin{array}{l}
+            F[x, \varphi(x), \psi(x)] \equiv 0 \\
+            G[x, \varphi(x), \psi(x)] \equiv 0
+        \end{array}\right.
+    $$
+
+    两端分别对\(x\)求全导数，得
+
+    $$
+        \left\{\begin{array}{l}
+            \dfrac{\partial F}{\partial x}+\dfrac{\partial F}{\partial y} \dfrac{\mathrm{~d} y}{\mathrm{~d} x}+
+                \dfrac{\partial F}{\partial z} \dfrac{\mathrm{~d} z}{\mathrm{~d} x}=0 \\ \\
+            \dfrac{\partial G}{\partial x}+\dfrac{\partial G}{\partial y} \dfrac{\mathrm{~d} y}{\mathrm{~d} x}+
+                \dfrac{\partial G}{\partial z} \dfrac{\mathrm{~d} z}{\mathrm{~d} x}=0
+        \end{array}\right.
+    $$
+
+    故可解得
+
+    $$
+        \frac{\mathrm{d} y}{\mathrm{~d} x}=\varphi^{\prime}(x)=\frac{\left|\begin{array}{ll}
+        F_z & F_x \\
+        G_z & G_x
+        \end{array}\right|}{\left|\begin{array}{ll}
+        F_y & F_z \\
+        G_y & G_z
+        \end{array}\right|}
+    $$
+
+    $$
+        \frac{\mathrm{d} z}{\mathrm{~d} x}=\psi^{\prime}(x)=\frac{\left|\begin{array}{ll}
+        F_x & F_y \\
+        G_x & G_y
+        \end{array}\right|}{\left|\begin{array}{ll}
+        F_y & F_z \\
+        G_y & G_z
+        \end{array}\right|}
+    $$
+
+    于是$T=\left(1, \varphi^{\prime}\left(x_0\right), \psi^{\prime}\left(x_0\right)\right)$
+    是曲线\(\varGamma\)在点\(M\)处的一个切向量，这里
+
+    $$
+        \varphi^{\prime}\left(x_0\right)=\frac{\left|\begin{array}{ll}
+        F_z & F_x \\
+        G_z & G_x
+        \end{array}\right|_M}{\left|\begin{array}{ll}
+        F_y & F_z \\
+        G_y & G_z
+        \end{array}\right|_M}, \psi^{\prime}\left(x_0\right)=\frac{\left|\begin{array}{ll}
+        F_x & F_y \\
+        G_x & G_y
+        \end{array}\right|_M}{\left|\begin{array}{ll}
+        F_y & F_z \\
+        G_y & G_z
+        \end{array}\right|_M}
+    $$
+
+    （后略）
+
+\subsubsection{例题}
+
+    \textbf{例题1}
+
+    求曲线$x=t, y=t^2, z=t^3$在点\(\left(1,1,1\right)\)处的切线及法平面方程。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    因为$x_t^{\prime}=1, y_t^{\prime}=2 t, z_t^{\prime}=3 t^2$，而点\(\left(1,1,1\right)\)
+    所对应的参数\(t_0=1\)，所以
+
+    \[
+        \overrightarrow{T} = \left(1,2,3\right)
+    \]
+
+    于是，切线方程为
+
+    $$
+        \frac{x-1}{1}=\frac{y-1}{2}=\frac{z-1}{3}
+    $$
+
+    法平面方程为
+
+    $$
+        (x-1)+2(y-1)+3(z-1)=0
+    $$
+
+    即
+
+    $$
+        x+2 y+3 z=6
+    $$
+
+    \vspace{1em}
+    \textbf{例题2}
+
+    求曲线$x^2+y^2+z^2=6, x+y+z=0$在点\(\left(1,-2,1\right)\)处的切线及法平面方程。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    将所给方程的两边对\(x\)求导并移项，得
+
+    $$
+        \left\{\begin{array}{l}
+        y \frac{\mathrm{~d} y}{\mathrm{~d} x}+z \frac{\mathrm{~d} z}{\mathrm{~d} x}=-x \\
+        \frac{\mathrm{~d} y}{\mathrm{~d} x}+\frac{\mathrm{d} z}{\mathrm{~d} x}=-1
+        \end{array}\right.
+    $$
+
+    由此得
+
+    $$
+        \frac{\mathrm{d} y}{\mathrm{~d} x}=\frac{\left|\begin{array}{cc}
+        -x & z \\
+        -1 & 1
+        \end{array}\right|}{\left|\begin{array}{ll}
+        y & z \\
+        1 & 1
+        \end{array}\right|}=\frac{z-x}{y-z}, \frac{\mathrm{~d} z}{\mathrm{~d} x}=\frac{\left|\begin{array}{cc}
+        y & -x \\
+        1 & -1
+        \end{array}\right|}{\left|\begin{array}{ll}
+        y & z \\
+        1 & 1
+        \end{array}\right|}=\frac{x-y}{y-z} .
+    $$
+
+    $$
+        \left.\frac{\mathrm{d} y}{\mathrm{~d} x}\right|_{(1,-2,1)}=0,\quad \left.\frac{\mathrm{~d} z}{\mathrm{~d} x}\right|_{(1,-2,1)}=-1
+    $$
+
+    从而
+
+    $$
+        \overrightarrow{T}=(1,0,-1)
+    $$
+
+    故所求切线方程为
+
+    $$
+        \frac{x-1}{1}=\frac{y+2}{0}=\frac{z-1}{-1}
+    $$
+
+    法平面方程为
+
+    $$
+        (x-1)+0 \cdot(y+2)-(z-1)=0
+    $$
+
+    即
+
+    $$
+        x-z = 0
+    $$
+
+\subsection{曲面的切平面与法线}
+
+\subsubsection{曲面为\(F\left(x,y,z\right)=0\)的情形}
+
+    \[
+        \includegraphics*[scale=0.18]{Chapter 09 images/pic5.jpg}
+    \]
+
+    设\(M\left(x_0,y_0,z_0\right)\)是曲面\(\Sigma\)上任意一点，
+    在曲面\(\Sigma\)上，通过\(M\)任取一条曲线
+
+    \begin{equation}
+        \varGamma:
+        \left\{\begin{array}{l}
+            x=\varphi(t), \\
+            y=\psi(t), \\
+            z=\omega(t),
+        \end{array} \quad t \in[\alpha, \beta]. \right.
+        \label{9-6-11}
+    \end{equation}
+
+    \(M\left(x_0,y_0,z_0\right)\)所对应的参数\(t_0=1\)
+
+    则过\(M\)的切线方程为
+
+    $$
+        \frac{x-x_0}{\varphi^{\prime}\left(t_0\right)}=
+        \frac{y-y_0}{\psi^{\prime}\left(t_0\right)}=\frac{z-z_0}{\omega^{\prime}\left(t_0\right)}
+    $$
+
+    命题：在曲面\(\Sigma\)上通过点\(M\)且在点\(M\)处具有切线的任何曲线，
+    它们在点\(M\)处的切线都在同一个平面上。
+
+    该平面称为曲面\(\Sigma\)在点\(M\)处的切平面，切平面方程为
+
+    \begin{equation}
+        F_x\left(x_0, y_0, z_0\right)\left(x-x_0\right)+F_y\left(x_0, y_0, z_0\right)\left(y-y_0\right)+
+        F_z\left(x_0, y_0, z_0\right)\left(z-z_0\right)=0
+        \label{9-6-12}
+    \end{equation}
+
+    通过点\(M_0\left(x_0,y_0,z_0\right)\)且垂直于切平面\ref{9-6-12}
+    的直线称为曲面在该点的法线。法线方程是
+
+    \begin{equation}
+        \frac{x-x_0}{F_x\left(x_0, y_0, z_0\right)}=\frac{y-y_0}{F_y\left(x_0, y_0, z_0\right)}=\frac{z-z_0}{F_z\left(x_0, y_0, z_0\right)} .
+    \end{equation}
+
+    垂直于曲面上切平面的向量称为曲面的法向量。向量
+
+    \begin{equation}
+        \overrightarrow{n}=\left(F_x\left(x_0, y_0, z_0\right), F_y\left(x_0, y_0, z_0\right), F_z\left(x_0, y_0, z_0\right)\right)
+    \end{equation}
+
+    就是曲面\(\Sigma\)在点\(M\)上的一个法向量。
+
+    \textbf{注意}：平面解析几何中，\(f\left(x,y\right)=0\)，则其法向量为$\overrightarrow{n}=
+    \left(f_x\left(x_0, y_0\right), f_y\left(x_0, y_0\right)\right)$.
+
+\subsubsection{曲面为\(z=f\left(x,y\right)\)的情形}
+
+    令\(F\left(x,y,z\right)=f\left(x,y\right)-z\)，可见
+
+    $$
+        F_x(x, y, z)=f_x(x, y), F_y(x, y, z)=f_y(x, y), F_z(x, y, z)=-1
+    $$
+
+    于是曲面在点\(M_0\left(x_0,y_0,z_0\right)\)处的法向量为
+
+    $$
+        \overrightarrow{n}=\left(f_x\left(x_0, y_0\right), f_y\left(x_0, y_0\right),-1\right)
+    $$
+
+    切平面方程为
+
+    \begin{equation}
+        f_x\left(x_0, y_0\right)\left(x-x_0\right)+f_y\left(x_0, y_0\right)\left(y-y_0\right)-\left(z-z_0\right)=0
+    \end{equation}
+
+    或
+
+    \begin{equation}
+        z-z_0=f_x\left(x_0, y_0\right)\left(x-x_0\right)+f_y\left(x_0, y_0\right)\left(y-y_0\right)
+    \end{equation}
+
+    切线方程为
+
+    \begin{equation}
+        \frac{x-x_0}{f_x\left(x_0, y_0\right)}=\frac{y-y_0}{f_y\left(x_0, y_0\right)}=\frac{z-z_0}{-1}
+    \end{equation}
+
+    \begin{enumerate}
+        \item $$
+                \begin{aligned}
+                    z-z_0 & =f_x\left(x_0, y_0\right)\left(x-x_0\right)+f_y\left(x, y_0\right)\left(y-y_0\right) \\
+                    & =\left.f_x\right|_{\left(x_0.y_0\right)}\Delta x+\left.f_y\right|_{\left(x_0.y_0\right)} \Delta y=\rmd \left.z\right|_{\left(x_0.y_0\right)}
+                \end{aligned}
+            $$
+        \item 法向量\(\overrightarrow{n}\)不唯一。
+    \end{enumerate}
+
+\subsubsection{例题}
+
+    \textbf{例题1}
+
+    求球面\(x^2+y^2+z^2=14\)在点\(\left(1,2,3\right)\)处的切平面及法线方程。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    $$
+        F(x, y, z)=x^2+y^2+z^2-14
+    $$
+
+    则法向量
+
+    $$
+        \overrightarrow{n}=\left(F_x, F_y, F_z\right)=(2 x, 2 y, 2 z)
+    $$
+
+    $$
+        \left.\overrightarrow{n}\right|_{(1,2,3)}=(2,4,6)
+    $$
+    
+    所以在点\(\left(1,2,3\right)\)处的切平面为
+
+    $$
+        2(x-1)+4(y-2)+6(z-3)=0
+    $$
+
+    即
+
+    $$
+        x+2 y+3 z-14=0
+    $$
+
+    法线方程为
+
+    $$
+        \frac{x-1}{1}=\frac{y-2}{2}=\frac{z-3}{3}
+    $$
+
+    即
+
+    $$
+        \frac{x}{1}=\frac{y}{2}=\frac{z}{3}
+    $$
+
+    由此可见，法线经过原点（即球心）。
+    \vspace{1em}
+
+    \textbf{例题2}
+
+    求由曲线$\left\{\begin{array}{l}3 x^2+2 y^2=12 \\ z=0\end{array}\right.$
+    绕\(y\)轴旋转一周所得的旋转面在点\(P\left(0,\sqrt{3},\sqrt{2}\right)\)处的
+    指向外侧的单位法向量。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    旋转面方程为
+
+    \[
+        3 \sqrt{x^2+z^2}^2+2 y^2 = 12
+    \]
+
+    即
+
+    \[
+        3 x^2+2 y^2 +3z^2= 12
+    \]
+
+    令\(F\left(x,y,z\right)=3 x^2+2 y^2 +3z^2 -12\)，则
+
+    $$
+        F_x^{\prime}(0, \sqrt{3}, \sqrt{2})=0
+    $$
+
+    $$
+        F_y^{\prime}(0, \sqrt{3}, \sqrt{2})=4\sqrt{3}
+    $$
+
+    $$
+        F_z^{\prime}(0, \sqrt{3}, \sqrt{2})=6\sqrt{2}
+    $$
+
+    故所得旋转面在点\(P\left(0,\sqrt{3},\sqrt{2}\right)\)处的
+    指向外侧的法向量为
+
+    \[
+        \overrightarrow{n} = \left(0,4\sqrt{3},6\sqrt{2}\right)
+    \]
+
+    与之同方向的单位法向量为
+
+    \[
+        \overrightarrow{n}^0 = \left(0,\frac{\sqrt{10}}{5},\frac{\sqrt{15}}{5}\right)
+    \]
+
 \end{document}
