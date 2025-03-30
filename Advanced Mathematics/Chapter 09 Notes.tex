@@ -1577,4 +1577,60 @@
         \frac{\partial v}{\partial y}=\frac{\mathrm{e}^u+\sin v}{u \mathrm{e}^u(\sin v-\cos v)+u}
     $$
 
+\section{多元函数微分学应用}
+
+\subsection{向量值函数及其导数}
+
+    由空间解析几何知道，空间曲线\(\varGamma\)的参数方程为
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+            x=\varphi(t), \\
+            y=\psi(t), \\
+            z=\omega(t),
+        \end{array} \quad t \in[\alpha, \beta]. \right.
+        \label{9-6-1}
+    \end{equation}
+
+    方程\ref{9-6-1}也可以写成向量形式。若记
+
+    \begin{align*}
+        \overrightarrow{r} = x\overrightarrow{i} + y\overrightarrow{j} + z\overrightarrow{k}, \quad
+        \overrightarrow{f}\left(t\right) = \varphi\left(t\right)\overrightarrow{i} +
+            \psi\left(t\right)\overrightarrow{j} + \omega\left(t\right)
+    \end{align*}
+
+    则方程\ref{9-6-1}就成为向量方程
+
+    \begin{equation}
+        \overrightarrow{r} = \overrightarrow{f}\left(t\right),\quad t \in[\alpha, \beta]
+    \end{equation}
+
+    \textbf{定义1}：设数集\(D \subset \mathbf{R}\)，则称映射\(\overrightarrow{f}: D \rightarrow \mathbf{R}^n\)
+    为一元向量值函数，通常记为
+
+    \begin{equation}
+        \overrightarrow{r} = \overrightarrow{f}\left(t\right),\quad t \in D
+    \end{equation}
+
+    其中数集\(D\)称为函数的定义域，\(t\)称为自变量，\(\overrightarrow{r}\)称为因变量。
+
+    \begin{enumerate}
+        \item 一元向量值函数（向量值函数）与普通实值函数（数量函数）的关系：一元向量值函数是对普通一元函数的推广。
+            现在，自变量\(t\)依然取实数值，但因变量\(\overrightarrow{r}\)不取实数值，而取值为\(n\)维向量。
+        \item 向量值函数的图形：
+            $$
+                \begin{aligned}
+                    \overrightarrow{r}=\overrightarrow{f}(t) & =f_1(t) \overrightarrow{i}+f_2(t) \overrightarrow{j}+f_3(t) \overrightarrow{k} \\
+                    & =\left(f_1(t), f_2(t), f_3(t)\right)
+                \end{aligned}
+            $$
+            \[
+                \includegraphics[scale=0.2]{Chapter 09 images/pic4.jpg}
+            \]
+            若\(\overrightarrow{r} = \overrightarrow{OM}\)，则\(M\)的轨迹（记作\(\varGamma\)）称为向量值函数
+            \(\overrightarrow{r} = \overrightarrow{f}\left(t\right)\)的终端曲线，曲线\(\varGamma\)也称为向量值函数
+            \(\overrightarrow{r} = \overrightarrow{f}\left(t\right)\)的图形。
+    \end{enumerate}
+
 \end{document}
