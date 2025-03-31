@@ -2222,4 +2222,103 @@
         \overrightarrow{n}^0 = \left(0,\frac{\sqrt{10}}{5},\frac{\sqrt{15}}{5}\right)
     \]
 
+\section{方向导数与梯度}
+
+\subsection{方向导数}
+
+\subsubsection{定义}
+
+    \[
+        \includegraphics[scale=0.16]{Chapter 09 images/pic6.jpg}
+    \]
+
+    设\(l\)是\(xOy\)平面上以\(P_0\left(x_0,y_0\right)\)为始点的一条射线，
+    \(\overrightarrow{e_1}=\left(\cos \alpha, \cos \beta\right)\)是与\(l\)同方向的单位向量。
+    射线\(l\)的参数方程为
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+        x=x_0+t \cos \alpha \\
+        y=y_0+t \cos \beta
+        \end{array}(t \geq 0)\right.
+    \end{equation}
+
+    设函数\(z=f\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right)\)的某个邻域
+    \(U\left(P_0\right)\)，\(P\left(x+t \cos \alpha,y+t \cos \beta\right)\)
+    为\(l\)上另一点，且\(P \in U\left(P_0\right)\)。如果函数增量\(f\left(x+t \cos \alpha,y+t \cos \beta\right)-
+    f\left(x_0,y_0\right)\)与\(P\)到\(P_0\)的距离\(\left|PP_0\right|=t\)的比值
+
+    \begin{equation*}
+        \frac{f\left(x_0+t \cos \alpha, y_0+t \cos \beta\right)-f\left(x_0, y_0\right)}{t}
+    \end{equation*}
+
+    当\(P\)沿着\(l\)趋于\(P_0\)（即\(t \rightarrow 0^{+}\)）时的极限存在，那么称此极限为函数\(f\left(x,y\right)\)
+    在\\\(P_0\left(x_0,y_0\right)\)处沿\(l\)的方向导数，
+    记作\(\left.\dfrac{\partial f}{\partial l}\right|_{\left(x_0,y_0\right)}\)，即
+
+    \begin{equation}
+        \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)}=
+        \lim_{t \rightarrow 0^{+}} \frac{f\left(x_0+t \cos \alpha, y_0+t \cos \beta\right)-f\left(x_0, y_0\right)}{t}
+    \end{equation}
+
+    方向导数\(\left.\dfrac{\partial f}{\partial l}\right|_{\left(x_0,y_0\right)}\)就是函数
+    \(f\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right)\)处沿方向\(l\)的变化率。
+    
+    若函数\(f\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right)\)处的偏导数存在，
+    取\(\overrightarrow{e}_l = \overrightarrow{i} = (1,0)\)，则
+
+    \begin{equation*}
+        \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)}=
+        \lim _{t \rightarrow 0^{+}} \frac{f\left(x_0+t, y_0\right)-f\left(x_0, y_0\right)}{t}=f_x\left(x_0, y_0\right)
+    \end{equation*}
+
+    于是，我们有
+
+    $$
+        \text{偏导数存在} \Rightarrow \text{沿\(x\)轴正向的方向导数存在}
+    $$
+
+    同理，若取\(\overrightarrow{e}_l = \overrightarrow{j} = (0,1)\)，则
+
+    \begin{equation*}
+        \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)}=
+        \lim _{t \rightarrow 0^{+}} \frac{f\left(x_0, y_0+t\right)-f\left(x_0, y_0\right)}{t}=f_y\left(x_0, y_0\right)
+    \end{equation*}
+
+    但反之，若\(\overrightarrow{e}_l = \overrightarrow{i}\)，\(\left.\dfrac{\partial z}{\partial l}\right|_{\left(x_0,y_0\right)}\)
+    存在，则\(\left.\dfrac{\partial z}{\partial x}\right|_{\left(x_0,y_0\right)}\)未必存在。
+
+\subsubsection{计算公式}
+
+    \textbf{定理}：如果函数\(f\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right)\)可微分，
+    那么函数在该点沿任意方向\(l\)的方向导数存在，且有
+
+    \begin{equation}
+        \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)}=f_x\left(x_0, y_0\right) \cos \alpha+f_y\left(x_0, y_0\right) \cos \beta
+    \end{equation}
+
+    其中\(\cos \alpha\)和\(\cos \beta\)是方向\(l\)的方向余弦。
+
+\subsubsection{推广}
+
+    % \textbf{推广}
+
+    对于三元函数\(f\left(x,y,z\right)\)来说，它在空间一点\(P_0\left(x_0,y_0,z_0\right)\)
+    沿方向\\\(\overrightarrow{e}_l = \left(\cos \alpha, \cos \beta, \cos \gamma\right)\)的方向导数为
+
+    \begin{equation}
+        \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0, z_0\right)}=
+        \lim _{t \rightarrow 0^{+}} \frac{f\left(x_0+t \cos \alpha, y_0+t \cos \beta, z_0
+        +t \cos \gamma\right)-f\left(x_0, y_0, z_0\right)}{t}
+        \end{equation}
+
+    \textbf{定理}：如果函数\(f\left(x,y,z\right)\)在点\(P_0\left(x_0,y_0,z_0\right)\)可微分，
+    那么函数在该点沿方向\\\(\overrightarrow{e}_l = \left(\cos \alpha, \cos \beta, \cos \gamma\right)\)的方向导数为
+
+    \begin{equation}
+        \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0, z_0\right)}=
+        f_x\left(x_0, y_0, z_0\right) \cos \alpha+f_y\left(x_0, y_0, z_0\right) \cos \beta+
+        f_z\left(x_0, y_0, z_0\right) \cos \gamma
+    \end{equation}
+
 \end{document}
