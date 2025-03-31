@@ -271,7 +271,7 @@
             \draw (191.5,144.4) node [anchor=north west][inner sep=0.75pt]    {$a$};
             \draw (240,144.9) node [anchor=north west][inner sep=0.75pt]    {$v( t)$};
             \draw (303.5,144.4) node [anchor=north west][inner sep=0.75pt]    {$x( t)$};
-            \draw (144.5,62.9) node [anchor=north west][inner sep=0.75pt]    {$F=-kx=ma=m\frac{\mathrm{d}^{2} x}{\mathrm{d} t^{2}}$};
+            \draw (144.5,62.9) node [anchor=north west][inner sep=0.75pt]    {$F=-kx=ma=m\dfrac{\mathrm{d}^{2} x}{\mathrm{d} t^{2}}$};
         \end{tikzpicture}
     \]
 
@@ -366,5 +366,81 @@
     \begin{align}
         \Delta \varphi = \left(\omega t+\varphi_1\right) - \left(\omega t+\varphi_2\right)
     \end{align}
+
+    不同简谐振动在同一时刻，两者的相位之差值
+    可以判断它们的步调：超前、落后。
+
+    $$
+    \Delta \varphi=\varphi_2-\varphi_1\left\{\begin{array}{l}
+        2 k \uppi, \quad \text{同相} \\
+        2(k+1) \uppi, \quad \text{反相} \\
+        >0, \quad \text{\(x_2\)比\(x_1\)超前（或\(x_1\)比\(x_2\)）落后} \\
+        < 0, \quad \text{\(x_2\)比\(x_1\)落后（或\(x_1\)比\(x_2\)）超前}
+        \end{array}\right.
+    $$
+
+    注意：超前、落后以\(\left|\Delta \varphi\right| < \uppi\)的相位角来判断。
+
+\subsection{简谐振动的能量问题}
+
+\subsubsection{解析法描述简谐运动}
+
+    \[
+        x = A \cos \left(\omega t + \varphi\right)
+    \]
+
+    以水平的弹簧振子为例，
+
+    简谐振动的动能：
+
+    \begin{equation}
+        E_k=\frac{1}{2} m v^2 =\frac{1}{2} m A^2 \omega^2 \sin ^2(\omega t+\varphi)
+        =\frac{1}{2} k A^2 \sin ^2(\omega t+\varphi)
+    \end{equation}
+
+    简谐振动的势能：
+
+    \begin{equation}
+        E_p=\frac{1}{2} k x^2=\frac{1}{2} k A^2 \cos ^2(\omega t+\varphi)
+    \end{equation}
+
+    简谐振动的总机械能量：
+
+    \begin{equation}
+        E=E_k+E_p=\frac{1}{2} k A^2=\frac{1}{2} m \omega^2 A^2
+    \end{equation}
+
+    即简谐振动总机械能不随时间变化。
+
+\subsubsection{参考圆表示法}
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic3.png}
+    \]
+
+    一个动点在参考圆上匀速转动，
+    以该动点在参考一个动点在参考圆上匀圆的一根直径上的投影点的运动可代表简谐振动。
+
+\subsubsection{旋转矢量表示法简谐振动}
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic4.png}
+    \]
+
+    旋转矢量法：矢量\(\overrightarrow{A}\)的端点在\(x\)轴上投影点的运动规律。
+    使相位表示更加直观。
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic5.png}
+    \]
+
+    \begin{enumerate}
+        \item 在平面图上作一\(Ox\)轴；
+        \item 振幅矢量\(\overrightarrow{A}\)从初相位置开始绕\(Ox\)轴上\(O\)点以匀角速度\(\omega\)逆时针旋转，转一圈所用的时间\(T\)；
+        \item 矢量\(\overrightarrow{A}\)的端点M在\(x\)轴上投影点\(P\)的运动规律：
+            \[
+                x = A \cos \left(\omega t + \varphi\right)
+            \]
+    \end{enumerate}
 
 \end{document}
