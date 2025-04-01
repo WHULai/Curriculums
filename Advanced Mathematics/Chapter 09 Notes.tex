@@ -2321,4 +2321,126 @@
         f_z\left(x_0, y_0, z_0\right) \cos \gamma
     \end{equation}
 
+\subsection{梯度}
+
+\subsubsection{定义}
+
+    设函数\(f\left(x,y\right)\)在平面区域\(D\)内具有一阶连续偏导数，则对每一点
+    \(P_0\left(x_0,y_0\right) \in D\)，都可定出一个向量
+
+    \begin{equation}
+        f_x\left(x_0, y_0\right) \overrightarrow{i}+f_y\left(x_0, y_0\right) \overrightarrow{j}
+    \end{equation}
+
+    这向量称为函数\(f\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right) \in D\)的梯度，
+    记作\(\operatorname{grad} f\left(x_0,y_0\right)\)或\(\nabla f\left(x_0,y_0\right)\)，
+    即
+
+    \begin{equation}
+        \operatorname{grad} f\left(x_0, y_0\right)=\nabla f\left(x_0, y_0\right)=
+        f_x\left(x_0, y_0\right) \overrightarrow{i}+f_y\left(x_0, y_0\right) \overrightarrow{j}
+    \end{equation}
+
+    其中$\nabla=\dfrac{\partial}{\partial x} \overrightarrow{i}+\dfrac{\partial}{\partial y} \overrightarrow{j}$
+    称为（二维的）向量微分算子或Nabla算子，
+    $\nabla f=\dfrac{\partial f}{\partial x} \overrightarrow{i}+\dfrac{\partial f}{\partial y} \overrightarrow{j}$
+
+    \textbf{推广}：
+
+    $$
+        \nabla f\left(x_0, y_0, z_0\right)=\left(f_x\left(x_0, y_0, x_0\right),
+        f_y\left(x_0, y_0, z_0\right), f_z\left(x_0, y_0, z_0\right)\right) .
+    $$
+
+\subsubsection{梯度与方向导数的关系}
+
+    如果函数\(f\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right)\)处可微分，
+    \(\overrightarrow{e}_l=\left(\cos \alpha, \cos \beta\right)\)是与\(l\)同方向的单位向量，那么
+
+    \begin{equation}
+        \begin{aligned}
+        \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)} & =f_x\left(x_0, y_0\right) \cos \alpha+f_y\left(x_0, y_0\right) \cos \beta \\
+        & =\operatorname{grad} f\left(x_0, y_0\right) \cdot \overrightarrow{e}_l=\left|\operatorname{grad} f\left(x_0, y_0\right)\right| \cos \theta
+        \end{aligned}
+    \end{equation}
+
+    其中$\theta=\left(\operatorname{grad} \widehat{f\left(x_0, y_0\right), \overrightarrow{e}_l}\right)$
+
+    \begin{enumerate}
+        \item 当\(\theta=0\)，即方向\(\overrightarrow{e}_l\)与\(\operatorname{grad} f\left(x_0, y_0\right)\)一致时，
+            函数\(f\left(x,y\right)\)增长最快。此时，函数在这个方向导数达到最大值，这个最大值就是梯度
+            \(\operatorname{grad} f\left(x_0, y_0\right)\)的模，即
+            $$
+                \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)}=
+                \left|\operatorname{grad} f\left(x_0, y_0\right)\right|
+            $$
+            函数\(f\left(x,y\right)\)在点\(P_0\left(x_0,y_0\right)\)的梯度\(\operatorname{grad} f\)的方向是函数在这点的方向导数取得最大值的方向，
+            它的模就等于最大值。
+        \item 当\(\theta=\uppi\)，即方向\(\overrightarrow{e}_l\)与\(\operatorname{grad} f\left(x_0, y_0\right)\)相反时，
+            函数\(f\left(x,y\right)\)减少最快，函数在这个方向导数达到最小值，即
+            $$
+                \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)}=-\left|\operatorname{grad} f\left(x_0, y_0\right)\right|
+            $$
+        \item 当\(\theta=\frac{\uppi}{2}\)，即方向\(\overrightarrow{e}_l\)与\(\operatorname{grad} f\left(x_0, y_0\right)\)正交时，
+            函数的变换率为0，即
+            $$
+                \left.\frac{\partial f}{\partial l}\right|_{\left(x_0, y_0\right)}=\left|\operatorname{grad} f\left(x_0, y_0\right)\right| \cos \theta=0 .
+            $$
+    \end{enumerate}
+
+\subsubsection{梯度与等值线的关系}
+
+    二元函数\(z=f\left(x,y\right)\)在几何上表示一个曲面，这曲面被平面\(z=c\)（\(c\)是常数）所截得的曲线\(L\)的方程为
+
+    $$
+        \left\{\begin{array}{l}
+            z=f(x, y) \\
+            z=c
+        \end{array}\right.
+    $$
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 09 images/pic7.jpg}
+    \]
+
+    这条曲线\(L\)在\(xOy\)面上的投影是一条平面曲线\(L^{*}\)，它在\(xOy\)
+    平面直角坐标系中的方程为
+
+    \[
+        f\left(x,y\right) = c
+    \]
+
+    对于曲线\(L^{*}\)上的一切点，已给函数的函数值都是\(c\)，
+    所以我们称平面曲线\(L^{*}\)为函数\(z=f\left(x,y\right)\)的等值线。
+
+    若\(f_x\)、\(f_y\)不同时为零，则等值线\(f\left(x,y\right) = c\)
+    上任一点\(P_0\left(x_0,y_0\right)\)处的一个单位法向量为
+
+    \begin{equation}
+        \begin{aligned}
+            \overrightarrow{n} & =\frac{1}{\sqrt{f_x^2\left(x_0, y_0\right)+f_y^2\left(x_0, y_0\right)}}\left(f_x\left(x_0, y_0\right), f_y\left(x_0, y_0\right)\right) \\
+            & =\frac{\nabla f\left(x_0, y_0\right)}{\left|\nabla f\left(x_0, y_0\right)\right|}
+        \end{aligned}
+    \end{equation}
+
+    说明函数\(z=f\left(x,y\right)\)在\(\left(x_0,y_0\right)\)处的梯度方向就是\(f\left(x,y\right) = c\)
+    在该点处的法线方向\(\overrightarrow{n}\)，且
+
+    \begin{equation}
+        \nabla f\left(x_0, y_0\right)=\frac{\partial f}{\partial n} \overrightarrow{n}
+    \end{equation}
+
+\subsubsection{数量场、向量场}
+
+    \begin{enumerate}
+        \item \(M \in G\)，数量\(f\left(M\right)\)：数量场（如温度场、密度场）
+        \item \(M \in G\)，向量\(\overrightarrow{F}\left(M\right)\)：向量场（如力场、速度场）
+            $$
+                \overrightarrow{F}(M)=P(M) \overrightarrow{i}+Q(M) \overrightarrow{j}+R(M) \overrightarrow{k}
+            $$
+        \item 若向量场\(\overrightarrow{F}\left(M\right)\)是某个数量函数\(f\left(M\right)\)的梯度，
+            则称\(f\left(M\right)\)是\(\overrightarrow{F}\left(M\right)\)的一个势函数，\\并称
+            \(\overrightarrow{F}\left(M\right)\)为势场。
+    \end{enumerate}
+
 \end{document}
