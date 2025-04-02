@@ -224,6 +224,7 @@
 
     \begin{align}
         \dfrac{\rmd^2 x}{\rmd t^2} = -\omega^2 x
+        \label{6-1-2}
     \end{align}
 
     解得
@@ -441,6 +442,140 @@
             \[
                 x = A \cos \left(\omega t + \varphi\right)
             \]
+    \end{enumerate}
+
+\section{单摆和复摆}
+
+\section{单摆}
+
+    \[
+        \includegraphics[scale=0.3]{Chapter 06 images/pic6.png}
+    \]
+
+    由转动定律，
+
+    \begin{equation}
+        M = I \frac{\rmd^2 \theta}{\rmd t^2}
+    \end{equation}
+
+    \begin{equation}
+        -mg l \sin \theta = m l^2 \frac{\rmd^2 \theta}{\rmd t^2}
+    \end{equation}
+
+    当\(\theta < 5\degree\)时，\(\sin \theta \approx \theta\)
+
+    \begin{equation}
+        \frac{\rmd^2 \theta}{\rmd t^2} + \frac{g}{l}\theta = 0
+    \end{equation}
+
+    即
+
+    \begin{equation}
+        \frac{\rmd^2 \theta}{\rmd t^2} + \omega^2 \theta = 0
+        \label{6-3-4}
+    \end{equation}
+
+    方程\ref{6-3-4}与简谐运动的微分方程式\ref{6-1-2}在数学形式上完全相同。
+
+    在角位移很小的时候，单摆的振动是简谐振动。
+
+    角频率、振动的周期分别为
+
+    \begin{equation}
+        \omega = \sqrt{\frac{g}{l}}
+    \end{equation}
+
+    \begin{equation}
+        T = \frac{2 \uppi}{\omega} = 2 \uppi \sqrt{\frac{l}{g}}
+    \end{equation}
+
+    简谐振动表达式为
+
+    \begin{equation}
+        \theta = \theta_m \cos \left(\omega t + \varphi\right)
+    \end{equation}
+
+\subsection{复摆（刚体的转动）}
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic7.jpg}
+    \]
+
+    一个可绕固定轴\(O\)在竖直平面内摆动的刚体称为复摆 (compound pendulum)。
+
+    \begin{enumerate}
+        \item 任意形状；
+        \item 小角度；
+        \item 无摩擦；
+        \item 自由摆动。
+    \end{enumerate}
+
+    复摆受重力矩
+
+    \[
+        M = -mg l \sin \theta
+    \]
+
+    （负号表示重力矩\(M\)的方向与角位移\(\theta\)的方向相反）
+
+    当\(\theta < 5\degree\)时，\(\sin \theta \approx \theta\)
+
+    \[
+        M = -mg l \theta
+    \]
+
+    由转动定律\(M = I \frac{\rmd^2 \theta}{\rmd t^2}\)
+
+    \begin{equation}
+        \frac{\rmd^2 \theta}{\rmd t^2} + \frac{mgl}{I}\theta = 0
+    \end{equation}
+
+    在摆角很小时，复摆的运动也是简谐运动，其角频率、振动的周期分别为
+
+    \begin{equation}
+        \omega = \sqrt{\frac{mgl}{I}}
+    \end{equation}
+
+    \begin{equation}
+        T = \frac{2 \uppi}{\omega} = 2 \uppi \sqrt{\frac{I}{mgg}}
+    \end{equation}
+
+\subsection{例题}
+
+    长度为\(3a\)的轻质细杆的两端各有质量为\(m\)的小球，该杆可绕水平光滑轴\(O\)
+    摆动，若摆角很小，求细杆的振动周期。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    由转动定律可得
+
+    \[
+        -mg \cdot 2a \sin \theta + mg \cdot a \sin \theta = I \frac{\rmd^2 \theta}{\rmd t^2}
+    \]
+
+    \[
+        I = ma^2 + m\left(2a\right)^2 = 5 ma^2
+    \]
+
+    当\(\theta\)很小时时，\(\sin \theta \approx \theta\)
+
+    \[
+        \frac{\rmd^2 \theta}{\rmd t^2} + \frac{g}{5a}\theta =0
+    \]
+
+    故\(\omega = \dfrac{g}{5a}\)，所以
+
+    \[
+        T = 2\uppi \sqrt{\frac{5a}{g}}
+    \]
+
+\subsection{讨论}
+
+    \begin{enumerate}
+        \item 振动系统受弹性回复力之外还受恒力作用时，系统仍作简谐振动。
+        \item 质点是绕平衡位置\(O^{\prime}\)作简谐振动的，选平衡位置为坐标原点更方便。
     \end{enumerate}
 
 \end{document}
