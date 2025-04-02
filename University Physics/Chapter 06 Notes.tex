@@ -583,4 +583,166 @@
 
     即简谐振动总机械能不随时间变化。
 
+\section{简谐运动的合成}
+
+    \begin{enumerate}
+        \item 同频率同方向简谐振动的合成（考试重点）；
+        \item 不同频率同方向简谐振动的合成；
+        \item 两个相互垂直的同频率简谐振动的合成（不考试）。
+    \end{enumerate}
+
+\subsection{两个同方向同频率的简谐振动的合成}
+
+    设两个振动具有相同频率，在同一直线上运动，有不同的振幅和初相位
+
+    \[
+        x_1\left(t\right) = A_1 cos\left(\omega t + \varphi_1\right)
+    \]
+
+    \[
+        x_2\left(t\right) = A_2 cos\left(\omega t + \varphi_2\right)
+    \]
+
+    合成：
+
+    \[
+        x\left(t\right) = x_1\left(t\right) + x_2\left(t\right)
+    \]
+
+    $$
+        \begin{aligned}
+            x(t)=x_1(t)+x_2(t)& =A_1 \cos \left(\omega t+\varphi_1\right)+A_2 \cos \left(\omega t+\varphi_2\right) \\
+            & =\left(A_1 \cos \varphi_1+A_2 \cos \varphi_2\right) \cos \omega t-\left(A_1 \sin \varphi_1+A_2 \sin \varphi_2\right) \sin \omega t \\
+            & =A \cos \varphi \cdot \cos \omega t-A \sin \varphi \cdot \sin \omega t \\
+            & =A \cos (\omega t+\varphi)
+        \end{aligned}
+    $$
+
+    于是
+
+    \begin{equation}
+        x=x_1+x_2=A_1 \cos \left(\omega t+\varphi_1\right)+A_2 \cos \left(\omega t+\varphi_2\right)=A \cos (\omega t+\varphi)
+    \end{equation}
+
+    式中
+
+    \begin{equation}
+        A=\sqrt{A_1^2+A_2^2+2 A_1 A_2 \cos \left(\varphi_2-\varphi_1\right)}
+    \end{equation}
+
+    \begin{equation}
+        \tan \varphi=\frac{A_1 \sin \varphi_1+A_2 \sin \varphi_2}{A_1 \cos \varphi_1+A_2 \cos \varphi_2}
+    \end{equation}
+
+    图示理解：
+
+    \[
+        \begin{tikzpicture}
+            \draw (0,0) -- (0,3) -- (2,0) -- cycle;
+            \coordinate[label=left:$A_1 \cos \varphi_1+A_2 \cos \varphi_2$] (formulate1)
+                at (0,2);
+            \coordinate[label=below:$A_1 \sin \varphi_1+A_2 \sin \varphi_2$] (formulate2)
+                at (1,0);
+            \coordinate[label=below:$\varphi$] (phi) at (0.2,2.8);
+            \coordinate[label=above:$A$] (A) at (1.2,1.4);
+        \end{tikzpicture}
+    \]
+
+    \textbf{特殊情况}：
+
+    \begin{enumerate}
+        \item 若相位差$\varphi_2-\varphi_1=2 k \uppi \quad(k=0, \pm 1, \pm 2, \cdots)$，
+            则\(A = A_1 + A_2\)
+        \item 若相位差$\varphi_2-\varphi_1=2 (k+1) \uppi \quad(k=0, \pm 1, \pm 2, \cdots)$，
+            则\(A = \left|A_1 - A_2\right|\)
+    \end{enumerate}
+
+    推广：多个同方向、同频率简谐运动合成仍为简谐运动。
+
+\subsection{两个同方向不同频率的简谐振动的合成、拍}
+
+\subsubsection{两个同方向不同频率的简谐振动的合成}
+
+    两个振幅相同，初相位相同，在相同方向上以不同频率振动，
+    振动表达式分别为：
+
+    \[
+        x_1\left(t\right) = A_1 cos\left(\omega_1 t + \varphi\right)
+    \]
+
+    \[
+        x_2\left(t\right) = A_2 cos\left(\omega_2 t + \varphi\right)
+    \]
+
+    合成：
+
+    \[
+        x\left(t\right) = x_1\left(t\right) + x_2\left(t\right)
+    \]
+
+    \begin{equation}
+        x=2 A \cos \left(\frac{\omega_2-\omega_1}{2} t\right) \cdot \cos \left(\frac{\omega_2+\omega_1}{2} t+\varphi\right)
+    \end{equation}
+
+    合振动不是简谐振动！
+
+    $$
+        x=A(t) \cos (\overline{\omega} t+\varphi)
+    $$
+
+    $A(t)=2 A \cos \left(\frac{\omega_2-\omega_1}{2} t\right)$
+    随\(t \)缓变，
+    $\cos (\overline{\omega} t+\varphi)=\cos \left(\frac{\omega_2+\omega_1}{2} t+\varphi\right)$
+    随\(t \)快变：
+
+    合振动可看作振幅缓变的简谐振动。
+
+\subsubsection{拍}
+
+    频率较大而频率之差很小的两个同方向简谐振动合成时，
+    其合振动的振幅时而加强时而减弱的现象叫\textbf{拍}。
+
+    \textbf{拍频}：单位时间内振动加强或减弱的次数叫拍频。
+
+    拍频的值可由$\left|2 A \cos \left(\frac{\omega_2-\omega_1}{2}\right) t\right|=\left|2 A \cos \left(2 \uppi \frac{v_2-v_1}{2} t\right)\right|$
+    取最大定出。
+
+    相邻两最大满足
+
+    $$
+        2 \uppi \frac{v_2-v_1}{2} \cdot 0=0
+    $$
+
+    $$
+        2 \uppi \frac{v_2-v_1}{2}T^{\prime}=\uppi
+    $$
+
+    拍频
+
+    \begin{equation}
+        v=\frac{1}{T^{\prime}}=\left|v_2-v_1\right|
+    \end{equation}
+
+    （\(T^{\prime}\)为振幅变化周期）
+
+\subsection{两个相互垂直的同频率简谐振动的合成}
+
+    分振动：
+
+    \[
+        x\left(t\right) = A_1 cos\left(\omega t + \varphi_1\right)
+    \]
+
+    \[
+        y\left(t\right) = A_2 cos\left(\omega t + \varphi_2\right)
+    \]
+
+    合运动：
+
+    \begin{equation}
+        \frac{x^2}{A_1^2}+\frac{y^2}{A_2^2}-2 \frac{x}{A_1} \frac{y}{A_2} \cos \left(\varphi_2-\varphi_1\right)=\sin ^2\left(\varphi_2-\varphi_1\right)
+    \end{equation}
+
+    （椭圆）
+
 \end{document}
