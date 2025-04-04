@@ -2443,4 +2443,92 @@
             \(\overrightarrow{F}\left(M\right)\)为势场。
     \end{enumerate}
 
+\section{多元函数的极值及其求法}
+
+\subsection{多元函数的极值及其最大值与最小值}
+
+\subsubsection{极值的定义}
+
+    设函数\(z=f\left(x.y\right)\)的定义域为\(D\)，\(P_0\left(x_0,y_0\right)\)为\(D \)的内点。
+    若存在\(P_0\)的某个邻域\(U\left(P_0\right) \subset D\)，使得对于该邻域内异于\(P_0\)的任何点\(\left(x,y\right)\)，
+    都有
+
+    \[
+        f\left(x,y\right) < f\left(x_0,y_0\right)
+    \]
+
+    则称函数\(f\left(x.y\right)\)在点\(\left(x_0,y_0\right)\)有极大值\(f\left(x_0,y_0\right)\)，
+    点\(\left(x_0,y_0\right)\)称为函数\(f\left(x.y\right)\)的极大值点；
+    
+    
+    若对于该邻域内异于\(P\)的任何点\(\left(x,y\right)\)，都有
+    
+    \[
+        f\left(x,y\right) < f\left(x_0,y_0\right)
+    \]
+
+    则称函数\(f\left(x.y\right)\)在点\(\left(x_0,y_0\right)\)有极小值\(f\left(x_0,y_0\right)\)，
+    点\(\left(x_0,y_0\right)\)称为函数\(f\left(x.y\right)\)的极小值点；
+
+    极大值与极小值统称为极值，使得函数取得极值的点称为极值点。
+
+    \textbf{注意}：
+
+    \begin{enumerate}
+        \item \(f \)在极值点的邻域内有定义，但不一定在该点连续；
+        \item 极值是局部最值；
+        \item 类似可定义多元函数极值。
+    \end{enumerate}
+ 
+\subsubsection{极值的条件}
+    
+    \textbf{定理1}（必要条件）：设函数\(z=f\left(x.y\right)\)在点\(\left(x_0,y_0\right)\)具有偏导数，
+    且在点\(\left(x_0,y_0\right)\)处有极值，则有
+
+    \begin{align}
+        f_x\left(x_0,y_0\right) = 0, f_y\left(x_0,y_0\right) = 0
+    \end{align}
+
+    \textbf{注意}：
+
+    \begin{enumerate}
+        \item 称使得\(f_x\left(x_0,y_0\right) = 0, f_y\left(x_0,y_0\right) = 0\)的点称为\(f\left(x.y\right)\)的驻点；
+        \item 几何解释：曲面\(z=f\left(x.y\right)\)在极值点对应点\(\left(x_0,y_0,f\left(x_0,y_0\right)\right)\)
+            处的切平面法向量
+            $$
+                \overrightarrow{n}=\left(f_x\left(x_0, y_0\right), f_y\left(x_0, y_0\right),-1\right)=(0,0,-1)
+            $$
+            平行于\(z\)轴，故切平面平行于\(xOy\)面（水平）；
+        \item 类似可推广到多元函数的极值。
+    \end{enumerate}
+
+    \textbf{定理2}（充分条件）：设函数\(z=f\left(x.y\right)\)在点\(\left(x_0,y_0\right)\)
+    的某个邻域内连续且有一阶及二阶连续偏导数，有\(f_x\left(x_0,y_0\right) = 0\)，
+    \(f_y\left(x_0,y_0\right) = 0\)，令
+
+    $$
+        f_{x x}\left(x_0, y_0\right)=A, f_{x y}\left(x_0, y_0\right)=B, f_{y y}\left(x_0, y_0\right)=C
+    $$
+
+    则\(f\left(x,y\right)\)在点\(\left(x_0,y_0\right)\)处是否取得极值的条件如下;
+
+    \begin{enumerate}
+        \item \(AC - B^2>0\)时具有极值，且当\(A<0\)时有极大值，且当\(A>0\)时有极小值；
+        \item \(AC - B^2>0\)时没有极值；
+        \item \(AC - B^2=0\)时可能有极值，也可能没有极值，还需另作讨论；
+    \end{enumerate}
+
+\subsubsection{最值问题}
+
+    求函数\(z=f\left(x.y\right)\)在闭区域\(D \)上的最值。（\(f \)在\(D \)上连续，在\(D \)内可微且只有有限个驻点）
+
+    \begin{enumerate}
+        \item 求\(f \)在\(D \)内的全部驻点；
+        \item 求\(f \)在\(D \)上的最值点；
+        \item 将1、2中的点函数值进行比较。
+    \end{enumerate}
+
+    实际问题中，若已知最值必在内部取得，且驻点位移，
+    则驻点就是所求最值点。
+
 \end{document}
