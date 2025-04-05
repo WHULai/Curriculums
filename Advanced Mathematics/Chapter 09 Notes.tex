@@ -2531,4 +2531,192 @@
     实际问题中，若已知最值必在内部取得，且驻点位移，
     则驻点就是所求最值点。
 
+\subsection{条件极值、拉格朗日乘数法}
+
+\subsubsection{条件极值问题的描述}
+
+    对自变量附加条件的极值称为条件极值。
+
+    如：
+
+    \begin{enumerate}
+        \item 求表面积为\(a^2\)，体积最大的长方体体积。目标函数\(z=xyz\)，
+            约束条件\(2\left(xy+yz+zx\right) - a^2=0\)；
+        \item 求\(z=x^2+y^2\)在条件\(x+y=1\)下的最小值。
+    \end{enumerate}
+
+\subsubsection{条件极值问题的解题方法}
+
+    \begin{enumerate}
+        \item 化为无条件极值问题（从条件中解出某变量，代回原函数）；
+        \item 拉格朗日乘数法。
+    \end{enumerate}
+
+\subsubsection{拉格朗日乘数法}
+
+    目标函数：\(z=f\left(x,y\right)\)，约束条件：\(\varphi\left(x,y \right)=0\)。
+    \vspace{1em}
+
+    \textbf{推导}（必要条件）：
+
+    设\(\left(x_0,y_0\right)\)是\(f\left(x,y\right)\)在\(\varphi\left(x,y \right)=0\)下的极值点。
+
+    由\(\varphi\left(x,y \right)=0\)中解出隐函数\(y=\left(x\right)\)（要求
+    \(\varphi\left(x,y \right)=0\)存在隐函数且可导），得
+
+    \(x=x_0\)是\(z=f\left(x,y\left(x \right)\right)\)的极值点，则
+
+    $$
+        \left.\frac{\rmd z}{\rmd x}\right|_{x=x_0}=
+        f_x\left(x_0, y_0\right)+\left.f_y\left(x_0, y_0\right) \cdot \frac{\rmd y}{\rmd x}\right|_{x=x_0}=0
+    $$
+
+    于是
+
+    $$
+        f_x\left(x_0, y_y\right)+f_y\left(x_0, y_0\right) \cdot
+        \frac{-\varphi_x\left(x_0, y_0\right)}{\varphi_y\left(x_0, y_0\right)}=0
+    $$
+
+    即
+
+    $$
+        f_x\left(x_0, y_0\right)-\frac{f_y\left(x_0, y_0\right)}{\varphi_y\left(x_0, y_0\right)}
+        \cdot \varphi_x\left(x_0, y_y\right)=0
+    $$
+
+    记$\dfrac{f_y\left(x_0, y_0\right)}{\varphi_y\left(x_0, y_0\right)}=-\lambda$，则
+
+    \begin{align}
+        \left\{\begin{array}{l}
+            f_x+\lambda \varphi_x=0 \\
+            f_y+\lambda \varphi_y=0
+        \end{array} \quad \text{且} \varphi=0\right.
+        \label{9-8-2}
+    \end{align}
+    
+    反之，若\(\left(x_0,y_0\right)\)满足方程\ref{9-8-2}，则其可能为极值点。
+
+    为便于记忆，引入拉格朗日函数
+
+    \begin{equation*}
+        L(x, y)=f(x, y)+\lambda \varphi(x, y)
+    \end{equation*}
+
+    其中，参数\(\varphi\)称为拉格朗日乘子。
+
+    则
+
+    $$
+        \left\{\begin{array}{l}
+        L_x=0 \Rightarrow f_x+\lambda \varphi_x=0 \\
+        l_y=0 \Rightarrow f_y+\lambda \varphi_y=0 \\
+        L_\lambda=0 \Rightarrow \varphi(x, y)=0
+        \end{array}\right.
+    $$
+
+    即为方程\ref{9-8-2}。
+    \vspace{1em}
+
+    \textbf{拉格朗日乘数法}：要找函数\(z=f\left(x,y\right)\)在附加条件
+    \(\varphi\left(x,y \right)=0\)下的极值点，可以先作拉格朗日函数
+
+    \begin{equation}
+        L(x, y)=f(x, y)+\lambda \varphi(x, y)
+    \end{equation}
+
+    其中，\(\varphi\)为参数。求其\(x \)对\(y\)的一阶偏导数，并使之为零，
+    然后与方程\ref{9-8-2}联立起来：
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+            f_x(x, y)+\lambda \varphi_x(x, y)=0, \\
+            f_y(x, y)+\lambda \varphi_y(x, y)=0, \\
+            \varphi(x, y)=0
+        \end{array}\right.
+    \end{equation}
+
+    由这方程组解出\(x \)、\(y \)及\(\lambda\)，这样的\(\left(x,y \right)\)就是函数\(f\left(x,y \right)\)在附加条件
+    \(\varphi\left(x,y \right)=0\)下可能的极值点。
+    \vspace{1em}
+
+    注意：
+
+    \begin{enumerate}
+        \item 实际问题中，若已知最值必在内部取得，且驻点位移，则驻点就是所求最值点；
+        \item 若驻点唯一，则可化为无条件极值问题，利用定理2（充分条件）判断；
+        \item 若驻点不唯一，且最值存在，只需比较即可。
+    \end{enumerate}
+
+    \textbf{推广}：
+
+    要求函数\[u=f\left(x,y,z\right)\]在附加条件
+
+    $$
+        \varphi(x, y, z, t)=0, \quad \psi(x, y, z, t)=0
+    $$
+
+    下的极值，可作拉格朗日函数
+    
+    $$
+        L(x, y, z, t)=f(x, y, z, t)+\lambda \varphi(x, y, z, t)+\mu \psi(x, y, z, t)
+    $$
+
+    令
+
+    $$
+        L_x=L_y=L_z=L_\lambda=L_\mu=0
+    $$
+
+\subsubsection{例题}
+
+    求函数\(u=xyz\)在附加条件
+
+    $$
+        \frac{1}{x}+\frac{1}{y}+\frac{1}{z}=\frac{1}{a} \quad(x>0, y>0, z>0, a>0)
+    $$
+
+    下的极值。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    作拉格朗日函数
+
+    $$
+        L(x, y, z)=x y z+\lambda\left(\frac{1}{x}+\frac{1}{y}+\frac{1}{z}-\frac{1}{a}\right)
+    $$
+
+    令
+
+    $$
+        \left\{\begin{array}{l}
+            L_x=y z-\dfrac{\lambda}{x^2}=0 \\\\
+            L_y=x z-\dfrac{\lambda}{y^2}=0 \\\\
+            L_z=x y-\dfrac{\lambda}{z^2}=0
+        \end{array}\right.
+    $$
+
+    注意到以上三个方程左端的第一项都是三个变量\(x\)、\(y \)与\(z\)中某两个变量的乘积，
+    将各方程两端同乘相应缺少的那个变量，使各方程左端的第一项都成为\(xyz\)，
+    然后将所得的三个方程左、右两端相加，得
+
+    $$
+        3 x y z-\lambda\left(\frac{1}{x}+\frac{1}{y}+\frac{1}{z}\right)=0,
+    $$
+
+    将附加条件代入上式，得
+
+    $$
+        x y z=\frac{\lambda}{3 a}
+    $$
+
+    于是\(x=y=z=3a\)，由此得到点\(\left(3a,3a,3a\right)\)是函数\(u=xyz\)在该附加条件下
+    唯一可能的极值点。
+
+    把附加条件所确定的隐函数记作\(z=z\left(x,y\right)\)，将目标函数看做\(u=xyz\left(x,y \right)=F\left(x,y \right)\)，
+    再应用函数极值的充分条件判断，可知点\(\left(3a ,3a, 3a\right)\)是函数\(u =xyz\)在该附加条件下的极小值点。 
+    因此，目标函数\(u=xyz\)在该附加条件下在点\(\left(3a ,3a, 3a\right)\)处取得极小值\(27a^3\)。
+
 \end{document}
