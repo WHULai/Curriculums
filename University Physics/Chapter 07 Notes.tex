@@ -409,4 +409,167 @@
 
     表示\(t_0\)时刻\(x\)轴上各质点的位移。
 
+\section{平面简谐波的能量}
+
+\subsection{波的能量}
+
+    当波动在介质中传播时，各质元中的动能和势能总是同步变化的。在波峰、
+    波谷处，动能势能同时为零；在平衡位置处，两者同时到达最大值。
+    进一步的定量分析还表明，任一质元中的动能和势能不仅同步变化，
+    而且大小总是相等的。这就是波动的能量特点。
+
+    以固体棒中传播的纵波为例分析波动能量的传播：
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 07 images/pic2.png}
+    \]
+
+    如图所示，假设匀质细棒的橫截面积为\(S \)，棒的密度为\(\rho\)，
+    杨氏模量为\(E \)，在棒中取一段长度为\(\rmd x\)的棒元，
+    其体积为\(\rmd V=S\rmd x\)，质量为\(\rmd m =\rho \rmd V=\rho S\rmd x\)。
+    当波动传播到这里时，这段棒元由于振动而具有动能\(\rmd E_k\)。
+    由于形变而具有弹性势能\(\rmd E_p\)。 不失一般性，设细棒中平面简谐波的波函数为
+
+    \begin{equation}
+        y(x, t)=A \cos \omega\left(t-\frac{x}{u}\right)
+        \label{7-3-1}
+    \end{equation}
+
+    则该棒元振动速度为
+
+    \begin{equation}
+        v=\frac{\partial y}{\partial t}=-A \omega \sin \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    所以该棒元的振动动能为
+
+    \begin{equation}
+        \mathrm{d} E_{\mathrm{k}}=\frac{1}{2} \mathrm{~d} m \cdot v^2=
+        \frac{1}{2} \rho \mathrm{~d} V \cdot A^2 \omega^2 \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    设这段横截面积为\(S \)、长为\(\rmd x\)的棒元在拉力\(F \)的作用下，其长度的伸长量为\(\rmd y\)，则
+
+    \begin{equation}
+        E=\frac{F / S}{\mathrm{~d} y / \mathrm{d} x}
+    \end{equation}
+
+    不难看出：$E$的物理意义就是其单位横伐面上的拉力$F / S$（称为应力），与单位长度上的伸长量$\rmd y / \mathrm{d} x$（称为应变）之比。
+    将上式改写为
+    
+    \begin{equation}
+        F=\frac{E S}{\mathrm{~d} x} \cdot \mathrm{~d} y
+    \end{equation}
+
+    将上式与胡克定律比较，的这段棒元的劲度系数为$k=\dfrac{E S}{\mathrm{~d} x}$，所以该棒元的弹性势能为
+
+    \begin{equation}
+        \mathrm{d} E_{\mathrm{p}}=\frac{1}{2} k(\mathrm{~d} y)^2=\frac{1}{2} \frac{E S}{\mathrm{~d} x}(\mathrm{~d} y)^2
+        =\frac{1}{2} E \mathrm{~d} V\left(\frac{\partial y}{\partial x}\right)^2
+        \label{7-3-6}
+    \end{equation}
+
+    又因为固体中纵波的传播速度为\(u = \sqrt{\dfrac{E }{\rho}}\)，所以\(E = \rho u^2\)，
+    再由波动表达式\ref{7-3-1}，可得应变为
+
+    \begin{equation}
+        \frac{\partial y}{\partial x}=-A \frac{\omega}{u} \sin \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    将上式代入式\ref{7-3-6}，整理后可得该棒元的弹性势能为
+
+    \begin{equation}
+        \mathrm{d} E_{\mathrm{p}}=\frac{1}{2} \rho A^2 \omega^2 \mathrm{~d} V \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    比较可得
+
+    $$
+        \mathrm{d} E_{\mathrm{k}}=\mathrm{d} E_{\mathrm{p}}=
+        \frac{1}{2} \rho A^2 \omega^2 \mathrm{~d} V \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    $$
+
+    即在波动传播到的任意位置，任意体积元\(\rmd V\)内的动能和势能总是相等的，且同步变化。
+    所以体积元\(\rmd V\)中波动的总能量为
+
+    \begin{equation}
+        \mathrm{d} E=\mathrm{d} E_{\mathrm{k}}+\mathrm{d} E_{\mathrm{p}}=\rho A^2 \omega^2 \mathrm{~d} V \sin ^2 \omega\left(t-\frac{x}{u}\right)
+        \label{7-3-9}
+    \end{equation}
+
+    \textbf{讨论}：
+
+    \begin{enumerate}
+        \item 每一体积元的动能和势能值相同，且同相位；
+        \item 小体积元的机械能随时间作周期性变化。
+    \end{enumerate}
+
+\subsection{波的能量密度}
+
+    人们将介质中单位体积内具有的波动能量称为波的能量密度(energy density of wave)，记为$w$，由式\ref{7-3-9}可得
+
+    \begin{equation}
+        w=\frac{\mathrm{d} E}{\mathrm{~d} V}=\rho A^2 \omega^2 \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    上式说明，波的能量密度同样是时间\(t\)和空间坐标\(x\)的二元函数，且沿波的传播方向（\(x\)轴）以速度\(u\)传播。
+    通常把能量密度在一个时间周期\(T\)内的平均值，称为平均能量密度，并用\(\overline{w}\)表示，即
+
+    \begin{equation}
+        \overline{w}=\frac{1}{T} \int_t^{t+T} w \mathrm{~d} t
+    \end{equation}
+
+    正弦函数：
+
+    $$
+        \begin{aligned}
+            \overline{w} & =\frac{1}{T} \int_0^T w \mathrm{~d} t \\
+            & =\frac{1}{T} \int_0^T \rho \omega^2 A^2 \sin ^2 \omega\left(t-\frac{x}{u}\right) \mathrm{d} t=\frac{1}{2} \rho \omega^2 A^2
+        \end{aligned}
+    $$
+
+    即
+
+    \begin{equation}
+        \overline{w}=\frac{1}{2} \rho A^2 \omega^2
+    \end{equation}
+
+\subsection{能流、平均能流密度}
+
+\subsubsection{能流}
+
+    单位时间内通过某面积的能量——通过该面积的能流(energy flux, \(P\))。
+
+    对垂直于波的传播方向的面积\(S\)而言：
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 07 images/pic3.png}
+    \]
+
+    能流
+
+    \begin{equation}
+        P=w u S=\rho A^2 \omega^2 u S \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    平均能流(average energy flux)
+
+    \begin{equation}
+        \overline{P}=\overline{w} u S
+    \end{equation}
+
+\subsubsection{波的能流密度}
+
+    能流密度:与波传播方向垂直的单位面积上通过的能流。
+
+    平均能流密度(average energy flux density)：
+    与波传播方向垂直的单位面积上通过的平均能流，也称为波的强度(波强，intensity of wave)，用\(I \)表示，即
+
+    \begin{equation}
+        I=\frac{\overline{P}}{S}=\overline{w} u=\frac{1}{2} \rho u \omega^2 A^2
+    \end{equation}
+
+    由此可以证明，平面简谐波在无吸收的介质中传播时振动保持不变，
+    球面波的波强与离开波源的距离的平方成反比。
+
 \end{document}
