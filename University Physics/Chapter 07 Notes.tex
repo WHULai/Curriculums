@@ -301,4 +301,112 @@
     波就会向前传播一个波长的距离，这表明波源的振动周期和振动频率在数值上与波的周期和波的频率是相等的，
     即两组物理量可以通用。如果波源与介质有相对运动，则两组物理量有差异，不可通用。
 
+\section{平面简谐波的波动表达式}
+
+\subsection{平面简谐波的波动表达式}
+
+    波是运动状态的传播，介质的质点并不随波传播。
+
+    设波源在\(t\)时刻的振动方程：
+
+    $$
+        y_O=A \cos (\omega t+\varphi)
+    $$
+
+    求波线\(x \)轴上平衡位置位于\(P \)点的质点的振动表达式。
+    设\(P \)点与\(O \)点的距离为\(x \)，因为波动从\(O \)传到\(P \)点处所需的时间为\(\dfrac{x }{u }\)，
+    所以\(P \)点处的质点在\(t\)时刻的位移与\(O \)点处的质点在\(t - \dfrac{x }{u }\)时刻的位移相同，即
+
+    $$
+        y_P(t)=y_O\left(t-\frac{x}{u}\right)=A \cos \left[\omega\left(t-\frac{x}{u}\right)+\varphi_0\right]
+    $$
+
+    质点的振动表达式（即位移随时间的变化规律），忽略下标\(P \)，上式可写为
+
+    \begin{equation}
+        y(x, t)=A \cos \left[\omega\left(t-\frac{x}{u}\right)+\varphi_0\right]
+        \label{7-2-1}
+    \end{equation}
+
+    这就是沿\(x\)轴正方向传播的平面简谐波的波动表达式，也称为波函数。
+    
+    当然，我们也可以用相位的超前与落后关系求出波函数。由于沿波的传播方向，
+    波线上各点的振动相位依次落后，每隔一个波长的距离，后者比前者的相位落后\(2 \uppi \)。
+    因此，如果已知波长\(\lambda\)，则当波从\(O \)点传到\(P\)点时，\(P \)点的振动相位比\(O\)点
+    落后\(\Delta \varphi = 2\uppi \dfrac{x}{\lambda}\)，即
+
+    \begin{equation}
+        \varphi_P=\varphi_0-\Delta \varphi=\varphi_0-2 \uppi \frac{x}{\lambda}
+    \end{equation}
+
+    所以\(P \)点的振动表达式，即此波的波函数为
+
+    \begin{equation}
+        y(x, t)=A \cos \left(\omega t+\varphi_P\right)=A \cos \left(\omega t-\frac{2 \uppi}{\lambda} x+\varphi_0\right)
+        \label{7-2-3}
+    \end{equation}
+
+    考虑到\(u = \dfrac{\lambda }{T }\)，\(\omega = \dfrac{2 \uppi}{T } = 2 \uppi \nu\)，
+    \(\dfrac{\omega}{u}=\dfrac{2 \uppi}{\lambda}\)，所以式\ref{7-2-1}和式\ref{7-2-3}两种形式的波动表达式实际上是等价的。
+    同理可得波动表达式的其他形式，如
+
+    \begin{equation}
+        y(x, t)=A \cos \left[2 \uppi\left(\frac{t}{T}-\frac{x}{\lambda}\right)+\varphi_0\right]
+    \end{equation}
+
+    如果波动沿\(x \)轴的负方向传播，那么\(P \)点处质点的振动要比\(O \)点处的质点早开始\(\dfrac{x }{u }\)时间，
+    即\(P\)点处的质点在\(t\)时刻的位移与\(O\)点处的质点在\(t + \dfrac{x }{u }\)的位移相同；
+    从相位的角度来看，\(P \)点处质点的振动相位要比\(O \)点的相位超前$\Delta \varphi=2 \uppi \frac{x}{\lambda}=\frac{\omega}{u} x$，
+    即
+
+    $$
+        \varphi_P=\varphi_O+\Delta \varphi=\varphi_O+2 \uppi \frac{x}{\lambda}
+    $$
+
+    所以\(P \)点处质点的振动表达式为
+
+    \begin{equation}
+        y(x, t)=A \cos \left[\omega\left(t+\frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+    
+    或
+
+    \begin{equation}
+        y(x, t)=A \cos \left(\omega t+\frac{2 \uppi}{\lambda} x+\varphi_0\right)
+    \end{equation}
+
+    \begin{equation}
+        y(x, t)=A \cos \left[2 \uppi\left(\frac{t}{T}+\frac{x}{\lambda}\right)+\varphi_0\right]
+    \end{equation}
+
+\subsection{波动表达式的物理意义}
+
+    当\(x \)一定时，如\(x = x_0\)：
+
+    \begin{equation}
+        y(t)=A \cos \left[\omega\left(t-\frac{x_0}{u}\right)+\varphi_O\right]
+    \end{equation}
+
+    是\(x = x_0\)处质点的振动表达式。
+
+    将波动表达式分别对时间求一阶和二阶偏导数，可得波线上任一质元\(P\)振动速度和加速度分别为
+
+    \begin{equation}
+        v(x, t)=\frac{\partial y(x, t)}{\partial t}=-A \omega \sin \left[\omega\left(t \pm \frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+    
+    \begin{equation}
+        a(x, t)=\frac{\partial^2 y(x, t)}{\partial t^2}=-A \omega^2 \cos \left[\omega\left(t \pm \frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+    
+    \vspace{1em}
+
+    当\(t \)一定时，如\(t = t_0\)：
+
+    \begin{equation}
+        y(x)=A \cos \left[\omega\left(t_0-\frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+
+    表示\(t_0\)时刻\(x\)轴上各质点的位移。
+
 \end{document}
