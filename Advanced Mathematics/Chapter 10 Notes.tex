@@ -314,4 +314,136 @@
         \iint_D f(x, y) \mathrm{d} \sigma=f(\xi, \eta) \sigma
     $$
 
+\section{二重积分的计算法}
+
+\subsection{利用直角坐标计算二次积分}
+
+    二重积分化二次积分：
+
+\subsubsection{X型区域}
+
+    设积分区域$D$可以用不等式
+
+    $$
+        \varphi_1(x) \leq y \leq \varphi_2(x), \quad a \leq x \leq b
+    $$
+
+    来表示（称为X型区域），其中函数 $\varphi_1(x)$、$\varphi_2(x)$在区间$[a, b]$上连续。
+
+    则
+
+    \begin{equation}
+        \iint_D f(x, y) \mathrm{d} \sigma=\int_a^b\left[\int_{\varphi_1(x)}^{\varphi_2(x)} f(x, y) \mathrm{d} y\right] \mathrm{d} x
+        \label{10-2-1}
+    \end{equation}
+
+    上式右端的积分叫做先对$y$、后对$x$的二次积分。就是说，先把$x$看做常数，把$f(x, y)$只看做$y$的函数，
+    并对$y$计算从$\varphi_1(x)$到$\varphi_2(x)$的定积分；然后把算得的结果（是$x$的函数）再对$x$计算在区间$[a, b]$上的定积分。
+    这个先对$y$，后对$x$的二次积分也常记作
+    
+    $$
+        \int_0^b \mathrm{~d} x \int_{\varphi_1(x)}^{\varphi_2(x)} f(x, y) \mathrm{d} y .
+    $$
+
+    因此，等式\ref{10-2-1}也写成
+
+    \begin{equation}
+        \iint_D f(x, y) \mathrm{d} \sigma=\int_a^b \mathrm{~d} x \int_{\varphi_1(x)}^{\varphi_2(x)} f(x, y) \mathrm{d} y
+        \label{10-2-2}
+    \end{equation}
+
+    这就是把二重积分化为先对$y$，后对$x$的二次积分的公式。
+
+\subsubsection{Y型区域}
+
+    类似地，如果积分区域$D$可以用不等式
+    
+    $$
+        \psi_1(y) \leq x \leq \psi_2(y), \quad c \leq y \leq d
+    $$
+
+    来表示（称为Y型区域），其中函数$\psi_1(y)$、$\psi_2(y)$在区间$[c, d]$上连续，那么就有
+
+    \begin{equation}
+        \iint_D f(x, y) \mathrm{d} \sigma=\int_c^d\left[\int_{\psi_1(y)}^{\psi_2(y)} f(x, y) \mathrm{d} x\right] \mathrm{d} y
+        \label{10-2-3}
+    \end{equation}
+
+    上式右端的积分叫做先对$x$，后对$y$的二次积分，这个积分也常记作
+
+    $$
+        \int_c^d \mathrm{~d} y \int_{\psi_1(y)}^{\psi_2(y)} f(x, y) \mathrm{d} x
+    $$
+
+    因此，等式\ref{10-2-3}也写成
+
+    \begin{equation}
+        \iint_D f(x, y) \mathrm{d} \sigma=\int_c^d \mathrm{~d} y \int_{\psi_1(y)}^{\psi_2(y)} f(x, y) \mathrm{d} x
+        \label{10-2-4}
+    \end{equation}
+
+    这就是把二重积分化为先对$x$，后对$y$的二次积分的公式。
+
+\subsubsection{既是X型区域，又是Y型区域}
+
+    如果积分区域$D$既是X型的，可用不等式$\varphi_1(x) \leq y \leq \varphi_2(x), a \leq x \leq b$表示，又是Y型的，
+    可用不等式 $\psi_1(y) \leq x \leq \psi_2(y), c \leq y \leq d$表示，那么由公式\ref{10-2-2}及\ref{10-2-4}就得
+
+    \begin{equation}
+        \int_a^b \mathrm{~d} x \int_{\varphi_1(x)}^{\varphi_2(x)} f(x, y) \mathrm{d} y=\int_{c}^d \mathrm{~d} y \int_{\psi_1(y)}^{\psi_2(y)} f(x, y) \mathrm{d} x
+    \end{equation}
+
+    上式表明，这两个不同次序的二次积分相等，因为它们都等于同一个二正积分
+
+    $$
+        \iint_b f(x, y) \mathrm{d} \sigma
+    $$
+
+\subsubsection{既不是X型区域，又不是Y型区域}
+
+    可以把区域\(D \)分成几部分，使每个部分是X型区域或是Y型区域。
+
+\subsubsection{例题}
+
+    计算${\displaystyle \iint_D x y \mathrm{~d} \sigma}$，其中$D$是由抛物线$y^2=x$及直线$y=x-2$所围成的闭区域。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    画出积分区域$D$如图所示。$D$既X型的，又是Y型的。若利用公式\ref{10-2-3}，则得
+
+    $$
+        \begin{aligned}
+            \iint_D x y \mathrm{~d} \sigma & =\int_{-1}^2\left[\int_{y^2}^{y+2} x y \mathrm{~d} x\right] \mathrm{d} y \\
+            & =\int_{-1}^2\left[\frac{x^2}{2} y\right]_{y^2}^{y+2} \mathrm{~d} y \\
+            & =\frac{1}{2} \int_{-1}^2\left[y(y+2)^2-y^5\right] \mathrm{d} y \\
+            & =\frac{1}{2}\left[\frac{y^4}{4}+\frac{4}{3} y^3+2 y^2-\frac{y^6}{6}\right]_{-1}^2 \\
+            & =\frac{45}{8}
+        \end{aligned}
+    $$
+
+    \[
+        \includegraphics[scale=0.3]{Chapter 10 images/pic1.jpg}
+    \]
+
+    若利用公式\ref{10-2-1}来计算，则由于在区间$[0,1]$及$[1,4]$上表示$\varphi_1(x)$的式子不同，
+    所以要用经过交点$(1,-1)$且平行于$y$轴的直线$x=1$把区域$D$分成$D_1$和$D_2$两部分（如图），其中
+    
+    $$
+        \begin{aligned}
+            & D_1=\left\{(x, y) \mid -\sqrt{x} \leq y \leq \sqrt{x}, 0 \leq x \leq 1 \right\} \\
+            & D_2=\left\{(x, y) \mid x-2 \leq y \leq \sqrt{x}, 1 \leq x \leq 4 \right\}
+        \end{aligned}
+    $$
+
+    因此，
+
+    $$
+        \begin{aligned}
+            \iint_D x y \mathrm{~d} \sigma & =\iint_{D_1} x y \mathrm{~d} \sigma+\iint_{D_2} x y \mathrm{~d} \sigma \\
+            & =\int_0^1\left[\int_{-\sqrt{x}}^{\sqrt{x}} x y \mathrm{~d} y\right] \mathrm{d} x+\int_1^4\left[\int_{x-2}^{\sqrt{x}} x y \mathrm{~d} y\right] \mathrm{d} x
+        \end{aligned}
+    $$
+
 \end{document}
