@@ -405,6 +405,9 @@
 
 \subsubsection{例题}
 
+    \textbf{Problem 1}
+    \vspace{1em}
+
     计算${\displaystyle \iint_D x y \mathrm{~d} \sigma}$，其中$D$是由抛物线$y^2=x$及直线$y=x-2$所围成的闭区域。
     \vspace{1em}
 
@@ -444,6 +447,57 @@
             \iint_D x y \mathrm{~d} \sigma & =\iint_{D_1} x y \mathrm{~d} \sigma+\iint_{D_2} x y \mathrm{~d} \sigma \\
             & =\int_0^1\left[\int_{-\sqrt{x}}^{\sqrt{x}} x y \mathrm{~d} y\right] \mathrm{d} x+\int_1^4\left[\int_{x-2}^{\sqrt{x}} x y \mathrm{~d} y\right] \mathrm{d} x
         \end{aligned}
+    $$
+
+    \textbf{Problem 2}
+    \vspace{1em}
+
+    求两个底圆半径都等于\(R \)的直交圆柱面所围成的立体的体积。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    设这两个圆柱面的方程分别为
+
+    \[
+        x^2+y^2=R^2 \text{及 } x^2+z^2=R^2
+    \]
+
+    利用立体关于坐标平面的对称性，只要算出它在第一卦限部分（图(a)）的体积\(V_1\)再乘以\(8\)就行了。
+
+    \[
+        \includegraphics[scale=0.3]{Chapter 10 images/pic2.jpg}
+    \]
+
+    所求立体在第一卦限部分可以看成一个曲顶柱体，它的底为
+
+    $$
+        D=\left\{(x, y) \mid 0 \leq y \leq \sqrt{R^2-x^2}, 0 \leq x \leq R\right\}
+    $$
+
+    如图(b)所示。它的顶是柱面$z=\sqrt{R^2-x^2}$。于是
+
+    $$
+        V_1=\iint_D \sqrt{R^2-x^2} \mathrm{~d} \sigma
+    $$
+
+    所以
+
+    $$
+        \begin{aligned}
+            V_1 & =\iint_D \sqrt{R^2-x^2} \mathrm{~d} \sigma \\
+            & =\int_0^R\left[\int_0^{\sqrt{R^2-x^2}} \sqrt{R^2-x^2} \mathrm{~d} y\right] \mathrm{d} x \\
+            & =\int_0^R\left[\sqrt{R^2-x^2} y\right]_0^{\sqrt{R^2-x^2}} \mathrm{~d} x \\
+            & =\int_0^R\left(R^2-x^2\right) \mathrm{d} x \\
+            & =\frac{2}{3} R^3
+        \end{aligned}
+    $$
+
+    从而所求立体的体积为
+
+    $$
+        V=8 V_1=\frac{16}{3} R^3
     $$
 
 \end{document}
