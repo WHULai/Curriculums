@@ -500,4 +500,231 @@
         V=8 V_1=\frac{16}{3} R^3
     $$
 
+\subsection{利用极坐标计算二重积分}
+
+\subsubsection{二重积分的极坐标形式}
+
+    $$
+        \iint_D f(x, y) \mathrm{d} \sigma=\iint_D f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho \mathrm{~d} \theta
+    $$
+
+    把极坐标上点\(\left(\rho, \theta\right)\)看作是在同一平面上的点\(\left(x,y\right)\)的极坐标表示，
+    所以上式右端的积分区域仍然记作\(D \)。因为在直角坐标系中\({\displaystyle \iint_{D }f\left(x,y\right)\rmd \sigma}\)
+    也常记作\({\displaystyle \iint_{D }f\left(x,y\right)\rmd x \rmd y}\)，所以上式又可写成
+
+    \begin{equation}
+        \iint_D f(x, y) \mathrm{d} x \mathrm{~d} y=\iint_D f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho \mathrm{~d} \theta
+        \label{10-2-6}
+    \end{equation}
+
+\subsubsection{极坐标系下的二重积分化为二次积分}
+
+    设积分区域$D$可以用不等式
+
+    $$
+        \varphi_1(\theta) \leq \rho \leq \varphi_2(\theta), \quad \alpha \leq \theta \leq \beta
+    $$
+
+    来表示，其中函数$\varphi_1(\theta)$、$\varphi_2(\theta)$在区间$[\alpha, \beta]$上连续。
+
+    极坐标中二重积分化为二次积分的公式为
+
+    \begin{equation}
+        \iint_D f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho \mathrm{~d} \theta=
+        \int_\alpha^\beta\left[\int_{\varphi_1(\theta)}^{\varphi_2(\theta)} f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho\right] \mathrm{d} \theta
+    \end{equation}
+
+    上式也写成
+
+    \begin{equation}
+        \iint_D f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho \mathrm{~d} \theta=
+        \int_\alpha^\beta \mathrm{d} \theta \int_{\varphi_1(\theta)}^{\varphi_2(\theta)} f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho
+        \label{10-2-8}
+    \end{equation}
+
+    如果积分区城$D$是如图所示的曲边扇形，那么可以把它看作当$\varphi_1(\theta) \equiv 0, \varphi_2(\theta)=\varphi(\theta)$\\
+    时的特例，这时闭区域$D$可以用不等式
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic4.jpg}
+    \]
+
+    $$
+        0 \leq \rho \leq \varphi(\theta), \alpha \leq \theta \leq \beta
+    $$
+
+    来表示，而公式\ref{10-2-8}成为
+
+    $$
+        \iint_D f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho \mathrm{~d} \theta=
+        \int_a^\theta \mathrm{d} \theta \int_0^{\varphi(\theta)} f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho
+    $$
+
+    如果积分区城$D$如图所示，极点在\(D\)的内部，那么可以把它看作当$\alpha = 0, \beta = 2\uppi$
+    时的特例，这时闭区域$D$可以用不等式
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic3.jpg}
+    \]
+
+    $$
+        0 \leq \rho \leq \varphi(\theta), \quad 0 \leq \theta \leq 2 \uppi
+    $$
+
+    来表示，而公式\ref{10-2-8}成为
+
+    $$
+        \iint_D f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho \mathrm{~d} \theta
+        =\int_0^{2 \uppi} \mathrm{~d} \theta \int_0^{\varphi(\theta)} f(\rho \cos \theta, \rho \sin \theta) \rho \mathrm{d} \rho
+    $$
+
+    \textbf{注意}：
+
+    \begin{enumerate}
+        \item \({\displaystyle \sigma = \iint_D \rmd \sigma}\)表示闭区域\(D \)的面积；
+        \item \({\displaystyle \sigma = \iint_D \rmd x \rmd y}\)表示直角坐标系中闭区域\(D \)的面积；
+        \item \({\displaystyle \sigma = \iint_D \rho \rmd \rho \rmd \theta}\)表示极坐标系中闭区域\(D \)的面积；
+    \end{enumerate}
+
+    设积分区域$D$可以用不等式
+
+    $$
+        \varphi_1(\theta) \leq \rho \leq \varphi_2(\theta), \quad \alpha \leq \theta \leq \beta
+    $$
+
+    来表示，其中函数$\varphi_1(\theta)$、$\varphi_2(\theta)$在区间$[\alpha, \beta]$上连续，则有
+
+    $$
+        \sigma=\iint_D \rho \mathrm{~d} \rho \mathrm{~d} \theta=
+        \int_\alpha^\beta \mathrm{d} \theta \int_{\varphi_1(\theta)}^{\varphi_2(\theta)} \rho \mathrm{d} \rho
+        =\frac{1}{2} \int_\alpha^\beta\left[\varphi_2^2(\theta)-\varphi_1^2(\theta)\right] \mathrm{d} \theta
+    $$
+
+    如果积分区城$D$是曲边扇形，那么可以把它看作当$\varphi_1(\theta) \equiv 0, \varphi_2(\theta)=\varphi(\theta)$
+    时的特例，这时有
+
+    $$
+        \sigma=\frac{1}{2} \int_\alpha^\beta \varphi^2(\theta) \mathrm{d} \theta
+    $$
+
+\subsubsection{例题}
+
+    \textbf{Problem 1}
+    \vspace{1em}
+
+    计算${\displaystyle \iint_D e^{-x^2-y^2} \rmd x \rmd y}$，其中$D$是由圆心在原点、半径为\(a \)的圆周所围成的闭区域。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    在极坐标系中，闭区域\(D \)可表示为
+
+    \[
+        0 \leq \rho \leq a, 0 \leq \theta \leq 2 \uppi
+    \]
+
+    于是有
+
+    $$
+        \begin{aligned}
+            \iint_D \mathrm{e}^{-x^2-y^2} \mathrm{~d} x \mathrm{~d} y & =\iint_D \mathrm{e}^{-\rho^2} \rho \mathrm{~d} \rho \mathrm{~d} \theta=\int_0^{2 \uppi}\left[\int_0^a \mathrm{e}^{-\rho^2} \rho \mathrm{~d} \rho\right] \mathrm{d} \theta \\
+            & =\int_0^{2 \uppi}\left[-\frac{1}{2} \mathrm{e}^{-\rho^2}\right]_0^a \mathrm{~d} \theta=\frac{1}{2}\left(1-\mathrm{e}^{-a^2}\right) \int_0^{2 \uppi} \mathrm{~d} \theta \\
+            & =\uppi\left(1-\mathrm{e}^{-a^2}\right)
+        \end{aligned}
+    $$
+    \vspace{1em}
+
+    利用上面的结果计算反常积分\({\displaystyle \int_{0}^{+\infty} e^{-x^2} \rmd x}\)：
+
+    设
+
+    $$
+        D_1=\left\{(x, y) \mid x^2+y^2 \leq R^2, x \geq 0, y \geq 0\right\}
+    $$
+
+    $$
+        D_2=\left\{(x, y) \mid x^2+y^2 \leq 2 R^2, x \geq 0, y \geq 0\right\}
+    $$
+
+    $$
+        S=\{(x, y) \mid 0 \leq x \leq R, 0 \leq y \leq R\}
+    $$
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic5.jpg}
+    \]
+
+    显然\(D_1 \subset S \subset D_2\)。由于\(e^{-x^2-y^2} > 0\)，从而在这些闭区域上的二重积分之间有不等式
+
+    $$
+        \iint_{D_1} \mathrm{e}^{-x^2-y^2} \mathrm{~d} x \mathrm{~d} y<
+        \iint_S \mathrm{e}^{-x^2-y^2} \mathrm{~d} x \mathrm{~d} y<\iint_{D_2} \mathrm{e}^{-x^2-y^2} \mathrm{~d} x \mathrm{~d} y
+    $$
+
+    因为
+
+    $$
+        \iint_S \mathrm{e}^{-x^2-y^2} \mathrm{~d} x \mathrm{~d} y=
+        \int_0^R \mathrm{e}^{-x^2} \mathrm{~d} x \cdot \int_0^R \mathrm{e}^{-y^2} \mathrm{~d} y
+        =\left(\int_0^R \mathrm{e}^{-x^2} \mathrm{~d} x\right)^2
+    $$
+
+    又应用上面已得的结果有
+
+    $$
+        \iint_{D_1} \mathrm{e}^{-x^2-y^2} \mathrm{~d} x \mathrm{~d} y=\frac{\uppi}{4}\left(1-\mathrm{e}^{-R^2}\right)
+    $$
+
+    $$
+        \iint_{D_2} \mathrm{e}^{-x^2-y^2} \mathrm{~d} x \mathrm{~d} y=\frac{\uppi}{4}\left(1-\mathrm{e}^{-2 R^2}\right)
+    $$
+
+    于是上面的不等式可以写成
+
+    $$
+        \frac{\uppi}{4}\left(1-\mathrm{e}^{-R^2}\right)<\left(\int_0^R \mathrm{e}^{-x^2} \mathrm{~d} x\right)^2<\frac{\uppi}{4}\left(1-\mathrm{e}^{-2 R^2}\right)
+    $$
+
+    令\(R \rightarrow +\infty\)，上式两端趋于同一极限\(\frac{\uppi}{4}\)，从而
+
+    $$
+        \int_0^{+\infty} e^{-x^2} d x=\frac{\sqrt{\uppi}}{2}
+    $$
+    \vspace{1em}
+
+    \textbf{Problem 2}
+    \vspace{1em}
+
+    求球体\(x^2+y^2+z^2 \leq 4a^2\)被圆柱面\(x^2+y^2=2ax,\; (a>0)\)所截得的（含在圆柱面内的部分）立体的体积。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic6.jpg}
+    \]
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    由对称性
+
+    $$
+        V=4 \iint_D \sqrt{4 a^2-x^2-y^2} \mathrm{~d} x \mathrm{~d} y,
+    $$
+
+    其中\(D \)为半圆周\(y=\sqrt{2ax-x^2}\)及\(x \)轴所围成的闭区域。在极坐标系中，闭区域\(D \)可用不等式
+
+    $$
+        0 \leq \rho \leq 2 a \cos \theta, \quad 0 \leq \theta \leq \frac{\uppi}{2}
+    $$
+
+    来表示。于是
+
+        $$
+        \begin{aligned}
+            V & =4 \iint_D \sqrt{4 a^2-\rho^2} \rho \mathrm{~d} \rho \mathrm{~d} \theta=4 \int_0^{\frac{\uppi}{2}} \mathrm{~d} \theta \int_0^{2 a \cos \theta} \sqrt{4 a^2-\rho^2} \rho \mathrm{~d} \rho \\
+            & =\frac{32}{3} a^3 \int_0^{\frac{\uppi}{2}}\left(1-\sin ^3 \theta\right) \mathrm{d} \theta=\frac{32}{3} a^3\left(\frac{\uppi}{2}-\frac{2}{3}\right)
+        \end{aligned}
+    $$
+
 \end{document}
