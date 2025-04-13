@@ -723,4 +723,91 @@
         I=2 I_0(1+\cos \Delta \varphi)=4 I_0 \cos ^2 \frac{\Delta \varphi}{2}
     \end{equation}
 
+\section{驻波}
+
+\subsection{驻波的形成和特点}
+
+    两列\textbf{振幅相同}的\textbf{相干波}在同一直线上\textbf{沿相反方向传播}时由于相干叠加所产生的波称为\textbf{驻波}。
+
+    波的干涉是特定条件下的波叠加， 驻波又是特定条件下的波的干涉。
+
+    \[
+        \includegraphics[width=\linewidth]{Chapter 07 images/pic9.png}
+    \]
+
+\subsection{驻波方程}
+
+    设有两列波相向传播，沿\(x\)轴正向传播的波为
+
+    $$
+        y_1(x, t)=A \cos \left(\omega t-\frac{2 \uppi x}{\lambda}+\varphi_1\right)
+    $$
+
+    沿\(x\)轴负向传播的波为
+
+    $$
+        y_2(x, t)=A \cos \left(\omega t+\frac{2 \uppi x}{\lambda}+\varphi_2\right)
+    $$
+
+    则合成波（即驻波）的表达式为：
+
+    \begin{equation}
+        y_{\text{合}}(x, t)=y_1(x, t)+y_2(x, t)=
+        2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right) \cos \left(\omega t+\frac{\varphi_2+\varphi_1}{2}\right)
+        \label{7-6-1}
+    \end{equation}
+
+    式\ref{7-6-1}即为驻波方程。
+
+\subsubsection{波腹和波节}
+
+    \begin{equation}
+        A_{\text{合}}=\left|2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right)\right|
+    \end{equation}
+
+    驻波上各点的振幅不同，其大小与位置\(x \)有关。
+    当\({\displaystyle \left|2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right)\right|=1}\)，
+    合振幅达到最大值（\(A_{\text{合}} = A_1+A_2\)），这就是波腹。波腹的位置条件为
+
+    \begin{equation}
+        \frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}= \pm k \uppi, \quad k=0,1,2, \cdots
+    \end{equation}
+
+    当\({\displaystyle 2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right)=0}\)，
+    合振幅为零（\(A_{\text{合}} = 0\)），这就是波节。波节的位置条件为
+
+    \begin{equation}
+        \frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}= \pm(2 k+1) \frac{\uppi}{2}, \quad k=0,1,2, \cdots
+    \end{equation}
+
+    所以相邻两波节或波腹之间的距离为
+
+    \begin{equation}
+        \Delta x=x_{k+1}-x_k=\frac{\lambda}{2}
+    \end{equation}
+
+\subsubsection{振动相位}
+
+    驻波方程\ref{7-6-1}中没有\(x\)坐标，表示没有相位的传播。
+
+    相邻两波节之间的各质点的振动相位相同；波节两侧的各质点的振动相位相反。
+
+    驻波（已经是叠加波）不是振动相位的传播过程，驻波的波形不发生定向传播。
+
+\subsubsection{驻波的能量}
+
+    驻波的能量在相邻的波腹和波节间往复变化，在相邻的波节间发生动能和势能间的转换，
+    动能主要集中在波腹，势能主要集中在波节，但无长距离的能量传播。
+
+\subsection{半波损失}
+
+    入射波从波疏介质到波密介质，在两者的界面上，反射波在反射点出现半波损失，
+    引起\(\uppi\)相位的突变。
+
+    由入射波与反射波产生驻波 与 “半波损失”。
+
+    \[
+        \includegraphics[width=\linewidth]{Chapter 07 images/pic10.png}
+    \]
+
 \end{document}
