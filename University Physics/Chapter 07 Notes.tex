@@ -634,4 +634,93 @@
 
     式中\(n_{21}=\dfrac{u_1}{u_2}\)称为介质2对介质1的相对折射率。
 
+\section{波的干涉}
+
+\subsection{波的叠加原理}
+
+    几列波相遇之后， 仍然保持它们各自原有的特征（频率、波长、振幅、振动方向等）不变，
+    相遇之后并按照原来的方向继续前进，好象没有遇到过其他波一样。
+
+    在相遇区域内任一点的振动，为各列波单独存在时在该点所引起的振动位移的矢量和。
+    
+\subsection{波的干涉}
+
+    频率相同、振动方向平行、相位相同或相位差恒定的两列波相遇时，
+    使某些地方振动始终加强，而使另一些地方振动始终减弱的现象，
+    称为波的干涉(interference)现象。
+
+    两相干波源振动规律：
+
+    \[
+        \includegraphics[scale=0.3]{Chapter 07 images/pic8.png}
+    \]
+
+    $$
+        y_1=A_1 \cos \left(\omega t-\frac{2 \uppi r_1}{\lambda}+\varphi_1\right)
+    $$
+
+    $$
+        y_2=A_2 \cos \left(\omega t-\frac{2 \uppi r_2}{\lambda}+\varphi_2\right)
+    $$
+
+    \(P \)点的合振动为
+
+    \begin{equation}
+        y=y_1+y_2=A \cos (\omega t+\varphi)
+    \end{equation}
+
+    其中
+
+    \begin{equation}
+        \tan \varphi=\dfrac{A_1 \sin \left(\varphi_1-\dfrac{2 \uppi r_1}{\lambda}\right)+
+        A_2 \sin \left(\varphi_2-\dfrac{2 \uppi r_2}{\lambda}\right)}{A_1 \cos \left(\varphi_1-\dfrac{2 \uppi r_1}{\lambda}\right)+A_2 \cos \left(\varphi_2-\dfrac{2 \uppi r_2}{\lambda}\right)}
+    \end{equation}
+
+    \begin{equation}
+        A=\sqrt{A_1^2+A_2^2+2 A_1 A_2 \cos \left(\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}\right)}
+    \end{equation}
+
+    两个波源振动传播到\(P\)点的引起的两个振动相位差值
+
+    \begin{equation}
+        \Delta \varphi=\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}
+    \end{equation}
+
+    干涉叠加加强或减弱取决于\(\Delta \varphi\)。凡是满足
+
+    \begin{equation}
+        \Delta \varphi=\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}= \pm 2 k \uppi, \quad k=0,1,2, \cdots
+    \end{equation}
+
+    的空间各点，\(A = A_{max} = A_1+A_2\)，这些点的合振幅最大，称为\textbf{干涉加强}，或\textbf{相长干涉}。
+
+    凡是满足
+
+    \begin{equation}
+        \Delta \varphi=\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}= \pm(2 k-1) \uppi, \quad k=1,2,3, \cdots
+    \end{equation}
+
+    的空间各点，\(A = A_{min} = \left|A_1-A_2\right|\)，这些点的合振幅最小，称为\textbf{干涉减弱}。
+    如果\(A_1=A_2\)，则\(A = A_{min} = 0\)，即该点的合振幅为零，这称为\textbf{相消干涉}。
+
+    \(P\)波强度
+
+    \begin{equation}
+        I=I_1+I_2+2 \sqrt{I_1 I_2} \cos \Delta \varphi
+        \label{7-5-7}
+    \end{equation}
+
+    \begin{enumerate}
+        \item 相干波源在\(P\)点波强\(\neq I_1+I_2\), 而是多出一与位置有关的干涉项；
+        \item 对确定点\( P\)，\(\Delta \varphi\)为固定值，波强为确定值，不随时间变化；
+        \item 对不同点，\(\Delta \varphi\)不同，\(I\)也不同，有强弱分布，产生干涉现象；
+        \item 当\(\Delta \varphi\)为\(\uppi\)的偶数倍时，波强达极大值(干涉极大)；当\(\Delta \varphi\)为\(\uppi\)的奇数倍时，干涉极小。
+    \end{enumerate}
+
+    当\(I_1=I_2=I_0\)，则式\ref{7-5-7}可以写成
+
+    \begin{equation}
+        I=2 I_0(1+\cos \Delta \varphi)=4 I_0 \cos ^2 \frac{\Delta \varphi}{2}
+    \end{equation}
+
 \end{document}
