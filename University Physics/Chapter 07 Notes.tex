@@ -536,7 +536,7 @@
 
 \subsection{能流、平均能流密度}
 
-\subsubsection{能流}
+\subsubsection{能流（面能量）}
 
     单位时间内通过某面积的能量——通过该面积的能流(energy flux, \(P\))。
 
@@ -571,5 +571,67 @@
 
     由此可以证明，平面简谐波在无吸收的介质中传播时振动保持不变，
     球面波的波强与离开波源的距离的平方成反比。
+
+\section{惠更斯原理、波的衍射、反射和折射}
+
+\subsection{惠更斯原理}
+
+    在波的传播过程中，所到达的每一点都可看作是发射子波的波源，
+    在其后的任一时刻，这些子波的包络面就是新的波前。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 07 images/pic4.jpg}
+    \]
+
+\subsection{惠更斯原理的应用}
+
+\subsubsection{波的衍射}
+
+    波在传播过程中遇到障得物时，能够偏窝原来的直线传播方向，绕到障碍物后面的绕射现象，
+    称为波的衍射(diffraction)。
+
+    \begin{figure}[!htbp]
+        \centering  % 居中放置
+        \subfigure[缝宽\(a\)远大于波长\(\lambda\)]  % 为每个图片加上编号
+        {
+            \begin{minipage}[b]{.3\linewidth}
+                \includegraphics[scale=0.2]{Chapter 07 images/pic5.png}
+                % \caption{缝宽\(a \)远大于波长\(\lambda\)}
+            \end{minipage}
+        }
+        \subfigure[缝宽\(a \)小于波长\(\lambda\)]
+        {
+            \begin{minipage}[b]{.3\linewidth}
+                \includegraphics[scale=0.2]{Chapter 07 images/pic6.png}
+                % \caption{缝宽\(a \)小于波长\(\lambda\)}
+            \end{minipage}
+        }
+        % \caption{}
+    \end{figure}
+    
+    \(\dfrac{a }{\lambda}\)越小，衍射越显著。
+
+    波长较短的波衍射不显著，所以定向性较好。
+
+\subsubsection{波的反射和折射}
+
+    \textbf{反射定律}
+    \vspace{1em}
+
+    \textbf{折射定律}
+
+    当波动从一种介质进入另一种介质时，由于在两种介质中的波速不同，
+    在分界面上要发生折射现象。设在介质1中的波速是\(u_1\)，在介质2中波速为\(u_2\)，
+    设\(MN \)为两种介质的分界面。
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 07 images/pic7.jpg}
+    \]
+
+    \begin{equation}
+        \frac{\sin i}{\sin r}=\frac{u_1}{u_2}=n_{21}
+    \end{equation}
+
+    式中\(n_{21}=\dfrac{u_1}{u_2}\)称为介质2对介质1的相对折射率。
 
 \end{document}
