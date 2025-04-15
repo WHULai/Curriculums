@@ -727,4 +727,245 @@
         \end{aligned}
     $$
 
+\section{三重积分}
+
+\subsection{三重积分的概念}
+
+    设\(f\left(x,y,z\right)\)是空间有界闭区域\(\varOmega\)上的有界函数。将\(\varOmega\)任意分成\(n \)个小闭区域
+
+    $$
+        \Delta v_1, \Delta v_2, \cdots, \Delta v_n
+    $$
+
+    其中\(\Delta v_i\)表示第\(i \)个小闭区域，也表示它的体积。在每个\(\Delta v_i\)上任取一点\(\left(\xi_i, \eta_i, \zeta_i\right)\)，
+    作乘积\(f\left(\xi_i, \eta_i, \zeta_i\right) \Delta v_i\)($i=1,2,\cdots,n$)，
+    并作和\(\sum_{i=1}^{n} f\left(\xi_i, \eta_i, \zeta_i\right) \Delta v_i \)。如果当各小闭区域的直径中的最大值\(\lambda \rightarrow 0\)时，
+    这和的极限总存在，且与闭区域\(\varOmega\)的分法及点\(\left(\xi_i, \eta_i, \zeta_i\right)\)的取法无关，那么称此极限为函数
+    \(f\left(x,y,z\right)\)在闭区域\(\varOmega\)上的三重积分，记作\({\displaystyle \iiint_{\varOmega} f(x, y, z) \mathrm{d} v}\)，即
+
+    \begin{equation}
+        \iiint_{\varOmega} f(x, y, z) \mathrm{d} v=\lim _{\lambda \rightarrow 0} \sum_{i=1}^n f\left(\xi_i, \eta_i, \zeta_i\right) \Delta v_i
+    \end{equation}
+
+    其中\(f\left(x,y,z\right)\)叫做被积函数，\(\rmd v\)叫做体积元素，\(\varOmega\)叫做积分区域。
+
+    在直角坐标系中，有时也把体积元素\(\rmd v\)记作\(\rmd x \rmd y \rmd z\)，而把三重积分记作
+
+    \begin{equation*}
+        \iiint_\varOmega f\left(x,y,z \right) \rmd x \rmd y \rmd z
+    \end{equation*}
+
+    其中\(\rmd x \rmd y \rmd z\)叫做直角坐标系中的体积元素。
+
+    如果$f(x, y, z)$表示某物体在点$(x, y, z)$处的密度，$\varOmega$是该物体所占有的空间闭区域，\\
+    $f(x, y, z)$在$\varOmega$上连续，那么${\displaystyle \sum_{i=1}^n f\left(\xi_i, \eta_i, \zeta_i\right) \Delta v_i}$是该物体的质量$m$的近似值，
+    这个和当$\lambda \rightarrow 0$时的极限就是该物体的质量$m$，所以
+
+    $$
+        m=\iiint_\varOmega f(x, y, z) \mathrm{d} v
+    $$
+
+    若\(f\left(x,y,z \right)\)在闭区域\(\varOmega\)上连续，则$m=\iiint_\varOmega f(x, y, z) \mathrm{d} v$存在。
+
+    性质：与二重积分类似。
+
+\subsection{三重积分的计算}
+
+\subsubsection{利用直角坐标计算三重积分}
+
+    若积分区域\(\varOmega\)可表示为
+
+    \[
+        \varOmega = \left\{\left(x,y,z\right) \mid z_1\left(x,y\right) \leq z \leq z_2\left(x,y\right), \left(x,y\right) \in D_{xy}\right\}
+    \]
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic7.jpg}
+    \]
+
+    先将\(x \)、\(y \)看作定值，将\(f\left(x,y,z \right)\)只看作\(z \)的函数，在区间\(\left[z_1\left(x,y\right),z_2\left(x,y\right)\right]\)
+    上对\(z \)积分。积分的结果是\(x \)、\(y \)的函数，即为\(F\left(x,y \right)\)，即
+
+    \[
+        F\left(x,y \right) = \int_{z_1\left(x,y\right)}^{z_2\left(x,y\right)} f\left(x,y,z \right) \rmd z
+    \]
+
+    计算\(F\left(x,y \right)\)在闭区域\(D_{xy}\)上的二重积分
+
+    $$
+        \iint_{D_{x y}} F(x, y) \mathrm{d} \sigma=\iint_{D_{x y}}\left[\int_{z_1(x, y)}^{z_2(x, y)} f(x, y, z) \mathrm{d} z\right] \mathrm{d} \sigma
+    $$
+
+    假如闭区域
+
+    $$
+        D_{x y}=\left\{(x, y) \mid y_1(x) \leq y \leq y_2(x), a \leq x \leq b\right\}
+    $$
+
+    把这个二重积分化为二次积分，于是得到三重积分的计算公式
+
+    \begin{equation}
+        \iiint_{\varOmega} f(x, y, z) \mathrm{d} v=\int_a^b \mathrm{~d} x \int_{y_1(x)}^{y_2(x)} \mathrm{d} y \int_{z_1(x, y)}^{z_2(x, y)} f(x, y, z) \mathrm{d} z
+        \label{10-3-2}
+    \end{equation}
+
+    公式\ref{10-3-2}把三重积分化为先对\(z \)、次对\(y \)、最后对\(x \)的三次积分。
+
+    我们计算一个三重积分也可以化为先计算一个二重积分、再计算一个定积分，即有下述计算公式。
+
+    设空间闭区域
+
+    \[
+        \varOmega = \left\{\left(x,y,z\right) \mid \left(x,y\right) \in D_{z}, c_1 \leq c_2\right\}
+    \]
+
+    其中\(D_{z }\)是竖坐标为\(z \)的平面截闭区域\(\varOmega\)所得到的一个平面闭区域，则有
+
+    \begin{equation}
+        \iiint_{\varOmega} f(x, y, z) \mathrm{d} v=\int_{c_1}^{c_2} \mathrm{~d} z \iint_{D_z} f(x, y, z) \mathrm{d} x \mathrm{~d} y
+        \label{10-3-3}
+    \end{equation}
+
+\subsubsection{利用柱面坐标计算三重积分}
+
+    直角坐标与柱面坐标的关系为
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+            x=\rho \cos \theta \\
+            y=\rho \sin \theta \\
+            z=z
+        \end{array}\right.
+    \end{equation}
+
+    柱面坐标系中，有
+    
+    \[
+        \rmd v = \rho \rmd \rho \rmd \theta \rmd z
+    \]
+
+    所以
+
+    \begin{equation}
+        \iiint_{\varOmega} f(x, y, z) \mathrm{d} x \mathrm{~d} y \mathrm{~d} z=
+        \iiint_{\varOmega} F(\rho, \theta, z) \rho \mathrm{d} \rho \mathrm{~d} \theta \mathrm{~d} z
+    \end{equation}
+
+    适用：
+
+    形状为曲顶曲线柱体，投影区域适合用极坐标表示。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic10.jpg}
+    \]
+
+\subsubsection{例题}
+
+    \textbf{Problem 1}
+    \vspace{1em}
+
+    计算三重积分${\displaystyle \iiint_\varOmega x \rmd x \rmd y \rmd z}$，其中$\varOmega$为三个坐标面及平面\(x+2y+z=1\)所围成的闭区域。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    作闭区域$\varOmega$如图所示。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic8.jpg}
+    \]
+
+    \(\varOmega\)在\(xOy\)面投影得\(D_{xy}\)，由\(x \)轴、\(y \)轴及\(x+2y=1\)围成。
+
+    所以
+
+    $$
+    D_{x y}=\left\{(x, y) \left|, 0 \leq y \leq \frac{1-x}{2}\right., 0 \leq x \leq 1\right\}
+    $$
+
+    于是
+
+    $$
+        \begin{aligned}
+            \iiint_\varOmega x \mathrm{~d} x \mathrm{~d} y \mathrm{~d} z
+            & =\int_0^1 \mathrm{~d} x \int_0^{\frac{1-x}{2}} \mathrm{~d} y \int_0^{1-x-2 y} x \mathrm{~d} z \\
+            & =\int_0^1 x \mathrm{~d} x \int_0^{\frac{1-x}{2}}(1-x-2 y) \mathrm{d} y \\
+            & =\frac{1}{4} \int_0^1\left(x-2 x^2+x^3\right) \mathrm{d} x \\
+            & =\frac{1}{48}
+        \end{aligned}
+    $$
+
+    \textbf{Problem 2}
+    \vspace{1em}
+
+    计算三重积分${\displaystyle \iiint_\varOmega z^2 \rmd x \rmd y \rmd z}$，
+    其中$\varOmega$是由球面${\displaystyle \frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1}$所围成的闭区域。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    空间闭区域\(\varOmega\)可表示为
+
+    $$
+    \left\{(x, y, z) \left| \frac{x^2}{a^2}+\frac{y^2}{b^2} \leq 1-\frac{z^2}{c^2}\right., -c \leq z \leq c\right\}
+    $$
+
+    如图所示。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic9.jpg}
+    \]
+
+    由公式\ref{10-3-3}得
+
+    $$
+        \begin{aligned}
+            \iiint_{\varOmega} z^2 \mathrm{~d} x \mathrm{~d} y \mathrm{~d} z
+            & =\int_{-c}^c z^2 \mathrm{~d} z \iint_{D_z} \mathrm{~d} x \mathrm{~d} y \\
+            & =\uppi a b \int_{-r}^c\left(1-\frac{z^2}{c^2}\right) z^2 \mathrm{~d} z \\
+            & =\frac{4}{15} \uppi a b c^3
+        \end{aligned}
+    $$
+
+    思考：
+
+    \begin{enumerate}
+        \item ${\displaystyle \iiint_\varOmega yx^2 \rmd x \rmd y \rmd z}$：截面垂直于\(y\)轴（最后对\(y\)积分）；
+        \item ${\displaystyle \iiint_\varOmega x^2 \rmd x \rmd y \rmd z}$：截面垂直于\(x\)轴（最后对\(x\)积分）。
+    \end{enumerate}
+
+    \textbf{Problem 3}
+    \vspace{1em}
+
+    利用柱面坐标计算三重积分${\displaystyle \iiint_\varOmega z \rmd x \rmd y \rmd z}$，
+    其中$\varOmega$是由曲面$z=x^2+y^2$与平面\(z=4\)所围成的闭区域。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    把闭区域\(\varOmega\)投影到\(xOy\)面上，得半径为2的圆形闭区域
+
+    $$
+    D_{x y}=\left\{(\rho, \theta) \mid 0 \leq \rho \leq 2, 0 \leq \theta \leq 2 \uppi \right\}
+    $$
+
+    在\(D_{xy}\)内任取一点\(\rho, \theta\)，过此点作平行于\(z \)轴的直线，此直线通过曲面$z=x^2+y^2$
+    穿入\(\varOmega\)内，然后通过平面\(z=4\)穿出\(\varOmega\)外。因此闭区域\(\varOmega\)可用不等式
+    \[\rho^2 \leq z \leq 4, \quad 0 \leq \rho \leq 2, \quad 0 \leq \theta \leq 2 \uppi\]
+    来表示，于是
+
+    $$
+        \begin{aligned}
+            \iiint_\varOmega z \mathrm{~d} x \mathrm{~d} y \mathrm{~d} z
+            & =\iiint_\varOmega z \rho \mathrm{~d} \rho \mathrm{~d} \theta \mathrm{~d} z \\
+            & =\int_0^{2 \uppi} \mathrm{~d} \theta \int_0^2 \rho \mathrm{~d} \rho \int_{\rho^2}^4 z \mathrm{~d} z \\
+            & =\frac{1}{2} \int_0^{2 \uppi} \mathrm{~d} \theta \int_0^2 \rho\left(16-\rho^4\right) \mathrm{d} \rho \\
+            & =\frac{1}{2} \cdot 2 \uppi\left[8 \rho^2-\frac{1}{6} \rho^6\right]_0^2 \\
+            & =\frac{64}{3} \uppi
+        \end{aligned}
+    $$
+
 \end{document}
