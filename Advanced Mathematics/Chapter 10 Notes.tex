@@ -859,6 +859,45 @@
         \includegraphics[scale=0.2]{Chapter 10 images/pic10.jpg}
     \]
 
+\subsubsection{利用球面坐标计算三重积分}
+
+    \(r\)、\(\varphi\)、\(\theta\)叫做球面坐标，变化范围为
+
+    $$
+        \begin{gathered}
+            0 \leq r<+\infty \\
+            0 \leq \varphi \leq \uppi \\
+            0 \leq \theta \leq 2 \uppi
+        \end{gathered}
+    $$
+
+    直角坐标与球面坐标的关系为
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic11.jpg}
+    \]
+
+    \begin{equation}
+        \left\{\begin{array}{l}
+            x=r \sin \varphi \cos \theta \\
+            y=r \sin \varphi \sin \theta \\
+            z=r \cos \varphi
+        \end{array}\right.
+    \end{equation}
+
+    柱面坐标系中，有
+    
+    \[
+        \rmd v = r^2 \sin \varphi \rmd r \rmd \varphi \rmd \theta
+    \]
+
+    所以
+
+    \begin{equation}
+        \iiint_{\varOmega} f(x, y, z) \mathrm{d} x \mathrm{~d} y \mathrm{~d} z=
+        \iiint_{\varOmega} F(r, \varphi, \theta) r^2 \sin \varphi \rmd r \rmd \varphi \rmd \theta
+    \end{equation}
+
 \subsubsection{例题}
 
     \textbf{Problem 1}
@@ -965,6 +1004,35 @@
             & =\frac{1}{2} \int_0^{2 \uppi} \mathrm{~d} \theta \int_0^2 \rho\left(16-\rho^4\right) \mathrm{d} \rho \\
             & =\frac{1}{2} \cdot 2 \uppi\left[8 \rho^2-\frac{1}{6} \rho^6\right]_0^2 \\
             & =\frac{64}{3} \uppi
+        \end{aligned}
+    $$
+
+    \textbf{Problem 3}
+    \vspace{1em}
+
+    求半径为\(a \)的球面与半顶角为\(\alpha\)的内接锥面的顶点在原点所围成的立体（如图）的体积。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic12.jpg}
+    \]
+
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    设球面通过原点\(O \)，球心在\(z \)轴上，又内接锥面的顶点在原点\(O \)，其轴与\(z \)轴重合，
+    则球面方程为\(r=2a\cos \varphi\)，锥面方程为\(\varphi = \alpha\)。因为立体所占有的空间闭区域\(\varOmega\)可用不等式
+    \[0 \leq r \leq 2 a \cos \varphi, \quad 0 \leq \varphi \leq \alpha, \quad 0 \leq \theta \leq 2 \uppi\]
+    来表示，所以
+
+    $$
+        \begin{aligned}
+            V & =\iiint_\varOmega r^2 \sin \varphi \mathrm{~d} r \mathrm{~d} \varphi \mathrm{~d} \theta
+            =\int_0^{2 \uppi} \mathrm{~d} \theta \int_0^\alpha \mathrm{d} \varphi \int_0^{2 a \cos \varphi} r^2 \sin \varphi \mathrm{~d} r \\
+            & =2 \uppi \int_0^\alpha \sin \varphi \mathrm{d} \varphi \int_0^{2 a \cos \varphi} r^2 \mathrm{~d} r
+            =\frac{16 \uppi a^3}{3} \int_0^\alpha \cos ^3 \varphi \sin \varphi \mathrm{~d} \varphi \\
+            & =\frac{4 \uppi a^3}{3}\left(1-\cos ^4 \alpha\right)
         \end{aligned}
     $$
 
