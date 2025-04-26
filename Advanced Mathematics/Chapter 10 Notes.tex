@@ -1038,7 +1038,257 @@
 
 \section{重积分的应用}
 
+    我们已经掌握
 
+    \begin{enumerate}
+        \item 平面区域的面积：\(A = \iint_D \rmd \sigma\)
+        \item 平面薄片的质量：\(M = \iint_D \mu \left(x,y\right) \rmd \sigma\)
+        \item 空间区域的体积：\(V = \iiint_\varOmega \rmd v\)
+        \item 空间物体的质量：\(M = \iiint_\varOmega \rho\left(x,y,z\right) \rmd v\)
+    \end{enumerate}
 
+\subsection{曲面的面积}
+
+    设曲面\(S\)由方程\[z=f\left(x,y\right)\]给出，\(D\)为曲面\(S\)在\(xOy\)面上的投影区域，
+    函数\(f\left(x,y\right)\)在\(D\)上具有连续偏导数\(f_x\left(x,y\right)\)和\\
+    \(f_y\left(x,y\right)\)。要计算曲面\(S\)的面积\(A\)。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic13.jpg}
+    \]
+
+    如图，
+
+    \[
+        \rmd A = \frac{\rmd \sigma}{\cos \gamma}
+    \]
+
+    因为
+
+    $$
+        \cos \gamma = \left|\cos\left(\widehat{\left(0,0,1\right), \left(z_x,z_y,-1\right)}\right)\right|
+        = \frac{1}{\sqrt{1+f_x^2(x, y)+f_y^2(x, y)}}
+    $$
+
+    所以
+
+    \[
+        \rmd A = \sqrt{1+f_x^2(x, y)+f_y^2(x, y)} \rmd \sigma
+    \]
+
+    这就是曲面\(S\)的面积元素，则
+
+    $$
+        A=\iint_D \sqrt{1+f_x^2(x, y)+f_y^2(x, y)} \mathrm{d} \sigma
+    $$
+
+    上式也写成
+
+    $$
+        A=\iint_D \sqrt{1+\left(\frac{\partial z}{\partial x}\right)^2+\left(\frac{\partial z}{\partial y}\right)^2} \mathrm{~d} x \mathrm{~d} y
+    $$
+
+    其他形式：
+
+    $$
+        A=\iint_{D_{yz}} \sqrt{1+\left(\frac{\partial x}{\partial y}\right)^2+\left(\frac{\partial x}{\partial z}\right)^2} \mathrm{~d} y \mathrm{~d} z
+    $$
+
+    $$
+        A=\iint_{D_{zx}} \sqrt{1+\left(\frac{\partial y}{\partial z}\right)^2+\left(\frac{\partial y}{\partial x}\right)^2} \mathrm{~d} z \mathrm{~d} x
+    $$
+
+\subsection{质心}
+
+\subsubsection{平面薄片的质心}
+
+    设有一平面薄片，占有\(xOy\)面上的闭区域\(D\)，在点\(\left(x,y\right)\)处的面密度为
+    \(\mu\left(x,y\right)\)，\\假定\(\mu\left(x,y\right)\)在\(D\)上连续。现要找该薄片质心的坐标。
+
+    静矩
+
+    $$
+        M_y=\iint_D x \mu(x, y) \mathrm{d} \sigma, \quad M_x=\iint_D y \mu(x, y) \mathrm{d} \sigma
+    $$
+
+    又该薄片的质量
+
+    $$
+        M=\iint_D \mu(x, y) \mathrm{d} \sigma
+    $$
+
+    所以薄片的质心的坐标为
+
+    $$
+        \bar{x}=\frac{M_y}{M}=\frac{\iint_D x \mu(x, y) \mathrm{d} \sigma}{\iint_D \mu(x, y) \mathrm{d} \sigma}, \quad
+        \bar{y}=\frac{M_x}{M}=\frac{\iint_D y \mu(x, y) \mathrm{d} \sigma}{\iint_D \mu(x, y) \mathrm{d} \sigma}
+    $$
+
+    当薄片均匀时（密度为常数），公式成为
+
+    $$
+        \bar{x}=\frac{1}{A} \iint_D x \mathrm{~d} \sigma, \quad y=\frac{1}{A} \iint_D y \mathrm{~d} \sigma
+    $$
+
+\subsubsection{空间物体的质心}
+
+    占有空间有界闭区域\(\varOmega\)、在点\(\left(x,y,z\right)\)处的密度为\(\rho\left(x,y,z\right)\)
+    （假定\(\rho\left(x,y,z\right)\)在\(\varOmega\)上连续）的物体的质心坐标是
+    \[\bar{x}=\frac{1}{M} \iiint_{\Omega} x \rho(x, y, z) \mathrm{d} v, \quad \bar{y}=\frac{1}{M} \iiint_{\Omega} y \rho(x, y, z) \mathrm{d} v,
+    \quad \bar{z}=\frac{1}{M} \iiint_{\Omega} z \rho(x, y, z) \mathrm{d} v\]其中\(M = \iiint_\varOmega \rho(x, y, z) \mathrm{d} v\)。
+    
+    
+    当薄片均匀时（密度为常数），公式成为
+
+    $$
+        \bar{x}=\frac{1}{V} \iiint_\varOmega x \mathrm{~d} v, \quad \bar{y}=\frac{1}{V} \iiint_\varOmega y \mathrm{~d} v, \quad \bar{z}=\frac{1}{V} \iiint_\varOmega z \mathrm{~d} v
+    $$
+
+\subsection{转动惯量}
+
+\subsubsection{平面薄片的转动惯量}
+
+    设有一平面薄片，占有\(xOy\)面上的闭区域\(D\)，在点\(\left(x,y\right)\)处的面密度为
+    \(\mu\left(x,y\right)\)，\\假定\(\mu\left(x,y\right)\)在\(D\)上连续。现要找该薄片的转动惯量。
+
+    对\(x\)轴、\(y\)轴的转动惯量分别为
+
+    $$
+        I_x=\iint_D y^2 \mu(x, y) \mathrm{d} \sigma, \quad I_y=\iint_D x^2 \mu(x, y) \mathrm{d} \sigma .
+    $$
+
+\subsubsection{空间物体的转动惯量}
+
+    占有空间有界闭区域\(\varOmega\)、在点\(\left(x,y,z\right)\)处的密度为\(\rho\left(x,y,z\right)\)
+    （假定\(\rho\left(x,y,z\right)\)在\(\varOmega\)上连续）的物体的对\(x\)轴、\(y\)轴、\(z\)轴的转动惯量分别为
+
+    $$
+        I_x=\iiint_{\Omega}\left(y^2+z^2\right) \rho(x, y, z) \mathrm{d} v,
+    $$
+
+    $$
+        I_y=\iiint_{\Omega}\left(z^2+x^2\right) \rho(x, y, z) \mathrm{d} v,
+    $$
+
+    $$
+        I_z=\iiint_{\Omega}\left(x^2+y^2\right) \rho(x, y, z) \mathrm{d} v
+    $$
+
+\subsection{引力}
+
+    设物体占有空间有界闭区域\(\varOmega\)、它在点\(\left(x,y,z\right)\)处的密度为\(\rho\left(x,y,z\right)\)，
+    并假定\(\rho\left(x,y,z\right)\)在\(\varOmega\)上连续。该物体对物体外一点\(P_0\left(x_0,y_0,z_0\right)\)所受引力为
+    
+    $$
+        \begin{aligned}
+            \boldsymbol{F} = & \left(F_x, F_y, F_z\right) \\
+            = &\left(\iiint_n \frac{G \rho(x, y, z)\left(x-x_0\right)}{r^3} \mathrm{~d} v, \iiint_n \frac{G \rho(x, y, z)\left(y-y_0\right)}{r^3} \mathrm{~d} v,\right. \\
+            & \left.\iiint_n \frac{G \rho(x, y, z)\left(z-z_0\right)}{r^3} \mathrm{~d} v\right)
+        \end{aligned}
+    $$
+
+\subsection{例题}
+
+    \textbf{Problem 1}
+    \vspace{1em}
+
+    求半径为$a$的球的表面积。
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    取上半球面方程为\(z = \sqrt{a^2 - x^2 - y^2}\)，则它在\(xOy\)面上的投影区域\\
+    \(D = \left\{(x,y) \mid x^2 + y^2 \leq a^2\right\}\)。
+
+    由$\dfrac{\partial z}{\partial x}=\dfrac{-x}{\sqrt{a^2-x^2-y^2}}$，$\dfrac{\partial z}{\partial y}=\dfrac{-y}{\sqrt{a^2-x^2-y^2}}$，得
+    $$\sqrt{1+\left(\frac{\partial z}{\partial x}\right)^2+\left(\frac{\partial z}{\partial y}\right)^2}=\frac{a}{\sqrt{a^2-x^2-y^2}}$$
+    
+    得半球面的面积
+
+    $$
+        A_1=\iint_{D_1} \frac{a}{\sqrt{a^2-x^2-y^2}} \mathrm{~d} x \mathrm{~d} y,
+    $$
+
+    利用极坐标，得
+
+    $$
+        \begin{aligned}
+            A_1 & =\iint_{D_1} \frac{a}{\sqrt{a^2-\rho^2} \rho \mathrm{~d} \rho \mathrm{~d} \theta
+            =a \int_0^{2 \uppi} \mathrm{~d} \theta \int_0^b \frac{\rho \mathrm{~d} \rho}{\sqrt{a^2-\rho^2}}} \\
+            & =2 \uppi a \int_0^b \frac{\rho \mathrm{~d} \rho}{\sqrt{a^2-\rho^2}}=2 \uppi a\left(a-\sqrt{a^2-b^2}\right)
+        \end{aligned}
+    $$
+
+    于是
+
+    $$
+        \lim _{b \rightarrow a} A_1=\lim _{b \rightarrow a} 2 \uppi a\left(a-\sqrt{a^2-b^2}\right)=2 \uppi a^2 .
+    $$
+
+    这就是半个球面的面积，因此整个球面的面积为
+
+    \[
+        A = 4\uppi a^2
+    \]
+    \vspace{1em}
+
+    \textbf{Problem 2}
+    \vspace{1em}
+
+    设\(D\)由$x^2+y^2=2y$与$x^2+y^2=4y$所围成，求质心。
+    \vspace{1em}
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 10 images/pic14.jpg}
+    \]
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    设形心为\(\left(\bar{x}, \bar{y}\right)\)，由对称性知
+    
+    \[
+        \bar{x} = 0
+    \]
+
+    按公式，
+
+    $$
+        \bar{y}=\frac{1}{A} \iint_D y \mathrm{~d} \sigma
+    $$
+
+    又
+
+    $$
+        \begin{aligned}
+            \iint_D y \mathrm{~d} \sigma & =\iint_D \rho^2 \sin \theta \mathrm{~d} \rho \mathrm{~d} \theta
+            =\int_0^\uppi \sin \theta \mathrm{d} \theta \int_{2 \sin \theta}^{4 \sin \theta} \rho^2 \mathrm{~d} \rho \\
+            & =\frac{56}{3} \int_0^\uppi \sin ^4 \theta \mathrm{~d} \theta=7 \uppi .
+        \end{aligned}
+    $$
+
+    因此$\bar{y}=\dfrac{7 \uppi}{3 \uppi}=\dfrac{7}{3}$，所求质心是$C\left(0, \dfrac{7}{3}\right)$。
+    \vspace{1em}
+
+    \textbf{Problem 3}
+    \vspace{1em}
+
+    求半径为\(a\)的均匀半圆薄片（面密度为常量\(\mu\)）对于其直径边的转动惯量。
+    \vspace{1em}
+
+    设薄片所占闭区域\[D = \left\{\left(x,y\right) \mid x^2+y^2 \leq a^2, y \geq 0\right\}\]
+    而所求转动惯量即半圆薄片对于\(x\)轴的转动惯量\(I_x\)。
+
+    $$
+        \begin{aligned}
+            I_x & =\iint_D \mu y^2 \mathrm{~d} \sigma=\mu \iint_D \rho^3 \sin ^2 \theta \mathrm{~d} \rho \mathrm{~d} \theta
+            =\mu \int_0^\uppi \mathrm{d} \theta \int_0^a \rho^3 \sin ^2 \theta \mathrm{~d} \rho \\
+            & =\mu \cdot \frac{a^4}{4} \int_0^\uppi \sin ^2 \theta \mathrm{~d} \theta
+            =\frac{1}{4} \mu a^4 \cdot \frac{\uppi}{2}=\frac{1}{4} M a^2
+        \end{aligned}
+    $$
+
+    其中$M=\frac{1}{2} \uppi a^2 \mu$为半圆薄片的质量。
 
 \end{document}
