@@ -1,0 +1,262 @@
+%!TEX program = xelatex
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{empheq}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{ctex}
+\usepackage{upgreek}
+\usepackage{indentfirst}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{pgfplots}
+\usepgfplotslibrary{patchplots}
+\usepgfplotslibrary{colormaps}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{automata,positioning,shapes.geometric,arrows.meta,patterns,calc}
+\numberwithin{equation}{section}
+\CTEXoptions[today=old]
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.2in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength{\parindent}{2em}  % 2em代表首行缩进两个字符
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+% \setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{0}
+% \nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Line Integrals and Surface Integrals}
+\newcommand{\hmwkClass}{Advanced Mathematics}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\myUniversiy}{Wuhan University}
+\newcommand{\hmwkAuthorName}{\textbf{Lai Wei}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \vspace{0.4in}
+    \large{\textit{\myUniversiy}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{\today}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% % For derivatives
+% \newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+% \newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% 我的newcommand
+\newcommand{\degree}{^{\circ}}
+\newcommand{\arrow}{-{Stealth[length=4mm,width=2mm]}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
+\renewcommand{\parallel}{\mathrel{/\mskip-2.5mu/}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\parallelogram}{
+	\mathord
+    {\text
+        {
+			\tikz[baseline]
+			\draw (0,.1ex) -- (.8em,.1ex) -- (1em,1.6ex) -- (.2em,1.6ex) -- cycle;
+        }
+    }
+}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+% 设置页码格式是罗马数字
+\pagenumbering{roman}
+
+% 生成目录
+\tableofcontents
+
+\pagebreak
+
+% 设置页码格式是阿拉伯数字
+\pagenumbering{arabic}
+
+\pagebreak
+
+\section{对弧长的曲线积分}
+
+\subsection{对弧长的曲线积分的概念与性质}
+
+\subsubsection{定义}
+
+    设L为\(xOy\)面内的一条光滑曲线弧，函数\(f\left(x,y\right)\)在\(L\)上有界。
+    在\(L\)上任意插入一点列\\\(M_1, M_2, \cdots M_n-1\)把\(L\)分成\(n\)个小段。
+    设第\(i\)个小段的长度为\(\Delta s_i\)；又\(\left(\xi_i, \eta_i\right)\)为第\(i\)个小段上任意取定的一点，
+    作乘积\(f\left(\xi_i, \eta_i\right) \Delta s_i\)（\(i=1,2,\cdots,n\)）并作和\(\sum_{i=1}^{n}f\left(\xi_i, \eta_i\right) \Delta s_i\)。
+    如果当各小弧段的长度的最大值\(\lambda \rightarrow 0\)时，这和的极限总存在，
+    且与曲线弧\(L\)的分法及点\(\left(\xi_i, \eta_i\right) \)的取法无关，
+    那么称此极限为函数\(f\left(x,y\right)\)在曲线弧\(L\)上对弧长的曲线积分或第一类曲线积分，
+    记作\({\displaystyle \int_{L} f\left(x,y\right) \rmd s}\)，即
+    \[\int_L f(x, y) \mathrm{d} s=\lim _{\lambda \rightarrow 0} \sum_{i=1}^n f\left(\xi_i, \eta_i\right) \Delta s_i\]
+    其中\(f\left(x,y\right)\)叫做被积函数，\(L\)叫做积分弧段。
+
+    如果\(L\)（或\(\varGamma\)）是分段光滑的，我们规定函数在\(L\)（或\(\varGamma\)）上的曲线积分等于函数在光滑的各段上的曲线积分之和。
+    例如,设\(L\)可分成两段光滑曲线弧\(L_1\)及\(L_2\)（记作\(L=L_1+L_2\)），就规定
+    \[\int_L f(x, y) \mathrm{d} s=\lim _{\lambda \rightarrow 0} \sum_{i=1}^n f\left(\xi_i, \eta_i\right) \Delta s_i\]
+
+
+\subsubsection{性质}
+
+    \begin{enumerate}
+        \item 设\(\alpha\)、\(\beta\)为常数，则\[\int_L\left[\alpha f(x, y)+\beta g(x, y)\right] \mathrm{d} s=\alpha \int_L f(x, y) \mathrm{d} s+\beta \int_L g(x, y) \mathrm{d} s\]
+        \item 若积分弧段$L$可分成两段光滑曲线弧$L_1$和$L_2$，则\[\int_L f(x, y) \mathrm{d} s=\int_{L_1} f(x, y) \mathrm{d} s+\int_{L_2} f(x, y) \mathrm{d} s\]
+        \item 设在\(L\)上\(f\left(x,y\right) \leq g\left(x,y\right)\)，则\[\int_L f(x, y) \mathrm{d} s \leq \int_L g(x, y) \mathrm{d} s\]特别地，
+            有\[\left| \int_L f(x, y) \mathrm{d} s \right| \leq \int_L \left| f(x, y) \right| \mathrm{d} s\]
+    \end{enumerate}
+
+
+\subsection{对弧长的曲线积分的计算法}
+
+    设$f(x, y)$在曲线弧$L$上有定义且连续，$L$的参数方程为
+    \[
+        \left\{\begin{array}{l}
+        x=\varphi(t), \\
+        y=\psi(t)
+        \end{array} \quad(\alpha \leq t \leq \beta),\right.
+    \]
+    若$\varphi(t)$、$\psi(t)$在$[\alpha, \beta]$上具有一阶连续导数，且$\varphi^{\prime 2}(t)+\psi^{\prime 2}(t) \neq 0$，则曲线积分$\int_i f(x, y) \mathrm{d} s$存在，
+    且\begin{equation}
+    \int_L f(x, y) \mathrm{d} s=\int_a^\beta f[\varphi(t), \psi(t)] \sqrt{\varphi^{\prime 2}(t)+\psi^{\prime 2}(t)} \mathrm{d} t \quad(\alpha<\beta)
+    \label{11-1-1}
+    \end{equation}
+
+    公式\ref{11-1-1}表明，计算对弧长的曲线积分\(\int_L f(x, y) \mathrm{d} s\)时，只要把\(x\)、\(y\)、\(\rmd s\)依次换为
+    \(\varphi\left(t\right)\)、\(\psi\left(t\right)\)、\(\sqrt{\varphi^{\prime 2}(t)+\psi^{\prime 2}(t)}\)，然后从\(\alpha\)
+    到\(\beta\)作定积分就行了，这里必须注意，定积分的 下限\(\alpha\)一定要小于上限\(\beta\)。
+
+    如果曲线弧长\(L\)由方程\[y=\psi(x) \quad (x_0 \leq x \leq X)\]给出，那么可以把这种情形看作是特殊的参数方程
+    \[x=t, y=\psi(t) \quad (x_0 \leq t \leq X)\]的情形，从而由公式\ref{11-1-1}得出
+
+    \begin{equation}
+        \int_L f(x, y) \mathrm{d} s=\int_{x_0}^X f[x, \psi(x)] \sqrt{1+\psi^{\prime 2}(x)} \mathrm{d} x\left(x_0<X\right)
+    \end{equation}
+
+    类似地，如果曲线弧长\(L\)由方程\[x=\varphi(y) \quad (y_0 \leq y \leq Y)\]给出，那么有
+
+    \begin{equation}
+        \int_L f(x, y) \mathrm{d} s=\int_{y_0}^Y f[\varphi(y), y] \sqrt{1+\varphi^{\prime 2}(y)} \mathrm{d} y\left(y_0<Y\right)
+    \end{equation}
+
+    公式\ref{11-1-1}可推广到空间曲线弧\(\varGamma\)由参数方程\[x=\varphi(t), y=\psi(t), z=\omega(t) \quad(\alpha \leq t \leq \beta)\]给出的情形，
+    这时有
+
+    \begin{equation}
+        \int_\varGamma f(x, y, z) \mathrm{d} s=\int_a^\beta f[\varphi(t), \psi(t), \omega(t)] \sqrt{\varphi^{\prime 2}(t)+\psi^{\prime 2}(t)+\omega^{\prime 2}(t)} \mathrm{d} t
+        \quad (\alpha \leq \beta)
+    \end{equation}
+
+\end{document}
