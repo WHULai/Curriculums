@@ -43,12 +43,15 @@
 \newcommand{\rmd}{\mathrm{d}}
 \newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
 \renewcommand{\parallel}{\mathrel{/\mskip-2.5mu/}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dpderiv}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\dfrac{\rmd #1}{\rmd #2}}
 
 \addbibresource{reference.bib} % Bibliography file
 
 \definecolor{ocre}{RGB}{243, 102, 25} % Define the color used for highlighting throughout the book
 
-\chapterimage{miku3.png} % Chapter heading image
+\chapterimage{miku1.jpg} % Chapter heading image
 \chapterspaceabove{6.5cm} % Default whitespace from the top of the page to the chapter title on chapter pages
 \chapterspacebelow{6.75cm} % Default amount of vertical whitespace from the top margin to the start of the text on chapter pages
 
@@ -97,7 +100,7 @@
 %	PART
 %----------------------------------------------------------------------------------------
 
-\part{大学物理A1}
+\part{大学物理B（上）}
 
 %----------------------------------------------------------------------------------------
 %	SECTIONING EXAMPLES CHAPTER
@@ -851,6 +854,10 @@
         a = -\frac{v_{0}^{2} h^{2}}{x_{0}^{3}}
     \]
 
+\chapterimage{miku3.png} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
 \chapter{牛顿运动定律}
 
 \section{牛顿定律}
@@ -1290,6 +1297,10 @@
     $$
         T(r)=\int|\mathrm{d} T|=\int_r^L \frac{M \omega^2}{L} r \mathrm{~d} r=\frac{M \omega^2}{2 L}\left(L^2-r^2\right)
     $$
+
+\chapterimage{miku1.jpg} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
 
 \chapter{运动的守恒定律}
 
@@ -2218,6 +2229,2646 @@
     $$
         x_c = 0
     $$
+
+\chapterimage{miku2.jpg} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+\chapter{刚体力学}
+
+\section{刚体的定轴转动}
+
+\subsection{刚体}
+
+
+    \begin{definition}[刚体]
+    在外力作用下，形状和大小都不发生变化的物体。（任意两质点间距离保持不变的特殊质点组。）
+    \end{definition}
+
+    \begin{enumerate}
+        \item 刚体是理想模型；
+        \item 刚体模型是为简化研究问题而引进的。
+    \end{enumerate}
+
+    \vspace{1em}
+    \begin{definition}[平动]
+    刚体中所有点的运动轨迹都保持完全相同。（各点的状态一样）
+
+    刚体上任意一点的运动可以代表整个刚体的运动。（刚体平动的运动规律和与质点的运动规律相同）
+    \end{definition}
+
+\subsection{转动}
+
+    分为\textbf{定轴转动}和\textbf{非定轴转动}。
+
+    刚体的一般运动可以看作“随质心的平动”和“绕质心的转动”的合成。
+
+\subsubsection{刚体转动的角速度和角加速度}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.15]{"Chapter 04 images/pic1.png"}
+        % \caption{}
+        \label{pic4-1}
+    \end{wrapfigure}
+
+    角坐标\(\theta = \theta\left(t\right)\)，沿逆时针方向转动为\(\theta > 0\)，
+    角位移\(\Delta \theta = \theta \left(t + \Delta t\right) - \theta\left(t\right)\)。
+    角速度矢量
+
+    \begin{equation}
+        \omega=\lim _{\Delta t \rightarrow 0} \frac{\Delta \theta}{\Delta t}=\frac{\mathrm{d} \theta}{\mathrm{~d} t}
+    \end{equation}
+
+    方向按右手螺旋法则确定。
+
+\subsubsection{刚体定轴转动}
+
+    刚体定轴转动（一维转动）的转动方向可以用角速度的正、负来表示。
+
+    角加速度
+
+    $$
+        \overrightarrow{\alpha} = \deriv{\overrightarrow{\omega}}{t}
+    $$
+
+    定轴转动的特点：
+
+    \begin{enumerate}
+        \item 每一质点均做圆周运动，与轴垂直的圆面为转动平面；
+        \item 任意质点运动\(\Delta \theta,\; \omega,\; \overrightarrow{\omega},\; \overrightarrow{\alpha}\)相同，但\(\overrightarrow{v},\; \overrightarrow{a}\)不相同；
+        \item 运动描述仅需一个坐标。
+    \end{enumerate}
+
+    匀变速转动公式：
+
+    $$
+    \begin{array}{|l|l|}
+    \hline \text { 质点匀变速直线运动 } & \text { 刚体绕定轴匀变速转动 } \\
+    \hline v=v_0+a t & \omega=\omega_0+\alpha t \\
+    \hline x=x_0+v_0 t+\frac{1}{2} a t^2 & \theta=\theta_0+\omega_0 t+\frac{1}{2} \alpha t^2 \\
+    \hline v^2=v_0^2+2 a\left(x-x_0\right) & \omega^2=\omega_0^2+2 \alpha\left(\theta-\theta_0\right) \\
+    \hline
+    \end{array}
+    $$
+
+    角量与线量的关系：
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic2.png"}
+        % \caption{}
+        \label{pic4-2}
+    \end{wrapfigure}
+
+    \[
+        \omega = \deriv{\theta}{t}
+    \]
+
+    \[
+        \overrightarrow{v_i} = r_i \omega \overrightarrow{e}_t
+    \]
+
+    $$
+        \overrightarrow{v}=\overrightarrow{\omega} \times \overrightarrow{r}_{\perp}=
+        \overrightarrow{\omega} \times \overrightarrow{r}
+    $$
+
+    $$
+        \alpha=\deriv{\omega}{t}=\frac{\rmd^2 \theta}{\rmd^2 t}
+    $$
+
+    于是
+
+    \begin{equation}
+        \overrightarrow{a}=r \alpha \overrightarrow{e}_{\mathrm{t}}+r \omega^2 \overrightarrow{e}_{\mathrm{n}}
+    \end{equation}
+
+\subsection{力矩}
+
+    \begin{definition}[力矩]
+    用来描述力对刚体的转动的作用的物理量。
+    \end{definition}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic3.png"}
+        % \caption{}
+        \label{pic4-3}
+    \end{wrapfigure}
+
+    刚体绕\(Oz\)轴旋转 , 力作用在刚体上点\(P\)，且在转动平面内，为由点\(O\)到力的作用点\(P\)的径矢。
+    \(\overrightarrow{F}\)对转轴\(z\)的力矩的定义：
+
+    \begin{align}
+        \overrightarrow{M} = \overrightarrow{r} \times \overrightarrow{F}
+    \end{align}
+
+    $$
+        M = Fr\sin\theta = Fd \quad (d\text{为力臂})
+    $$
+
+    \begin{enumerate}
+        \item 若力\(\overrightarrow{F}\)不在转动平面内，可将力分解为平行和垂直于转轴方向的两个分量；
+        \item 合力矩等于各分力矩的矢量和；
+        \item 刚体内作用力和反作用力的力矩相互抵消；
+        \item 力矩的单位只能用\(\text{牛顿} \cdot \text{米}\)，而不能用焦耳。
+    \end{enumerate}
+
+\section{转动定律、转动惯量}
+
+\subsection{质点的转动惯量}
+
+    单个质点\(m\)与转轴刚性连接
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic4.png"}
+        % \caption{}
+        \label{pic4-4}
+    \end{wrapfigure}
+
+    $$
+        F_{\mathrm{t}}=m a_{\mathrm{t}}=m r \alpha
+    $$
+
+    则
+
+    \begin{equation}
+        F_{\mathrm{t}}=m a_{\mathrm{t}}=m r \alpha
+    \end{equation}
+
+    \textbf{定义}
+
+    \begin{align}
+        I = mr^2
+    \end{align}
+
+    为质点\(m\)对\(O\)点的“转动惯量”。
+
+    于是
+
+    \begin{align}
+        M = I \alpha
+    \end{align}
+
+\subsection{刚体的转动惯量}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic5.png"}
+        % \caption{}
+        \label{pic4-5}
+    \end{wrapfigure}
+
+    质量元受外力\(\overrightarrow{F}_{\mathrm{e}j}\)，内力\(\overrightarrow{F}_{\mathrm{i}j}\)
+
+    则
+
+    \begin{align*}
+        M_{\mathrm{e} j}+M_{\mathrm{i} j}=\Delta m_j r_j^2 \alpha
+    \end{align*}
+
+    因为$M_{i j}=-M_{j i}$，所以
+
+    $$
+        \sum_j M_{i j}=0
+    $$
+
+    于是
+
+    \begin{equation}
+        \sum_j M_{\mathrm{e} j}=\left(\sum \Delta m_j r_j^2\right) \alpha
+    \end{equation}
+
+    于是\textbf{定义}
+
+    \begin{align}
+        I=\sum_j \Delta m_j r_j^2
+    \end{align}
+
+    为刚体对\(O\)点的“转动惯量”。
+
+    积分形式即为
+
+    \begin{equation}
+        I=\int r^2 \mathrm{~d} m
+    \end{equation}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=right:$x$] (x_axis) at (5,0);
+            \coordinate[label=below:$x$] (x) at (1.3,-0.2);
+            \coordinate[label=$l$] (l) at (2,0.5);
+            \coordinate[label=below:$\rmd x$] (x) at (2.3,-0.2);
+            \draw (0,-2) -- (0,2);
+            \draw[->] (O) -- (x_axis);
+            \draw (4,0) -- (4,1.5);
+            \draw[->] (1.8,0.5) -- (0,0.5);
+            \draw[->] (2.2,0.5) -- (4,0.5);
+            \draw[line width=2pt, color=black!70] (O) -- (4,0);
+            \draw[line width=2pt, color=BrickRed] (2.1,0) -- (2.4,0);
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例1 \quad}均匀杆\(m\)对\(O\)轴（通过杆的端点与杆垂直）的转动惯量：
+
+    运用微积分的思想和方法，
+
+    \begin{align*}
+        I_{O} = \int x^2 \rmd m = \int_{0}^{l} x^2 \rmd x \lambda = \frac{\lambda l^3}{3} = \frac{1}{3} m l^2
+    \end{align*}
+    \vspace{1em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \begin{tikzpicture}[scale=0.7]
+            \coordinate[label=left:$O$] (O) at (0,0);
+            \coordinate[label=below:$C$] (C) at (2,0);
+            \coordinate[label=above:$\frac{l}{2}$] (l-1) at (1,0.5);
+            \coordinate[label=above:$\frac{l}{2}$] (l-2) at (3,0.5);
+            \draw (O) -- (0,1.5);
+            \draw (4,0) -- (4,1.5);
+            \draw (2,-2) -- (2,2);
+            \draw[<->] (2,0.5) -- (0,0.5);
+            \draw[<->] (2,0.5) -- (4,0.5);
+            \draw[line width=2pt, color=black!70] (O) -- (4,0);
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例2 \quad}均匀杆\(m\)对\(C\)轴（通过杆的端点与杆垂直）的转动惯量：
+
+    $$
+        I_C =\frac{1}{12} m l^2
+    $$
+
+    \textbf{证}（方法1）
+
+    $$
+        \begin{aligned}
+            I_C &=\int x^2 \rmd m \\
+            &=\int_{-\frac{l}{2}}^{\frac{l}{2}} x^2 d x \lambda\\
+            &=\frac{1}{12} \lambda l^3\\
+            &=\frac{1}{12} m l^2
+        \end{aligned}
+    $$
+
+    \textbf{证}（方法2：平行轴定理）
+
+    由平行轴定理，
+
+    $$
+        I_O = I_C + m \left(\frac{l}{2}\right)^2
+    $$
+
+    于是
+
+    $$
+        \begin{aligned}
+            I_C &=I_O - m \left(\frac{l}{2}\right)^2 \\
+            &=\frac{1}{3} m l^2 - m \left(\frac{l}{2}\right)^2 \\
+            &=\frac{1}{12} m l^2
+        \end{aligned}
+    $$
+
+    \vspace{2em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+            %Shape: Can [id:dp17410052803948828] 
+            \draw   (167.4,90.33) -- (211.46,90.07) .. controls (218.62,90.03) and (224.5,103.43) .. (224.6,120) ..
+                controls (224.69,136.57) and (218.96,150.03) .. (211.8,150.07) -- (167.74,150.33) .. controls
+                (160.58,150.37) and (154.7,136.97) .. (154.6,120.4) .. controls (154.51,103.83) and (160.24,90.37) .. (167.4,90.33) ..
+                controls (174.56,90.29) and (180.45,103.68) .. (180.54,120.25) .. controls (180.64,136.82) and (174.91,150.29) .. (167.74,150.33) ;
+            %Straight Lines [id:da06354151922433426] 
+            \draw    (125.4,120.6) -- (166.38,120.54) ;
+            %Straight Lines [id:da03453199583434419] 
+            \draw    (224.6,120) -- (256.2,120.2) ;
+            \draw   (167.91,98.31) -- (173.02,93.94) -- (174.33,100.53) ;
+            %Straight Lines [id:da7464924546039589] 
+            \draw    (165.62,120.54) -- (173,94.08) ;
+            % Text Node
+            \draw (156.77,121.4) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+            % Text Node
+            \draw (142.15,101.63) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例3 \quad}均匀圆柱\(m\)对转轴（圆柱体的轴线）的转动惯量：
+
+    $$
+        I = \frac{1}{2} m R^2
+    $$
+    \vspace{2em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp023285849196069686] 
+        \draw   (169.6,97.35) .. controls (159.81,97.3) and (151.94,81.59) .. (152.04,62.26)
+            .. controls (152.13,42.93) and (160.15,27.3) .. (169.94,27.35) .. controls (179.73,27.39) and (187.59,43.1)
+            .. (187.5,62.43) .. controls (187.41,81.76) and (179.39,97.39) .. (169.6,97.35) -- cycle ;
+        %Shape: Arc [id:dp152216816696912] 
+        \draw  [draw opacity=0] (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) ..
+            (178.45,28.08) .. controls (184.62,28.11) and (189.55,43.64) .. (189.45,62.78) .. controls
+            (189.36,81.88) and (184.3,97.35) .. (178.14,97.37) -- (178.28,62.72) -- cycle ;
+        \draw (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) .. (178.45,28.08) ..
+            controls (184.62,28.11) and (189.55,43.64) .. (189.45,62.78) .. controls (189.36,81.88) and (184.3,97.35) .. (178.14,97.37) ;  
+        %Straight Lines [id:da15998039992585622] 
+        \draw    (169.94,27.35) -- (178.39,28.08) ;
+        %Straight Lines [id:da9421417261902603] 
+        \draw    (169.6,97.35) -- (178.14,97.37) ;
+        %Straight Lines [id:da023543911373016257] 
+        \draw    (127.15,62.23) -- (169.77,62.35) ;
+        %Straight Lines [id:da05591836369536707] 
+        \draw    (189.77,62.23) -- (213.77,62.23) ;
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (169.77,62.35) -- (182.54,39.62) ;
+        \draw   (177.34,42.47) -- (182.49,39.5) -- (182.45,45.45) ;
+        % Text Node
+        \draw (163.23,41.28) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (165.85,65.74) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例4 \quad}均匀圆盘\(m\)对转轴（通过盘心垂直于盘面）的转动惯量：
+
+    $$
+        I = \frac{1}{2} m R^2
+    $$
+
+    \textbf{证}（方法1）
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp6022616866424968] 
+        \draw   (213,137.17) .. controls (213,123.82) and (234.19,113) .. (260.33,113) .. controls (286.47,113) and (307.67,123.82) .. (307.67,137.17) .. 
+            controls (307.67,150.51) and (286.47,161.33) .. (260.33,161.33) .. controls (234.19,161.33) and (213,150.51) .. (213,137.17) -- cycle ;
+        %Straight Lines [id:da33799420686761406] 
+        \draw    (260.33,137.17) -- (259.89,83.31) ;
+        %Straight Lines [id:da8541013949511429] 
+        \draw    (260.29,179.31) -- (260.33,161.33) ;
+        %Straight Lines [id:da3324794336188084] 
+        \draw    (260.33,137.17) -- (241.12,128.77) ;
+        \draw [shift={(239.29,127.96)}, rotate = 23.62] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+            (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Shape: Chord [id:dp96440595365312] 
+        \draw   (238.98,130.36) .. controls (238.71,130.32) and (238.44,130.24) .. (238.18,130.11) .. controls (236.97,129.48) and (236.48,128.01)
+            .. (237.09,126.83) .. controls (237.7,125.65) and (239.18,125.2) .. (240.39,125.82) .. controls (240.65,125.96) and (240.87,126.13) .. (241.06,126.33) -- cycle ;
+        % Text Node
+        \draw (239.86,117.95) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$\mathrm{d} r$};
+        \draw (248.36,135.7) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$r$};
+        \end{tikzpicture}
+    \]
+
+    设圆盘的面密度为\(\sigma\)，则\(\sigma = \dfrac{m}{\uppi R^2}\)
+
+    如图，取微元\(\rmd m\)：
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Block Arc [id:dp4642247634663095] 
+        \draw   (206.87,95.84) .. controls (212.07,92.22) and (218.33,90.11) .. (225.06,90.11) .. controls (229.14,90.11) and (233.06,90.89)
+            .. (236.66,92.31) -- (232.18,104.64) .. controls (229.97,103.72) and (227.57,103.22) .. (225.06,103.22) .. controls (220.94,103.22)
+            and (217.11,104.57) .. (213.95,106.88) -- cycle ;
+        %Straight Lines [id:da4857653535391253] 
+        \draw    (232.18,104.64) -- (225.06,124.2) ;
+        %Straight Lines [id:da18026998140759942] 
+        \draw    (213.95,106.88) -- (225.06,124.2) ;
+        % Text Node
+        \draw (211.49,111.51) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$r$};
+        \draw (200.69,100.71) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$\mathrm{d} r$};
+        \draw (230.62,117.82) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$\mathrm{d} \theta $};
+        \end{tikzpicture}
+    \]
+
+    则
+
+    \[
+        \rmd m = \sigma r \rmd \theta \rmd r
+    \]
+
+    于是
+
+    $$
+        \begin{aligned}
+            I & =\int r^2 \rmd m\\
+            & =\int r^2 \sigma r \rmd \theta \rmd r \\
+            & =\iint \sigma r^3 \rmd r \rmd \theta \\
+            & =\sigma \int_0^R r^3 \rmd r \int_0^{2 \uppi} \rmd \theta \\
+            & =\sigma \frac{1}{4} R^4 \cdot 2 \uppi \\
+            & =\frac{1}{2} m R^2
+        \end{aligned}
+    $$
+
+    \textbf{证}（方法2）
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp6022616866424968] 
+        \draw   (213,137.17) .. controls (213,123.82) and (234.19,113) .. (260.33,113) .. controls (286.47,113) and (307.67,123.82)
+            .. (307.67,137.17) .. controls (307.67,150.51) and (286.47,161.33) .. (260.33,161.33) .. controls (234.19,161.33) and (213,150.51) .. (213,137.17) -- cycle ;
+        %Straight Lines [id:da33799420686761406] 
+        \draw    (260.33,137.17) -- (259.89,83.31) ;
+        %Straight Lines [id:da8541013949511429] 
+        \draw    (260.29,179.31) -- (260.33,161.33) ;
+        %Straight Lines [id:da3324794336188084] 
+        \draw    (260.33,137.17) -- (244.12,130.12) ;
+        \draw [shift={(242.29,129.32)}, rotate = 23.49] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75] (10.93,-3.29) .. controls
+            (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+        %Shape: Ellipse [id:dp4379584317489489] 
+        \draw   (235.53,137.17) .. controls (235.53,130.17) and (246.64,124.5) .. (260.33,124.5) .. controls (274.03,124.5) and
+            (285.13,130.17) .. (285.13,137.17) .. controls (285.13,144.16) and (274.03,149.83) .. (260.33,149.83) .. controls (246.64,149.83) and (235.53,144.16) .. (235.53,137.17) -- cycle ;
+        % Text Node
+        \draw (248.36,135.7) node [anchor=north west][inner sep=0.75pt]  [font=\tiny]  {$r$};
+        \end{tikzpicture}
+    \]
+
+    同样，设圆盘的面密度为\(\sigma = \dfrac{m}{\uppi R^2}\)。取距离圆心\(r\)的某一圆环
+    （宽\(\rmd r\)）为\(\rmd m\)，则
+
+    \[
+        \rmd m = \sigma 2 \uppi r \rmd r
+    \]
+
+    于是
+
+    $$
+        \begin{aligned}
+            I &= \int r^2 \rmd m \\
+            &= \int_{0}^{R} r^2 \cdot \sigma 2 \uppi r \rmd r \\
+            & =\frac{1}{2} m R^2
+        \end{aligned}
+    $$
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp023285849196069686] 
+        \draw   (169.6,97.35) .. controls (159.81,97.3) and (151.94,81.59) .. (152.04,62.26) ..
+            controls (152.13,42.93) and (160.15,27.3) .. (169.94,27.35) .. controls (179.73,27.39) and (187.59,43.1)
+            .. (187.5,62.43) .. controls (187.41,81.76) and (179.39,97.39) .. (169.6,97.35) -- cycle ;
+        %Shape: Arc [id:dp152216816696912] 
+        \draw  [draw opacity=0] (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) .. (178.45,28.08)
+            .. controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89) and (185.02,97.36)
+            .. (178.14,97.37) -- (178.28,62.72) -- cycle ; \draw   (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08)
+            .. (178.45,28.08) .. controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89) and (185.02,97.36) .. (178.14,97.37) ;  
+        %Straight Lines [id:da15998039992585622] 
+        \draw    (169.94,27.35) -- (178.39,28.08) ;
+        %Straight Lines [id:da9421417261902603] 
+        \draw    (169.6,97.35) -- (178.14,97.37) ;
+        %Straight Lines [id:da023543911373016257] 
+        \draw    (127.15,62.23) -- (187.5,62.43) ;
+        %Straight Lines [id:da05591836369536707] 
+        \draw    (191.31,62.23) -- (213.77,62.23) ;
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (169.77,62.35) -- (182.54,39.62) ;
+        \draw   (177.34,42.47) -- (182.49,39.5) -- (182.45,45.45) ;
+        %Shape: Arc [id:dp47532243106850425] 
+        \draw  [draw opacity=0] (169.5,96.99) .. controls (169.48,96.99) and (169.46,96.99) ..
+            (169.44,96.99) .. controls (162.54,96.93) and (157.1,81.36) .. (157.28,62.23) .. controls (157.47,43.12)
+            and (163.19,27.68) .. (170.07,27.7) -- (169.77,62.35) -- cycle ; \draw   (169.5,96.99) ..
+            controls (169.48,96.99) and (169.46,96.99) .. (169.44,96.99) .. controls (162.54,96.93) and (157.1,81.36)
+            .. (157.28,62.23) .. controls (157.47,43.12) and (163.19,27.68) .. (170.07,27.7) ;  
+        % Text Node
+        \draw (163.23,41.28) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (165.85,65.74) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例5 \quad}均匀圆环\(m\)对转轴（通过环心垂直于盘面）的转动惯量：
+
+    $$
+        I = m R^2
+    $$
+    \vspace{2em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Shape: Ellipse [id:dp023285849196069686] 
+        \draw   (169.6,97.35) .. controls (159.81,97.3) and (151.94,81.59) .. (152.04,62.26)
+            .. controls (152.13,42.93) and (160.15,27.3) .. (169.94,27.35) .. controls (179.73,27.39) and (187.59,43.1)
+            .. (187.5,62.43) .. controls (187.41,81.76) and (179.39,97.39) .. (169.6,97.35) -- cycle ;
+        %Shape: Arc [id:dp152216816696912] 
+        \draw  [draw opacity=0] (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08) .. (178.45,28.08) ..
+            controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89) and (185.02,97.36)
+            .. (178.14,97.37) -- (178.28,62.72) -- cycle ; \draw   (178.39,28.08) .. controls (178.41,28.08) and (178.43,28.08)
+            .. (178.45,28.08) .. controls (185.34,28.11) and (190.86,43.65) .. (190.76,62.78) .. controls (190.67,81.89)
+            and (185.02,97.36) .. (178.14,97.37) ;  
+        %Straight Lines [id:da15998039992585622] 
+        \draw    (169.94,27.35) -- (178.39,28.08) ;
+        %Straight Lines [id:da9421417261902603] 
+        \draw    (169.6,97.35) -- (178.14,97.37) ;
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (169.77,62.35) -- (182.54,39.62) ;
+        \draw   (177.34,42.47) -- (182.49,39.5) -- (182.45,45.45) ;
+        %Shape: Arc [id:dp47532243106850425] 
+        \draw  [draw opacity=0] (169.5,96.99) .. controls (169.48,96.99) and (169.46,96.99) ..
+            (169.44,96.99) .. controls (162.54,96.93) and (157.1,81.36) .. (157.28,62.23) ..
+            controls (157.47,43.12) and (163.19,27.68) .. (170.07,27.7) -- (169.77,62.35) -- cycle ;
+        \draw (169.5,96.99) .. controls (169.48,96.99) and (169.46,96.99) .. (169.44,96.99) ..
+            controls (162.54,96.93) and (157.1,81.36) .. (157.28,62.23) .. controls (157.47,43.12) and (163.19,27.68) .. (170.07,27.7) ;  
+        %Straight Lines [id:da7330715455990151] 
+        \draw    (170.96,11.25) -- (171.04,113.44) ;
+        % Text Node
+        \draw (174.31,51.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (157.69,61.74) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例6 \quad}均匀圆环\(m\)对转轴（沿圆环直径）的转动惯量：
+
+    $$
+        I = \frac{1}{2} m R^2
+    $$
+    \vspace{4em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Straight Lines [id:da23564039281617188] 
+        \draw    (171,61.56) -- (178.11,47.51) -- (182.54,39.62) ;
+        \draw   (177.34,42.77) -- (182.49,39.81) -- (182.45,45.76) ;
+        %Straight Lines [id:da7330715455990151] 
+        \draw    (171,17.81) -- (171,35.62) ;
+        %Shape: Circle [id:dp7000744143017317] 
+        \draw   (146,60.62) .. controls (146,46.81) and (157.19,35.62) ..
+            (171,35.62) .. controls (184.81,35.62) and (196,46.81) .. (196,60.62) .. controls
+            (196,74.42) and (184.81,85.62) .. (171,85.62) .. controls (157.19,85.62)
+            and (146,74.42) .. (146,60.62) -- cycle ;
+        %Straight Lines [id:da5423143354957887] 
+        \draw    (171,98.31) -- (171,85.62) ;
+        %Straight Lines [id:da1925163091022266] 
+        \draw    (171,35.62) -- (171,40.69) ;
+        %Straight Lines [id:da49186666744211105] 
+        \draw    (171,42.62) -- (171,47.69) ;
+        %Straight Lines [id:da6273845348478542] 
+        \draw    (170.88,49.87) -- (170.88,54.94) ;
+        %Straight Lines [id:da5600475408875403] 
+        \draw    (170.63,59.62) -- (170.63,64.69) ;
+        %Straight Lines [id:da3768869837055404] 
+        \draw    (170.75,67.12) -- (170.75,72.19) ;
+        %Straight Lines [id:da21244422124496465] 
+        \draw    (170.88,73.62) -- (170.88,78.69) ;
+        %Straight Lines [id:da19418219961056882] 
+        \draw    (171,80.54) -- (171,85.62) ;
+        % Text Node
+        \draw (174.46,51.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (154.6,60.92) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例7 \quad}薄球壳\(m\)对转轴（沿直径）的转动惯量：
+
+    $$
+        I = \frac{2}{3} m R^2
+    $$
+    \vspace{4em}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+        %Straight Lines [id:da23564039281617188] 
+        \draw (171,61.56) -- (178.11,47.51) -- (182.54,39.62) ;
+        \draw (177.34,42.77) -- (182.49,39.81) -- (182.45,45.76) ;
+        %Straight Lines [id:da7330715455990151] 
+        \draw (171,17.81) -- (171,35.62) ;
+        %Shape: Circle [id:dp7000744143017317] 
+        \draw (146,60.62) .. controls (146,46.81) and (157.19,35.62) ..
+            (171,35.62) .. controls (184.81,35.62) and (196,46.81) .. (196,60.62) .. controls
+            (196,74.42) and (184.81,85.62) .. (171,85.62) .. controls (157.19,85.62)
+            and (146,74.42) .. (146,60.62) -- cycle ;
+        %Straight Lines [id:da5423143354957887] 
+        \draw (171,98.31) -- (171,85.62) ;
+        %Straight Lines [id:da1925163091022266] 
+        \draw (171,35.62) -- (171,40.69) ;
+        %Straight Lines [id:da49186666744211105] 
+        \draw (171,42.62) -- (171,47.69) ;
+        %Straight Lines [id:da6273845348478542] 
+        \draw (170.88,49.87) -- (170.88,54.94) ;
+        %Straight Lines [id:da5600475408875403] 
+        \draw (170.63,59.62) -- (170.63,64.69) ;
+        %Straight Lines [id:da3768869837055404] 
+        \draw (170.75,67.12) -- (170.75,72.19) ;
+        %Straight Lines [id:da21244422124496465] 
+        \draw (170.88,73.62) -- (170.88,78.69) ;
+        %Straight Lines [id:da19418219961056882] 
+        \draw (171,80.54) -- (171,85.62) ;
+        % Text Node
+        \draw (174.46,51.43) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$R$};
+        % Text Node
+        \draw (154.6,60.92) node [anchor=north west][inner sep=0.75pt]  [font=\footnotesize]  {$O$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    \textbf{例8 \quad}均匀实心球体\(m\)对转轴（沿直径）的转动惯量：
+
+    $$
+        I = \frac{2}{5} m R^2
+    $$
+    \vspace{2em}
+
+\subsection{转动定律}
+
+\begin{theorem}[转动定律]
+    \begin{align}
+        M = I \alpha
+    \end{align}
+\end{theorem}
+
+    \begin{enumerate}
+        \item 若\(M=0\)，则\(\alpha=0\)，即\(\omega\)不变；
+        \item \(\alpha \)与\(\dfrac{M}{I}\)成反比；
+        \item \(M = I\alpha = I\dderiv{\omega}{t}\)；
+        \item 转动惯量的单位为\(\mathrm{kg} \cdot \mathrm{m^2}\)；
+        \item 转动惯量的是对某一转轴而言的；
+        \item 转动惯量是转动惯性的量度；
+        \item 转动惯量具有可叠加性；
+        \item 转动惯量与刚体的质量、质量的分布以及转轴的位置有关。
+    \end{enumerate}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic6.png"}
+        % \caption{}
+        \label{pic4-6}
+    \end{wrapfigure}
+
+\begin{theorem}[平行轴定理]
+    质量为\(m\)的刚体，如果对其质心轴的转动惯量为\(I_{C}\)，则对任一与该轴平行，
+    相对\(d\)的转轴的转动惯量
+
+    \begin{align}
+        I = I_{C} + md^2
+    \end{align}
+\end{theorem}
+
+\begin{theorem}[垂直轴定理（正交轴定理）]
+
+    对\textbf{薄板状}刚体：对板面内相互垂直的两个定轴的转动惯量之和
+    等于该刚体对通过两轴交点且垂直于板面的定轴的转动惯量。
+
+    \begin{align}
+        I_{z} = I_{x} + I_{y}
+    \end{align}
+\end{theorem}
+
+    证明：
+
+    \begin{align*}
+        \begin{aligned}
+            I_{z} &= \sum \Delta m_{i}r_{i}^2 \\
+            &= \sum \Delta m_{i}\left(x_{i}^2 + y_{i}^2\right) \\
+            &= I_{x} + I_{y}
+        \end{aligned}
+    \end{align*}
+
+\subsection{例题}
+
+\begin{exercise}
+    质量为\(M\)的匀质圆盘，可绕通过盘中心并垂直于盘面的固定光滑轴转动，转动惯量为
+    \(\frac{1}{2}Mr^2\)。一根长为\(l\)，质量为\(m\)的匀质柔软绳索挂在圆盘上，如图所示。
+    设绳与圆盘间无相对滑动，试求当圆盘两侧绳长之差为\(S\)时，绳的加速度的大小。
+    \vspace{1em}
+\end{exercise}
+
+    \begin{wrapfigure}{r}{4cm}
+        \centering
+        \includegraphics[scale=0.2]{"Chapter 04 images/pic7.png"}
+        % \caption{}
+        \label{pic4-7}
+    \end{wrapfigure}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    设某一时刻圆盘两侧的绳长分别为\(x_1\)、\(x_2\)（\(x_1 > x_2\)），如图所示。
+    可将绳分为三段，即长度分别为\(x1\)、\(x2\)的两段绳和绕在盘上的一段，
+    由于绕在盘上的一段谁盘一起转动，所以可将它和盘作为一个整体来讨论。
+    假设在 1、2 两点处绳中的张力分别为\(T_1\)、\(T_2\)，则由牛顿定律和转动定律可得
+
+    \[
+        x_2 \rho g - T_2 = x_2 \rho a
+    \]
+
+    \[
+        T_1 - x_1 \rho g = x_1 \rho a
+    \]
+
+    \[
+        T_2r - T_1r = I \alpha
+    \]
+
+    且
+
+    \[
+        a = r\alpha
+    \]
+
+    式中，
+
+    \[
+        \rho = \frac{m}{l}
+    \]
+
+    是绳的线密度，
+
+    \[
+        I = \frac{1}{2}Mr^2 + \uppi r \rho \cdot r^2
+    \]
+
+    是绕在盘上的绳与盘作为整体的转动惯量。
+
+    联立以上方程，并取\(x_2-x_1=S\)，可得绳的加速度为
+
+    $$
+        a=\frac{2 m g S}{(2 m+M) l}
+    $$
+
+\section{刚体定轴转动的功能关系}
+
+\subsection{力矩做功}
+
+    \(\overrightarrow{F}\)在转动平面内，
+
+    \begin{equation*}
+        \mathrm{d} A=\overrightarrow{F} \cdot \mathrm{~d} \overrightarrow{r}=F_\tau \mathrm{d} s=F_\tau r \mathrm{~d} \theta
+        \label{formula-4-3-1}
+    \end{equation*}
+
+    上式也可写成
+
+    \begin{equation}
+        \mathrm{d} A = M \rmd \theta
+    \end{equation}
+
+    于是力矩\(M\)对刚体所做的总功为
+
+    \begin{equation}
+        A=\int \mathrm{d} A=\int_{\theta_0}^\theta M \mathrm{~d} \theta
+    \end{equation}
+
+    由式\ref{formula-4-3-1}还可得出力矩做功的瞬时功率为
+
+    \begin{equation}
+        P=\frac{\mathrm{d} A}{\mathrm{~d} t}=\frac{M \mathrm{~d} \theta}{\mathrm{~d} t}=M \omega
+    \end{equation}
+
+    当\(\overrightarrow{M}\)与\(\overrightarrow{\omega}\)同向，\(W\)、\(P\)为正；
+    当\(\overrightarrow{M}\)与\(\overrightarrow{\omega}\)反向，\(W\)、\(P\)为负。
+
+\subsection{转动动能}
+
+    整个刚体的动能就是所有质元的动能之和：
+
+    \begin{equation}
+        E_{\mathrm{k}}=\sum_i \frac{1}{2} \Delta m_i r_i^2 \omega^2=\frac{1}{2}\left(\sum_i \Delta m_i r_i^2\right) \omega^2
+    \end{equation}
+
+    即
+
+    \begin{equation}
+        E_{\mathrm{k}}=\frac{1}{2} I \omega^2
+    \end{equation}
+
+\subsection{刚体定轴转动的动能定理}
+
+    由
+
+    \begin{equation*}
+        A=\int_{\theta_1}^{\theta_2} M \mathrm{~d} \theta=\int_{\theta_1}^{\theta_2} I \frac{\mathrm{~d} \omega}{\mathrm{~d} t} \mathrm{~d} \theta=\int_{\omega_1}^{\omega_2} I \omega \mathrm{~d} \omega
+    \end{equation*}
+
+    有
+
+    \begin{equation}
+        A=\int_{\theta_1}^{\theta_2} M \mathrm{~d} \theta=\int_{\omega_1}^{\omega_2} I \omega \mathrm{~d} \omega=\frac{1}{2} I \omega_2^2-\frac{1}{2} I \omega_1^2
+    \end{equation}
+
+    即：合外力矩对绕定轴转动的刚体所作的功等于刚体转动动能的增量。
+    ——刚体绕定轴转动的动能定理
+
+\section{刚体的角动量、角动量定理、角动量守恒定律}
+
+    \textbf{力}的时间累积效应：冲量、动量、动量定理。
+
+    \textbf{力矩}的时间累积效应：冲量矩、角动量、角动量定理。
+
+\subsection{刚体定轴转动的角动量}
+
+\begin{definition}[质点的角动量]
+    质量为\(m\)的质点以速度\(\overrightarrow{v}\)在空间运动，某时刻对\(O\)的位矢为
+    \(\overrightarrow{r}\)，则质点对\(O\)的角动量定义为
+
+    \begin{equation}
+        \overrightarrow{L} = \overrightarrow{r} \times \overrightarrow{p}
+        = \overrightarrow{r} \times m \overrightarrow{v}
+    \end{equation}
+
+    \[
+        \includegraphics[scale=0.12]{"Chapter 04 images/pic8.png"}
+        % \caption{}
+        \label{pic4-8}
+    \]
+
+    当质点以角速度\(\omega\)作半径为\(r\)的圆运动时，
+    相对圆心的角动量：
+
+    \begin{equation}
+        L = r m v = r^2 m \omega
+    \end{equation}
+    
+    （方向按右手螺旋法则确定）
+\end{definition}
+
+\begin{definition}[刚体的角动量]
+
+    对于绕\(z\)轴转动的刚体（质点系，每个质点做圆周运动）：
+
+    \begin{equation}
+        L_z =\sum_i L_{z i}=\sum_i r_i^2 \Delta m_i \omega
+        =\left(\sum_i r_i^2 \Delta m_i\right) \omega=I_z \omega
+    \end{equation}
+\end{definition}
+
+\subsection{刚体定轴转动的角动量定理}
+
+\begin{theorem}[质点的角动量定理]
+    \begin{equation}
+        \overrightarrow{M} = \deriv{\overrightarrow{L}}{t}
+    \end{equation}
+
+    作用于质点的合外力对参考点0的力矩，等于质点对该点\(O\)的角动量随时间的变化率。
+
+    微分形式：
+
+    \begin{equation}
+        \overrightarrow{M} \rmd t = \rmd L
+    \end{equation}
+
+    积分形式：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} \overrightarrow{M} \rmd t = \overrightarrow{L}_2 - \overrightarrow{L}_1
+    \end{equation}
+\end{theorem}
+
+    定义\textbf{冲量矩}：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} \overrightarrow{M} \rmd t
+    \end{equation}
+
+    质点的角动量定理另一表述：对同一参考点\(O\)，
+    质点所受的冲量矩等于质点角动量的增量。
+
+\begin{theorem}[质点的角动量守恒定律]
+
+    由质点的角动量定理：
+
+    如果\(\overrightarrow{M}=\overrightarrow{0}\)，则
+
+    \begin{equation}
+        \overrightarrow{L} = \overrightarrow{r} \times m \overrightarrow{v}
+        = \text{恒矢量}
+    \end{equation}
+
+    若质点所受外力对某给定点\(O\)的力矩为零，则质点对\(O\)点的角动量保持不变。
+\end{theorem}
+
+\begin{theorem}[刚体定轴转动的角动量定理]
+
+    刚体也是质点系，刚体定轴转动的角动量定理的微分形式应为
+
+    \begin{equation}
+        M \rmd t = \rmd \left(I \omega\right)
+    \end{equation}
+
+    \textbf{注意}：这两式对非刚体（转动惯量会发生变化）也成立。
+
+    而刚体绕定轴的转动定律：
+
+    \begin{equation}
+        M = I \deriv{\omega}{t}
+    \end{equation}
+
+    （\(I\)是常数，仅对刚体成立）
+
+    刚体（非刚体）定轴转动的角动量定理的积分形式：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} M \mathrm{~d} t=\int_{\left(I \omega\right)_1}^{\left(I \omega\right)_2} \rmd \left(I \omega\right)
+        =I_2 \omega_2-I_1 \omega_1
+    \end{equation}
+\end{theorem}
+
+\subsection{刚体定轴转动的角动量守恒定律}
+
+    如果\(\overrightarrow{M}=\overrightarrow{0}\)，则
+
+    \begin{equation}
+        L = I \omega = \text{常量}
+    \end{equation}
+
+    若物体所受的合外力矩为零，则物体的角动量保持不变。
+
+    \begin{enumerate}
+        \item 若\(I\)不变，\(\omega\)不变；
+        \item 若\(I\)变，\(\omega\)也变，但\(L = I \omega\)不变。
+    \end{enumerate}
+
+    即内力矩不改变系统的角动量。
+
+    在冲击等问题中，\(M^{\text{in}} \gg  M^{\text{ex}}\)，可认为\(L \approx \text{常量}\)。
+
+\subsection{共轴系统定轴转动的角动量定理}
+
+    当一个系统由多个物体和质点组成时，则某段时间内对某轴
+    的合外力矩的冲量矩等于系统绕该轴的角动量的增量：
+
+    $$
+    \int_{t_1}^{t_2} M \mathrm{~d} t=\left(\sum_i I_i \omega_i\right)_2-\left(\sum I_i \omega_i\right)_1
+    $$
+
+    （\(I_i\)、\(\omega_i\)应对同一轴，\(\omega_i\)应对同一惯性系。）
+
+    共轴系统的定轴转动的角动量守恒定律：
+
+    当系统对某轴的合外力矩的冲量矩等于零时，系统绕该轴的角动量守恒，即：
+
+    \begin{equation}
+        \int_{t_1}^{t_2} M \rmd t \text{时，} \sum_{i} I_i \omega_i = \text{恒矢量}
+    \end{equation}
+
+    （\(I_i\)、\(\omega_i\)应对同一轴，\(\omega_i\)应对同一惯性系。）
+
+\subsection{例题}
+
+\begin{exercise}
+    在半径为\(R\)、质量为\(M\)具有光滑竖直固定中心轴的水平圆盘上，
+    有一人静止站立在距转轴为\(\frac{R}{2}\)处，人的质量是圆盘质量的\(\frac{1}{10}\)，
+    开始时载人圆盘对地以角速度\(\omega_0\)匀速转动。现在此人相对于圆盘以速率\(v\)沿与圆盘转动的相反方向绕轴作圆周运动，
+    如图所示。已知圆盘对中心轴的转动惯量为\(\frac{1}{2}MR^2\)。试求：
+
+    \begin{enumerate}
+        \item 圆盘对地的角速度；
+        \item 欲使圆盘对地静止，人在该圆周上相对于圆盘的速度\(v\)的大小及方向。
+    \end{enumerate}
+
+    \[
+        \includegraphics[scale=0.24]{Chapter 04 images/pic9.png}
+    \]
+\end{exercise}
+
+    \vspace{1em}
+    \textbf{Solution}
+    
+    \textbf{Part One}
+
+    当人以速率\(v\)沿相对圆盘转动相反的方向走动时，圆盘对地的角速度为\(\omega\)，
+    则由速度叠加原理可知，人相对于地角速度为
+
+    $$
+        \omega^{\prime}=\omega-\frac{v}{R / 2}=\omega-\frac{2 v}{R}
+    $$
+
+    将人与盘视为一个共轴系统，人在盘上走动时系统受对转轴的合外力矩为零，
+    故系统的角动量守恒，所以有
+
+    $$
+        \left[\frac{1}{2} M R^2+\frac{M}{10}\left(\frac{1}{2} R\right)^2\right] \omega_0=
+        \frac{1}{2} M R^2 \omega+\frac{M}{10}\left(\frac{1}{2} R\right)^2 \omega^{\prime}
+    $$
+
+    联解得
+
+    $$
+        \omega=\omega_0+\frac{2 v}{21 R}
+    $$
+
+    \textbf{Part Two}
+
+    欲使盘对地静止，则\(\omega=0\)必为零，即
+    
+    $$
+        \omega=\omega_0+\frac{2 v}{21 R}=0
+    $$
+
+    由此得，人相对于圆盘的速度为
+
+    $$
+        v=-\frac{21 R \omega_0}{2}
+    $$
+
+    式中负号表示人的走动方向与上一问中人走动的方向相反，即与盘的初始转动方向一致。
+    \vspace{1em}
+
+\begin{exercise}
+    一块宽\(L=0.60\mathrm{m}\) 、质量\(M=1.0\mathrm{kg}\)的均匀薄木板，
+    可绕水平固定轴\(OO^{\prime}\)无摩擦地自由转动。当木板静止在平衡位置时，有一质量为
+    \(m = 10 \times 10^3 \mathrm{kg}\)的子弹垂直击中木板上的\(A\)点，\(A\)离转轴\(OO^{\prime}\)距离
+    \(l = 0.36\mathrm{m}\)，子弹击中木板前的速度为\(500 m \cdot s^{-1}\)，穿出木板后的速度为\(200 m \cdot s^{-1}\)。
+    试求
+
+    \begin{enumerate}
+        \item 子弹给予木板的冲量；
+        \item 木板获得的角速度。
+    \end{enumerate}
+
+    （已知：木板绕\(OO^{\prime}\)轴的转动惯量\(I=\frac{1}{3}ML^2\)）
+
+    \[
+        \includegraphics[scale=0.24]{Chapter 04 images/pic10.png}
+    \]
+\end{exercise}
+
+    \vspace{1em}
+    \textbf{Solution}
+    
+    \textbf{Part One}
+
+    子弹受到的冲量为
+
+    $$
+        I=\int F \mathrm{~d} t=m\left(v-v_0\right)
+    $$
+    
+    由牛顿第三定律，子弹对木块的冲量为
+
+    $$
+        I^{\prime}=\int F^{\prime} \mathrm{d} t=-\int F \mathrm{~d} t=m\left(v_0-v\right)=3.0 \mathrm{N \cdot m}
+    $$
+
+    \textbf{Part Two}
+
+    若将子弹和木板作为一个共轴系统，则该系统在碰撞过程中满足角动量守恒条件。
+    所以有
+
+    $$
+        m v_0 l=m v l+I \omega
+    $$
+
+    所以木板获得的角速度为
+
+    $$
+        \omega=\frac{m v_0 l-m v l}{I}=\frac{3\left(m v_0 l-m v l\right)}{M L^2}
+        =9.0 \mathrm{rad} \cdot \mathrm{~s}^{-1}
+    $$
+
+\chapterimage{miku3.png} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+\chapter{机械振动}
+
+\section{简谐振动}
+
+\subsection{简谐振动的动力学特征}
+
+\subsubsection{弹簧振子的振动}
+
+    模型：谐振子轻弹簧（不计质量）与物体（看成质点）
+
+    弹簧振子的无阻尼自由振动：
+
+    \[
+        \includegraphics[scale=0.5]{Chapter 06 images/pic1.png}
+    \]
+
+    振动的成因：
+
+    \begin{enumerate}
+        \item 回复力；
+        \item 惯性。
+    \end{enumerate}
+
+\subsubsection{弹簧振子的运动方程}
+
+    \begin{equation}
+        F=-k x=m a=m \frac{\rmd^2 x}{\rmd t^2}
+    \end{equation}
+
+    令
+    
+    \[
+        \omega^2=\frac{k}{m}
+    \]
+    
+    得
+    
+    \[
+        \dfrac{\rmd^2 x}{\rmd t^2} = -\omega^2 x
+    \]
+
+    即\(a=-\omega^2 x\)
+
+    具有加速度\(a\)与位移的大小\(x\)成正比，而方向相反特征的振动称为简谐运动。
+
+    简谐运动的微分方程：
+
+    \begin{align}
+        \dfrac{\rmd^2 x}{\rmd t^2} = -\omega^2 x
+        \label{6-1-2}
+    \end{align}
+
+    解得
+
+    \begin{align}
+        x = A \cos\left(\omega t + \varphi\right)
+    \end{align}
+
+    或
+
+    \begin{align}
+        x = A \sin\left(\omega t + \varphi + \frac{\uppi}{2}\right)
+    \end{align}
+
+    用复指数表示
+    
+    \begin{equation}
+        x=A \mathrm{e}^{\mathrm{i}(\omega t+\varphi)}
+    \end{equation}
+
+    \textbf{公式之间的相互推导关系}
+
+    \[
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+            %Straight Lines [id:da5445518985427571] 
+            \draw    (155.43,153.29) -- (182.43,153.29) ;
+            \draw [shift={(184.43,153.29)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+                (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+            %Straight Lines [id:da8539578247281134] 
+            \draw    (234.5,153.61) -- (207,153.61) ;
+            \draw [shift={(205,153.61)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+                (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+            %Straight Lines [id:da08053806804260755] 
+            \draw    (300.5,153.61) -- (275,153.61) ;
+            \draw [shift={(273,153.61)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]
+                (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+            %Straight Lines [id:da2022111052056348] 
+            \draw    (158,96.11) -- (136,138.11) ;
+            %Straight Lines [id:da9851232959428675] 
+            \draw    (275,103.61) -- (312.5,140.11) ;
+            % Text Node
+            \draw (122,144.4) node [anchor=north west][inner sep=0.75pt]    {$F( x)$};
+            \draw (191.5,144.4) node [anchor=north west][inner sep=0.75pt]    {$a$};
+            \draw (240,144.9) node [anchor=north west][inner sep=0.75pt]    {$v( t)$};
+            \draw (303.5,144.4) node [anchor=north west][inner sep=0.75pt]    {$x( t)$};
+            \draw (144.5,62.9) node [anchor=north west][inner sep=0.75pt]    {$F=-kx=ma=m\dfrac{\mathrm{d}^{2} x}{\mathrm{d} t^{2}}$};
+        \end{tikzpicture}
+    \]
+
+\subsection{谐振动的速度和加速度}
+
+    由
+
+    \begin{align*}
+        x = A \cos\left(\omega t + \varphi\right)
+    \end{align*}
+
+    运动方程对时间求导
+
+    \begin{equation}
+        v=\frac{\mathrm{d} x}{\mathrm{~d} t}=-\omega A \sin (\omega t+\varphi)=-v_{\mathrm{m}} \sin (\omega t+\varphi)
+    \end{equation}
+
+    运动方程对时间求二阶导
+
+    \begin{equation}
+        a=\frac{\mathrm{d}^2 x}{\mathrm{~d} t^2}=-\omega^2 A \cos (\omega t+\varphi)=
+        -a_{\mathrm{m}} \cos (\omega t+\varphi)
+    \end{equation}
+
+    其中，
+
+    $$
+        A=\sqrt{x_0^2+\left(\frac{v_0}{\omega}\right)^2}
+    $$
+
+    $$
+        \varphi=\arctan \left(-\frac{v_0}{\omega x_0}\right)
+    $$
+
+    （此结果一般有两个值，最后要舍去一个，根据速度的方向。）
+    
+    \[
+        \includegraphics[scale=0.5]{Chapter 06 images/pic2.png}
+    \]
+
+\subsection{描述简谐振动的物理量}
+
+    振幅 (amplitude)：
+
+    \begin{align}
+        x_m = A
+    \end{align}
+
+    周期 (period)：
+
+    \begin{align}
+        T = \frac{2 \uppi}{\omega}
+    \end{align}
+
+    简谐运动中，\(\omega\)被称为角频率或圆频率
+
+    \begin{align}
+        \omega = \sqrt{\frac{k}{m}}
+    \end{align}
+
+    频率 (frequency)：
+
+    \begin{align}
+        \nu = \frac{1}{T}
+    \end{align}
+
+    相位 (phase)：
+
+    \begin{align}
+        \left(\omega t + \varphi\right)
+    \end{align}
+
+    初相位（初相，initial phase）
+
+    \begin{align}
+        \varphi
+    \end{align}
+
+    相位差：
+
+    设有两个同方向、同频率的简谐振动，它们的振动表达式分别为
+    
+    $$
+        \begin{aligned}
+            & x_1=A_1 \cos \left(\omega t+\varphi_1\right) \\
+            & x_2=A_2 \cos \left(\omega t+\varphi_2\right)
+        \end{aligned}
+    $$
+
+    它们在任意时刻的相位差为
+
+    \begin{align}
+        \Delta \varphi = \left(\omega t+\varphi_1\right) - \left(\omega t+\varphi_2\right)
+    \end{align}
+
+    不同简谐振动在同一时刻，两者的相位之差值
+    可以判断它们的步调：超前、落后。
+
+    $$
+    \Delta \varphi=\varphi_2-\varphi_1\left\{\begin{array}{l}
+        2 k \uppi, \quad \text{同相} \\
+        2(k+1) \uppi, \quad \text{反相} \\
+        >0, \quad \text{\(x_2\)比\(x_1\)超前（或\(x_1\)比\(x_2\)）落后} \\
+        < 0, \quad \text{\(x_2\)比\(x_1\)落后（或\(x_1\)比\(x_2\)）超前}
+        \end{array}\right.
+    $$
+
+    注意：超前、落后以\(\left|\Delta \varphi\right| < \uppi\)的相位角来判断。
+
+\subsubsection{解析法描述简谐运动}
+
+    \[
+        x = A \cos \left(\omega t + \varphi\right)
+    \]
+
+\subsubsection{参考圆表示法}
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic3.png}
+    \]
+
+    一个动点在参考圆上匀速转动，
+    以该动点在参考一个动点在参考圆上匀圆的一根直径上的投影点的运动可代表简谐振动。
+
+    \subsubsection{旋转矢量表示法简谐振动}
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic4.png}
+    \]
+
+    旋转矢量法：矢量\(\overrightarrow{A}\)的端点在\(x\)轴上投影点的运动规律。
+    使相位表示更加直观。
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic5.png}
+    \]
+
+    \begin{enumerate}
+        \item 在平面图上作一\(Ox\)轴；
+        \item 振幅矢量\(\overrightarrow{A}\)从初相位置开始绕\(Ox\)轴上\(O\)点以匀角速度\(\omega\)逆时针旋转，转一圈所用的时间\(T\)；
+        \item 矢量\(\overrightarrow{A}\)的端点M在\(x\)轴上投影点\(P\)的运动规律：
+            \[
+                x = A \cos \left(\omega t + \varphi\right)
+            \]
+    \end{enumerate}
+
+\section{单摆和复摆}
+
+\subsection{单摆}
+
+    \[
+        \includegraphics[scale=0.3]{Chapter 06 images/pic6.png}
+    \]
+
+    由转动定律，
+
+    \begin{equation}
+        M = I \frac{\rmd^2 \theta}{\rmd t^2}
+    \end{equation}
+
+    \begin{equation}
+        -mg l \sin \theta = m l^2 \frac{\rmd^2 \theta}{\rmd t^2}
+    \end{equation}
+
+    当\(\theta < 5\degree\)时，\(\sin \theta \approx \theta\)
+
+    \begin{equation}
+        \frac{\rmd^2 \theta}{\rmd t^2} + \frac{g}{l}\theta = 0
+    \end{equation}
+
+    即
+
+    \begin{equation}
+        \frac{\rmd^2 \theta}{\rmd t^2} + \omega^2 \theta = 0
+        \label{6-3-4}
+    \end{equation}
+
+    方程\ref{6-3-4}与简谐运动的微分方程式\ref{6-1-2}在数学形式上完全相同。
+
+    在角位移很小的时候，单摆的振动是简谐振动。
+
+    角频率、振动的周期分别为
+
+    \begin{equation}
+        \omega = \sqrt{\frac{g}{l}}
+    \end{equation}
+
+    \begin{equation}
+        T = \frac{2 \uppi}{\omega} = 2 \uppi \sqrt{\frac{l}{g}}
+    \end{equation}
+
+    简谐振动表达式为
+
+    \begin{equation}
+        \theta = \theta_m \cos \left(\omega t + \varphi\right)
+    \end{equation}
+
+\subsection{复摆（刚体的转动）}
+
+    一个可绕固定轴\(O\)在竖直平面内摆动的刚体称为复摆 (compound pendulum)。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 06 images/pic7.jpg}
+    \]
+
+    \begin{enumerate}
+        \item 任意形状；
+        \item 小角度；
+        \item 无摩擦；
+        \item 自由摆动。
+    \end{enumerate}
+
+    复摆受重力矩
+
+    \[
+        M = -mg l \sin \theta
+    \]
+
+    （负号表示重力矩\(M\)的方向与角位移\(\theta\)的方向相反）
+
+    当\(\theta < 5\degree\)时，\(\sin \theta \approx \theta\)
+
+    \[
+        M = -mg l \theta
+    \]
+
+    由转动定律\(M = I \frac{\rmd^2 \theta}{\rmd t^2}\)
+
+    \begin{equation}
+        \frac{\rmd^2 \theta}{\rmd t^2} + \frac{mgl}{I}\theta = 0
+    \end{equation}
+
+    在摆角很小时，复摆的运动也是简谐运动，其角频率、振动的周期分别为
+
+    \begin{equation}
+        \omega = \sqrt{\frac{mgl}{I}}
+    \end{equation}
+
+    \begin{equation}
+        T = \frac{2 \uppi}{\omega} = 2 \uppi \sqrt{\frac{I}{mgg}}
+    \end{equation}
+
+\subsection{例题}
+
+\begin{exercise}
+    长度为\(3a\)的轻质细杆的两端各有质量为\(m\)的小球，该杆可绕水平光滑轴\(O\)
+    摆动，若摆角很小，求细杆的振动周期。
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 06 images/pic8.png}
+    \]
+\end{exercise}
+
+    \vspace{1em}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+    由转动定律可得
+
+    \[
+        -mg \cdot 2a \sin \theta + mg \cdot a \sin \theta = I \frac{\rmd^2 \theta}{\rmd t^2}
+    \]
+
+    \[
+        I = ma^2 + m\left(2a\right)^2 = 5 ma^2
+    \]
+
+    当\(\theta\)很小时时，\(\sin \theta \approx \theta\)
+
+    \[
+        \frac{\rmd^2 \theta}{\rmd t^2} + \frac{g}{5a}\theta =0
+    \]
+
+    故\(\omega = \dfrac{g}{5a}\)，所以
+
+    \[
+        T = 2\uppi \sqrt{\frac{5a}{g}}
+    \]
+
+\subsection{讨论}
+
+    \begin{enumerate}
+        \item 振动系统受弹性回复力之外还受恒力作用时，系统仍作简谐振动。
+        \item 质点是绕平衡位置\(O^{\prime}\)作简谐振动的，选平衡位置为坐标原点更方便。
+    \end{enumerate}
+
+\subsection{简谐振动的能量}
+
+    以水平的弹簧振子为例，
+
+    简谐振动的动能：
+
+    \begin{equation}
+        E_k=\frac{1}{2} m v^2 =\frac{1}{2} m A^2 \omega^2 \sin ^2(\omega t+\varphi)
+        =\frac{1}{2} k A^2 \sin ^2(\omega t+\varphi)
+    \end{equation}
+
+    简谐振动的势能：
+
+    \begin{equation}
+        E_p=\frac{1}{2} k x^2=\frac{1}{2} k A^2 \cos ^2(\omega t+\varphi)
+    \end{equation}
+
+    简谐振动的总机械能量：
+
+    \begin{equation}
+        E=E_k+E_p=\frac{1}{2} k A^2=\frac{1}{2} m \omega^2 A^2
+    \end{equation}
+
+    即简谐振动总机械能不随时间变化。
+
+\section{简谐运动的合成}
+
+    \begin{enumerate}
+        \item 同频率同方向简谐振动的合成（考试重点）；
+        \item 不同频率同方向简谐振动的合成；
+        \item 两个相互垂直的同频率简谐振动的合成（不考试）。
+    \end{enumerate}
+
+\subsection{两个同方向同频率的简谐振动的合成}
+
+    设两个振动具有相同频率，在同一直线上运动，有不同的振幅和初相位
+
+    \[
+        x_1\left(t\right) = A_1 cos\left(\omega t + \varphi_1\right)
+    \]
+
+    \[
+        x_2\left(t\right) = A_2 cos\left(\omega t + \varphi_2\right)
+    \]
+
+    合成：
+
+    \[
+        x\left(t\right) = x_1\left(t\right) + x_2\left(t\right)
+    \]
+
+    $$
+        \begin{aligned}
+            x(t)=x_1(t)+x_2(t)& =A_1 \cos \left(\omega t+\varphi_1\right)+A_2 \cos \left(\omega t+\varphi_2\right) \\
+            & =\left(A_1 \cos \varphi_1+A_2 \cos \varphi_2\right) \cos \omega t-\left(A_1 \sin \varphi_1+A_2 \sin \varphi_2\right) \sin \omega t \\
+            & =A \cos \varphi \cdot \cos \omega t-A \sin \varphi \cdot \sin \omega t \\
+            & =A \cos (\omega t+\varphi)
+        \end{aligned}
+    $$
+
+    于是
+
+    \begin{equation}
+        x=x_1+x_2=A_1 \cos \left(\omega t+\varphi_1\right)+A_2 \cos \left(\omega t+\varphi_2\right)=A \cos (\omega t+\varphi)
+    \end{equation}
+
+    式中
+
+    \begin{equation}
+        A=\sqrt{A_1^2+A_2^2+2 A_1 A_2 \cos \left(\varphi_2-\varphi_1\right)}
+    \end{equation}
+
+    \begin{equation}
+        \tan \varphi=\frac{A_1 \sin \varphi_1+A_2 \sin \varphi_2}{A_1 \cos \varphi_1+A_2 \cos \varphi_2}
+    \end{equation}
+
+    图示理解：
+
+    \[
+        \begin{tikzpicture}
+            \draw (0,0) -- (0,3) -- (2,0) -- cycle;
+            \coordinate[label=left:$A_1 \cos \varphi_1+A_2 \cos \varphi_2$] (formulate1)
+                at (0,2);
+            \coordinate[label=below:$A_1 \sin \varphi_1+A_2 \sin \varphi_2$] (formulate2)
+                at (1,0);
+            \coordinate[label=below:$\varphi$] (phi) at (0.2,2.8);
+            \coordinate[label=above:$A$] (A) at (1.2,1.4);
+        \end{tikzpicture}
+    \]
+
+    \textbf{特殊情况}：
+
+    \begin{enumerate}
+        \item 若相位差$\varphi_2-\varphi_1=2 k \uppi \quad(k=0, \pm 1, \pm 2, \cdots)$，
+            则\(A = A_1 + A_2\)
+        \item 若相位差$\varphi_2-\varphi_1=2 (k+1) \uppi \quad(k=0, \pm 1, \pm 2, \cdots)$，
+            则\(A = \left|A_1 - A_2\right|\)
+    \end{enumerate}
+
+    推广：多个同方向、同频率简谐运动合成仍为简谐运动。
+
+\subsection{两个同方向不同频率的简谐振动的合成、拍}
+
+\subsubsection{两个同方向不同频率的简谐振动的合成}
+
+    两个振幅相同，初相位相同，在相同方向上以不同频率振动，
+    振动表达式分别为：
+
+    \[
+        x_1\left(t\right) = A_1 cos\left(\omega_1 t + \varphi\right)
+    \]
+
+    \[
+        x_2\left(t\right) = A_2 cos\left(\omega_2 t + \varphi\right)
+    \]
+
+    合成：
+
+    \[
+        x\left(t\right) = x_1\left(t\right) + x_2\left(t\right)
+    \]
+
+    \begin{equation}
+        x=2 A \cos \left(\frac{\omega_2-\omega_1}{2} t\right) \cdot \cos \left(\frac{\omega_2+\omega_1}{2} t+\varphi\right)
+    \end{equation}
+
+    合振动不是简谐振动！
+
+    $$
+        x=A(t) \cos (\overline{\omega} t+\varphi)
+    $$
+
+    $A(t)=2 A \cos \left(\frac{\omega_2-\omega_1}{2} t\right)$
+    随\(t \)缓变，
+    $\cos (\overline{\omega} t+\varphi)=\cos \left(\frac{\omega_2+\omega_1}{2} t+\varphi\right)$
+    随\(t \)快变：
+
+    合振动可看作振幅缓变的简谐振动。
+
+\subsubsection{拍}
+
+    频率较大而频率之差很小的两个同方向简谐振动合成时，
+    其合振动的振幅时而加强时而减弱的现象叫\textbf{拍}。
+
+    \textbf{拍频}：单位时间内振动加强或减弱的次数叫拍频。
+
+    拍频的值可由$\left|2 A \cos \left(\frac{\omega_2-\omega_1}{2}\right) t\right|=\left|2 A \cos \left(2 \uppi \frac{v_2-v_1}{2} t\right)\right|$
+    取最大定出。
+
+    相邻两最大满足
+
+    $$
+        2 \uppi \frac{v_2-v_1}{2} \cdot 0=0
+    $$
+
+    $$
+        2 \uppi \frac{v_2-v_1}{2}T^{\prime}=\uppi
+    $$
+
+    拍频
+
+    \begin{equation}
+        v=\frac{1}{T^{\prime}}=\left|v_2-v_1\right|
+    \end{equation}
+
+    （\(T^{\prime}\)为振幅变化周期）
+
+\subsection{两个相互垂直的同频率简谐振动的合成}
+
+    分振动：
+
+    \[
+        x\left(t\right) = A_1 cos\left(\omega t + \varphi_1\right)
+    \]
+
+    \[
+        y\left(t\right) = A_2 cos\left(\omega t + \varphi_2\right)
+    \]
+
+    合运动：
+
+    \begin{equation}
+        \frac{x^2}{A_1^2}+\frac{y^2}{A_2^2}-2 \frac{x}{A_1} \frac{y}{A_2} \cos \left(\varphi_2-\varphi_1\right)=\sin ^2\left(\varphi_2-\varphi_1\right)
+    \end{equation}
+
+    （椭圆）
+
+\chapterimage{miku1.jpg} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+\chapter{机械波}
+
+\section{机械波的产生和传播}
+
+\subsection{机械波的基本概念}
+
+    \textbf{波}是振动状态再空间的传播过程。
+
+    \textbf{机械波}是机械振动在弹性介质中的传播过程。
+
+    \textbf{电磁波}是交变电场在空间的传播过程。
+
+    \textbf{弹性介质}(elastic medium)：由无穷多个质元通过弹性力结合再一起形成的连续介质。
+
+    \vspace{1em}
+    要产生机械波，必须满足两个条件：
+
+    \begin{enumerate}
+        \item 要有波源（即振动源）；
+        \item 要有能够传播机械振动的弹性介质。
+    \end{enumerate}
+
+    \vspace{1em}
+    机械波与电磁波的共同特征：
+
+    \begin{enumerate}
+        \item 具有一定的传播速度；
+        \item 能够产生干涉、衍射现象；
+        \item 伴随着能量的传播；
+        \item 具有相似的数学表达式。
+    \end{enumerate}
+
+\begin{definition}[横波]
+    质点的振动方向与波的传播方向垂直。
+    横波中凸起的位置称为波峰,下凹的位置称为波谷。
+\end{definition}
+
+\begin{definition}[纵波]
+    （又称为疏密波）质点的振动方向与波的传播方向平行。
+\end{definition}
+
+    在机械波中，横波只能在固体中出现；纵波可在气体、液体和固体中出现。
+    空气中的声波是纵波。液体表面的波动情况较复杂，不是单纯的纵波或横波。
+
+\textbf{波的几何描述}
+
+    波阵面(波面, wave surface)：相位相同的点连成的面；
+
+    波线(波射线, wave ray)：波的传播方向。
+
+    \[
+        \includegraphics[scale=0.4]{Chapter 07 images/pic1.jpg}
+    \]
+
+\subsection{描述机械波的物理量}
+
+\begin{definition}[波速]
+    单位时间内振动状态在介质中传播的距离称为波的传播速度，简称波速。
+    在弹性介质中，机械波的传播速度取决于介质的惯性和弹性，
+    也就是取决于介质的密度和弹性模量，与波源在介质中的运动速度无关。
+\end{definition}
+
+    在拉紧的弹性绳索中，横波的传播速度为
+
+    \begin{align}
+        u = \sqrt{\frac{F }{\lambda}}
+    \end{align}
+
+    式中\(F \)为绳中的张力，\(\lambda\)是绳的质量线密度。
+
+    在固体中，既可以传播横波，也可以传播纵波，它们的传播速度分别为
+
+    \begin{equation}
+        u=\sqrt{\frac{G}{\rho}} \quad \text{（横波）}
+    \end{equation}
+
+    \begin{equation}
+        u=\sqrt{\frac{E}{\rho}} \quad(\text{（纵波）})
+    \end{equation}
+    
+    式中\(\rho\)是固体的密度，\(G\)和\(E\)分别是固体的切变模量(shear modulus)和杨氏模量
+    (Young's modulus)，它们是反应材料形变和內应力关系的物理量，其单位都是\(\mathrm{N \cdot m^{-2}}\)。
+
+    在液体和液体中，纵波的传播速度为
+
+    \begin{equation}
+        u=\sqrt{\frac{K}{\rho}}
+    \end{equation}
+
+    式中\(K\)为介质的体积模量，\(\rho\)是气体或液体的密度。
+
+    对于理想气体，根据分子动理论和热力学理论，可以证明理想气体中声波的传播速度为
+
+    \begin{equation}
+        u=\sqrt{\frac{\gamma p}{\rho}}=\sqrt{\frac{\gamma R T}{M}}
+        \label{7-1-5}
+    \end{equation}
+
+    式中\(M\)是气体分子的摩尔质量，是气体的摩尔定压热容与摩尔定容热容之比，
+    简称摩尔热容比，\(p\)是气体的压强，\(T\)是热力学温度，\(R \)是摩尔气体常量。
+    式\ref{7-1-5}表明，气体中声波的传播速度不仅与气体的性质有关，还与温度有关。
+
+    \begin{definition}[波长(wave length)]
+    波的传播方向上相邻两振动状态完全相同的质点间的距离（一完整波的长度），用\(\lambda\)表示。
+    \end{definition}
+
+    \begin{definition}[周期]
+    波传播一个波长的距离所用的时间，用\(T \)表示。
+    \end{definition}
+
+    波速\(u \)、波长\(\lambda\)和周期\(T \)三者之间有如下关系：
+
+    \begin{equation}
+        u=\frac{\lambda}{T}
+        \label{7-1-6}
+    \end{equation}
+
+    \begin{definition}[频率]
+        单位时间内波向前传播的完整波的数目，是周期的倒数，用\(\nu\)表示。
+    \end{definition}
+
+    于是式\ref{7-1-6}可改写为
+
+    \begin{equation}
+        u=\nu \lambda
+    \end{equation}
+
+    当波源和弹性介质没有相对运动（仅仅在介质中做振动）时，波源每做一次完全振动，
+    波就会向前传播一个波长的距离，这表明波源的振动周期和振动频率在数值上与波的周期和波的频率是相等的，
+    即两组物理量可以通用。如果波源与介质有相对运动，则两组物理量有差异，不可通用。
+
+\section{平面简谐波的波动表达式}
+
+\subsection{平面简谐波的波动表达式}
+
+    波是运动状态的传播，介质的质点并不随波传播。
+
+    设波源在\(t\)时刻的振动方程：
+
+    $$
+        y_O=A \cos (\omega t+\varphi)
+    $$
+
+    求波线\(x \)轴上平衡位置位于\(P \)点的质点的振动表达式。
+    设\(P \)点与\(O \)点的距离为\(x \)，因为波动从\(O \)传到\(P \)点处所需的时间为\(\dfrac{x }{u }\)，
+    所以\(P \)点处的质点在\(t\)时刻的位移与\(O \)点处的质点在\(t - \dfrac{x }{u }\)时刻的位移相同，即
+
+    $$
+        y_P(t)=y_O\left(t-\frac{x}{u}\right)=A \cos \left[\omega\left(t-\frac{x}{u}\right)+\varphi_0\right]
+    $$
+
+    质点的振动表达式（即位移随时间的变化规律），忽略下标\(P \)，上式可写为
+
+    \begin{equation}
+        y(x, t)=A \cos \left[\omega\left(t-\frac{x}{u}\right)+\varphi_0\right]
+        \label{7-2-1}
+    \end{equation}
+
+    这就是沿\(x\)轴正方向传播的平面简谐波的波动表达式，也称为波函数。
+    
+    当然，我们也可以用相位的超前与落后关系求出波函数。由于沿波的传播方向，
+    波线上各点的振动相位依次落后，每隔一个波长的距离，后者比前者的相位落后\(2 \uppi \)。
+    因此，如果已知波长\(\lambda\)，则当波从\(O \)点传到\(P\)点时，\(P \)点的振动相位比\(O\)点
+    落后\(\Delta \varphi = 2\uppi \dfrac{x}{\lambda}\)，即
+
+    \begin{equation}
+        \varphi_P=\varphi_0-\Delta \varphi=\varphi_0-2 \uppi \frac{x}{\lambda}
+    \end{equation}
+
+    所以\(P \)点的振动表达式，即此波的波函数为
+
+    \begin{equation}
+        y(x, t)=A \cos \left(\omega t+\varphi_P\right)=A \cos \left(\omega t-\frac{2 \uppi}{\lambda} x+\varphi_0\right)
+        \label{7-2-3}
+    \end{equation}
+
+    考虑到\(u = \dfrac{\lambda }{T }\)，\(\omega = \dfrac{2 \uppi}{T } = 2 \uppi \nu\)，
+    \(\dfrac{\omega}{u}=\dfrac{2 \uppi}{\lambda}\)，所以式\ref{7-2-1}和式\ref{7-2-3}两种形式的波动表达式实际上是等价的。
+    同理可得波动表达式的其他形式，如
+
+    \begin{equation}
+        y(x, t)=A \cos \left[2 \uppi\left(\frac{t}{T}-\frac{x}{\lambda}\right)+\varphi_0\right]
+    \end{equation}
+
+    如果波动沿\(x \)轴的负方向传播，那么\(P \)点处质点的振动要比\(O \)点处的质点早开始\(\dfrac{x }{u }\)时间，
+    即\(P\)点处的质点在\(t\)时刻的位移与\(O\)点处的质点在\(t + \dfrac{x }{u }\)的位移相同；
+    从相位的角度来看，\(P \)点处质点的振动相位要比\(O \)点的相位超前$\Delta \varphi=2 \uppi \dfrac{x}{\lambda}=\dfrac{\omega}{u} x$，
+    即
+
+    $$
+        \varphi_P=\varphi_O+\Delta \varphi=\varphi_O+2 \uppi \frac{x}{\lambda}
+    $$
+
+    所以\(P \)点处质点的振动表达式为
+
+    \begin{equation}
+        y(x, t)=A \cos \left[\omega\left(t+\frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+    
+    或
+
+    \begin{equation}
+        y(x, t)=A \cos \left(\omega t+\frac{2 \uppi}{\lambda} x+\varphi_0\right)
+    \end{equation}
+
+    \begin{equation}
+        y(x, t)=A \cos \left[2 \uppi\left(\frac{t}{T}+\frac{x}{\lambda}\right)+\varphi_0\right]
+    \end{equation}
+
+\subsection{波动表达式的物理意义}
+
+    当\(x \)一定时，如\(x = x_0\)：
+
+    \begin{equation}
+        y(t)=A \cos \left[\omega\left(t-\frac{x_0}{u}\right)+\varphi_O\right]
+    \end{equation}
+
+    是\(x = x_0\)处质点的振动表达式。
+
+    将波动表达式分别对时间求一阶和二阶偏导数，可得波线上任一质元\(P\)振动速度和加速度分别为
+
+    \begin{equation}
+        v(x, t)=\frac{\partial y(x, t)}{\partial t}=-A \omega \sin \left[\omega\left(t \pm \frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+    
+    \begin{equation}
+        a(x, t)=\frac{\partial^2 y(x, t)}{\partial t^2}=-A \omega^2 \cos \left[\omega\left(t \pm \frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+    
+    \vspace{1em}
+
+    当\(t \)一定时，如\(t = t_0\)：
+
+    \begin{equation}
+        y(x)=A \cos \left[\omega\left(t_0-\frac{x}{u}\right)+\varphi_0\right]
+    \end{equation}
+
+    表示\(t_0\)时刻\(x\)轴上各质点的位移。
+
+\section{平面简谐波的能量}
+
+\subsection{波的能量}
+
+    当波动在介质中传播时，各质元中的动能和势能总是同步变化的。在波峰、
+    波谷处，动能势能同时为零；在平衡位置处，两者同时到达最大值。
+    进一步的定量分析还表明，任一质元中的动能和势能不仅同步变化，
+    而且大小总是相等的。这就是波动的能量特点。
+
+    以固体棒中传播的纵波为例分析波动能量的传播：
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 07 images/pic2.png}
+    \]
+
+    如图所示，假设匀质细棒的橫截面积为\(S \)，棒的密度为\(\rho\)，
+    杨氏模量为\(E \)，在棒中取一段长度为\(\rmd x\)的棒元，
+    其体积为\(\rmd V=S\rmd x\)，质量为\(\rmd m =\rho \rmd V=\rho S\rmd x\)。
+    当波动传播到这里时，这段棒元由于振动而具有动能\(\rmd E_k\)。
+    由于形变而具有弹性势能\(\rmd E_p\)。 不失一般性，设细棒中平面简谐波的波函数为
+
+    \begin{equation}
+        y(x, t)=A \cos \omega\left(t-\frac{x}{u}\right)
+        \label{7-3-1}
+    \end{equation}
+
+    则该棒元振动速度为
+
+    \begin{equation}
+        v=\frac{\partial y}{\partial t}=-A \omega \sin \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    所以该棒元的振动动能为
+
+    \begin{equation}
+        \mathrm{d} E_{\mathrm{k}}=\frac{1}{2} \mathrm{~d} m \cdot v^2=
+        \frac{1}{2} \rho \mathrm{~d} V \cdot A^2 \omega^2 \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    设这段横截面积为\(S \)、长为\(\rmd x\)的棒元在拉力\(F \)的作用下，其长度的伸长量为\(\rmd y\)，则
+
+    \begin{equation}
+        E=\frac{F / S}{\mathrm{~d} y / \mathrm{d} x}
+    \end{equation}
+
+    不难看出：$E$的物理意义就是其单位横伐面上的拉力$F / S$（称为应力），与单位长度上的伸长量$\rmd y / \mathrm{d} x$（称为应变）之比。
+    将上式改写为
+    
+    \begin{equation}
+        F=\frac{E S}{\mathrm{~d} x} \cdot \mathrm{~d} y
+    \end{equation}
+
+    将上式与胡克定律比较，的这段棒元的劲度系数为$k=\dfrac{E S}{\mathrm{~d} x}$，所以该棒元的弹性势能为
+
+    \begin{equation}
+        \mathrm{d} E_{\mathrm{p}}=\frac{1}{2} k(\mathrm{~d} y)^2=\frac{1}{2} \frac{E S}{\mathrm{~d} x}(\mathrm{~d} y)^2
+        =\frac{1}{2} E \mathrm{~d} V\left(\frac{\partial y}{\partial x}\right)^2
+        \label{7-3-6}
+    \end{equation}
+
+    又因为固体中纵波的传播速度为\(u = \sqrt{\dfrac{E }{\rho}}\)，所以\(E = \rho u^2\)，
+    再由波动表达式\ref{7-3-1}，可得应变为
+
+    \begin{equation}
+        \frac{\partial y}{\partial x}=-A \frac{\omega}{u} \sin \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    将上式代入式\ref{7-3-6}，整理后可得该棒元的弹性势能为
+
+    \begin{equation}
+        \mathrm{d} E_{\mathrm{p}}=\frac{1}{2} \rho A^2 \omega^2 \mathrm{~d} V \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    比较可得
+
+    $$
+        \mathrm{d} E_{\mathrm{k}}=\mathrm{d} E_{\mathrm{p}}=
+        \frac{1}{2} \rho A^2 \omega^2 \mathrm{~d} V \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    $$
+
+    即在波动传播到的任意位置，任意体积元\(\rmd V\)内的动能和势能总是相等的，且同步变化。
+    所以体积元\(\rmd V\)中波动的总能量为
+
+    \begin{equation}
+        \mathrm{d} E=\mathrm{d} E_{\mathrm{k}}+\mathrm{d} E_{\mathrm{p}}=\rho A^2 \omega^2 \mathrm{~d} V \sin ^2 \omega\left(t-\frac{x}{u}\right)
+        \label{7-3-9}
+    \end{equation}
+
+    \textbf{讨论}：
+
+    \begin{enumerate}
+        \item 每一体积元的动能和势能值相同，且同相位；
+        \item 小体积元的机械能随时间作周期性变化。
+    \end{enumerate}
+
+\subsection{波的能量密度}
+
+    人们将介质中单位体积内具有的波动能量称为波的能量密度(energy density of wave)，记为$w$，由式\ref{7-3-9}可得
+
+    \begin{equation}
+        w=\frac{\mathrm{d} E}{\mathrm{~d} V}=\rho A^2 \omega^2 \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    上式说明，波的能量密度同样是时间\(t\)和空间坐标\(x\)的二元函数，且沿波的传播方向（\(x\)轴）以速度\(u\)传播。
+    通常把能量密度在一个时间周期\(T\)内的平均值，称为平均能量密度，并用\(\overline{w}\)表示，即
+
+    \begin{equation}
+        \overline{w}=\frac{1}{T} \int_t^{t+T} w \mathrm{~d} t
+    \end{equation}
+
+    正弦函数：
+
+    $$
+        \begin{aligned}
+            \overline{w} & =\frac{1}{T} \int_0^T w \mathrm{~d} t \\
+            & =\frac{1}{T} \int_0^T \rho \omega^2 A^2 \sin ^2 \omega\left(t-\frac{x}{u}\right) \mathrm{d} t=\frac{1}{2} \rho \omega^2 A^2
+        \end{aligned}
+    $$
+
+    即
+
+    \begin{equation}
+        \overline{w}=\frac{1}{2} \rho A^2 \omega^2
+    \end{equation}
+
+\subsection{能流、平均能流密度}
+
+\begin{definition}[能流（面能量）]
+    单位时间内通过某面积的能量——通过该面积的能流(energy flux, \(P\))。
+\end{definition}
+
+    对垂直于波的传播方向的面积\(S\)而言：
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 07 images/pic3.png}
+    \]
+
+    能流
+
+    \begin{equation}
+        P=w u S=\rho A^2 \omega^2 u S \sin ^2 \omega\left(t-\frac{x}{u}\right)
+    \end{equation}
+
+    平均能流(average energy flux)
+
+    \begin{equation}
+        \overline{P}=\overline{w} u S
+    \end{equation}
+
+\subsubsection{波的能流密度}
+
+\begin{definition}[能流密度]
+    能流密度:与波传播方向垂直的单位面积上通过的能流。
+\end{definition}
+
+    \begin{definition}[平均能流密度(average energy flux density)]
+    与波传播方向垂直的单位面积上通过的平均能流，也称为波的强度(波强，intensity of wave)，用\(I \)表示，即
+
+    \begin{equation}
+        I=\frac{\overline{P}}{S}=\overline{w} u=\frac{1}{2} \rho u \omega^2 A^2
+    \end{equation}
+    \end{definition}
+
+    由此可以证明，平面简谐波在无吸收的介质中传播时振动保持不变，
+    球面波的波强与离开波源的距离的平方成反比。
+
+\section{惠更斯原理、波的衍射、反射和折射}
+
+\subsection{惠更斯原理}
+
+    在波的传播过程中，所到达的每一点都可看作是发射子波的波源，
+    在其后的任一时刻，这些子波的包络面就是新的波前。
+
+    \[
+        \includegraphics[scale=0.2]{Chapter 07 images/pic4.jpg}
+    \]
+
+\subsection{惠更斯原理的应用}
+
+\subsubsection{波的衍射}
+
+    波在传播过程中遇到障得物时，能够偏窝原来的直线传播方向，绕到障碍物后面的绕射现象，
+    称为波的衍射(diffraction)。
+
+    \begin{figure}[!htbp]
+        \centering  % 居中放置
+        \subfigure[缝宽\(a\)远大于波长\(\lambda\)]  % 为每个图片加上编号
+        {
+            \begin{minipage}[b]{.3\linewidth}
+                \includegraphics[scale=0.2]{Chapter 07 images/pic5.png}
+                % \caption{缝宽\(a \)远大于波长\(\lambda\)}
+            \end{minipage}
+        }
+        \subfigure[缝宽\(a \)小于波长\(\lambda\)]
+        {
+            \begin{minipage}[b]{.3\linewidth}
+                \includegraphics[scale=0.2]{Chapter 07 images/pic6.png}
+                % \caption{缝宽\(a \)小于波长\(\lambda\)}
+            \end{minipage}
+        }
+        % \caption{}
+    \end{figure}
+    
+    \(\dfrac{a }{\lambda}\)越小，衍射越显著。
+
+    波长较短的波衍射不显著，所以定向性较好。
+
+    \begin{theorem}[折射定律]
+    当波动从一种介质进入另一种介质时，由于在两种介质中的波速不同，
+    在分界面上要发生折射现象。设在介质1中的波速是\(u_1\)，在介质2中波速为\(u_2\)，
+    设\(MN \)为两种介质的分界面。
+
+    \[
+        \includegraphics[scale=0.25]{Chapter 07 images/pic7.jpg}
+    \]
+
+    \begin{equation}
+        \frac{\sin i}{\sin r}=\frac{u_1}{u_2}=n_{21}
+    \end{equation}
+
+    式中\(n_{21}=\dfrac{u_1}{u_2}\)称为介质2对介质1的相对折射率。
+\end{theorem}
+
+\section{波的干涉}
+
+\subsection{波的叠加原理}
+
+    几列波相遇之后， 仍然保持它们各自原有的特征（频率、波长、振幅、振动方向等）不变，
+    相遇之后并按照原来的方向继续前进，好象没有遇到过其他波一样。
+
+    在相遇区域内任一点的振动，为各列波单独存在时在该点所引起的振动位移的矢量和。
+    
+\subsection{波的干涉}
+
+    频率相同、振动方向平行、相位相同或相位差恒定的两列波相遇时，
+    使某些地方振动始终加强，而使另一些地方振动始终减弱的现象，
+    称为波的干涉(interference)现象。
+
+    两相干波源振动规律：
+
+    \[
+        \includegraphics[scale=0.3]{Chapter 07 images/pic8.png}
+    \]
+
+    $$
+        y_1=A_1 \cos \left(\omega t-\frac{2 \uppi r_1}{\lambda}+\varphi_1\right)
+    $$
+
+    $$
+        y_2=A_2 \cos \left(\omega t-\frac{2 \uppi r_2}{\lambda}+\varphi_2\right)
+    $$
+
+    \(P \)点的合振动为
+
+    \begin{equation}
+        y=y_1+y_2=A \cos (\omega t+\varphi)
+    \end{equation}
+
+    其中
+
+    \begin{equation}
+        \tan \varphi=\dfrac{A_1 \sin \left(\varphi_1-\dfrac{2 \uppi r_1}{\lambda}\right)+
+        A_2 \sin \left(\varphi_2-\dfrac{2 \uppi r_2}{\lambda}\right)}{A_1 \cos \left(\varphi_1-\dfrac{2 \uppi r_1}{\lambda}\right)+A_2 \cos \left(\varphi_2-\dfrac{2 \uppi r_2}{\lambda}\right)}
+    \end{equation}
+
+    \begin{equation}
+        A=\sqrt{A_1^2+A_2^2+2 A_1 A_2 \cos \left(\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}\right)}
+    \end{equation}
+
+    两个波源振动传播到\(P\)点的引起的两个振动相位差值
+
+    \begin{equation}
+        \Delta \varphi=\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}
+    \end{equation}
+
+    干涉叠加加强或减弱取决于\(\Delta \varphi\)。凡是满足
+
+    \begin{equation}
+        \Delta \varphi=\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}= \pm 2 k \uppi, \quad k=0,1,2, \cdots
+    \end{equation}
+
+    的空间各点，\(A = A_{max} = A_1+A_2\)，这些点的合振幅最大，称为\textbf{干涉加强}，或\textbf{相长干涉}。
+
+    凡是满足
+
+    \begin{equation}
+        \Delta \varphi=\varphi_2-\varphi_1-2 \uppi \frac{r_2-r_1}{\lambda}= \pm(2 k-1) \uppi, \quad k=1,2,3, \cdots
+    \end{equation}
+
+    的空间各点，\(A = A_{min} = \left|A_1-A_2\right|\)，这些点的合振幅最小，称为\textbf{干涉减弱}。
+    如果\(A_1=A_2\)，则\(A = A_{min} = 0\)，即该点的合振幅为零，这称为\textbf{相消干涉}。
+
+    \(P\)波强度
+
+    \begin{equation}
+        I=I_1+I_2+2 \sqrt{I_1 I_2} \cos \Delta \varphi
+        \label{7-5-7}
+    \end{equation}
+
+    \begin{enumerate}
+        \item 相干波源在\(P\)点波强\(\neq I_1+I_2\), 而是多出一与位置有关的干涉项；
+        \item 对确定点\( P\)，\(\Delta \varphi\)为固定值，波强为确定值，不随时间变化；
+        \item 对不同点，\(\Delta \varphi\)不同，\(I\)也不同，有强弱分布，产生干涉现象；
+        \item 当\(\Delta \varphi\)为\(\uppi\)的偶数倍时，波强达极大值(干涉极大)；当\(\Delta \varphi\)为\(\uppi\)的奇数倍时，干涉极小。
+    \end{enumerate}
+
+    当\(I_1=I_2=I_0\)，则式\ref{7-5-7}可以写成
+
+    \begin{equation}
+        I=2 I_0(1+\cos \Delta \varphi)=4 I_0 \cos ^2 \frac{\Delta \varphi}{2}
+    \end{equation}
+
+\section{驻波}
+
+\subsection{驻波的形成和特点}
+
+    两列\textbf{振幅相同}的\textbf{相干波}在同一直线上\textbf{沿相反方向传播}时由于相干叠加所产生的波称为\textbf{驻波}。
+
+    波的干涉是特定条件下的波叠加， 驻波又是特定条件下的波的干涉。
+
+    \[
+        \includegraphics[width=\linewidth]{Chapter 07 images/pic9.png}
+    \]
+
+\subsection{驻波方程}
+
+    设有两列波相向传播，沿\(x\)轴正向传播的波为
+
+    $$
+        y_1(x, t)=A \cos \left(\omega t-\frac{2 \uppi x}{\lambda}+\varphi_1\right)
+    $$
+
+    沿\(x\)轴负向传播的波为
+
+    $$
+        y_2(x, t)=A \cos \left(\omega t+\frac{2 \uppi x}{\lambda}+\varphi_2\right)
+    $$
+
+    则合成波（即驻波）的表达式为：
+
+    \begin{equation}
+        y_{\text{合}}(x, t)=y_1(x, t)+y_2(x, t)=
+        2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right) \cos \left(\omega t+\frac{\varphi_2+\varphi_1}{2}\right)
+        \label{7-6-1}
+    \end{equation}
+
+    式\ref{7-6-1}即为驻波方程。
+
+\subsubsection{波腹和波节}
+
+    \begin{equation}
+        A_{\text{合}}=\left|2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right)\right|
+    \end{equation}
+
+    驻波上各点的振幅不同，其大小与位置\(x \)有关。
+    当\({\displaystyle \left|2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right)\right|=1}\)，
+    合振幅达到最大值（\(A_{\text{合}} = A_1+A_2\)），这就是波腹。波腹的位置条件为
+
+    \begin{equation}
+        \frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}= \pm k \uppi, \quad k=0,1,2, \cdots
+    \end{equation}
+
+    当\({\displaystyle 2 A \cos \left(\frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}\right)=0}\)，
+    合振幅为零（\(A_{\text{合}} = 0\)），这就是波节。波节的位置条件为
+
+    \begin{equation}
+        \frac{2 \uppi}{\lambda} x+\frac{\varphi_2-\varphi_1}{2}= \pm(2 k+1) \frac{\uppi}{2}, \quad k=0,1,2, \cdots
+    \end{equation}
+
+    所以相邻两波节或波腹之间的距离为
+
+    \begin{equation}
+        \Delta x=x_{k+1}-x_k=\frac{\lambda}{2}
+    \end{equation}
+
+\subsubsection{振动相位}
+
+    驻波方程\ref{7-6-1}中没有\(x\)坐标，表示没有相位的传播。
+
+    相邻两波节之间的各质点的振动相位相同；波节两侧的各质点的振动相位相反。
+
+    驻波（已经是叠加波）不是振动相位的传播过程，驻波的波形不发生定向传播。
+
+\subsubsection{驻波的能量}
+
+    驻波的能量在相邻的波腹和波节间往复变化，在相邻的波节间发生动能和势能间的转换，
+    动能主要集中在波腹，势能主要集中在波节，但无长距离的能量传播。
+
+\subsection{半波损失}
+
+    入射波从波疏介质到波密介质，在两者的界面上，反射波在反射点出现半波损失，
+    引起\(\uppi\)相位的突变。
+
+    由入射波与反射波产生驻波 与 “半波损失”。
+
+    \[
+        \includegraphics[width=\linewidth]{Chapter 07 images/pic10.png}
+    \]
+
+\part{大学物理B（下）}
+
+\chapterimage{miku2.jpg} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+\chapter{真空中的恒定磁场}
+
+\section{恒定电流}
+
+\subsection{电流 \quad 电流密度}
+
+\begin{equation}
+    \mathbf{j} = \deriv{I}{S_0} \mathbf{e}_{\text{n}}
+\end{equation}
+
+\begin{itemize}
+    \item 方向：改点正电荷运动的方向，即$\mathbf{e}_{\text{n}}$；
+    \item 大小：$j = \dderiv{I}{S_0} = \dderiv{I}{S \cos \theta}$。
+\end{itemize}
+
+通过面积元的电流为
+
+\begin{equation}
+    I = \int_S \mathbf{j} \cdot \rmd \mathbf{S}
+\end{equation}
+
+\subsection{电流的连续性方程 \quad 电路恒定的条件}
+
+在导体内任取一封闭曲面$S$，由电荷守恒
+
+\begin{equation}
+    \oint_S \mathbf{j} \cdot \rmd \mathbf{S} = - \deriv{Q}{t}
+\end{equation}
+
+由$Q = \int_V \rho \rmd V$ ($\rho = \rho(x,y,z,t)$为电荷体密度分布函数)，
+
+\begin{equation}
+    \oint_S \mathbf{j} \cdot \rmd \mathbf{S} = \int_V \pderiv{\rho}{t} \rmd V
+\end{equation}
+
+\subsection{欧姆定律及其微分形式}
+
+由电阻定律，
+
+\begin{equation}
+    R = \rho \frac{l}{S}
+\end{equation}
+
+电流在不均匀的导体中流动：
+
+\begin{equation}
+    R = \int \rmd R = \int \rho \frac{\rmd l}{S}
+\end{equation}
+
+沿电场线方向，取长$\rmd l$、横截面积$\rmd S$的微流管，电阻率为$\rho$，则
+
+\begin{equation}
+    j = \frac{1}{\rho}\left(-\deriv{V}{l}\right) = \sigma E
+\end{equation}
+
+矢量形式为
+
+\begin{equation}
+    \mathbf{j} = \sigma \mathbf{E}
+\end{equation}
+
+\begin{exercise}
+如图所示,高度为\(h\)的两个共轴金属圆环,其内环的外半径和外环的内半径分别为\(R_1\)和\(R_2\)。两环间充满电阻率为\(\rho\)的均匀导电材料（$\rho$4远大于金属圆环的电阻率）。
+当圆环之间加上电压\(U\)后，电流沿径向由内向外流动。试求
+
+\begin{enumerate}
+    \item 两环之间导电材料的总电阻；
+    \item 两环之间距离为\(r\)处电流密度的大小和方向。
+\end{enumerate}
+
+\centering{\includegraphics{graphics/p12.1.pdf}}
+\end{exercise}
+
+在导电材料上任取一半径为$r$，宽度为$\rmd r$，高度为$h$的薄圆环，其侧面积为$2 \uppi r h$，则薄圆环的径向电阻为
+
+\begin{equation*}
+    \rmd R = \rho \frac{\rmd r}{2 \uppi rh}
+\end{equation*}
+
+所以整个导电材料的径向总电阻为
+
+\begin{equation*}
+    R = \int \rmd R = \int_{R_1}^{R_2} \rho \frac{\rmd r}{2 \uppi rh} \ln \frac{R_2}{R_1}
+\end{equation*}
+
+由欧姆定律可得导电材料中的径向总电流为
+
+\begin{equation*}
+    I = \frac{U}{R} = \frac{2 \uppi h U}{\rho \ln(R_2/R_1)}
+\end{equation*}
+
+于是在距离环心为\(r\)处电流密度的大小为
+
+\begin{equation*}
+    j = \frac{I}{S} = \frac{I}{2 \uppi r h} = \frac{U}{r \rho \ln(R_2/R_1)}
+\end{equation*}
+
+\subsection{电源\quad 电动势}
+
+电动势
+
+\begin{equation}
+    \mathcal{E} = \int_{-}^{+} \mathbf{E}_{\text{k}} \cdot \rmd l
+\end{equation}
+
+闭合回路的总电动势
+
+\begin{equation}
+    \mathcal{E} = \oint_L \mathbf{E}_{\text{k}} \cdot \rmd l
+\end{equation}
+
+\section{磁场 \quad 磁感应强度}
+
+定义磁感应强度\(\mathbf{B}\)的大小为
+
+\begin{equation}
+    B = \frac{F_{\text{max}}}{qv}
+\end{equation}
+
+运动电荷在磁场中受到的磁场力可表示为
+
+\begin{equation}
+    \mathbf{F} = q \mathbf{v} \times \mathbf{B}
+\end{equation}
+
+这就是运动电荷在磁场中受到的磁场力，通常称为\textbf{洛伦兹力}。
+
+\section{毕奥-萨伐尔定律}
+
+\subsection{毕奥-萨伐尔定律}
+
+\begin{theorem}[毕奥-萨伐尔定律]
+电流元\(I \rmd \mathbf{l}\)在空间某点\(P\)处激发的磁感应强度\(\rmd \mathbf{B}\)的大小与电流元\(I\rmd \mathbf{l}\)的大小成正比，与电流元\(I\rmd \mathbf{l}\)到场点\(P\)的距离\(r\)的平方成反比，与电流元\(I\rmd \mathbf{l}\)和径矢\(\mathbf{r}\)之间的夹角\(\theta\)的正弦成正比，即
+
+\begin{equation}
+    \rmd B = \frac{\mu_0}{4 \uppi} \cdot \frac{I \rmd l \sin \theta}{r^2}
+    \label{13}
+\end{equation}
+
+\(\rmd \mathbf{B}\)的方向与\(I \rmd \mathbf{l} \times \mathbf{r}\)的方向相同，即\(\rmd \mathbf{B}\)的方向与\(I \rmd \mathbf{l}\)和\(\mathbf{r}\)的方向符合右手螺旋定律。将式\ref{13}写成矢量形式，则有
+
+\begin{equation}
+    \rmd \mathbf{B} = \frac{\mu_0}{4 \uppi} \frac{I \rmd \mathbf{l} \times \mathbf{e_r}}{r^2} = \frac{\mu_0}{4 \uppi} \frac{I \rmd \mathbf{l} \times \mathbf{r}}{r^3}
+\end{equation}
+
+其中\(\mathbf{e_r} = \dfrac{\mathbf{r}}{r}\)为\(\mathbf{r}\)方向的单位矢量。此即毕奥-萨伐尔定律的数学表达式。
+
+根据场强叠加原理
+
+\begin{equation}
+    \mathbf{B} =\int_{L} = \frac{\mu_0}{4 \uppi} \int_L \frac{I \rmd \mathbf{l} \times \mathbf{e_r}}{r^2}
+\end{equation}
+\end{theorem}
+
+\subsection{毕奥-萨伐尔定律的应用}
+
+\subsubsection{载流直导线的磁场}
+
+（教材Page. 11）
+
+真空中有一根长度为\(l\)、通有恒定电流\(I\)的直导线\(A_1A_2\)，试求载流直导线附近任意一点\(P\)处的磁感应强度\(B\)。已知\(P\)点到直导线的垂直距离为\(a\)。
+
+\begin{equation}
+    B = \frac{\mu_0 I}{2 \uppi a}
+\end{equation}
+
+“无限长”载流直导线产生的磁场分布具有轴对称性和轴向平移不变性。
+
+\subsubsection{圆电流轴线上任意一点的磁场}
+
+（教材Page. 12）
+
+真空中有一载流圆环，通有恒定电流\(I\)，已知圆环的半径为\(R\)，试求圆环轴线上任意一点\(P\)处的磁场强度。
+
+\begin{equation}
+    B = \frac{\mu_0 I R^2}{2 \left(R^2 + x^2\right)^{3/2}} = \frac{\mu_0 I}{2R} \cdot \sin^3 \theta = B_0 \cdot \sin^3 \theta
+\end{equation}
+其中\(B_0\)为圆电流在圆心处激发的磁场。
+
+如果有一个平面载流线圈，线圈中的电流为\(I\)，线圈的面积为\(S\)，线圈的总匝数为\(N\)，则该平面载流线圈的磁矩定义为
+\begin{equation}
+    \mathbf{m} = NIS \mathbf{e}_n
+\end{equation}
+式中，\(\mathbf{e}_n\)为线圈平面法向的单位矢量，它与线圈中的电流方向符合右手螺旋法则。于是圆电流轴线上任意一点的磁感应强度公式还可以写为
+\begin{equation}
+    B = \frac{\mu_0 I R^2}{2 \left(R^2 + x^2\right)^{3/2}} = \frac{\mu_0 m}{2 \uppi \left(R^2 + x^2\right)^{3/2}}
+\end{equation}
+
+\subsubsection{载流密绕直螺线管线圈在其轴线上的磁场}
+
+（教材Page. 14）
+
+设真空中有一半径为\(R\)的均匀密绕的载流直螺线管线圈，其电流为\(I\)。管长为\(l\)，沿轴线单位长度的匝数为\(n\)。试求螺线管内轴线上任意一\(P\)处的磁感应强度\(\mathbf{B}\)。
+
+当管长\(l >> R\)时，螺线管可近似为无限长，则
+\begin{equation}
+    B = \mu_0 n I
+\end{equation}
+在螺线管线圈的端口处
+\begin{equation}
+    B = \frac{1}{2} \mu_0 n I
+\end{equation}
+
+\subsubsection{运动电荷的磁场}
+
+（教材Page. 16）
+
+设导体中单位体积内有\(n\)个做定向运动的电荷，每个电荷的电荷量为\(q\)（不妨假设\(q > 0\)），以平均漂移速度\(\mathbf{v}\)沿电流元\(I \rmd \mathbf{l}\)方向匀速运动而形成电流\(I\)，如果电流元的横截面积为\(S\)，则单位时间通过横截面积\(S\)的电荷量为\(nqSv\)，亦即\(I = nqSv\)。于是每一个以速度\(v\)运动的电荷在场点\(P\)处产生的磁感应强度\(\mathbf{B}\)就是
+\begin{equation}
+    \mathbf{B} = \deriv{\mathbf{B}}{N} = \frac{\mu_0}{4 \uppi} \cdot \frac{q \mathbf{v} \times \mathbf{r}}{r^3}
+\end{equation}
+
+\section{真空中恒定磁场的基本定理}
+
+\subsection{磁感应线}
+
+磁感应线上任一点的切线方向就是该点处磁感应强度\(\mathbf{B}\)的方向，而空间任一点处磁感应线的疏密程度则反映了该处磁场的强弱。
+
+\subsection{磁通量}
+
+在磁场中某点处，通过与磁场方向垂直的单位面积上的磁感应线的根数就等于该点处磁感应强度的大小
+\begin{equation}
+    B = \deriv{N}{S_{\perp}}
+\end{equation}
+
+将磁场中通过某个曲面的磁感应线的根数，称为该曲面的磁通量
+\begin{equation}
+    \Phi = BS \cos \theta = \mathbf{B} \rmd \mathbf{S}
+\end{equation}
+非均匀磁场中任意曲面\(S\)
+\begin{equation}
+    \Phi = \int \rmd \Phi = \int_S B \cos \theta \rmd S = \int_S \mathbf{B} \rmd \mathbf{S}
+\end{equation}
+
+\subsection{磁场的高斯定理}
+
+\begin{theorem}[磁场的高斯定理]
+磁感应强度对任意一个闭合曲面的磁通量必等于零，即
+\begin{equation}
+    \oint_S \mathbf{B} \cdot \rmd \mathbf{S} = 0
+\end{equation}
+\end{theorem}
+
+
+\emph{注意}：与静电场的高斯定理$\oint \mathbf{E} \rmd \mathbf{S} = \dfrac{1}{\varepsilon_0} \sum q$有本质区别。静电场是有源场，磁场是无源场。
+
+\subsection{真空中磁场的安培环路定理}
+
+\begin{theorem}[真空中磁场的安培环路定理]
+在真空中磁感应强度 $\mathbf{B}$对任意一个闭合环路$L$的环流(即线积分)等于真空中的磁导率$\mu_ O $与该闭合四路 $L $所包围的电流的代数和 $\sum I_ i$之积
+\begin{equation}
+    \oint_L \mathbf{B} \cdot \rmd \mathbf{l} = \mu_0 \sum I_i
+\end{equation}
+\end{theorem}
+
+对电流连续分布的载流体情形，安培环路定理可表示为
+\begin{equation}
+    \oint_L \mathbf{B} \cdot \rmd \mathbf{l} = \mu_0 \int_S \mathbf{j} \cdot \rmd \mathbf{S}
+\end{equation}
+
+\subsection{安培环路定理的应用}
+
+一根半径为的“无限长”的载流直圆柱形导体，电流沿轴向流动，且在圆柱体的横截面上均匀分布。试求圆柱体内外磁感应强度的分布。
+
+（教材Page. 21）
+
+\begin{equation*}
+    \begin{aligned}
+        & B = \frac{\mu_0 I}{2 \uppi r} (r \geq R) \\
+        & B = \frac{\mu_0 I}{2 \uppi R^2} r (0 < r < R)
+    \end{aligned}
+\end{equation*}
+
+\(\mathbf{B}\)的方向眼圆周的切线方向，并与圆柱体上的电流\(I\)成右手螺旋关系。
+
+\section{磁场对电流的作用}
+
+\subsection{安培定律}
+
+\begin{theorem}[安培定律]
+\begin{equation}
+    \rmd F = B I \rmd l \sin \theta
+\end{equation}
+\end{theorem}
+
+矢量表达式
+\begin{equation}
+    \rmd \mathbf{F} = I \rmd \mathbf{l} \times \mathbf{B}
+\end{equation}
+
+对任意形状的载流导线在磁场中受到的安培力
+\begin{equation}
+    \mathbf{F} = \int_L \rmd \mathbf{F} = \int_L I \rmd \mathbf{l} \times \mathbf{B}
+\end{equation}
+
+在匀强磁场中任意形状的一段载流导体所受的安培力，等效于该导线的起点和终点之间的一根载流直导线在同一磁场中所受安培力。
+
+\subsection{无限长平行载流直导线间的相互作用}
+
+假设真空中有两根相立平行的“无限长”载流直导线，相距为$d$，两导线受力均为
+\begin{equation}
+    F = \frac{\mu_0 I_1 I_2}{2 \uppi d}
+\end{equation}
+当两载流直导线通有同向电流时相互吸引，通有反向电流则相互排斥。
 
 %----------------------------------------------------------------------------------------
 %	PRESENTING INFORMATION/RESULTS EXAMPLES CHAPTER
