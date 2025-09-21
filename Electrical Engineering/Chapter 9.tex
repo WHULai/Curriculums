@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+%Also I made it 12pt
+
+\usepackage[fontset=macnew]{ctex}
+\usepackage{physics}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,patterns,chains,arrows.meta, positioning}
+% \usepackage{tkz-euclide}
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\input{PomLingHandoutTemplatePreamble}
+%MJKD note to future self - this preamble is just the section headers + PomLing formatting, but an ordering paradox between the two files made me combine them and re-order fontspec. *shrug* In future if it needs an update, just take the PomLing formatting file and add in the section headers for handouts.
+
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dpderiv}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\dfrac{\rmd #1}{\rmd #2}}
+
+\title{半导体器件}
+\author{\href{mailto:lai-wei@whu.edu.cn}{Lai Wei}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{半导体的导电特性}
+
+\subsection{本征半导体}
+
+半导体材料具有晶体结构，每个原子核最外层空间的价电子与相邻原子核的价电子形成了共价键结构，对价电子形成约束。常温下有少量的价电子获得外界能量，挣脱束缚而成为自由电子，同时在共价键中留下一个空位子——空穴，这一过程称为激发。
+
+在半导体中同时存在着电子导电和空穴导电。自由电子和空穴都称为载流子。在本征半导体中自由电子和空穴总是成对出现，同时又不断复合。
+
+\subsection{N型半导体和P型半导体}
+
+本征半导体导电能力很低。如果在其中掺入微量的杂质（某种元素），这将使参杂后的半导体（杂志半导体）的导电性能大大增强。
+
+例如在硅晶体中掺入五价元素磷，自由电子是多数载流子，空穴是少数载流体（电子导电是主要导电方式），形成电子型半导体或N型半导体；又如在硅晶体中掺入三价元素硼，空穴是多数载流子，自由电子是少数载流体（空穴导电是主要导电方式），形成空穴型半导体或P型半导体。
+
+\subsection{PN结及其单向导电性}
+
+通常是在一块N型（或P型）半导体的局部再掺入浓度较大的三价（五价）杂质，使其变为P型（或N型）半导体。在P型半导体和N型半导体的交界面就形成了一个特殊的薄层，称为PN结。
+
+当在PN结上加正向电压，即电源正极接卫区,负极接N区时，P区的多数载流子空穴和N区的多数载流子自由电子在电场作用下通过PN结进人对方，两者形成较大的正向电流。此时PN结呈现低电阻，处于导通状态。
+
+当在PN结上加反向电压时，P区和N区的多数載流子受阻，难于通过PN结。但P区的少数载流子自由电子和N区的少数载流子空穴在电场作用下却能通过PN结进人对方，形成反向电流。由于少数载流子数量少，因此反向电流极小。此时PN结呈现高电阻，处于截止状态。
+
+此即为PN结的单向导电性，PN结是各种半导体器件的共同基础。
+
+\end{document}

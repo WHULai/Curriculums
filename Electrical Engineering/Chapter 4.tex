@@ -1,0 +1,97 @@
+\documentclass[12pt]{article}
+%Also I made it 12pt
+
+\usepackage[fontset=macnew]{ctex}
+\usepackage{physics}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,patterns,chains,arrows.meta, positioning}
+% \usepackage{tkz-euclide}
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\input{PomLingHandoutTemplatePreamble}
+%MJKD note to future self - this preamble is just the section headers + PomLing formatting, but an ordering paradox between the two files made me combine them and re-order fontspec. *shrug* In future if it needs an update, just take the PomLing formatting file and add in the section headers for handouts.
+
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dpderiv}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\dfrac{\rmd #1}{\rmd #2}}
+
+\title{电动机}
+\author{\href{mailto:lai-wei@whu.edu.cn}{Lai Wei}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{三相异步电动机的构造}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = .75\textwidth]{graphics/Screenshot 2025-09-15 at 18.24.13.png}
+    \caption{三相异步电动机的构造}
+    \label{三相异步电动机的构造}
+\end{figure}
+
+\section{三相异步电动机的工作原理}
+
+\subsection{旋转磁场}
+
+\subsubsection{旋转磁场的产生}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = .6\textwidth]{graphics/Screenshot 2025-09-15 at 18.43.21.png}
+    \caption{三相对称电流}
+    \label{三相对称电流}
+\end{figure}
+
+\begin{equation*}
+    \begin{aligned}
+        & i_1 = I_m \sin(\omega t) \\
+        & i_2 = I_m \sin(\omega t - 120^{\circ}) \\
+        & i_3 = I_m \sin(\omega t + 120^{\circ})
+    \end{aligned}
+\end{equation*}
+
+\subsubsection{旋转磁场的极数}
+
+如果将三相定子绕组作不同的安排，也可产生两对、三对或更多刺激对数的旋转磁场。
+
+\subsubsection{旋转磁场的转速}
+
+设电流的频率为\(f_1\)，即电流每秒钟交变\(f_1\)次，则旋转磁场的转速为\(n_0 = 60 f_1\)。当旋转磁场具有\(p\)对极时，磁场的转速为
+\begin{equation}
+    n_0 = \frac{60 f_1}{p}
+\end{equation}
+
+\subsection{电动机的转动原理}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = .2\textwidth]{graphics/Screenshot 2025-09-15 at 18.52.30.png}
+    \caption{转子转动的原理图}
+    \label{转子转动的原理图}
+\end{figure}
+
+在电动势的作用下，闭合的导条中就有电流。这电流与旋转磁场相互左右。而使转子导条受到电磁力\(F\)。电磁力的方向可应用左手定则来确定。由电磁力产生电磁转矩，转子就转动起来。由图\ref{转子转动的原理图}可知，转子转动的方向和磁极旋转的方向相同。
+
+\subsection{转差率}
+
+用\textbf{转差率}\(s\)来表示转子转速\(n\)与磁场转速\(n_0\)相差的程度，即
+\begin{equation}
+    s = \frac{n_0 - n}{n_0}
+    \label{3-2}
+\end{equation}
+
+当\(n=0\)时（启动初始瞬间），\(s=1\)，这时转差率最大。
+
+式\ref{3-2}也可写为
+\begin{equation}
+    n = (1-s)n_0
+\end{equation}
+
+\end{document}
