@@ -10,6 +10,10 @@
 \usepackage{upgreek}
 \usepackage{amsthm}
 \usepackage{amsfonts}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
 \input{PomLingHandoutTemplatePreamble}
 %MJKD note to future self - this preamble is just the section headers + PomLing formatting, but an ordering paradox between the two files made me combine them and re-order fontspec. *shrug* In future if it needs an update, just take the PomLing formatting file and add in the section headers for handouts.
 
@@ -50,5 +54,66 @@
 当在PN结上加反向电压时，P区和N区的多数載流子受阻，难于通过PN结。但P区的少数载流子自由电子和N区的少数载流子空穴在电场作用下却能通过PN结进人对方，形成反向电流。由于少数载流子数量少，因此反向电流极小。此时PN结呈现高电阻，处于截止状态。
 
 此即为PN结的单向导电性，PN结是各种半导体器件的共同基础。
+
+\section{二极管}
+
+\subsection{基本结构}
+
+将PN结加上相应的电极引线和管壳，就成为二极管。按结构分，二极管有点接触型、面接触型和平面型三类。
+
+\subsection{伏安特性}
+
+二极管具有单向导电性，伏安曲线如下
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=.8\textwidth]{graphics/Screenshot 2025-09-23 at 12.21.48.png}
+    \caption{二极管的伏安特性曲线}
+\end{figure}
+
+当外加正向电压很低时，正向电流很小，几乎为零。当正向电压超过一定数值后，电流增大很快。这个一定数值的正向电压称为死区电压。
+
+在二极管上加反向电压时，反向电流很小。但当把反向电流加大至某一数值时，反向电流将突然增大。这种现象称为击穿，二极管失去单向导电性。产生击穿时的电压称为击穿电压。
+
+\subsection{主要参数}
+
+\begin{enumerate}
+    \item 最大整流电流\(I_{OM}\)：二极管长期使用时，允许流过二极管的最大正向平均电流。
+    \item 最高反向工作电压\(U_{RWM}\)：反向击穿电压\(U_{BR}\)的1/2或1/3为最高反向工作电压。
+    \item 反向电流\(I_{RM}\)：二极管在反向工作下的电流就是反向电流。
+    \item 最高工作频率\(f_M\)：二极管工作的上限频率，由PN结的结电容决定。
+\end{enumerate}
+
+\section{稳压二极管}
+
+稳压二极管工作于反向击穿区。反向电压在一定范围内变化时，反向电流很小。当反向电压增高到击穿电压时，反向电流突然剧增，稳压二极管反向击穿。此后，电流虽然在很大范围内变化，但稳压二极管两端的电压变化很小。利用这一特性，稳压二极管在电路中能起稳压作用。稳压二极管与一般二极管不一样，它的反向击穿是可逆的。当去掉反向电压之后，稳压二极管又恢复正常。但是，如果反向电流超过允许范围，稳压吧二极管将会发生热击穿而损坏。
+
+稳压二极管的主要参数有
+
+\begin{enumerate}
+    \item 稳定电\(U_Z\)：稳压管正常工作（反向击穿）时管两端的电压；
+    \item 电压温度系数\(\alpha_U\)
+    \item 稳定电流、最大稳定电流；
+    \item 动态电阻\(r_z = \dfrac{\Delta U_Z}{\Delta I_Z}\)：越小，曲线越陡，稳压性能越好；
+    \item 最大允许耗散功率\(P_{ZM} = U_Z I_{ZM}\)：管子不发生热击穿的最大功率损耗。
+\end{enumerate}
+
+\section{双极型二极管}
+
+双极型二极管又称三极管，通常简称为晶体管。
+
+\subsection{基本结构}
+
+晶体管的结构，目前最常见的有平面型和合金型两类。硅管主要是平面型，锗管都是合金型。
+
+不论平面型或合金型，都分成NPN或PNP三层，因此又把晶体管分为NPN型和PNP型两类。
+
+每一类都分成基区、发射区和集电区，分别引出基极B、发射极E和集电极C。每一类都有两个PN结。基区和发射区之间的结称为发射结，基区和集电区之同的结称为集电结。
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=.6\textwidth]{graphics/Screenshot 2025-09-23 at 12.22.38.png}
+    \caption{晶体管的结构示意图和表示符号}
+\end{figure}
 
 \end{document}
