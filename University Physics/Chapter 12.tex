@@ -326,4 +326,55 @@
 \end{equation}
 当两载流直导线通有同向电流时相互吸引，通有反向电流则相互排斥。
 
+\subsection{均匀磁场对载流线圈的作用}
+
+磁场对线圈有一个磁力矩的作用，其大小为
+\begin{equation*}
+    M = NISB \cos \varphi
+\end{equation*}
+式中\(S = l_1l_2\)为线圈面积。若线圈共有N匝，则
+\begin{equation}
+    M = NISB \cos \varphi
+\end{equation}
+
+令\(\boldsymbol{e}_n\)与\(\boldsymbol{B}\)夹角为\(\theta\)，则
+\begin{equation}
+    M = NISB \sin \theta = m B \sin \theta
+\end{equation}
+式中\(m = NIS\)是线圈磁矩的大小。磁力矩\(\boldsymbol{M}\)的方向与矢量积\(\boldsymbol{e}_n \times \boldsymbol{B}\)的方向相同。由于磁矩也是矢量，其方向就是线圈平面的发现方向，即
+\begin{equation}
+    \boldsymbol{m} = NIS \boldsymbol{e}_n
+\end{equation}
+所以线圈在均匀磁场中受到的磁力矩的矢量表达式为
+\begin{equation}
+    \boldsymbol{M} = \boldsymbol{m} \times \boldsymbol{B}
+\end{equation}
+
+\subsection{磁场力和磁力矩的功}
+
+若回路中的电流\(I\)恒定不变，当导线从\(ab\)位置运动到\(a\prime b \prime\)位置时，磁场力做的总功为
+\begin{equation}
+    A = \int \rmd A = \int_{x_1}^{x_2} IBL \rmd x = IBL (x_2 - x_1) = I \cdot \Delta \varphi
+\end{equation}
+
+当载流线圈在磁力矩的作用下，其法线方向与磁场的夹角由\(\theta_1\)转到\(\theta_2\)时，同时保持线圈中的电流\(I\)恒定不变，则磁力矩所做的功为
+\begin{equation}
+    \begin{aligned}
+        A = \int \rmd A & = \int_{\theta_1}^{\theta_2} I \cdot \rmd (SB \cos \theta) \\
+        & = I (SB \cos \theta_2 - SB \cos \theta_2) = I \cdot (\Phi_1 - \Phi_2) = I \cdot \Delta \Phi
+    \end{aligned}
+\end{equation}
+
+当电流\(I\)恒定不变时，做功可表示为
+\begin{equation}
+    \rmd A = I \cdot \rmd \Phi \quad \text{或} \quad A = \int \rmd A = I \cdot \Delta \Phi
+\end{equation}
+
+如果线圈总匝数为\(N\)，则磁力矩所做的功为
+\begin{equation}
+    \rmd A = NI \cdot \rmd \Phi \quad \text{或} \quad A = \int \rmd A = NI \cdot \Delta \Phi
+\end{equation}
+
+\section{带电粒子在均匀电场和磁场中的运动}
+
 \end{document}
