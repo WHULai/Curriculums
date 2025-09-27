@@ -116,4 +116,55 @@
     \caption{晶体管的结构示意图和表示符号}
 \end{figure}
 
+\subsection{电流分配和放大原理}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=.25\textwidth]{graphics/Screenshot 2025-09-28 at 06.44.14.png}
+    \caption{晶体管电流放大的实验电路}
+\end{figure}
+
+有以下结论：
+
+\begin{enumerate}
+    \item $I_E = I_C + I_B$，符合基尔霍夫电路
+    \item \(I_C\)和\(I_E\)\(I_B\)大得多，\(I_C\)与\(I_B\)的比值为
+        \begin{equation}
+        \beta = \frac{\Delta I_C}{\Delta I_E}
+        \end{equation}式中，\(\beta\)称为\emph{动态电流（交流）放大系数}。
+    \item 当$I_B = 0$（将基极开路）时，\(I_C = I_CEO\)
+    \item 要使晶体管起放大作用，发射结必须正向偏置，而集电结必须反向偏置。
+\end{enumerate}
+
+NPN型：集电极电位最高，发射极电位最低；PNP型：发射极电位最高，集电极电位最低。
+
+NPN型硅管：基极电位比发射极电位大约高0.6 -- 0.7V；PNP型锗管：基极电位比发射极电位大约低0.2 -- 0.3V。
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+    \hline 管脚 & 1 & 2 & 3 \\
+    \hline 电位/V & 4 & 3.4 & 9 \\
+    \hline 电极 & B & E & C \\
+    \hline 类型 & \multicolumn{3}{|c}{ NPN 型 } \\
+    \hline 材料 & \multicolumn{3}{|c}{ 硅管 } \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+    \hline 管脚 & 1 & 2 & 3 \\
+    \hline 电位/V & -6 & -2.3 & -2 \\
+    \hline 电极 & C & B & E \\
+    \hline 类型 & \multicolumn{3}{|c}{ PNP 型 } \\
+    \hline 材料 & \multicolumn{3}{|c}{ 锗管 } \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\subsection{特性曲线}
+
+
 \end{document}
