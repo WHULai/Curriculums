@@ -4870,6 +4870,175 @@
 \end{equation}
 当两载流直导线通有同向电流时相互吸引，通有反向电流则相互排斥。
 
+\subsection{均匀磁场对载流线圈的作用}
+
+磁场对线圈有一个磁力矩的作用，其大小为
+\begin{equation*}
+    M = NISB \cos \varphi
+\end{equation*}
+式中\(S = l_1l_2\)为线圈面积。若线圈共有N匝，则
+\begin{equation}
+    M = NISB \cos \varphi
+\end{equation}
+
+令\(\boldsymbol{e}_n\)与\(\boldsymbol{B}\)夹角为\(\theta\)，则
+\begin{equation}
+    M = NISB \sin \theta = m B \sin \theta
+\end{equation}
+式中\(m = NIS\)是线圈磁矩的大小。磁力矩\(\boldsymbol{M}\)的方向与矢量积\(\boldsymbol{e}_n \times \boldsymbol{B}\)的方向相同。由于磁矩也是矢量，其方向就是线圈平面的发现方向，即
+\begin{equation}
+    \boldsymbol{m} = NIS \boldsymbol{e}_n
+\end{equation}
+所以线圈在均匀磁场中受到的磁力矩的矢量表达式为
+\begin{equation}
+    \boldsymbol{M} = \boldsymbol{m} \times \boldsymbol{B}
+\end{equation}
+
+\subsection{磁场力和磁力矩的功}
+
+若回路中的电流\(I\)恒定不变，当导线从\(ab\)位置运动到\(a\prime b \prime\)位置时，磁场力做的总功为
+\begin{equation}
+    A = \int \rmd A = \int_{x_1}^{x_2} IBL \rmd x = IBL (x_2 - x_1) = I \cdot \Delta \varphi
+\end{equation}
+
+当载流线圈在磁力矩的作用下，其法线方向与磁场的夹角由\(\theta_1\)转到\(\theta_2\)时，同时保持线圈中的电流\(I\)恒定不变，则磁力矩所做的功为
+\begin{equation}
+    \begin{aligned}
+        A = \int \rmd A & = \int_{\theta_1}^{\theta_2} I \cdot \rmd (SB \cos \theta) \\
+        & = I (SB \cos \theta_2 - SB \cos \theta_2) = I \cdot (\Phi_1 - \Phi_2) = I \cdot \Delta \Phi
+    \end{aligned}
+\end{equation}
+
+当电流\(I\)恒定不变时，做功可表示为
+\begin{equation}
+    \rmd A = I \cdot \rmd \Phi \quad \text{或} \quad A = \int \rmd A = I \cdot \Delta \Phi
+\end{equation}
+
+如果线圈总匝数为\(N\)，则磁力矩所做的功为
+\begin{equation}
+    \rmd A = NI \cdot \rmd \Phi \quad \text{或} \quad A = \int \rmd A = NI \cdot \Delta \Phi
+\end{equation}
+
+\chapterimage{miku3.png} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on 
+
+\chapter{磁介质}
+
+\section{磁介质的磁化}
+
+\subsection{磁介质的磁化 \quad 相对磁导率}
+
+被磁化后的磁介质会激发附加磁场\(\boldsymbol{B^\prime}\)，从而影响介质内外的磁场分布。磁介质内的磁感应强度为
+\begin{equation}
+    \boldsymbol{B} = \boldsymbol{B_0} + \boldsymbol{B^ \prime}
+\end{equation}
+
+相对磁导率
+\begin{equation}
+    \mu_r = \frac{B}{B_0}
+\end{equation}
+
+相对磁导率\(\mu_r\)的大小只与磁介质的性质有关，根据\(\mu_r\)的大小将磁介质分成顺磁质、抗磁质和铁磁质三类。
+
+\begin{enumerate}
+    \item 顺磁质\(\mu_r\)略大于1，即\(\mu_r \approx 1 + 10^{-4} > 1\)
+    \item 抗磁质\(\mu_r\)略大于1，即\(\mu_r \approx 1 - 10^{-5} < 1\)
+    \item 铁磁质\(\mu_r >> 1\)，磁化后产生的磁场\(\boldsymbol{B^\prime}\)的方向与原磁场\(\boldsymbol{B_0}\)的方向相同，且\(\boldsymbol{B^\prime} >> \boldsymbol{B_0}\)
+\end{enumerate}
+
+\subsection{磁化强度和磁化电流}
+
+将磁介质中单位体积内分子磁矩的矢量和称为\emph{磁化强度}，并用\(\boldsymbol{M}\)来表示，即
+\begin{equation}
+    \boldsymbol{M} = \frac{\sum \boldsymbol{m_{\text{分子}}}}{\Delta V} = \frac{\sum \boldsymbol{m} + \sum \Delta \boldsymbol{m}}{\Delta V}
+\end{equation}
+在国际单位制中，\(\boldsymbol{M}\)的单位为\(\mathrm{A} \cdot \mathrm{m}^{-1}\)。
+
+设有一“无限长”的载流直螺线管，管内充满均匀磁介质，电流在螺线管内激发匀强磁场。在此磁场中磁介质被均匀磁化，这时磁介质中各个分子电流平面将转到与磁场的方向相垂直。对磁介质的整体来说，未被抵消的分子电流是沿着柱面流动的，称为安培表面电流（或叫磁化面电流），用\(I_s\)表示。沿轴线单位长度上的磁化电流称为磁化电流密度，用\(\boldsymbol{j_s}\)表示。于是，沿棒的轴线方向长为\(L\)的表面上，磁化电流的大小为\(I_s = j_s L\)。介质被磁化的程度越大，介质表面的磁化电流越大。
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = .4\textwidth]{graphics/磁化电流.png}
+\end{figure}
+
+对顺磁性物质，安培表面电流和螺线管上导线中的电流方向相同；对抗磁性物质，则两者方向相反。
+
+即当磁化强度的方向与介质表面平行时，磁介质表面磁化电流密度的大小等于该处磁化强度的大小，即
+\begin{equation}
+    M = \frac{\sum  \boldsymbol{m}_{\text{分子}}}{\Delta V} = \frac{j_s L S}{L S} = j_s
+\end{equation}
+
+如果磁化强度的方向与介质表面不平行，可以证明
+\begin{equation}
+    \boldsymbol{j}_s = \boldsymbol{M} \times \boldsymbol{e}_n
+\end{equation}
+式中\(\boldsymbol{e}_n\)为磁介质表面的外法线单位矢量。该式表明，磁化强度\(\boldsymbol{M}\)沿磁介质表面的切向分量等于介质表面的磁化电流密度。
+
+可以证明：磁化强度\(\boldsymbol{M}\)与磁化电流\(I_s\)之间的普遍关系为
+\begin{equation}
+    \oint_L \boldsymbol{M} \cdot \rmd \boldsymbol{L} = \sum I_s
+    \label{13-6}
+\end{equation}
+
+\section{有磁介质存在时的安培环路定理和高斯定理}
+
+\subsection{有磁介质存在时的安培环路定理 \quad 磁场强度}
+
+有磁介质存在时，空间任意一点的磁感应强度\(\boldsymbol{B}\)应由导线中的传导电流\(I_0\)和磁介质表面的磁环电流\(I_s\)共同产生，因此有磁介质存在时，磁场的安培环路定理应写成
+\begin{equation}
+    \oint_L = \boldsymbol{B} \cdot \rmd \boldsymbol{L} = \mu_0 \left(\sum I_0 + \sum I_s\right)
+\end{equation}
+式中，\(\sum I_0\)是穿过闭合回路\(L\)所围面积的传导电流的代数和，\(\sum I_s\)时磁化电流的代数和。
+
+如果将磁化强度\(\boldsymbol{M}\)与磁化电流\(I_s\)的普遍关系式\ref{13-6}代入上式，则有
+\begin{equation}
+    \oint_L \boldsymbol{B} \cdot \rmd \boldsymbol{L} = \mu_0 \left(\sum I_0 + \oint_L \boldsymbol{M} \cdot \rmd \boldsymbol{L}\right)
+\end{equation}
+或写为
+\begin{equation}
+    \oint_L \left(\frac{\boldsymbol{B}}{\mu_0} - \boldsymbol{M}\right) \cdot \rmd \boldsymbol{L} = \sum I_0
+    \label{13-9}
+\end{equation}
+
+引入一个新的辅助物理量，称为\emph{磁场强度}，用\(\boldsymbol{H}\)表示，并定义
+\begin{equation}
+    \boldsymbol{H} = \frac{\boldsymbol{B}}{\mu_0} - \boldsymbol{M}
+\end{equation}
+则式\ref{13-9}可写为
+\begin{equation}
+    \oint_L \boldsymbol{H} \cdot \rmd \boldsymbol{L} = \sum I_0
+    \label{13-11}
+\end{equation}
+
+式\ref{13-11}称为有磁介质时的安培环路定理，它表明磁场强度\(\boldsymbol{H}\)沿任一闭合回路\(L\)的线积分（或环流）等于通过该回路\(L\)所围成面积的传导电流的代数和。
+
+\subsection{磁介质的磁化特性}
+
+在各向同性的磁介质内部，任意一点的磁化强度\(\boldsymbol{M}\)和磁场强度\(\boldsymbol{H}\)成正比，即
+\begin{equation}
+    \boldsymbol{M} = \chi_m \boldsymbol{H}
+\end{equation}
+式中\(\chi_m\)为比例系数，称为介质的\emph{磁化率}，对于顺磁质，\(\chi_m > 0\)，表明顺磁质中\(\boldsymbol{M}\)和\(\boldsymbol{H}\)的方向相同；对于抗磁质，\(\chi_m > 0\)，表明抗磁质中\(\boldsymbol{M}\)和\(\boldsymbol{H}\)的方向相反。
+
+于是
+\begin{equation}
+    \boldsymbol{B} = \mu_0 (1 + \chi_m)\boldsymbol{H} = \mu_0 \mu_r \boldsymbol{H}= \mu \boldsymbol{H}
+\end{equation}
+式中
+\begin{equation}
+    \mu_r = 1 + \chi_m, \quad \mu = \mu_0\mu_r
+\end{equation}
+\(\mu_r\)和\(\mu_0\)分别称为磁介质的相对磁导率和绝对磁导率（有时也简称为磁导率）。
+
+对于真空中的磁场，由于\(\boldsymbol{M} = 0\)，则\(\chi_m = 0\)，\(\boldsymbol{B} = \mu_0 \boldsymbol{H}\)，这表明真空的相对磁导率\(\mu_r = 1\)。
+
+\subsection{有磁介质存在时的高斯定理}
+
+\begin{equation}
+    \oint_S \boldsymbol{B} \cdot \rmd \boldsymbol{S} = 0
+\end{equation}
+
 %----------------------------------------------------------------------------------------
 %	PRESENTING INFORMATION/RESULTS EXAMPLES CHAPTER
 %----------------------------------------------------------------------------------------
