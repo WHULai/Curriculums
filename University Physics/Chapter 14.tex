@@ -10,6 +10,7 @@
 \usepackage{upgreek}
 \usepackage{amsthm}
 \usepackage{amsfonts}
+\usepackage{mathrsfs}
 % \usepackage{subfigure}
 \usepackage{subcaption}
 \input{PomLingHandoutTemplatePreamble}
@@ -290,5 +291,45 @@ J.C.Maxwell在分析电磁感应现象的基础上，提出了一个大胆的假
 \begin{equation*}
     M = \frac{\varPsi}{I} = \frac{\mu_0 NH}{2 \uppi} \ln \frac{b}{a}
 \end{equation*}
+
+\section{磁场的能量}
+
+回路中的自感电动势为\(\mathcal{E}_L = -L\dderiv{i}{t}\)，根据欧姆定律\(\mathcal{E} - L \dderiv{i}{t} = i R\)，可得电源做的功为
+\begin{equation}
+    \int_{0}^{\infty} \mathcal{E} i \rmd t = \int_{0}^{\infty} i L\deriv{i}{t} \rmd t + \int_{0}^{\infty} R i^2 \rmd t
+\end{equation}
+其中$\int_0^{\infty} R i^2 \rmd t$为在电阻上消耗的焦耳热能; $\int_0^{\infty}-i \mathscr{E}_L \rmd t=\int_0^{\infty} i L \deriv{i}{t} \rmd t=\int_0^{I_0} L i \rmd i=\frac{1}{2} L I^2$为电源克服自感电动势而建立恒定磁场所做的功，该功转化成为电感线圈中的能量储存起来，称为磁能或自感磁能，记为
+\begin{equation}
+W_{\mathrm{m}}=\frac{1}{2} L I^2
+\label{14-30}
+\end{equation}
+
+考虑长直螺线管的特例，给出磁场能量密度公式。截面积为\(S\)、长为\(l\)、\(N\)匝的长直螺线管，管内充满相对磁导率为\(\mu_0\)的各向同性的均匀磁介质，于是螺线管的自感系数为
+$$
+L=\mu_0 \mu_r \frac{N^2}{l} S
+$$
+代入自感磁能公式\ref{14-30}，利用\(\mu = \mu_0 \mu_r\)，\(B = \mu n I\)，得出
+\begin{equation}
+\begin{aligned}
+W_{\mathrm{m}} & =\frac{1}{2} L I^2=\frac{1}{2} \mu \frac{N^2}{l} S I^2 \\
+& =\frac{1}{2}\left(\mu \frac{N}{l} I\right)\left(\frac{N}{l} I\right)(S l)=\frac{1}{2} B H V
+\end{aligned}
+\end{equation}
+式中\(V=Sl\)是螺线管的体积，即螺线管内磁场所在空间的体积。那么单位体积磁场的能量，即磁场的能量密度为
+\begin{equation}
+w_{\mathrm{m}}=\frac{W_{\mathrm{m}}}{V}=\frac{1}{2} B H=\frac{1}{2 \mu} B^2
+\label{14-32}
+\end{equation}
+或用矢量表示，为
+\begin{equation}
+    w_m = \overrightarrow{B} \cdot \overrightarrow{H}
+    \label{14-33}
+\end{equation}
+公式虽由长直螺线管特例导出但普遍适用。对于非均匀磁场，总的磁场能量为
+\begin{equation}
+W_{\mathrm{m}}=\int_V w_{\mathrm{m}} \mathrm{~d} V=\int_V \frac{1}{2} \boldsymbol{B} \cdot \boldsymbol{H} \mathrm{~d} V
+\label{14-34}
+\end{equation}
+上式的积分范围为磁场占有的全部空间。式\ref{14-33}和式\ref{14-34}表明，磁场的能量密度和能量完全由描述磁场的矢量\(\overrightarrow{B}\)和\(\overrightarrow{H}\)确定。
 
 \end{document}
