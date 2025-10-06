@@ -5158,6 +5158,46 @@ J.C.Maxwell在分析电磁感应现象的基础上，提出了一个大胆的假
 
 感生电场与静电场唯一的共同点就是对电荷的作用规律相同，即电荷受到的两种电场力钧可以用\(\boldsymbol{F} = q \boldsymbol{E}\)表示。
 
+\begin{exercise}
+    在半径为\(R\)的圆柱形空间中存在着均匀磁场，磁场方向与圆柱的轴线平行。如图所示，有一长为\(L\)的金属棒放在磁场中，棒的两端恰好在圆周的边缘上。设\(B\)随时间的变化率为\(\dderiv{B}{t}\)。求证：棒上感应电动势的大小为
+    \begin{equation*}
+        \varepsilon=\frac{L}{2} \sqrt{R^2-(L / 2)^2} \deriv{B}{t}
+    \end{equation*}
+
+    \begin{center}
+        \includegraphics[width=.25\textwidth]{graphics/感生电动势题图.pdf}
+    \end{center}
+\end{exercise}
+
+    \textbf{Solution}
+    \vspace{1em}
+
+过圆心\(O\) 作金属棒的垂线，垂足为\(O^\prime\)，在棒上距\(O^\prime\)为\(x\)处取“棒元”\(\rmd x\)，如图所示。
+
+\begin{center}
+    \includegraphics[width=.25\textwidth]{graphics/感生电动势解图.pdf}
+\end{center}
+
+由例题，在\(r < R\)的区域，感生电场强度的大小为
+\begin{equation*}
+    E_B=\frac{r}{2} \frac{\mathrm{~d} B}{\mathrm{~d} t}
+\end{equation*}
+方向垂直于径向。则该“棒元”上的感生电动势为
+\begin{equation*}
+\begin{aligned}
+& \mathrm{d} \varepsilon=\boldsymbol{E}_B \cdot \mathrm{~d} \boldsymbol{x}=E_B \cos \theta \mathrm{~d} x \\
+& =\frac{r}{2} \frac{\mathrm{~d} B}{\mathrm{~d} t} \cdot \frac{h}{r} \cdot \mathrm{~d} x=\frac{h}{2} \frac{\mathrm{~d} B}{\mathrm{~d} t} \mathrm{~d} x
+\end{aligned}
+\end{equation*}
+所以棒ab上的感生电动势的大小为
+\begin{equation*}
+\begin{gathered}
+\varepsilon_{a b}=\int \mathrm{d} \varepsilon=\int_{x_a}^{x_b} \frac{h}{2} \frac{\mathrm{~d} B}{\mathrm{~d} t} \mathrm{~d} x=\frac{1}{2} h \frac{\mathrm{~d} B}{\mathrm{~d} t}\left(x_a-x_b\right)=\frac{1}{2} h L \frac{\mathrm{~d} B}{\mathrm{~d} t} \\
+=\frac{L}{2} \sqrt{R^2-(L / 2)^2} \frac{\mathrm{~d} B}{\mathrm{~d} t}
+\end{gathered}
+\end{equation*}
+
+
 \section{自感与互感}
 
 \subsection{自感电动势 \quad 自感}
