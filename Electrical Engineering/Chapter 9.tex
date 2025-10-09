@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 %Also I made it 12pt
 
-\usepackage[fontset=macnew]{ctex}
+\usepackage{ctex}
 \usepackage{physics}
 \usepackage{tikz}
 \usetikzlibrary{3d,calc,patterns,chains,arrows.meta, positioning}
@@ -166,5 +166,21 @@ NPN型硅管：基极电位比发射极电位大约高0.6 -- 0.7V；PNP型锗管
 
 \subsection{特性曲线}
 
+\subsection{输入特性曲线}
+
+对硅管而言，当\(U_{CE}>1V\)时，集电结已反向偏置。可以把从发射区发射到基区的电子中的绝大部分拉入集电区。此后，\(U_{CE}V\)对\(I_{B}\)就不再有明显的影响。 就是说\(U_{CE}>1V\)后的输入特性曲线基本上是重合的。所以，通常只画出\(U_{CE}>1V\)的一条输入特性曲线。
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=.2\textwidth]{graphics/3DG6晶体管的输入特性曲线.png}
+    \caption{3DG6晶体管的输入特性曲线}
+\end{figure}
+
+\subsection{输入特性曲线}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=.25\textwidth]{graphics/屏幕截图 2025-10-09 090405.png}
+    \caption{3DG6晶体管的输出特性曲线}
+\end{figure}
 
 \end{document}
