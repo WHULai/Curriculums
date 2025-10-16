@@ -58,4 +58,64 @@ I=\frac{1}{2} u \varepsilon E_0^2
 \end{equation}
 式中\(\varepsilon_r\)、\(\mu_r\)分别是介质的相对电容率和相对磁导率。对于各向同性的均匀介质，其折射率是一个常量。
 
+\subsection{相干光的获得方法}
+
+从普通光源的发光机制可知，来自两个独立光源的光是非相干光，而来自同一光源的两个不同部分的光也不是相干光。利用普通光源获得相干光的方法的基本原理是把由光源上同一点发出的光设法分成两部分，然后再使这两部分叠加起来。由于这两部分光实际上来自同一点光源，所以它们满足相干条件，因而是相干光。从普通光源获得相干光的方法有两种。一种称为\emph{分波振面法}，就是在一个电光源发出的波阵面上取出两个满足相干条件的两个子光源，典型的例子就是杨氏双缝干涉实验中的两个狭缝。另一种称为分振幅法，就是当光投射到两种透明介质的分界面上时，利用反射和折射将光波分成两部分或若干份，由于这几部分光波都来自同一个波列，所以也满足相干条件，例如薄膜干涉、迈克耳孙干涉仪等九江市利用了这种方法。
+
+\subsection{光波的相干叠加与非相干叠加}
+
+\subsubsection{非相干叠加}
+
+若\(S_1\)、\(S_2\)是两个独立的光源，则它们之间的初相位之差\(\left[\varphi_{20} (t) - \varphi_{10} (t)\right]\)是随时间而变的，\(\cos \Delta \varphi_P\)在\(\left[-1, +1\right]\)之间随机取值，于是在足够长的观测时间\(\tau\)内，\(\cos \Delta \varphi_P\)的时间平均值一定是零，即
+\begin{equation}
+    \frac{1}{\tau} \int_{0}^{\tau} \cos \Delta \varphi_P \rmd t = 0
+\end{equation}
+于是P点的光强为
+\begin{equation}
+    I = I_1 + I_2
+\end{equation}
+即交叠区域中任一点的总光强都等于各列光波在该点点光强之和，这称为非相干叠加。
+
+\subsubsection{相干叠加}
+
+若\(S_1\)、\(S_2\)是两个相干光源，即它们之间的初相位之差\(\varphi_{20} (t) - \varphi_{10} (t) = \varphi_{20} - \varphi_{10}\)与时间\(t\)无关，则\(\cos \Delta \varphi_P\)在观察时间内也与时间\(t\)无关，即
+\begin{equation}
+    \frac{1}{\tau} \int_{0}^{\tau} \cos \Delta \varphi_P \rmd t = \cos \Delta \varphi_P
+\end{equation}
+式中
+\begin{equation}
+    \Delta \varphi_P = \varphi_{20} - \varphi_{10} - \frac{2 \uppi}{\lambda} (r_2 - r_1)
+\end{equation}
+由此可得P点的光强为
+\begin{equation}
+I=I_1+I_2+2 \sqrt{I_1 I_2} \cos \Delta \varphi_P=E_{10}^2+E_{20}^2+2 E_{10} E_{20} \cos \Delta \varphi_P
+\end{equation}
+上式表明，在叠加区域内有些点光强始终加强，有些点光强始终减弱，即各点光强分布不随时间变化，称为相干叠加。
+
+当\(\Delta \varphi_P = \pm 2k \uppi, k=0,1,2,\cdots\)时
+\begin{equation}
+E_{P 0}=E_{\max }=E_{10}+E_{20}, \quad I=I_{\max }=\left(E_{10}+E_{20}\right)^2
+\end{equation}
+这称为两列光波在P点满足干涉加强（或相长干涉）条件，P点为第\(k\)级明条纹中心。
+
+当\(\Delta \varphi_P = \pm (2k-1) \uppi, k=1,2,3,\cdots\)时
+\begin{equation}
+E_{P 0}=E_{\min }=\left|E_{10}-E_{20}\right|, \quad I=I_{\min }=\left|E_{10}-E_{20}\right|^2
+\end{equation}
+这称为两列光波在P点满足干涉减弱（或相消干涉）条件，P点为暗条纹中心。
+
+特别是当\(E_{10} = E_{20} = E_{0}\)时，\(I_{\mathrm{max}} = 4 E_0^2 = 4 I_0, I_{\mathrm{min}} = 0\)。
+
+\subsubsection{干涉条纹的对比度}
+
+干涉条纹的对比度\(\eta\)定义为
+\begin{equation}
+    \eta = \frac{I_{\mathrm{max}} - I_{\mathrm{min}}}{I_{\mathrm{max}} + I_{\mathrm{min}}}
+\end{equation}
+对比度的取值范围\(0<\eta<1\)，其中\(\eta=0\)对应于非相干叠加情形；\(\eta=1\)对应于干涉效果最好、干涉条纹明暗对比度最强的相干叠加情形。因此，要获得清晰的干涉图案，除了两列光波需满足振动方向相同、频率相同、相位差恒定这三个必要的干涉 条件之外，还要满足以下两个补充条件：
+\begin{enumerate}
+    \item 参与干涉的两列光波的振幅不能相差太大。
+    \item 场点P到两光源\(S_1\)、\(S_2\)的距离之差\(r_2 - r_1\)不能太大，不能超过一个光源的最大相干长度\(L_m\)。
+\end{enumerate}
+
 \end{document}
