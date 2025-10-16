@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+%Also I made it 12pt
+
+\usepackage[fontset=macnew]{ctex}
+\usepackage{physics}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,patterns}
+% \usepackage{tkz-euclide}
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+% \usepackage{subfigure}
+\usepackage{subcaption}
+\input{PomLingHandoutTemplatePreamble}
+%MJKD note to future self - this preamble is just the section headers + PomLing formatting, but an ordering paradox between the two files made me combine them and re-order fontspec. *shrug* In future if it needs an update, just take the PomLing formatting file and add in the section headers for handouts.
+
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\deriv}[2]{\frac{\rmd #1}{\rmd #2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dpderiv}[2]{\dfrac{\partial #1}{\partial #2}}
+\newcommand{\dderiv}[2]{\dfrac{\rmd #1}{\rmd #2}}
+
+\title{光的干涉}
+\author{\href{mailto:lai-wei@whu.edu.cn}{Lai Wei}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{光的相干性}
+
+\subsection{光的电磁理论}
+
+根据光的电磁理论，光是一种波长在一定范围内的电磁波。
+
+对于一系列沿\(x\)轴正方向传播的单色平面电磁波，其波函数（波动表达式）可以写为
+\begin{equation}
+E(x, t)=E_0 \cos \omega\left(t-\frac{x}{u}\right)=E_0 \cos \left(\omega t-\frac{2 \pi}{\lambda} x\right)
+\end{equation}
+\begin{equation}
+H(x, t)=H_0 \cos \omega\left(t-\frac{x}{u}\right)=H_0 \cos \left(\omega t-\frac{2 \pi}{\lambda} x\right)
+\end{equation}
+式中\(u = \dfrac{1}{\sqrt{\varepsilon \mu}}\)式电磁波在介质中的传播速度。
+
+光的强度就是电磁波的平均能流密度，并用\(I\)表示，即
+\begin{equation}
+I=\frac{1}{2} u \varepsilon E_0^2
+\label{17-3}
+\end{equation}
+式\ref{17-3}表明，在同一种均匀介质中，光的强度与光波中电场强度的振幅的平方成正比。人们往往将电场强度振幅的平方\(E_0^2\)称为相对光强，通常也简称光强。
+
+人们将光在真空中的传播速度与光在介质中的传播速度之比称为该介质的折射率，用\(n\)表示，即
+\begin{equation}
+    n = \frac{c}{u} = \sqrt{\varepsilon_r \mu_r}
+\end{equation}
+式中\(\varepsilon_r\)、\(\mu_r\)分别是介质的相对电容率和相对磁导率。对于各向同性的均匀介质，其折射率是一个常量。
+
+\end{document}
