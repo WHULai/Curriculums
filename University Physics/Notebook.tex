@@ -5414,6 +5414,149 @@ W_{\mathrm{m}}=\int_V w_{\mathrm{m}} \mathrm{~d} V=\int_V \frac{1}{2} \overright
 \end{equation}
 上式的积分范围为磁场占有的全部空间。式\ref{14-33}和式\ref{14-34}表明，磁场的能量密度和能量完全由描述磁场的矢量\(\overrightarrow{B}\)和\(\overrightarrow{H}\)确定。
 
+\chapterimage{miku2.jpg} % Chapter heading image
+\chapterspaceabove{6.25cm} % Whitespace from the top of the page to the chapter title on chapter pages
+\chapterspacebelow{7.5cm} % Amount of vertical whitespace from the top margin to the start of the text on chapter pages
+
+\chapter{电磁场与电磁波}
+
+\section{位移电流 \quad 全电流安培环路定理}
+
+\subsection{位移电流}
+
+麦克斯韦认为，可以把电位移通量对时间的变化率看做是一种电流，称作是位移电流，用\(I_D\)表示；把电位移矢量对时间的变化率称为位移电流密度，用\(j_D\)表示。于是定义
+
+\begin{definition}[位移电流密度]
+\begin{equation}
+    \overrightarrow{j}_D = \pderiv{\overrightarrow{D}}{t}
+\end{equation}
+\end{definition}
+
+\begin{definition}[位移电流]
+    \begin{equation}
+    I_{\mathrm{d}}=\deriv{\varPsi}{t} = \int_S \pderiv{\overrightarrow{D}}{t} \cdot \rmd \overrightarrow{S}
+    \end{equation}
+\end{definition}
+
+\subsection{全电流安培环路定理}
+
+麦克斯韦认为：在非恒定电流的电路中，存在着两种电流，一种是电荷的定向移动形成的传导电流，另一种是电位移通量的变化引起的位移电流，两种电流的总和称为全电流，并用\(I_S\)表示，即
+\begin{equation}
+    I_S = I_C + I_D = \int_S \overrightarrow{j}_C \cdot \rmd \overrightarrow{S} + \int \pderiv{\overrightarrow{D}}{t} \cdot \rmd S
+\end{equation}
+在非恒定电流情况下，电路中的传导电流虽然不连续，但是全电流总是连续的。
+
+\begin{theorem}[全电流安培环路定理]
+    在考虑了全电流概念以后，麦克斯韦将磁场的安培环路定理推广为
+    \begin{equation}
+    \oint_L \overrightarrow{H} \cdot \mathrm{~d} \overrightarrow{L}=I_{\mathrm{S}}=I_{\mathrm{C}}+I_{\mathrm{D}}=\int_S \overrightarrow{j}_{\mathrm{C}} \cdot \mathrm{~d} \overrightarrow{S}+\int_S \frac{\partial \overrightarrow{D}}{\partial t} \cdot \mathrm{~d} \overrightarrow{S}
+    \label{15-4}
+    \end{equation}
+    式\ref{15-4}称为全电流安培环路定理。该定理表明，磁场强度对于任意闭合回路的环流等于该闭合回路所包围的（也就是穿过以该回路为周界的任意曲面的）全电流。式\ref{15-4}中的\(\overrightarrow{H}\)是空间所有电流（闭合回路内外的所有传导电流和位移电流）所共同产生的。该定理的意义在于指出了传导电流和位移电流都会激发涡施磁场，并且以完全相同的方式激发磁场。由于位移电流本质上就是变化的电场，因此麦克斯书关于位移电流假设的本质是认为变化的电场也能激发涡旋磁场。
+\end{theorem}
+
+应当注意：传导电流和位移电流尽管在激发涡旋磁场的规律上是相同的，但它们是两种完全不同的电流。
+
+\section{麦克斯韦方程组}
+
+\subsection{麦克斯韦方程组的积分形式}
+
+在19世纪中期确立了电荷、电流和电场、磁场之间的普遍关系后，麦克斯韦建立了统一的电磁场理论。他指出，除静止电荷激发无旋电场外，变化的磁场还将激发涡旋电场；同时，变化的电场和传导电流一样激发涡旋磁场。这就是说，变化的电场和变化的磁场不是彼此孤立的，它们相互联系、相互激发组成一个统一的电磁场。下面我们根据麦克斯韦的这些基本概念，首先介绍由他总结出来的麦克斯韦电磁场方程组(Maxwell equations)的积分形式。
+
+麦克斯韦认为，在一般情况下，空间的总电场强度\(\overrightarrow{E}\)是静电场\(\overrightarrow{E}_{\text{静}}\)和感生电场\(\overrightarrow{E}_{\text{感}}\)的矢量和，即
+\begin{equation}
+    \overrightarrow{E} = \overrightarrow{E}_{\text{静}} + \overrightarrow{E}_{\text{感}}
+\end{equation}
+同理，总电位矢量\(\overrightarrow{D}\)为
+\begin{equation}
+    \overrightarrow{D} = \overrightarrow{D}_{\text{静}} + \overrightarrow{D}_{\text{感}}
+\end{equation}
+
+由于静电场是有源、无旋的，感生电场是无源、有旋的，所以总电流强度\(\overrightarrow{E}\)对任意闭合回路\(L\)的环流为
+\begin{equation*}
+\begin{aligned}
+\oint_L \overrightarrow{E} \cdot \mathrm{~d} \overrightarrow{L} & =\oint_L\left(\overrightarrow{E}_{\text {静}}+\overrightarrow{E}_{\text {感}}\right) \cdot \mathrm{d} \overrightarrow{L} \\
+& =\oint_L \overrightarrow{E}_{\text {静}} \cdot \mathrm{d} \overrightarrow{L}+\oint_L \overrightarrow{E}_{\text {感}} \cdot \mathrm{d} \overrightarrow{L}=0+\left(-\frac{\mathrm{d} \Phi}{\mathrm{~d} t}\right)=-\int_S \frac{\partial \overrightarrow{B}}{\partial t} \cdot \mathrm{~d} \overrightarrow{S}
+\end{aligned}
+\end{equation*}
+即
+\begin{equation}
+\oint_L \overrightarrow{E} \cdot \mathrm{~d} \overrightarrow{L}=-\int_S \frac{\partial \overrightarrow{B}}{\partial t} \cdot \mathrm{~d} \overrightarrow{S}
+\label{15-7}
+\end{equation}
+式中\(S\)是以\(L\)为周界的任一曲面。总电位移矢量\(\overrightarrow{D}\)对任意闭合曲面的通量为
+\begin{equation*}
+\oint_S \overrightarrow{D} \cdot \mathrm{~d} \overrightarrow{S}=\oint_S \overrightarrow{D}_{\text {静}} \cdot \mathrm{d} \overrightarrow{S}+\oint_S \overrightarrow{D}_{\text {感 }} \cdot \mathrm{d} \overrightarrow{S}=\sum q+0=\int_V \rho \mathrm{~d} V
+\end{equation*}
+即
+\begin{equation}
+\oint_S \overrightarrow{D} \cdot \mathrm{~d} \overrightarrow{S}=\int_V \rho \mathrm{~d} V
+\label{15-8}
+\end{equation}
+式中的积分体积\(V\)是闭合曲面\(S\)所围的体积\(\rho\)是自由电荷密度。
+
+对于磁场，麦克斯韦同样认为，在一般情况下，空间的磁场是由恒定电流和位移电流共同产生的，磁场的环路定理应服从全电流安培环路定理，即
+\begin{equation}
+\oint_L \overrightarrow{H} \cdot \mathrm{~d} \overrightarrow{L}=\int_S \overrightarrow{j}_{\mathrm{C}} \cdot \mathrm{~d} \overrightarrow{S}+\int_S \frac{\partial \overrightarrow{D}}{\partial t} \cdot \mathrm{~d} \overrightarrow{S}
+\label{15-9}
+\end{equation}
+由于恒定电流和位移电流都是无源的涡旋场，所以，磁场的高斯定理的形式不变，即
+\begin{equation}
+\oint_S \overrightarrow{B} \cdot \mathrm{~d} \overrightarrow{S}=0
+\label{15-10}
+\end{equation}
+
+由方程式\ref{15-7}、方程式\ref{15-8}、方程式\ref{15-9}、方程式\ref{15-10}所构成的方程组
+\begin{equation}
+\displaystyle
+\left\{\begin{array}{l}
+\oint_S \overrightarrow{D} \cdot \mathrm{~d} \overrightarrow{S}=\int_V \rho \mathrm{~d} V \\
+\oint_L \overrightarrow{E} \cdot \mathrm{~d} \overrightarrow{L}=-\int_S \frac{\partial \overrightarrow{B}}{\partial t} \cdot \mathrm{~d} \overrightarrow{S} \\
+\oint_S \overrightarrow{B} \cdot \mathrm{~d} \overrightarrow{S}=0 \\
+\oint_L \overrightarrow{H} \cdot \mathrm{~d} \overrightarrow{L}=\int_S \overrightarrow{j}_{\mathrm{C}} \cdot \mathrm{~d} \overrightarrow{S}+\int_S \frac{\partial \overrightarrow{D}}{\partial t} \cdot \mathrm{~d} \overrightarrow{S}
+\end{array}\right.
+\end{equation}
+就是著名的麦克斯韦方程组的积分形式。
+
+\subsection{麦克斯韦方程组的微分形式}
+
+\section{电磁波}
+
+\subsection{LC电磁振荡}
+
+一个不计电阻的LC电路，就可以实现电磁振荡，故也称LC振荡电路。
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = .8\textwidth]{graphics/LC振荡电路.png}
+\end{figure}
+
+可以证明，LC振荡电路的振荡频率为
+\begin{equation}
+    \nu = \frac{1}{2 \uppi \sqrt{LC}}
+\end{equation}
+
+\subsection{电磁波的产生和传播}
+
+我们将电矩随时间作迅速周期性变化的电偶极子称为振荡电偶极子。最简单的振荡电偶极子模型是电矩随时间按余弦或正弦规律进行变化，即
+\begin{equation*}
+    \overrightarrow{p} = \overrightarrow{p}_0 \cos \omega t
+\end{equation*}
+
+若以振荡电偶极子的中心位坐标原点，以振子轴线为极轴的球坐标来描述电磁场，通过求解麦克斯韦方程组可以得到，在\(r >> \lambda\)的波长总任意一点P处的电场强度\(\overrightarrow{E}\)和磁场强度\(\overrightarrow{H}\)的数值分别为
+\begin{equation}
+    E(r, t)=\frac{p_0 \omega^2 \sin \theta}{4 \pi \varepsilon u^2 r} \cos \omega\left(t-\frac{r}{u}\right)
+\end{equation}
+\begin{equation}
+    H(r, t)=\frac{p_0 \omega^2 \sin \theta}{4 \pi u r} \cos \omega\left(t-\frac{r}{u}\right)
+\end{equation}
+式中\(\omega\)为振荡电偶极子的角频率，\(p_0\)为振荡电偶极子电矩的振幅，\(r\)为振荡电偶极子中心到P点的位矢\(\overrightarrow{r}\)的大小，\(\theta\)为位矢\(\overrightarrow{r}\)与极轴的夹角，\(u\)为电磁波的传播速度。\(\varepsilon = \varepsilon_0 \varepsilon_r\)，\(\mu = \mu_0 \mu_r\)
+
+可以证明，电磁波的传播速度为
+\begin{equation}
+    u = \frac{1}{\sqrt{\mu \varepsilon}}
+\end{equation}
+
+此外，在波长中任一点P处，\(\overrightarrow{E}\)和\(\overrightarrow{H}\)的方向与波的传播方向垂直，并成右手螺旋关系。
 
 %----------------------------------------------------------------------------------------
 %	PRESENTING INFORMATION/RESULTS EXAMPLES CHAPTER

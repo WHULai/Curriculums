@@ -54,12 +54,12 @@ I_{\mathrm{d}}=\deriv{\varPsi}{t} = \int_S \pderiv{\overrightarrow{D}}{t} \cdot 
 \end{equation}
 在非恒定电流情况下，电路中的传导电流虽然不连续，但是全电流总是连续的。
 
-在考虑了全电流概念以后，麦克斯韦将磁场的安增环路定理推广为
+在考虑了全电流概念以后，麦克斯韦将磁场的安培环路定理推广为
 \begin{equation}
 \oint_L \overrightarrow{H} \cdot \mathrm{~d} \overrightarrow{L}=I_{\mathrm{S}}=I_{\mathrm{C}}+I_{\mathrm{D}}=\int_S \overrightarrow{j}_{\mathrm{C}} \cdot \mathrm{~d} \overrightarrow{S}+\int_S \frac{\partial \overrightarrow{D}}{\partial t} \cdot \mathrm{~d} \overrightarrow{S}
 \label{15-4}
 \end{equation}
-式\ref{15-4}称为全电流安培环路定理。该定理表明，磁场强度对于任意闭合回路的环流等于该闭合回路所包围的（也就是穿过以该回路为周界的任意曲面的）全电流。式\ref{15-4}中的\(\overrightarrow{H}\)是空间所有电流（闭合回路内外的所有传导电流和位移电流）所共同产生的。该定理的意义在于指出了传导电流和位移电流都会激发涡施磁场，并且以完全相同的方式激发磁场。由于位移电流本质上就是变化的电场，因此麦克斯书关于位移电流假设的本质是认为变化的电场也能識发涡旋磁场。
+式\ref{15-4}称为全电流安培环路定理。该定理表明，磁场强度对于任意闭合回路的环流等于该闭合回路所包围的（也就是穿过以该回路为周界的任意曲面的）全电流。式\ref{15-4}中的\(\overrightarrow{H}\)是空间所有电流（闭合回路内外的所有传导电流和位移电流）所共同产生的。该定理的意义在于指出了传导电流和位移电流都会激发涡施磁场，并且以完全相同的方式激发磁场。由于位移电流本质上就是变化的电场，因此麦克斯书关于位移电流假设的本质是认为变化的电场也能激发涡旋磁场。
 
 应当注意：传导电流和位移电流尽管在激发涡旋磁场的规律上是相同的，但它们是两种完全不同的电流。
 
@@ -125,5 +125,43 @@ I_{\mathrm{d}}=\deriv{\varPsi}{t} = \int_S \pderiv{\overrightarrow{D}}{t} \cdot 
 就是著名的麦克斯韦方程组的积分形式。
 
 \subsection{麦克斯韦方程组的微分形式}
+
+\section{电磁波}
+
+\subsection{LC电磁振荡}
+
+一个不计电阻的LC电路，就可以实现电磁振荡，故也称LC振荡电路。
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width = .8\textwidth]{graphics/LC振荡电路.png}
+\end{figure}
+
+可以证明，LC振荡电路的振荡频率为
+\begin{equation}
+    \nu = \frac{1}{2 \uppi \sqrt{LC}}
+\end{equation}
+
+\subsection{电磁波的产生和传播}
+
+我们将电矩随时间作迅速周期性变化的电偶极子称为振荡电偶极子。最简单的振荡电偶极子模型是电矩随时间按余弦或正弦规律进行变化，即
+\begin{equation*}
+    \overrightarrow{p} = \overrightarrow{p}_0 \cos \omega t
+\end{equation*}
+
+若以振荡电偶极子的中心位坐标原点，以振子轴线为极轴的球坐标来描述电磁场，通过求解麦克斯韦方程组可以得到，在\(r >> \lambda\)的波长总任意一点P处的电场强度\(\overrightarrow{E}\)和磁场强度\(\overrightarrow{H}\)的数值分别为
+\begin{equation}
+    E(r, t)=\frac{p_0 \omega^2 \sin \theta}{4 \pi \varepsilon u^2 r} \cos \omega\left(t-\frac{r}{u}\right)
+\end{equation}
+\begin{equation}
+    H(r, t)=\frac{p_0 \omega^2 \sin \theta}{4 \pi u r} \cos \omega\left(t-\frac{r}{u}\right)
+\end{equation}
+式中\(\omega\)为振荡电偶极子的角频率，\(p_0\)为振荡电偶极子电矩的振幅，\(r\)为振荡电偶极子中心到P点的位矢\(\overrightarrow{r}\)的大小，\(\theta\)为位矢\(\overrightarrow{r}\)与极轴的夹角，\(u\)为电磁波的传播速度。\(\varepsilon = \varepsilon_0 \varepsilon_r\)，\(\mu = \mu_0 \mu_r\)
+
+可以证明，电磁波的传播速度为
+\begin{equation}
+    u = \frac{1}{\sqrt{\mu \varepsilon}}
+\end{equation}
+
+此外，在波长中任一点P处，\(\overrightarrow{E}\)和\(\overrightarrow{H}\)的方向与波的传播方向垂直，并成右手螺旋关系。
 
 \end{document}
