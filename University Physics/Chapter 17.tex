@@ -118,4 +118,57 @@ E_{P 0}=E_{\min }=\left|E_{10}-E_{20}\right|, \quad I=I_{\min }=\left|E_{10}-E_{
     \item 场点P到两光源\(S_1\)、\(S_2\)的距离之差\(r_2 - r_1\)不能太大，不能超过一个光源的最大相干长度\(L_m\)。
 \end{enumerate}
 
+\section{分波阵面法产生的光的干涉}
+
+\subsection{杨氏双缝干涉实验}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=.6\textwidth]{graphics/双缝干涉实验.png}
+    \caption{杨氏双缝干涉实验装置示意图}
+\end{figure}
+
+设观测屏上任意一点P到坐标原点\(O\)的距离为\(x\)，设\(PS_1 = r_1\)、\(PS_2 = r_2\)，并假设\(SS_1=SS_2\)，则从双缝\(S_1\)、\(S_2\)发出的光波传播到P点时的波程差为
+\begin{equation}
+    \delta = r_2 - r_1
+\end{equation}
+由图中几何关系可知
+\begin{equation*}
+r_1=\sqrt{\left(x-\frac{d}{2}\right)^2+D^2}, \quad r_2=\sqrt{\left(x+\frac{d}{2}\right)^2+D^2}
+\end{equation*}
+由上面两式可得
+\begin{equation}
+    r_2^2 - r_1^2 = (r_2 - r_1)(r_2 + r_1) = 2 d x
+\end{equation}
+在一般的双缝干涉实验中，\(d\)不足1mm，\(D\)通常有几米，故总是可以满足\(D >> d\)，所以
+\begin{equation}
+    r_2 + r_1 \approx 2D
+\end{equation}
+由此可得
+\begin{equation}
+\delta=r_2-r_1=\frac{d}{D} x
+\end{equation}
+可得各级明条纹中心的位置条件为
+\begin{equation}
+\delta=\frac{d}{D} x= \pm k \lambda
+\end{equation}
+即
+\begin{equation}
+x_k= \pm k \frac{D}{d} \lambda \quad(k=0,1,2, \cdots)
+\end{equation}
+\(k=0\)的明纹常被称为中央明纹或零级明纹。
+
+各级暗条纹中心的位置条件为
+\begin{equation}
+\delta=\frac{d}{D} x= \pm (2k-1) \frac{\lambda}{2}
+\end{equation}
+即
+\begin{equation}
+x_k= \pm (2k-1) \frac{D}{d} \frac{\lambda}{2} \quad(k=1,2,3, \cdots)
+\end{equation}
+综上，相邻两条明条纹（或暗条纹）之间的距离\(\Delta x\)为
+\begin{equation}
+\Delta x=x_{k+1}-x_k=\frac{D}{d} \lambda
+\end{equation}
+
 \end{document}
