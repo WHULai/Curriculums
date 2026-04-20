@@ -4,20 +4,27 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{xeCJK}
+\setCJKmainfont{Source Han Serif}
 \usepackage[onehalfspacing]{setspace}
-\usepackage{graphicx} % for including graphics
-\usepackage[breaklinks=true,colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref} % for references
-\usepackage{amsmath,amsthm,amssymb} % Mathematical environment 
-\usepackage{icomma} % Intelligent comma, selects the correct spacing between decimal numbers and in formulas.
-\usepackage[english]{babel} % English labels for table of contents etc
-\usepackage{csquotes} % Recommended for biblatex with babel/polyglossia
-\usepackage[T1]{fontenc}    % different font encoding for correct hyphenation
-\usepackage[locale = US,space-before-unit=true,per-mode = symbol]{siunitx} % Better units
-\usepackage{placeins} % Definiert den Befehl “\FloatBarrier”, der die Ausgabe der davor eingebundenen Bilder erzwingt, befor der Text weiter geht. (Mit vorsicht zu verwenden)
-\usepackage[natbib,abbreviate=true,doi=false,style=numeric-comp,giveninits=true,sorting=none]{biblatex} % Modernes Paket zur Erzeugung von Bibliografien (benötigt biber!)
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark, fit, shapes.geometric, positioning, shapes.arrows}
+\usepackage[breaklinks=true,colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{icomma}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[T1]{fontenc}
+\usepackage[locale = US,space-before-unit=true,per-mode = symbol]{siunitx}
+\usepackage{placeins}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[natbib,abbreviate=true,doi=false,style=numeric-comp,giveninits=true,sorting=none]{biblatex}
+\usepackage{xcolor}
 
-\addbibresource{MyBibliography.bib} % Ort der .bib Datei, die die Datenbank für Literatur/Referenzen enthält.
+\definecolor{whusakura}{RGB}{248, 163, 188}
 
+\addbibresource{MyBibliography.bib}
 \graphicspath{{Bilder/}}
 
 \DeclareSIUnit{\dBm}{dBm}
@@ -26,7 +33,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %
-\title{\includegraphics[width=5cm]{whu-logo.png} \\ Report Title}
+\title{\includegraphics[width=7cm]{whu-logo.png} \\ 《机器人学》课程笔记}
 \author{魏崃\thanks{\href{mailto:lai-wei@whu.edu.cn}{lai-wei@whu.edu.cn}}}
 \date{\today}
 \maketitle
@@ -35,16 +42,16 @@
 \section*{\abstractname}
 \textit{Lai's Lecture Notes for Robotics.}
 \thispagestyle{empty}
-%
-%
+
+\setcounter{tocdepth}{2} % 只显示到 subsection 层级\tableofcontents
 \tableofcontents
 \thispagestyle{empty}
 \cleardoublepage
 \pagenumbering{arabic} 
 \newpage
-%
-%
-\input{01-fundamentals-of-kinematics}
+
+\input{01-introduction}
+\input{02-fundamentals-of-kinematics}
 
 \printbibliography[]
 

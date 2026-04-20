@@ -1,0 +1,175 @@
+\section{运动学基础}
+\label{sec:02-fundamentals-of-kinematic}
+
+\subsection{机器人的自由度}
+
+自由度 (Degrees of freedom, DOF)：确定
+机构位形所需独立参数的数目。
+
+\subsection{描述：位置、姿态与坐标系}
+
+$$
+\text{位姿（Location）} = 
+\begin{array}[t]{c}
+\text{位置（Position）} \\
+\Downarrow \\
+3
+\end{array}
++
+\begin{array}[t]{c}
+\text{姿态（Orientation）} \\
+\Downarrow \\
+3
+\end{array}
+$$
+
+位置描述
+$$
+{ }^A P=\left(\begin{array}{l}
+p_x \\
+p_y \\
+p_z
+\end{array}\right)
+$$
+
+姿态描述：旋转矩阵
+$$
+{ }_B^A R=\left[{ }^A \hat{X}_B{ }^A \hat{Y}_B{ }^A \hat{Z}_B\right]=\left[\begin{array}{lll}
+r_{11} & r_{12} & r_{13} \\
+r_{21} & r_{22} & r_{23} \\
+r_{31} & r_{31} & r_{33}
+\end{array}\right]
+$$
+
+对应于轴$x$，$y$或$z$作转角为$\theta$的旋转变换，其旋转矩阵分别为：
+$$
+R(x, \theta)=\left[\begin{array}{ccc}
+1 & 0 & 0 \\
+0 & \cos \theta & -\sin \theta \\
+0 & \sin \theta & \cos \theta
+\end{array}\right]
+$$
+$$
+R(y, \theta)=\left[\begin{array}{ccc}
+\cos \theta & 0 & \sin \theta \\
+0 & 1 & 0 \\
+-\sin \theta & 0 & \cos \theta
+\end{array}\right]
+$$
+$$
+R(z, \theta)=\left[\begin{array}{ccc}
+\cos \theta & -\sin \theta & 0 \\
+\sin \theta & \cos \theta & 0 \\
+0 & 0 & 1
+\end{array}\right]
+$$
+
+位姿（Location）＝位置（Position）＋姿态（Orientation）；位姿描述 = 位置矢量 + 旋转矩阵。
+
+表示位置时，旋转矩阵等于单位矩阵；表示姿态时，位置矢量等于零。
+
+$$
+\{B\} = \{ \underbrace{{}^{A}_{B}R}_{\text{旋转矩阵}}, \quad \underbrace{{}^{A}P_{BORG}}_{\text{原点位置矢量}} \}
+$$
+
+手爪的方位——旋转矩阵$R=\left[\begin{array}{lll}n & o & a\end{array}\right]$，描述手爪的姿态。
+
+$$
+\{T\}=\left\{\begin{array}{llll}
+n & o & a & p
+\end{array}\right\}=
+\left(\begin{array}{cccc}
+n_1 & o_1 & a_1 & \tikzmarknode{x}{x} \\
+n_2 & o_2 & a_2 & \tikzmarknode{y}{y} \\
+n_3 & o_3 & a_3 & \tikzmarknode{z}{z} \\
+0 & 0 & 0 & 1
+\end{array}\right)
+$$
+
+\begin{tikzpicture}[overlay, remember picture]
+    \node[draw=whusakura, thick, ellipse, inner xsep=2pt, inner ysep=0pt, fit=(x) (y) (z)] (circle) {};
+    \draw[<-, whusakura, thick] (circle.east) -- ++(1,0) node[right] {坐标原点位置};
+\end{tikzpicture}
+
+\subsection{映射：从坐标系到坐标系的变换}
+
+\subsubsection{平移映射}
+
+\(\{B\}\)与\(\{A\}\)方位（姿态）相同，但原点不重合，用位置矢量${ }^A P_{B_0}$表示\(\{B\}\)的原点相对于\(\{A\}\)的位置。
+
+坐标平移方程：
+$$
+{ }^A p = { }^B p + { }^A p_{B_0}
+$$
+
+\subsubsection{旋转映射}
+
+坐标旋转方程
+$$
+{ }^A P = { }^A_B R { }^B P
+$$
+
+旋转的叠加：绕固定轴旋转（前乘） / 绕当前轴旋转（后乘）
+
+\subsubsection{一般坐标系的映射}
+
+$$
+{ }^{A} p = \tikzmarknode{R}{{}^{A}_{B} R} \, { }^{B} p + \tikzmarknode{P}{{ }^{A} p_{B_0}}
+$$
+
+% 在后台绘制箭头和文字
+\begin{tikzpicture}[overlay, remember picture, >=stealth]
+    % 向下引出标注旋转矩阵
+    \draw[<-, thick, whusakura] (R.south) -- ++(0,-0.6)
+        node[below, align=center, font=\small] {$\{B\}$ 相对于 $\{A\}$ 的 \\ (方位)旋转矩阵};
+    % 向上引出标注平移向量
+    \draw[<-, thick, whusakura] (P.east) -- ++(0.6,0)
+        node[right, align=center, font=\small] {$\{B\}$ 原点相对于 \\ $\{A\}$ 的位置};
+\end{tikzpicture}
+
+\vspace{0.4in}
+
+为了简化计算，将上述包含加法的仿射变换统一为单一的线性矩阵乘法，引入齐次坐标变换。定义$4 \times 4$ 的齐次变换矩阵 ${}^{A}_{B}T$：
+$$
+    {}^{A}_{B}T = 
+    \begin{bmatrix}
+        {}^{A}_{B}R & {}^{A}p_{B_0} \\
+        0 & 1
+    \end{bmatrix}
+$$
+
+\vspace{.6in}
+
+\begin{equation*}
+    % 使用 \tikzmarknode 为齐次坐标向量、旋转矩阵、平移矢量分别打上标签
+    \tikzmarknode{vecA}{\begin{bmatrix} {}^{A} p \\ 1 \end{bmatrix}} 
+    = 
+    \begin{bmatrix}
+        \tikzmarknode{matR}{{}^{A}_{B}R} & \tikzmarknode{vecP}{{}^{A}p_{B_o}} \\
+        0 & 1
+    \end{bmatrix}
+    \tikzmarknode{vecB}{\begin{bmatrix} {}^{B}p \\ 1 \end{bmatrix}}
+\end{equation*}
+
+% 在后台图层利用打好的标签绘制红圈、虚线箭头和文字注释
+\begin{tikzpicture}[remember picture, overlay, >=stealth]
+    \node[draw=red, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecA)] (ellA) {};
+    \node[draw=red, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecB)] (ellB) {};
+
+    \node[above=.1in of ellA] {齐次坐标};
+    \node[above=.1in of ellB] {齐次坐标};
+
+    \node[below=.6in of matR, xshift=-.2in] (labelR) {旋转矩阵};
+    \node[below=.6in of vecP, xshift=.2in] (labelP) {平移矢量};
+    
+    % 从矩阵元素引出红色虚线箭头指向底部文字
+    \draw[->, red, dashed, thick] (matR.south) -- (labelR.north);
+    \draw[->, red, dashed, thick] (vecP.south) -- (labelP.north);
+\end{tikzpicture}
+
+\vspace{.6in}
+
+% 最终简化的齐次变换紧凑形式
+$$
+    {}^{A} P = {}^{A}_{B} T \, {}^{B} P
+$$
