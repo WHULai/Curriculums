@@ -1,1 +1,34 @@
 .DS_Store
+
+# LaTeX compilation artifacts
+*.aux
+*.log
+*.toc
+*.out
+*.lof
+*.lot
+*.fls
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# Intermediate documents
+*.dvi
+*.xdv
+*-converted-to.*
+
+# Bibliography files
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*-blx.aux
+*-blx.bib
+
+# Build tool files
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.synctex
