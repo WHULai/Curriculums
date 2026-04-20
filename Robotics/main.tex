@@ -1,0 +1,51 @@
+% Header: Here are all packages used and some additional definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xeCJK}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{graphicx} % for including graphics
+\usepackage[breaklinks=true,colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref} % for references
+\usepackage{amsmath,amsthm,amssymb} % Mathematical environment 
+\usepackage{icomma} % Intelligent comma, selects the correct spacing between decimal numbers and in formulas.
+\usepackage[english]{babel} % English labels for table of contents etc
+\usepackage{csquotes} % Recommended for biblatex with babel/polyglossia
+\usepackage[T1]{fontenc}    % different font encoding for correct hyphenation
+\usepackage[locale = US,space-before-unit=true,per-mode = symbol]{siunitx} % Better units
+\usepackage{placeins} % Definiert den Befehl “\FloatBarrier”, der die Ausgabe der davor eingebundenen Bilder erzwingt, befor der Text weiter geht. (Mit vorsicht zu verwenden)
+\usepackage[natbib,abbreviate=true,doi=false,style=numeric-comp,giveninits=true,sorting=none]{biblatex} % Modernes Paket zur Erzeugung von Bibliografien (benötigt biber!)
+
+\addbibresource{MyBibliography.bib} % Ort der .bib Datei, die die Datenbank für Literatur/Referenzen enthält.
+
+\graphicspath{{Bilder/}}
+
+\DeclareSIUnit{\dBm}{dBm}
+\DeclareSIUnit[per-mode=reciprocal]\WN{\per\centi\meter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%
+\title{\includegraphics[width=5cm]{whu-logo.png} \\ Report Title}
+\author{魏崃\thanks{\href{mailto:lai-wei@whu.edu.cn}{lai-wei@whu.edu.cn}}}
+\date{\today}
+\maketitle
+\vfill
+\renewcommand\abstractname{Abstract}
+\section*{\abstractname}
+\textit{Lai's Lecture Notes for Robotics.}
+\thispagestyle{empty}
+%
+%
+\tableofcontents
+\thispagestyle{empty}
+\cleardoublepage
+\pagenumbering{arabic} 
+\newpage
+%
+%
+\input{01-fundamentals-of-kinematics}
+
+\printbibliography[]
+
+\end{document}
