@@ -227,8 +227,8 @@ $$
 
 % 在后台图层利用打好的标签绘制红圈、虚线箭头和文字注释
 \begin{tikzpicture}[remember picture, overlay, >=stealth]
-    \node[draw=red, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecA)] (ellA) {};
-    \node[draw=red, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecB)] (ellB) {};
+    \node[draw=whusakura, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecA)] (ellA) {};
+    \node[draw=whusakura, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecB)] (ellB) {};
 
     \node[above=.1in of ellA] {齐次坐标};
     \node[above=.1in of ellB] {齐次坐标};
@@ -237,8 +237,8 @@ $$
     \node[below=.6in of vecP, xshift=.2in] (labelP) {平移矢量};
     
     % 从矩阵元素引出红色虚线箭头指向底部文字
-    \draw[->, red, dashed, thick] (matR.south) -- (labelR.north);
-    \draw[->, red, dashed, thick] (vecP.south) -- (labelP.north);
+    \draw[->, whusakura, dashed, thick] (matR.south) -- (labelR.north);
+    \draw[->, whusakura, dashed, thick] (vecP.south) -- (labelP.north);
 \end{tikzpicture}
 
 \vspace{.6in}
@@ -246,4 +246,181 @@ $$
 % 最终简化的齐次变换紧凑形式
 $$
     {}^{A} P = {}^{A}_{B} T \, {}^{B} P
+$$
+
+\section{算子：平移、旋转和变换}
+
+\dfn{算子}{用坐标系内点的映射的通用数学表达式，包括点的平移算子、矢量旋转算
+子、平移加旋转算子}
+
+运动算子的一般形式：
+$$
+{}Ap_2=T^Ap_1
+$$
+
+\subsection{平移算子}
+
+矢量${}^A p_1$通过矢量${}^A p$进行平移，运算结果是得到一个新的矢量${}^A p_2$。
+
+写成算子形式，有：
+$$
+{}^A p_2=\operatorname{Trans}\left({}^A p\right){}^A p_1
+$$
+
+算子可看成是一个特殊形式的齐次变换：
+$$
+\operatorname{Trans}\left({}^A p\right)=
+\begin{bmatrix}
+    1 & 0 & 0 & {}^A p_x\\
+    1 & 0 & 0 & {}^A p_y\\
+    1 & 0 & 0 & {}^A p_z\\
+    0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+\subsection{旋转算子}
+
+旋转矩阵可用旋转变换算子定义，它将一个矢量${}^A p_1$用旋转$R$变换成一个新矢量${}^A p_2$。
+
+$$
+{}^A p_2=R{}^A p_1
+$$
+
+矢量经某一旋转$R$得到的旋转矩阵，与一个坐标系相对于参考坐标系经某一旋转$R$得到的旋转矩阵是相同的；
+
+用符号$R\left(k, \theta\right)$定义旋转算子，表示绕$k$轴旋转$\theta$：
+$$
+{}^A p_2=R\left(k, \theta\right){}^A p_1
+$$
+$$
+R\left(k, \theta\right)=
+\begin{bmatrix}
+    \cos\theta & \sin\theta & 0 & 0\\
+    -\sin\theta & \cos\theta & 0 & 0\\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+\subsection{运动算子的一般形式}
+
+与矢量和旋转矩阵一样，坐标系也可以用变换算子来定义平移并旋转得到一个新的矢量${}^A p_2$：
+$$
+{}^A p_2=T{}^A p_1
+$$
+
+\begin{note}
+    经旋转$R$和平移$\operatorname{Trans}$的齐次变换矩阵，与一个坐标系相对于参考坐标系经旋转$R$和平移$\operatorname{Trans}$的齐次变换矩阵是相同的；
+
+    一个变换通常被认为是由一个广义旋转矩阵和位置矢量分量组成的齐次变换的形式。
+\end{note}
+
+\qs{}{
+    \label{exr2.2}
+    已知点$\boldsymbol{u}=7\boldsymbol{i}+3\boldsymbol{j}+2\boldsymbol{k}$，将$\boldsymbol{u}$绕$z$轴旋转90°至点$\boldsymbol{v}$，再将点$\boldsymbol{v}$绕$y$轴旋转90°到点$\boldsymbol{w}$，求点$\boldsymbol{v}$、$\boldsymbol{w}$的坐标
+    $$
+    \begin{tikzpicture}[
+        % 自定义透视坐标系
+        x={(-0.55cm,-0.6cm)},
+        y={(1cm,0cm)},
+        z={(0cm,1cm)},
+        scale=.5
+    ]
+
+    % 1. 绘制三维坐标轴
+    \draw[-{Latex[length=4mm, width=3mm]}, line width=1.5pt] (0,0,0) -- (10,0,0) node[below left, xshift=-1mm, yshift=-1mm] {\huge $\boldsymbol{x}$};
+    \draw[-{Latex[length=4mm, width=3mm]}, line width=1.5pt] (0,0,0) -- (0,10,0) node[below right, xshift=1mm, yshift=-1mm] {\huge $\boldsymbol{y}$};
+    \draw[-{Latex[length=4mm, width=3mm]}, line width=1.5pt] (0,0,0) -- (0,0,5.5) node[right, xshift=1mm] {\huge $\boldsymbol{z}$};
+
+    % 原点 O 标签
+    \node[anchor=north west] at (0,0,0) {\huge $\boldsymbol{O}$};
+
+    % 2. 定义关键点的精确三维坐标
+    \coordinate (U) at (7,3,2);
+    \coordinate (V) at (-3,7,2);
+    \coordinate (W) at (2,7,3);
+    \coordinate (Zu) at (0,0,2); % z轴上的旋转中心
+    \coordinate (Yv) at (0,7,0); % y轴上的旋转中心
+
+    % 3. 绘制空间直角符号 (使用空间向量的线性组合确保透视正确)
+    % U-Zu-V 平面的直角
+    \coordinate (P1) at ($(Zu)!0.12!(U)$);
+    \coordinate (P3) at ($(Zu)!0.12!(V)$);
+    \coordinate (P2) at ($(P1)+(P3)-(Zu)$);
+    \draw[thick] (P1) -- (P2) -- (P3);
+
+    % V-Yv-W 平面的直角
+    \coordinate (Q1) at ($(Yv)!0.15!(V)$);
+    \coordinate (Q3) at ($(Yv)!0.15!(W)$);
+    \coordinate (Q2) at ($(Q1)+(Q3)-(Yv)$);
+    \draw[thick] (Q1) -- (Q2) -- (Q3);
+
+    % 4. 绘制实线段
+    % 蓝色实线
+    \draw[myb, line width=1.2pt] (Zu) -- (U);
+    \draw[myb, line width=1.2pt] (Zu) -- (V);
+    % 绿色实线
+    \draw[myg!60!black, line width=1.2pt] (Yv) -- (V);
+    \draw[myg!60!black, line width=1.2pt] (Yv) -- (W);
+
+    % 5. 绘制旋转路径的虚线箭头
+    % 调整 out/in 角度以精确匹配原图的视觉弧度
+    \draw[myb, densely dashed, -{Latex[length=3mm, width=2.5mm]}] (U) to[out=0, in=-70] (V);
+    \draw[myg!60!black, densely dashed, -{Latex[length=3mm, width=2.5mm]}] (V) to[out=195, in=90] (W);
+
+    % 6. 绘制红点及文本标签 (最后绘制确保覆盖在线条上方)
+    \fill[myr] (U) circle (3pt) node[below, black, yshift=-1.5mm] {\huge $\boldsymbol{u}$};
+    \fill[myr] (V) circle (3pt) node[right, black, xshift=1.5mm, yshift=1mm] {\huge $\boldsymbol{v}$};
+    \fill[myr] (W) circle (3pt) node[left, black, xshift=-1.5mm] {\huge $\boldsymbol{w}$};
+
+    \end{tikzpicture}
+$$
+}
+\sol{
+    $$
+    \boldsymbol{v} = \operatorname{Rot}(z, 90^\circ)\cdot \boldsymbol{u} = \begin{bmatrix} \cos 90^\circ & -\sin 90^\circ & 0 & 0 \\ \sin 90^\circ & \cos 90^\circ & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}\begin{bmatrix} 7 \\ 3 \\ 2 \\ 1 \end{bmatrix} = \begin{bmatrix} -3 \\ 7 \\ 2 \\ 1 \end{bmatrix}
+    $$
+    $$
+    \boldsymbol{w} = \operatorname{Rot}(y, 90^\circ)\cdot \boldsymbol{v} =
+    \begin{bmatrix}
+        \cos 90^\circ & 0 & \sin 90^\circ & 0 \\
+        0 & 1 & 0 & 0 \\
+        -\sin 90^\circ & 0 & \cos 90^\circ & 0 \\
+        0 & 0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix} -3 \\ 7 \\ 2 \\ 1 \end{bmatrix} = \begin{bmatrix} 2 \\ 7 \\ 3 \\ 1 \end{bmatrix}
+    $$
+}
+
+\begin{note}
+    \begin{itemize}
+        \item 绕固定轴旋转：前乘
+        \item 绕当前轴旋转：后乘
+    \end{itemize}
+\end{note}
+
+\section{变换矩阵运算}
+
+已知坐标系 $\{B\}$ 相对于 $\{A\}$ 的旋转矩阵 ${}_{B}^{A}R$ 满足正交性，即其逆矩阵等于其转置（${}_{A}^{B}R = {}_{B}^{A}R^{-1} = {}_{B}^{A}R^{T}$）。基于此，齐次变换矩阵的解析求逆通式可严格表示为：
+$$
+    {}_{A}^{B}T = {}_{B}^{A}T^{-1} =
+    \begin{bmatrix}
+    {}_{B}^{A}R^{T} & -{}_{B}^{A}R^{T} {}^{A}p_{Bo} \\
+    0 & 1
+    \end{bmatrix}
+$$
+
+\section{变换通式}
+
+为了描述三维空间中更为一般的旋转运动，需要建立绕任意过原点单位轴 $k = [k_x, k_y, k_z]^T$ 旋转 $\theta$ 角的变换通式。
+
+结合向量正交性分析，引入Versine函数（$\operatorname{Vers}\theta = 1 - \cos\theta$），旋转变换矩阵 $R(k, \theta)$ 可完全由转轴的方向余弦与转角参数化表达。
+
+设已知矩阵$R$的元素构成为$\left[n, o, a\right]$，通过求取矩阵迹（对角线元素之和），可率先解得转角$\theta$：
+$$
+    \cos\theta = \frac{1}{2}(n_x + o_y + a_z - 1)
+$$
+随后，利用矩阵非对角线元素的反对称特性（非对角线元素相减），即可提取并归一化等效转轴 $k$ 的各分量：
+$$
+    k_x = \frac{o_z - a_y}{2\sin\theta}, \quad k_y = \frac{a_x - n_z}{2\sin\theta}, \quad k_z = \frac{n_y - o_x}{2\sin\theta}
 $$
