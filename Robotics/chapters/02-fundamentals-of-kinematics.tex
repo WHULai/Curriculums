@@ -1,12 +1,12 @@
-\section{运动学基础}
+\chapter{运动学基础}
 \label{sec:02-fundamentals-of-kinematic}
 
-\subsection{机器人的自由度}
+\section{机器人的自由度}
 
 自由度 (Degrees of freedom, DOF)：确定
 机构位形所需独立参数的数目。
 
-\subsection{描述：位置、姿态与坐标系}
+\section{描述：位置、姿态与坐标系}
 
 $$
 \text{位姿（Location）} = 
@@ -91,9 +91,9 @@ $$
     \draw[<-, whusakura, thick] (circle.east) -- ++(1,0) node[right] {坐标原点位置};
 \end{tikzpicture}
 
-\subsection{映射：从坐标系到坐标系的变换}
+\section{映射：从坐标系到坐标系的变换}
 
-\subsubsection{平移映射}
+\subsection{平移映射}
 
 \(\{B\}\)与\(\{A\}\)方位（姿态）相同，但原点不重合，用位置矢量${ }^A P_{B_0}$表示\(\{B\}\)的原点相对于\(\{A\}\)的位置。
 
@@ -102,7 +102,7 @@ $$
 { }^A p = { }^B p + { }^A p_{B_0}
 $$
 
-\subsubsection{旋转映射}
+\subsection{旋转映射}
 
 坐标旋转方程
 $$
@@ -111,7 +111,7 @@ $$
 
 旋转的叠加：绕固定轴旋转（前乘） / 绕当前轴旋转（后乘）
 
-\subsubsection{一般坐标系的映射}
+\subsection{一般坐标系的映射}
 
 $$
 { }^{A} p = \tikzmarknode{R}{{}^{A}_{B} R} \, { }^{B} p + \tikzmarknode{P}{{ }^{A} p_{B_0}}
