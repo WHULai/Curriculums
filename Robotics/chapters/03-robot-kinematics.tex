@@ -1,0 +1,425 @@
+\chapter{机器人运动学}
+\label{sec:03-robot-kinematics}
+
+\section{机器人末端位姿描述}
+
+\begin{quote}
+    Kinetic Position and Coordinate
+\end{quote}
+
+机械手的位置表达：
+\begin{enumerate}
+    \item 机械手末端姿态由某个姿态变换规定
+    \item 相对基系的位置由\textbf{姿态矩阵}由左乘对应于矢量\(p\)的平移变换确定
+\end{enumerate}
+
+\subsection{Description in Cylinder Coordinates}
+
+用柱面坐标表示末端位置（平移变换）
+
+规定运动变换的过程(相对固定坐标系$xyz$运动)：
+\begin{enumerate}
+    \item 沿$x$轴平移$r$
+    \item 绕$z$轴旋转$\alpha$
+    \item 沿\(z\)轴平移\(z\)
+\end{enumerate}
+
+$$
+\begin{tikzpicture}[
+    % 设置 3D 透视坐标系 (Cavalier projection)
+    x={(-0.5cm,-0.5cm)},
+    y={(1cm,0cm)},
+    z={(0cm,1cm)},
+    scale=.6
+]
+    % 定义主要坐标点
+    \coordinate (O) at (0,0,0);
+    \coordinate (Px) at (3,0,0);
+    \coordinate (Pxy) at (3,4,0);
+    \coordinate (P) at (3,4,4.5);
+
+    % 1. 绘制全局坐标轴 (x, y, z)
+    \draw[->, thick, >=latex] (O) -- (6,0,0) node[right] {$x$};
+    \draw[->, thick, >=latex] (O) -- (0,5.5,0) node[below] {$y$};
+    \draw[->, thick, >=latex] (O) -- (0,0,6) node[left] {$z$};
+
+    % 2. 绘制平面投影线及辅助线
+    \draw (O) -- (Pxy); % 连向 xy 平面投影点的斜线 (r)
+    \draw (Px) -- (Pxy); % 平行于 y 轴的辅助线
+    \draw (Pxy) -- (P) node[midway, right] {$z$}; % 垂直于 xy 平面的高度线
+
+    % 3. 绘制主向量
+    % 使用 shorten >= 缩短一点箭头，以还原原图中箭头与局部坐标系原点间的微小空隙
+    \draw[->, thick, >=latex, shorten >= 2pt] (O) -- (P);
+
+    % 4. 绘制 xy 平面内的角度弧线和标签
+    \begin{scope}[canvas is xy plane at z=0]
+        % 角度 \alpha 的圆弧 (从 x 轴到投影线)
+        \draw[->, >=latex] (1.5, 0) arc (0:53.13:1.5);
+        \node at (26.5:1.1) {$\alpha$};
+        % 标签 r 放置在靠近 x 轴的外侧
+        \node at (10:2.1) {$r$};
+    \end{scope}
+
+    % 5. 绘制点 P 处的局部坐标系 (a, o, n)
+    % 向量 n (指向右前/下方)
+    \draw[->, thick, >=latex] (P) -- ++(2.0, 2.0, 0) node[right] {$\boldsymbol{n}$};
+    % 向量 o (指向右后/上方)
+    \draw[->, thick, >=latex] (P) -- ++(-1.5, 1.0, 0) node[right] {$\boldsymbol{o}$};
+    % 向量 a (指向上方，平行于 z 轴)
+    \draw[->, thick, >=latex] (P) -- ++(0, 0, 1.5) node[left] {$\boldsymbol{a}$};
+\end{tikzpicture}
+$$
+
+变换算子：
+$$
+\operatorname{Cyl}(z, \alpha, r) = \operatorname{Trans}(0,0,z) \operatorname{Rot}(z, \alpha) \operatorname{Trans}(r,0,0)
+$$
+
+\begin{note}
+    相对运动坐标$xyz$的变换算子：
+    $$
+    \operatorname{Cyl}(z, \alpha, r) = \operatorname{Trans}(0,0,z) \operatorname{Rot}(z^\prime, \alpha) \operatorname{Trans}(r^\prime,0,0)
+    $$
+\end{note}
+
+\subsection{Description in Spherical Coordinates}
+
+用球面坐标表示末端运动位置矢量
+
+规定运动变换的过程(相对固定坐标系$xyz$运动)：
+\begin{enumerate}
+    \item 沿$z$轴平移$r$
+    \item 绕$y$轴旋转$\beta$
+    \item 沿\(z\)轴旋转\(\alpha\)
+\end{enumerate}
+
+$$
+    \begin{tikzpicture}[
+        >=Stealth,
+        line cap=round,
+        line join=round,
+        scale=0.6
+    ]
+
+    %------------------------------------------------
+    % Coordinates
+    %------------------------------------------------
+    \coordinate (O) at (0,0);
+    \coordinate (X) at (-2.8,-2.0);
+    \coordinate (Y) at (4.6,0);
+    \coordinate (Z) at (0,5.2);
+
+    \coordinate (B) at (2.7,-2.0);
+    \coordinate (R) at (2.7,0);
+    \coordinate (P) at (2.7,3.7);
+    \coordinate (A) at (3.35,4.65);
+    \coordinate (o2) at (4.4,4.5);
+    \coordinate (N) at (4.05,2.45);
+
+    %------------------------------------------------
+    % Axes
+    %------------------------------------------------
+    \draw[->,thick] (O) -- (X) node[below left] {$x$};
+    \draw[->,thick] (O) -- (Y) node[right] {$y$};
+    \draw[->,thick] (O) -- (Z) node[above] {$z$};
+
+    %------------------------------------------------
+    % Auxiliary lines
+    %------------------------------------------------
+    \draw[thick] (O) -- (B);
+    \draw[thick] (O) -- (R);
+    \draw[thick] (B) -- (P);
+
+    % Main vector a_0
+    \draw[->,thick] (O) -- (A)
+        node[pos=0.96,above right] {$\boldsymbol{a}_0$};
+    % Normal vector n
+    \draw[->,thick] (P) -- (N)
+        node[right] {$\boldsymbol{n}$};
+    % Normal vector o
+    \draw[->,thick] (P) -- (o2)
+        node[right] {$\boldsymbol{o}$};
+    \draw[->,thick] (O) -- (P);
+
+    %------------------------------------------------
+    % Labels
+    %------------------------------------------------
+    \node[right] at ($(B)!0.56!(P)$) {$r$};
+
+    %------------------------------------------------
+    % Angle alpha: between x-axis and projection line
+    %------------------------------------------------
+    \draw[thick]
+        ($(O)+(-144.5:0.75)$)
+        arc[start angle=-144.5,end angle=-36.5,radius=0.75];
+
+    \node at ($(O)+(-90:1.00)$) {$\alpha$};
+
+    %------------------------------------------------
+    % Angle beta: between z-axis and vector a_0
+    %------------------------------------------------
+    \draw[thick]
+        ($(O)+(90:0.75)$)
+        arc[start angle=90,end angle=54.2,radius=0.75];
+
+    \node at ($(O)+(72:0.98)$) {$\beta$};
+
+    \end{tikzpicture}
+$$
+
+变换算子：
+$$
+\operatorname{Sph}(z, \alpha, r) = \operatorname{Rot}(z, \alpha) \operatorname{Rot}(y,\beta) \operatorname{Trans}(0,0,r)
+$$
+
+\begin{note}
+    相对运动坐标$xyz$的变换算子：
+    $$
+    \operatorname{Sph}(z, \alpha, r) = \operatorname{Rot}(z^\prime, \alpha) \operatorname{Rot}(y^\prime,\beta) \operatorname{Trans}(0,0,r^\prime)
+    $$
+\end{note}
+
+\section{连杆参数和连杆坐标系}
+
+\dfn{Link}{A manipulator may be thought of as a set of bodies connected in a chain by joints. These bodies are called links.}
+
+$$
+\begin{tikzpicture}[
+    scale=.6, 
+    > = stealth,
+    parallel/.style={
+        decoration={
+            markings,
+            mark=at position 0.6 with {
+                \draw[solid, thick] (-2pt,-4pt) -- (2pt,4pt);
+                \draw[solid, thick] (-6pt,-4pt) -- (-2pt,4pt);
+            }
+        },
+        postaction={decorate}
+    },
+    triple parallel/.style={
+        decoration={
+            markings,
+            mark=at position 0.6 with {
+                \draw[solid, thick] (-2pt,-4pt) -- (2pt,4pt);
+                \draw[solid, thick] (-7pt,-4pt) -- (-3pt,4pt);
+                \draw[solid, thick] (3pt,-4pt) -- (7pt,4pt);
+            }
+        },
+        postaction={decorate}
+    }
+]
+
+    % ==========================================
+    % 1. 参数与基础坐标点定义
+    % ==========================================
+    \def\angA{100} % 轴 i-1 的倾斜角度
+    \def\angB{75}  % 轴 i 的倾斜角度
+    \def\cylR{0.9} % 关节圆柱体半径
+    \def\cylH{2.2} % 关节圆柱体高度
+
+    % 公共法线交点
+    \coordinate (p1) at (0,0);       % a_{i-1} 与 Axis i-1 的交点
+    \coordinate (p2) at (7, -1.5);   % a_{i-1} 与 Axis i 的交点
+    
+    % 轴向量
+    \coordinate (vAx1) at ({cos(\angA)}, {sin(\angA)});
+    \coordinate (vAx2) at ({cos(\angB)}, {sin(\angB)});
+
+    % Axis i 上的特征点
+    \coordinate (p3) at ($(p2) + 1.8*(vAx2)$); % a_i 在 Axis i 上的起点 (距离 p2 上方 d_i 处)
+    \coordinate (p4) at ($(p3) + (4, 0.3)$);   % a_i 延伸线的终点
+
+    % 圆柱体底部中心点
+    \coordinate (c1_bot) at ($(p1) + 2.5*(vAx1)$); % Cyl 1 (Axis i-1) 底部
+    \coordinate (c2_bot) at (p3);                  % Cyl 2 (Axis i) 底部
+
+    % 轴线的底端延伸点 (用于画线)
+    \coordinate (ax1_bot) at ($(p1) - 3*(vAx1)$);
+    \coordinate (ax2_bot) at ($(p2) - 3.5*(vAx2)$);
+
+
+    % ==========================================
+    % 2. 绘制轴线底端和法线 (a_{i-1}, a_i)
+    % ==========================================
+    % 轴 i-1 底部线
+    \draw (p1) -- (ax1_bot);
+    % 轴 i 底部线
+    \draw (p2) -- (ax2_bot);
+    \path[triple parallel] (p2) -- (ax2_bot); % 添加三平行线标记
+
+    % 公共法线 a_{i-1}
+    \draw[thick] (p1) -- (p2) node[midway, above=2pt] {$a_{i-1}$};
+    \fill (p1) circle (1.5pt);
+    \fill (p2) circle (1.5pt);
+
+    % 法线 a_i
+    \draw[thick] (p3) -- (p4) node[right] {$a_i$};
+    \path[parallel] (p3) -- (p4); % 添加双平行线标记
+    \fill (p3) circle (1.5pt);
+
+
+    % ==========================================
+    % 3. 绘制 3D 连杆 (Links)
+    % ==========================================
+    % --- Link i-1 (连接 Cyl 1 下部 和 Cyl 2 下部) ---
+    \coordinate (L1_s1) at ($(c1_bot) + 0.3*(vAx1) + ({cos(\angA-90)*\cylR}, {sin(\angA-90)*\cylR})$);
+    \coordinate (L1_s2) at ($(c1_bot) + 1.3*(vAx1) + ({cos(\angA-90)*\cylR}, {sin(\angA-90)*\cylR})$);
+    
+    \coordinate (L1_e1) at ($(c2_bot) + 0.1*(vAx2) + ({cos(\angB+90)*\cylR}, {sin(\angB+90)*\cylR})$);
+    \coordinate (L1_e2) at ($(c2_bot) + 1.1*(vAx2) + ({cos(\angB+90)*\cylR}, {sin(\angB+90)*\cylR})$);
+
+    \draw[thick, fill=white] (L1_s2) .. controls +(right:3.5) and +(left:3.5) .. (L1_e2) node[midway, above=8pt] {Link $i-1$}
+        -- (L1_e1) .. controls +(left:3.5) and +(right:3.5) .. (L1_s1) -- cycle;
+
+    % --- Link i (从 Cyl 2 上部向右延伸) ---
+    \coordinate (L2_s1) at ($(c2_bot) + 1.2*(vAx2) + ({cos(\angB-90)*\cylR}, {sin(\angB-90)*\cylR})$);
+    \coordinate (L2_s2) at ($(c2_bot) + 2.0*(vAx2) + ({cos(\angB-90)*\cylR}, {sin(\angB-90)*\cylR})$);
+    
+    \coordinate (L2_e2) at ($(L2_s2) + (2.5, 0.4)$);
+    \coordinate (L2_e1) at ($(L2_s1) + (2.5, 0.4)$);
+
+    \fill[white] (L2_s2) .. controls +(right:1.5) and +(left:1) .. (L2_e2) 
+        -- (L2_e1) .. controls +(left:1) and +(right:1.5) .. (L2_s1) -- cycle;
+    \draw[thick] (L2_s2) .. controls +(right:1.5) and +(left:1) .. (L2_e2);
+    \draw[thick] (L2_s1) .. controls +(right:1.5) and +(left:1) .. (L2_e1);
+    \node at ($(L2_e2) + (0, 0.5)$) {Link $i$};
+
+
+    % ==========================================
+    % 4. 绘制圆柱形关节 (Axis i-1 和 Axis i)
+    % ==========================================
+    % --- Cylinder 1 (Axis i-1) ---
+    \draw (p1) -- (c1_bot); % 连接 a_{i-1} 到 Cyl 1 底部
+    \begin{scope}[shift={(c1_bot)}, rotate={\angA-90}]
+        % 外壳与遮挡
+        \draw[thick, fill=white] (-\cylR, 0) -- (-\cylR, \cylH) arc (180:0:{\cylR} and 0.4) -- (\cylR, 0) arc (360:180:{\cylR} and 0.4);
+        % 顶部椭圆与内孔
+        \draw[thick] (0, \cylH) ellipse ({\cylR} and 0.4);
+        \draw[thick] (0, \cylH) ellipse ({0.3*\cylR} and 0.15);
+        % 轴线上半部
+        \draw (0, \cylH) -- (0, \cylH+1.5) node[above] {Axis $i-1$};
+    \end{scope}
+
+    % --- Cylinder 2 (Axis i) ---
+    \draw[thick] (p2) -- (p3); % d_i 段实线
+    \begin{scope}[shift={(c2_bot)}, rotate={\angB-90}]
+        % 外壳与遮挡
+        \draw[thick, fill=white] (-\cylR, 0) -- (-\cylR, \cylH) arc (180:0:{\cylR} and 0.4) -- (\cylR, 0) arc (360:180:{\cylR} and 0.4);
+        % 圆柱体中部的分割线
+        \draw[thick] (-\cylR, 1.1) arc (180:360:{\cylR} and 0.4);
+        % 顶部椭圆与内孔
+        \draw[thick] (0, \cylH) ellipse ({\cylR} and 0.4);
+        \draw[thick] (0, \cylH) ellipse ({0.3*\cylR} and 0.15);
+        % 轴线上半部
+        \draw (0, \cylH) -- (0, \cylH+1.5) node[above] {Axis $i$};
+    \end{scope}
+
+
+    % ==========================================
+    % 5. 绘制直角标记 (Right Angle Symbols)
+    % ==========================================
+    % 直角 @ p1 (a_{i-1} 与 Axis i-1 下段)
+    \coordinate (p1_a) at ($(p1)!0.3cm!(p2)$);
+    \coordinate (p1_ax) at ($(p1)!0.3cm!(ax1_bot)$);
+    \draw ($(p1_a)$) -- ($(p1_a) + (p1_ax) - (p1)$) -- ($(p1_ax)$);
+
+    % 直角 @ p2 (a_{i-1} 与 Axis i 上段)
+    \coordinate (p2_a) at ($(p2)!0.3cm!(p1)$);
+    \coordinate (p2_ax) at ($(p2)!0.3cm!(p3)$);
+    \draw ($(p2_a)$) -- ($(p2_a) + (p2_ax) - (p2)$) -- ($(p2_ax)$);
+
+    % 直角 @ p3 (a_i 与 Axis i 下段)
+    \coordinate (p3_a) at ($(p3)!0.3cm!(p4)$);
+    \coordinate (p3_ax) at ($(p3)!0.3cm!(p2)$);
+    \draw ($(p3_a)$) -- ($(p3_a) + (p3_ax) - (p3)$) -- ($(p3_ax)$);
+
+
+    % ==========================================
+    % 6. 标注 d_i 大括号
+    % ==========================================
+    \draw[decorate,decoration={brace,amplitude=5pt}]
+        ($(p2) + ({cos(\angB+90)*0.2}, {sin(\angB+90)*0.2})$) -- 
+        ($(p3) + ({cos(\angB+90)*0.2}, {sin(\angB+90)*0.2})$) 
+        node[midway, left=8pt] {$d_i$};
+
+
+    % ==========================================
+    % 7. 标注角度 theta_i 及其平行辅助线 (使用原生 arc 重写)
+    % ==========================================
+    % 计算出的角度：a_{i-1}向量角度约为 -12度，a_i向量角度约为 4度
+    \coordinate (theta_end1) at ($(p2) + (-12:2.5)$); 
+    \coordinate (theta_end2) at ($(p2) + (4:2.5)$);  
+    
+    \draw[dashed] (p2) -- (theta_end1);
+    \draw[dashed] (p2) -- (theta_end2);
+    \path[parallel] (p2) -- (theta_end2); % 辅助线平行标记
+
+    % 原生圆弧绘制：从 -12度 画到 4度，半径为 1.6
+    \draw [->] (p2) ++(-12:1.6) arc (-12:4:1.6) node[midway, right=3pt] {$\theta_i$};
+
+
+    % ==========================================
+    % 8. 标注角度 alpha_{i-1} 及其平行辅助线 (使用原生 arc 重写)
+    % ==========================================
+    % 计算出的角度：Axis i-1 下半段角度为 -80度，Axis i 下半段角度为 -105度
+    \coordinate (alpha_L1) at ($(p1) + (-80:2.5)$);
+    \coordinate (alpha_L2) at ($(p1) + (-105:2.5)$);
+
+    \draw[dashed] (p1) -- (alpha_L2);
+    \path[triple parallel] (p1) -- (alpha_L2); % 辅助线三平行标记
+
+    % 原生圆弧绘制：从 -105度 画到 -80度，半径为 1.6
+    \draw [<->] (p1) ++(-105:1.6) arc (-105:-80:1.6) node[midway, below=3pt] {$\alpha_{i-1}$};
+\end{tikzpicture}
+$$
+
+\begin{itemize}
+    \item 杆件编号由固定基座开始，一般称基座为连杆0
+    \item 关节1处于连杆1和基座之间，杆件距基座近的一端的关节为第$i$个关节
+    \item 坐标系0是一个固定不动的坐标系（参考坐标系）
+    \item $n$关节机器人需建立$n+1$个坐标系
+\end{itemize}
+
+\subsection{连杆参数}
+
+两个结构参数：
+\begin{itemize}
+    \item 长度 \( a_{i-1} \)：第 \(i-1\) 轴指向第 \(i\) 轴的公法线长度（恒为正）。
+    \item 扭角 \( \alpha_{i-1} \)：第 \(i-1\) 轴绕公垂线转至第 \(i\) 轴的夹角（可正可负）。
+\end{itemize}
+
+两个连接参数：
+\begin{itemize}
+    \item 偏置 \( d_i \)：两条公法线之间的距离（带正负号）。
+    \item 关节角 \( \theta_i \)：两条公法线之间的夹角（带正负号）。
+\end{itemize}
+
+连杆 \(i-1\) 的四个参数为：\(a_{i-1}\)、\(\alpha_{i-1}\)、\(d_i\)、\(\theta_i\)。
+
+\begin{note}
+    \begin{itemize}
+        \item \textbf{旋转关节 (Revolute Joint)}：关节变量 \(\theta_i\)，连杆参数 \(a_{i-1}\)、\(\alpha_{i-1}\)、\(d_i\) 不变。
+        \item \textbf{移动关节 (Prismatic Joint)}：关节变量 \(d_i\)，连杆参数 \(a_{i-1}\)、\(\alpha_{i-1}\)、\(\theta_i\) 不变。
+    \end{itemize}
+\end{note}
+
+\dfn{Denavit—Hartenberg notation}{Hence, any robot can be described kinematically by giving the values of four
+quantities for each link. Two describe the link itself, and two describe the link's
+connection to a neighboring link. In the usual case of a revolute joint, is called
+the joint variable, and the other three quantities would be fixed link parameters.
+For prismatic joints, d1 is the joint variable, and the other three quantities are fixed
+link parameters. The definition of mechanisms by means of these quantities is a
+convention usually called the Denavit—Hartenberg notation}
+
+\ex{连杆坐标系建立的步骤}{
+    \begin{enumerate}
+        \item 找出各个关节轴
+        \item 画出相邻关节轴线的公垂线
+        \item 规定$z_i$轴与关节轴$i$重合
+        \item 规定$x_i$轴与公垂线$a_i$重合
+        \item 定义$y_i = z_i \times x_i$
+        \item 按规则确定$\{0\}$、$\{n\}$
+    \end{enumerate}
+}
