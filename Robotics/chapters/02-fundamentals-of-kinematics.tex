@@ -212,11 +212,11 @@ $$
     \end{bmatrix}
 $$
 
-\vspace{.6in}
+\vspace{2cm} % 顶部预留空间防止标注越界
 
 \begin{equation*}
     % 使用 \tikzmarknode 为齐次坐标向量、旋转矩阵、平移矢量分别打上标签
-    \tikzmarknode{vecA}{\begin{bmatrix} {}^{A} p \\ 1 \end{bmatrix}} 
+    \tikzmarknode{vecA}{\begin{bmatrix} {}^{A}p \\ 1 \end{bmatrix}} 
     = 
     \begin{bmatrix}
         \tikzmarknode{matR}{{}^{A}_{B}R} & \tikzmarknode{vecP}{{}^{A}p_{B_o}} \\
@@ -230,18 +230,18 @@ $$
     \node[draw=whusakura, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecA)] (ellA) {};
     \node[draw=whusakura, dashed, ellipse, inner xsep=4pt, inner ysep=8pt, fit=(vecB)] (ellB) {};
 
-    \node[above=.1in of ellA] {齐次坐标};
-    \node[above=.1in of ellB] {齐次坐标};
+    \node[above=0.2cm of ellA] {齐次坐标};
+    \node[above=0.2cm of ellB] {齐次坐标};
 
-    \node[below=.6in of matR, xshift=-.2in] (labelR) {旋转矩阵};
-    \node[below=.6in of vecP, xshift=.2in] (labelP) {平移矢量};
+    \node[below=.5in of matR, xshift=-0.2in] (labelR) {旋转矩阵};  % moved left
+    \node[below=.5in of vecP, xshift=0.2in] (labelP) {平移矢量};   % moved right
     
     % 从矩阵元素引出红色虚线箭头指向底部文字
     \draw[->, whusakura, dashed, thick] (matR.south) -- (labelR.north);
     \draw[->, whusakura, dashed, thick] (vecP.south) -- (labelP.north);
 \end{tikzpicture}
 
-\vspace{.6in}
+\vspace{2cm} % 顶部预留空间防止标注越界
 
 % 最终简化的齐次变换紧凑形式
 $$
