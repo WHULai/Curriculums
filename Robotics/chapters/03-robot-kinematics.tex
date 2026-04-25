@@ -405,6 +405,18 @@ $$
     \end{itemize}
 \end{note}
 
+\subsection{Denavit-Hartenberg方法}
+
+连杆$i-1$的四个参数：$a_{i-1}$、$\alpha_{i-1}$、$d_i$、$\theta_i$
+
+\begin{itemize}
+    \item 旋转关节 (Revolute Joint)：关节变量 \( \theta_i \)，连杆参数 \( a_{i-1} \)、\( \alpha_i \)、\( d_i \) 不变；
+    \item 移动关节 (Prismatic Joint)：关节变量 \( d_i \)，连杆参数 \( a_{i-1} \)、\( \alpha_i \)、\( \theta_i \) 不变；
+    \item 六自由度机器人：18个参数表示其运动学参数（固定），6个关节变量是运动学方程中的变量。
+\end{itemize}
+
+
+
 \dfn{Denavit—Hartenberg notation}{Hence, any robot can be described kinematically by giving the values of four
 quantities for each link. Two describe the link itself, and two describe the link's
 connection to a neighboring link. In the usual case of a revolute joint, is called
@@ -412,6 +424,22 @@ the joint variable, and the other three quantities would be fixed link parameter
 For prismatic joints, d1 is the joint variable, and the other three quantities are fixed
 link parameters. The definition of mechanisms by means of these quantities is a
 convention usually called the Denavit—Hartenberg notation}
+
+0号连杆（基座）的参数定义:
+\begin{itemize}
+    \item 0号连杆为基座，没有前向关节
+    \item $a_0=0$、 $\alpha_0=0$
+    \item 如果1号关节为旋转关节，则$d_1=0$
+    \item 如果1号关节为移动关节，则$\theta_1=0$
+\end{itemize}
+
+$n$号连杆（末端）的参数定义
+ \begin{itemize}
+    \item 末端没有后向关节
+    \item $a_n=0$、 $\alpha_n=0$
+    \item 如果末端关节为旋转关节，则$d_n=0$
+    \item 如果末端关节为移动关节，则$\theta_n=0$
+ \end{itemize}
 
 \ex{连杆坐标系建立的步骤}{
     \begin{enumerate}
@@ -423,3 +451,138 @@ convention usually called the Denavit—Hartenberg notation}
         \item 按规则确定$\{0\}$、$\{n\}$
     \end{enumerate}
 }
+
+\subsection{Craig法则 (Modified DH)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{Craig法则.png}
+\end{figure}
+
+中间连杆的坐标系$\{i-1\}$：
+\begin{itemize}
+    \item $z$轴：与关节轴线 \(i\) 共线，指向任意。
+    \item $x$轴：与连杆公法线 \(a_i\) 重合，指向由关节i到关节 \(i+1\)；当 \(a_i = 0\) 时，取 \(x_i = \pm z_{i+1} \times z_i\)。
+    \item $y$轴：取 \(y_i = z_i \times x_i\)（按右手法则）。
+    \item 原点$O$：取在 \(x_i\) 和 \(z_i\) 的交点上。
+        \begin{itemize}
+            \item 当 \(z_{i-1}\) 与 \(z_i\) 相交，取两轴交点使 \(a_{i-1} = 0\)。
+            \item 当 \(z_{i-1}\) 与 \(z_i\) 平行，取使 \(d_{i-1} = 0\)。
+        \end{itemize}
+\end{itemize}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{连杆坐标系定义——基座.png} % 图片宽度占满左栏
+\end{minipage}
+\hfill % 水平填充，拉开左右距离
+\begin{minipage}{0.45\textwidth}
+    连杆坐标系定义——基座
+    \begin{itemize}
+        \item 基座是连杆0，没有前向关节
+        \item 规定坐标系$\{0\}$原点与坐标系$\{1\}$原点重合
+        \item $\hat{Z}_0$轴与$\hat{Z}_1$轴重合
+        \item 当关节变量$q_1=0$时，$\hat{X}_0$轴与$\hat{X}_1$轴重合
+        \item $\hat{Y}_0$轴由右手定则确定
+        \item 坐标系$\{0\}$是固定坐标系
+    \end{itemize}
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{连杆坐标系定义——末端连杆.png} % 图片宽度占满左栏
+\end{minipage}
+\hfill % 水平填充，拉开左右距离
+\begin{minipage}{0.45\textwidth}
+    连杆坐标系定义——末端连杆
+    \begin{itemize}
+        \item 末端连杆$n$没有后向关节
+        \item 规定坐标系$\{n\}$的原点在$a_{n-1}$与关节$n$轴线$S_n$的交点处
+        \item $\hat{Z}_0$轴与关节$n$轴线$S_n$轴重合
+        \item 当关节变量$q_n=0$时，$\hat{X}_n$轴与$\hat{X}_{n-1}$轴共线且同向
+        \item $\hat{Y}_0$轴由右手定则确定
+    \end{itemize}
+\end{minipage}
+
+\begin{note}
+    连杆坐标系定义小结——步骤
+    \begin{enumerate}
+        \item 连杆和关节编号规定：从基座到末端依次编号，基座为连杆0，连接基座与连杆1的关节为关节1；
+        \item 画出各关节轴线，标记轴线$i$和$i+1$的交点，或两者的公垂线$a_i$及其与轴$i$的交点，该交点为坐标系$\{i\}$的原点；
+        \item 确定$\hat{Z}_i$轴沿轴$i$的方向（有两种选择）；
+        \item 规定$\hat{Z}_i$轴沿公垂线$a_i$从轴i指向轴$i+1$。若轴$i$与轴$i+1$相交，则$\hat{Z}_i$轴垂直于轴$i$与轴$i+1$所在平面，此时$\hat{Z}_i$轴的方向有两种选择；
+        \item 按照右手定则确定$\hat{Y}_i$轴
+        \item 坐标系总数量为$N+1$个，$N$为关节数；
+        \item 对于基座，规定其坐标系编号为$\{0\}$，与坐标系$\{1\}$重合；对于末端坐标系$\{N\}$，其原点在$a_{n-1}$与轴N的交点上，当$q_n=0$时，$\hat{X}_n$轴与$\hat{X}_{n-1}$轴共线且方向相同。
+    \end{enumerate}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.5\textwidth]{连杆坐标系定义小结——步骤.png}
+    \end{figure}
+\end{note}
+
+\subsection{坐标系变换}
+
+连杆坐标系$\{i-1\}$到坐标系$\{i\}$的齐次变换：
+$$
+{}^{i-1}_i T
+$$
+步骤：
+\begin{enumerate}
+    \item $\{i-1\}$绕$\hat{X}_{i-1}$旋转$\alpha_{i-1}$，得到$\{R\}$
+    \item $\{R\}$$\hat{X}_{i-1}$移动$a_{i-1}$，得到$\{Q\}$
+    \item $\{Q\}$绕$\hat{Z}_i$旋转$\theta_i$，得到$\{P\}$
+    \item $\{P\}$沿$\hat{Z}_i$平移$d_i$，与$\{i\}$重合
+\end{enumerate}
+
+\[
+{}^{i-1}_i T = {}^{i-1}_R T {}^R_Q T {}^Q_P T {}^P_i T = \operatorname{Rot}(x, \alpha_{i-1}) \operatorname{Trans}(x, a_{i-1}) \operatorname{Rot}(z, \theta_i) \operatorname{Trans}(z, d_i)
+\]
+
+连杆坐标系变换过程
+\begin{enumerate}
+    \item 绕\(x_{i-1}\)轴转\(\alpha_{i-1}\)角;
+    \item 沿\(x_{i-1}\)轴移动\(a_{i-1}\);
+    \item 绕\(z_{i}\)轴转\(\theta_{i}\)角;
+    \item 沿\(z_{i}\)轴移动\(d_{i}\).
+\end{enumerate}
+
+\subsection{广义变换矩阵}
+
+相邻坐标系间的关系
+\[
+\begin{aligned}
+    {}^{i-1}_i T &=\operatorname{Rot}(x, \alpha_{i-1}) \operatorname{Trans}(x, a_{i-1}) \operatorname{Rot}(z, \theta_i) \operatorname{Trans}(z, d_i) \\
+    &=\begin{bmatrix} \cos\theta_i & -\sin\theta_i & 0 & a_{i-1} \\ \sin\theta_i\cos\alpha_{i-1} & \cos\theta_i\cos\alpha_{i-1} & -\sin\alpha_{i-1} & -d_i\sin\alpha_{i-1} \\ \sin\theta_i\sin\alpha_{i-1} & \cos\theta_i\sin\alpha_{i-1} & \cos\alpha_{i-1} & d_i\cos\alpha_{i-1} \\ 0 & 0 & 0 & 1 \end{bmatrix}
+\end{aligned}
+\]
+
+\begin{note}
+    平移矩阵
+    $$
+    \operatorname{Trans}({}^A\boldsymbol{p}) = \begin{bmatrix} 
+    1 & 0 & 0 & {}^A p_x \\ 
+    0 & 1 & 0 & {}^A p_y \\ 
+    0 & 0 & 1 & {}^A p_z \\ 
+    0 & 0 & 0 & 1 
+    \end{bmatrix}
+    $$
+    旋转矩阵
+    $$
+    \boldsymbol{R}(\boldsymbol{k},\theta) = \begin{bmatrix} 
+    \cos\theta & -\sin\theta & 0 & 0 \\ 
+    \sin\theta & \cos\theta & 0 & 0 \\ 
+    0 & 0 & 1 & 0 \\ 
+    0 & 0 & 0 & 1 
+    \end{bmatrix}
+    $$
+\end{note}
+
+末端$\{n\}$相对基坐标系$\{0\}$的关系
+$$
+{}^{0}_n T\left(\theta_1, \theta_2, \theta_3, \cdots, \theta_n\right) = {}^{0}_1 T {}^{1}_2 T \cdots {}^{n-1}_n T
+$$
+
+运动学方程：表示 $\underset{(\boldsymbol{n}, \boldsymbol{o}, \boldsymbol{a}, \boldsymbol{p})}{\text{\textbf{末端位姿}}}$ 相对于基座的位置关系，是 $\underset{\theta_1,\dots,\theta_n}{\text{\textbf{关节变量}}}$ $(a, \alpha, d, \theta)$ 的函数。
