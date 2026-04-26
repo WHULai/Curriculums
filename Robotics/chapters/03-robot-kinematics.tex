@@ -586,3 +586,228 @@ $$
 $$
 
 运动学方程：表示 $\underset{(\boldsymbol{n}, \boldsymbol{o}, \boldsymbol{a}, \boldsymbol{p})}{\text{\textbf{末端位姿}}}$ 相对于基座的位置关系，是 $\underset{\theta_1,\dots,\theta_n}{\text{\textbf{关节变量}}}$ $(a, \alpha, d, \theta)$ 的函数。
+
+\section{机器人坐标系：DH法}
+
+D-H法——以3R机器人为例
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth,
+        % 定义通用样式
+        joint/.style={circle, draw, inner sep=1.5pt, thick},
+        link/.style={double, double distance=4pt, thick},
+        axis/.style={->, thick},
+        base/.style={thick},
+        % 定义点划线样式（用于延长线和尺寸辅助线）
+        dashline/.style={dash pattern=on 5pt off 2pt on 1pt off 2pt}
+    ]
+
+    % 定义连杆长度和关节角度（可根据需要调整以改变姿态）
+    \def\thetaone{30}   % 连杆1相对于基座的旋转角度
+    \def\thetatwo{35}   % 连杆2相对于连杆1的旋转角度
+    \def\thetathree{45} % 连杆3相对于连杆2的旋转角度
+    
+    \def\LOne{4.5}      % 连杆1长度
+    \def\LTwo{3.5}      % 连杆2长度
+    \def\LThree{1.5}    % 连杆3长度
+
+    % ================= 1. 绘制基座 (Base) 和 基坐标系 =================
+    % 基座半圆
+    \draw[base] (-1.2, 0) arc (180:0:1.2) -- cycle;
+    % 绘制阴影线表示固定地面
+    \foreach \x in {-1.0, -0.6, -0.2, 0.2, 0.6, 1.0} {
+        \draw[base] (\x, 0) -- (\x-0.3, -0.4);
+    }
+    \draw[base] (-1.5,0) -- (1.5,0);
+    
+    % 原点 O 标签
+    \node[below left] at (0,0) {\textbf{\textit{O}}};
+
+    % 基坐标系 (Frame 0)
+    \draw[axis] (0,0) -- (3,0) node[below] {$x_0$};
+    \draw[axis] (0,0) -- (0,3) node[left] {$y_0$};
+
+    % 基座关节原点黑点
+    \fill (0,0) circle (2.5pt);
+
+    % 绘制 theta_1 角度弧线
+    \draw[->, thick] (2.2,0) arc (0:\thetaone:2.2) node[midway, right=2pt] {$\theta_1$};
+
+    % ================= 2. 绘制连杆 1 =================
+    \begin{scope}[rotate=\thetaone]
+        % 连杆 1 本体
+        \draw[link] (0,0) -- (\LOne, 0);
+        
+        % L1 尺寸线 (向上偏移)
+        \draw[dashline] (0,0) -- (0, 1.5);
+        \draw[dashline] (\LOne,0) -- (\LOne, 1.5);
+        \draw[<->] (0, 1.2) -- (\LOne, 1.2) node[midway, fill=white, inner sep=2pt] {$L_1$};
+
+        % 平移至关节 1 的位置 (Joint 1)
+        \begin{scope}[shift={(\LOne,0)}]
+        % 绘制关节 1 的铰链圆圈
+        \node[joint] at (0,0) {};
+        \fill (0,0) circle (1.5pt);
+
+        % 绘制连杆 1 的延长线
+        \draw[dashline] (0,0) -- (2.5,0);
+        
+        % 绘制 theta_2 角度弧线
+        \draw[->, thick] (1.6,0) arc (0:\thetatwo:1.6) node[midway, right=2pt, yshift=2pt] {$\theta_2$};
+
+        % ================= 3. 绘制连杆 2 =================
+        \begin{scope}[rotate=\thetatwo]
+            % 连杆 2 本体
+            \draw[link] (0,0) -- (\LTwo, 0);
+
+            % L2 尺寸线 (向下偏移)
+            \draw[dashline] (0,0) -- (0, -1.8);
+            \draw[dashline] (\LTwo,0) -- (\LTwo, -1.8);
+            \draw[<->] (0, -1.5) -- (\LTwo, -1.5) node[midway, fill=white, inner sep=2pt] {$L_2$};
+
+            % 平移至关节 2 的位置 (Joint 2)
+            \begin{scope}[shift={(\LTwo,0)}]
+            % 绘制关节 2 的铰链圆圈
+            \node[joint] at (0,0) {};
+            \fill (0,0) circle (1.5pt);
+
+            % 绘制连杆 2 的延长线
+            \draw[dashline] (0,0) -- (2.2,0);
+
+            % 绘制 theta_3 角度弧线
+            \draw[->, thick] (1.5,0) arc (0:\thetathree:1.5) node[midway, right=2pt, yshift=4pt] {$\theta_3$};
+
+            % ================= 4. 绘制末端执行器 =================
+            \begin{scope}[rotate=\thetathree]
+                % 连杆 3 本体
+                \draw[link] (0,0) -- (\LThree, 0);
+
+                % L3 尺寸线 (向上偏移)
+                \draw[dashline] (0,0) -- (0, 1.2);
+                \draw[dashline] (\LThree,0) -- (\LThree, 1.2);
+                \draw[<->] (0, 0.9) -- (\LThree, 0.9) node[midway, fill=white, inner sep=2pt] {$L_3$};
+                
+                % 绘制末端夹爪 (Gripper)
+                \draw[thick] (\LThree, 0.4) -- (\LThree, -0.4); % 垂直基座
+                % 上夹爪
+                \fill (\LThree, 0.4) -- (\LThree+0.6, 0.15) -- (\LThree, 0.15) -- cycle;
+                % 下夹爪
+                \fill (\LThree, -0.4) -- (\LThree+0.6, -0.15) -- (\LThree, -0.15) -- cycle;
+                
+                % 末端关节黑点
+                \fill (\LThree,0) circle (1.5pt);
+            \end{scope}
+            \end{scope}
+        \end{scope}
+        \end{scope}
+    \end{scope}
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}[>=Stealth,
+        % 定义通用样式
+        joint/.style={circle, draw, inner sep=1.5pt, thick},
+        link/.style={double, double distance=4pt, thick},
+        axis/.style={->, thick},
+        base/.style={thick}
+    ]
+    % 定义连杆长度和关节角度
+    \def\thetaone{35}   % 连杆1相对于基座的旋转角度
+    \def\thetatwo{25}   % 连杆2相对于连杆1的旋转角度
+    \def\thetathree{55} % 连杆3相对于连杆2的旋转角度
+    
+    \def\LOne{4}        % 连杆1长度
+    \def\LTwo{3.5}      % 连杆2长度
+    \def\LThree{1.5}    % 连杆3长度
+
+    % ================= 1. 绘制基座 (Base) =================
+    % 基座半圆
+    \draw[base] (-1, 0) arc (180:0:1) -- cycle;
+    % 绘制阴影线表示固定地面
+    \foreach \x in {-0.8, -0.4, 0, 0.4, 0.8} {
+        \draw[base] (\x, 0) -- (\x-0.3, -0.4);
+    }
+    \draw[base] (-1,0) -- (1,0);
+    
+    % 原点 O 标签
+    \node[below left] at (0,0) {\textbf{\textit{O}}};
+
+    % 基坐标系 (Frame 0)
+    \draw[axis] (0,0) -- (3,0) node[below] {$x_0$};
+    \draw[axis] (0,0) -- (0,2.5) node[left] {$y_0$};
+
+    % 基座关节原点黑点
+    \fill (0,0) circle (2.5pt);
+
+    % ================= 2. 绘制连杆 1 和 坐标系 1 =================
+    \begin{scope}[rotate=\thetaone]
+        % 连杆 1 本体
+        \draw[link] (0,0) -- (\LOne, 0);
+        % 连杆 1 坐标系 (Frame 1)
+        \draw[axis] (0,0) -- (2.5,0) node[below] {$x_1$};
+        \draw[axis] (0,0) -- (0,2.5) node[left] {$y_1$};
+        % 平移至关节 1 的位置 (Joint 1)
+        \begin{scope}[shift={(\LOne,0)}]
+        % 绘制关节 1 的铰链圆圈
+        \node[joint] at (0,0) {};
+        \fill (0,0) circle (1.5pt);
+
+        % ================= 3. 绘制连杆 2 和 坐标系 2 =================
+        \begin{scope}[rotate=\thetatwo]
+            % 连杆 2 本体
+            \draw[link] (0,0) -- (\LTwo, 0);
+            % 连杆 2 坐标系 (Frame 2)
+            \draw[axis] (0,0) -- (2.5,0) node[right] {$x_2$};
+            \draw[axis] (0,0) -- (0,2.5) node[left] {$y_2$};
+            % 平移至关节 2 的位置 (Joint 2)
+            \begin{scope}[shift={(\LTwo,0)}]
+            % 绘制关节 2 的铰链圆圈
+            \node[joint] at (0,0) {};
+            \fill (0,0) circle (1.5pt);
+
+            % ================= 4. 绘制末端执行器和坐标系 3 =================
+            \begin{scope}[rotate=\thetathree]
+                % 末端连杆 3 (Frame 3 / End Effector)
+                \draw[axis] (0,0) -- (2,0) node[above] {$x_3$};
+                \draw[axis] (0,0) -- (0,2) node[left] {$y_3$};
+
+                % 连杆 3 本体
+                \draw[link] (0,0) -- (\LThree, 0);
+                
+                % 绘制末端夹爪 (Gripper)
+                \draw[thick] (\LThree, 0.4) -- (\LThree, -0.4); % 垂直基座
+                % 上夹爪
+                \fill (\LThree, 0.4) -- (\LThree+0.6, 0.15) -- (\LThree, 0.15) -- cycle;
+                % 下夹爪
+                \fill (\LThree, -0.4) -- (\LThree+0.6, -0.15) -- (\LThree, -0.15) -- cycle;
+                
+                % 末端关节黑点
+                \fill (0,0) circle (1.5pt);
+                \fill (\LThree,0) circle (1.5pt);
+            \end{scope}
+            \end{scope}
+        \end{scope}
+        \end{scope}
+    \end{scope}
+    \end{tikzpicture}
+\end{figure}
+
+\begin{itemize}
+    \item \(a_{i-1}=\) 从 \(z_{i-1}\) 到 \(z_i\) 沿 \(x_{i-1}\) 测量的距离；
+    \item \(a_{i-1}=\) 从 \(z_{i-1}\) 到 \(z_i\) 绕 \(x_{i-1}\) 旋转的角度；
+    \item \(d_i=\) 从 \(x_{i-1}\) 到 \(z_i\) 沿 \(z_i\) 测量的距离；
+    \item \(\theta_i=\) 从 \(x_{i-1}\) 到 \(z_i\) 绕 \(z_i\) 旋转的角度。
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c c c c c c}
+    \toprule
+    坐标系 & 连杆 \(i\) & \(\alpha_{i-1}\) & \(a_{i-1}\) & \(d_i\) & \(\theta_i\) \\
+    \midrule
+    基座 $\to$ 连杆1 & 1 & 0 & 0 & 0 & \(\theta_1\) \\
+    连杆1 $\to$ 连杆2 & 2 & 0 & \(L_1\) & 0 & \(\theta_2\) \\
+    连杆2 $\to$ 连杆3 & 3 & 0 & \(L_2\) & 0 & \(\theta_3\) \\
+    \bottomrule
+    \end{tabular}
+\end{table}
