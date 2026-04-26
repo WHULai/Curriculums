@@ -811,3 +811,368 @@ D-H法——以3R机器人为例
     \bottomrule
     \end{tabular}
 \end{table}
+
+\section{机器人正运动学}
+
+为简化书写，记
+\[
+ c_i = \cos\theta_i,\qquad s_i = \sin\theta_i,
+\]
+\[
+ c_{ij}=\cos(\theta_i+\theta_j),\qquad
+ s_{ij}=\sin(\theta_i+\theta_j),
+\]
+\[
+ c_{123}=\cos(\theta_1+\theta_2+\theta_3),\qquad
+ s_{123}=\sin(\theta_1+\theta_2+\theta_3).
+\]
+
+\subsection{以3R机器人为例}
+
+$$
+    \begin{tikzpicture}[>=Stealth,
+        % 定义通用样式
+        joint/.style={circle, draw, inner sep=1.5pt, thick},
+        link/.style={double, double distance=4pt, thick},
+        axis/.style={->, thick},
+        base/.style={thick},
+        % 定义点划线样式（用于延长线和尺寸辅助线）
+        dashline/.style={dash pattern=on 5pt off 2pt on 1pt off 2pt}
+    ]
+
+    % 定义连杆长度和关节角度（可根据需要调整以改变姿态）
+    \def\thetaone{30}   % 连杆1相对于基座的旋转角度
+    \def\thetatwo{35}   % 连杆2相对于连杆1的旋转角度
+    \def\thetathree{45} % 连杆3相对于连杆2的旋转角度
+    
+    \def\LOne{4.5}      % 连杆1长度
+    \def\LTwo{3.5}      % 连杆2长度
+    \def\LThree{1.5}    % 连杆3长度
+
+    % ================= 1. 绘制基座 (Base) 和 基坐标系 =================
+    % 基座半圆
+    \draw[base] (-1.2, 0) arc (180:0:1.2) -- cycle;
+    % 绘制阴影线表示固定地面
+    \foreach \x in {-1.0, -0.6, -0.2, 0.2, 0.6, 1.0} {
+        \draw[base] (\x, 0) -- (\x-0.3, -0.4);
+    }
+    \draw[base] (-1.5,0) -- (1.5,0);
+    
+    % 原点 O 标签
+    \node[below left] at (0,0) {\textbf{\textit{O}}};
+
+    % 基坐标系 (Frame 0)
+    \draw[axis] (0,0) -- (3,0) node[below] {$x_0$};
+    \draw[axis] (0,0) -- (0,3) node[left] {$y_0$};
+
+    % 基座关节原点黑点
+    \fill (0,0) circle (2.5pt);
+
+    % 绘制 theta_1 角度弧线
+    \draw[->, thick] (2.2,0) arc (0:\thetaone:2.2) node[midway, right=2pt] {$\theta_1$};
+
+    % ================= 2. 绘制连杆 1 =================
+    \begin{scope}[rotate=\thetaone]
+        % 连杆 1 本体
+        \draw[link] (0,0) -- (\LOne, 0);
+        
+        % L1 尺寸线 (向上偏移)
+        \draw[dashline] (0,0) -- (0, 1.5);
+        \draw[dashline] (\LOne,0) -- (\LOne, 1.5);
+        \draw[<->] (0, 1.2) -- (\LOne, 1.2) node[midway, fill=white, inner sep=2pt] {$L_1$};
+
+        % 平移至关节 1 的位置 (Joint 1)
+        \begin{scope}[shift={(\LOne,0)}]
+        % 绘制关节 1 的铰链圆圈
+        \node[joint] at (0,0) {};
+        \fill (0,0) circle (1.5pt);
+
+        % 绘制连杆 1 的延长线
+        \draw[dashline] (0,0) -- (2.5,0);
+        
+        % 绘制 theta_2 角度弧线
+        \draw[->, thick] (1.6,0) arc (0:\thetatwo:1.6) node[midway, right=2pt, yshift=2pt] {$\theta_2$};
+
+        % ================= 3. 绘制连杆 2 =================
+        \begin{scope}[rotate=\thetatwo]
+            % 连杆 2 本体
+            \draw[link] (0,0) -- (\LTwo, 0);
+
+            % L2 尺寸线 (向下偏移)
+            \draw[dashline] (0,0) -- (0, -1.8);
+            \draw[dashline] (\LTwo,0) -- (\LTwo, -1.8);
+            \draw[<->] (0, -1.5) -- (\LTwo, -1.5) node[midway, fill=white, inner sep=2pt] {$L_2$};
+
+            % 平移至关节 2 的位置 (Joint 2)
+            \begin{scope}[shift={(\LTwo,0)}]
+            % 绘制关节 2 的铰链圆圈
+            \node[joint] at (0,0) {};
+            \fill (0,0) circle (1.5pt);
+
+            % 绘制连杆 2 的延长线
+            \draw[dashline] (0,0) -- (2.2,0);
+
+            % 绘制 theta_3 角度弧线
+            \draw[->, thick] (1.5,0) arc (0:\thetathree:1.5) node[midway, right=2pt, yshift=4pt] {$\theta_3$};
+
+            % ================= 4. 绘制末端执行器 =================
+            \begin{scope}[rotate=\thetathree]
+                % 连杆 3 本体
+                \draw[link] (0,0) -- (\LThree, 0);
+
+                % L3 尺寸线 (向上偏移)
+                \draw[dashline] (0,0) -- (0, 1.2);
+                \draw[dashline] (\LThree,0) -- (\LThree, 1.2);
+                \draw[<->] (0, 0.9) -- (\LThree, 0.9) node[midway, fill=white, inner sep=2pt] {$L_3$};
+                
+                % 绘制末端夹爪 (Gripper)
+                \draw[thick] (\LThree, 0.4) -- (\LThree, -0.4); % 垂直基座
+                % 上夹爪
+                \fill (\LThree, 0.4) -- (\LThree+0.6, 0.15) -- (\LThree, 0.15) -- cycle;
+                % 下夹爪
+                \fill (\LThree, -0.4) -- (\LThree+0.6, -0.15) -- (\LThree, -0.15) -- cycle;
+                
+                % 末端关节黑点
+                \fill (\LThree,0) circle (1.5pt);
+            \end{scope}
+            \end{scope}
+        \end{scope}
+        \end{scope}
+    \end{scope}
+    \end{tikzpicture}
+$$
+
+3R 平面机器人各转动关节的轴线相互平行，其 D-H 参数为
+\[
+\begin{array}{c|c|c|c|c}
+\text{link} & \alpha_{i-1} & a_{i-1} & d_i & \theta_i \\
+\hline
+1 & 0 & 0 & 0 & \theta_1 \\
+2 & 0 & L_1 & 0 & \theta_2 \\
+3 & 0 & L_2 & 0 & \theta_3
+\end{array}
+\]
+
+\[
+    {}^0_1T=
+    \begin{bmatrix}
+    c_1 & -s_1 & 0 & 0 \\
+    s_1 & c_1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+    \end{bmatrix},
+    \qquad
+    {}^1_2T=
+    \begin{bmatrix}
+    c_2 & -s_2 & 0 & L_1 \\
+    s_2 & c_2 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+    \end{bmatrix},
+    \qquad
+    {}^2_3T=
+    \begin{bmatrix}
+    c_3 & -s_3 & 0 & L_2 \\
+    s_3 & c_3 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+    \end{bmatrix}
+\]
+
+正运动学方程: 从左向右相乘，有
+\[
+    {}^0_3T = {}^0_1T {}^1_2T {}^2_3T = 
+    \begin{bNiceMatrix}[margin=3pt]
+        c_{123} & -s_{123} & 0 & L_1c_1 + L_2c_{12} \\
+        s_{123} & c_{123}  & 0 & L_1s_1 + L_2s_{12} \\
+        0       & 0        & 1 & 0 \\
+        0       & 0        & 0 & 1
+    \CodeAfter
+        \begin{tikzpicture}
+            % 画左侧 3x3 矩阵的框
+            \draw [dashed, whusakura, thick] (1-|1) rectangle (4-|4);
+            % 画右侧 3x1 矩阵的框
+            \draw [dashed, whusakura, thick] (1-|4) rectangle (4-|5);
+        \end{tikzpicture}
+    \end{bNiceMatrix}
+\]
+
+\subsection{以SCARA机器人为例}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\textwidth]{以SCARA机器人为例.png}
+\end{figure}
+
+SCARA 机器人具有如下特点：
+\begin{itemize}
+  \item 3 个旋转关节，其轴线相互平行，用于平面定位和定向；
+  \item 1 个移动关节，用于垂直于平面的运动。
+\end{itemize}
+
+SCARA 各连杆变换矩阵为
+\[
+{}^0_1T=
+\begin{bmatrix}
+ c_1 & -s_1 & 0 & 0 \\
+ s_1 & c_1 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\quad
+{}^1_2T=
+\begin{bmatrix}
+ c_2 & -s_2 & 0 & 0 \\
+ s_2 & c_2 & 0 & l_1 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\quad
+{}^2_3T=
+\begin{bmatrix}
+ c_3 & -s_3 & 0 & 0 \\
+ s_3 & c_3 & 0 & l_2 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\quad
+{}^3_4T=
+\begin{bmatrix}
+ 1 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 \\
+ 0 & 0 & 1 & l_0+\theta_4 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix}.
+\]
+
+运动学方程
+\[
+{}^0_4T = {}^0_1T\,{}^1_2T\,{}^2_3T\,{}^3_4T.
+\]
+计算得
+\[
+{}^0_4T=
+\begin{bmatrix}
+ c_{123} & -s_{123} & 0 & -l_1s_1-l_2s_{12} \\
+ s_{123} & c_{123} & 0 & l_1c_1+l_2c_{12} \\
+ 0 & 0 & 1 & l_0+\theta_4 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix}.
+\]
+
+\subsection{以PUMA560为例}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\textwidth]{以PUMA560为例.png}
+\end{figure}
+
+PUMA560 是由 6 个连杆和 6 个关节组成的开式机构。其关节可分为两组：
+\begin{itemize}
+  \item Major joints，关节 1--3：用于定位，确定手腕参考点的位置；
+  \item Minor joints，关节 4--6：轴线交于一点，作为手腕参考点；后 3 个关节用于确定手腕的方位，即完成定姿。
+\end{itemize}
+
+PUMA560的 D-H 参数：
+\[
+\begin{array}{c|c|c|c|c|c}
+\text{坐标系} & \text{连杆 }i & a_{i-1} & \alpha_{i-1} & d_i & \theta_i \\
+\hline
+\text{基座}\rightarrow\text{连杆 1} & 1 & 0 & 0^\circ & 0 & \theta_1\,(90^\circ) \\
+\text{连杆 1}\rightarrow\text{连杆 2} & 2 & 0 & -90^\circ & d_2 & \theta_2\,(0^\circ) \\
+\text{连杆 2}\rightarrow\text{连杆 3} & 3 & a_2 & 0^\circ & 0 & \theta_3\,(-90^\circ) \\
+\text{连杆 3}\rightarrow\text{连杆 4} & 4 & a_3 & -90^\circ & d_4 & \theta_4\,(0^\circ) \\
+\text{连杆 4}\rightarrow\text{连杆 5} & 5 & 0 & 90^\circ & 0 & \theta_5\,(0^\circ) \\
+\text{连杆 5}\rightarrow\text{连杆 6} & 6 & 0 & -90^\circ & 0 & \theta_6\,(0^\circ)
+\end{array}
+\]
+
+D-H 参数的几何含义
+\begin{itemize}
+  \item $a_{i-1}$：从 $z_{i-1}$ 到 $z_i$，沿 $x_{i-1}$ 测量的距离；
+  \item $\alpha_{i-1}$：从 $z_{i-1}$ 到 $z_i$，绕 $x_{i-1}$ 旋转的角度；
+  \item $d_i$：从 $x_{i-1}$ 到 $x_i$，沿 $z_i$ 测量的距离；
+  \item $\theta_i$：从 $x_{i-1}$ 到 $x_i$，绕 $z_i$ 旋转的角度。
+\end{itemize}
+
+由上述参数代入相邻连杆变换矩阵，可得
+\[
+{}^0_1T=
+\begin{bmatrix}
+ c_1 & -s_1 & 0 & 0 \\
+ s_1 & c_1 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\qquad
+{}^1_2T=
+\begin{bmatrix}
+ c_2 & -s_2 & 0 & 0 \\
+ 0 & 0 & 1 & d_2 \\
+ -s_2 & -c_2 & 0 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\qquad
+{}^2_3T=
+\begin{bmatrix}
+ c_3 & -s_3 & 0 & a_2 \\
+ s_3 & c_3 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\]
+\[
+{}^3_4T=
+\begin{bmatrix}
+ c_4 & -s_4 & 0 & a_3 \\
+ 0 & 0 & 1 & d_4 \\
+ -s_4 & -c_4 & 0 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\qquad
+{}^4_5T=
+\begin{bmatrix}
+ c_5 & -s_5 & 0 & 0 \\
+ 0 & 0 & -1 & 0 \\
+ s_5 & c_5 & 0 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix},
+\qquad
+{}^5_6T=
+\begin{bmatrix}
+ c_6 & -s_6 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+ -s_6 & -c_6 & 0 & 0 \\
+ 0 & 0 & 0 & 1
+\end{bmatrix}.
+\]
+
+PUMA560 正运动学求解顺序：
+\begin{enumerate}
+  \item 计算各连杆变换矩阵；
+  \item 计算 PUMA560 的“手臂变换矩阵”；
+  \item 按照运动学方程的乘法顺序求解；
+  \item 核对矩阵正确性，并代入给定角度进行验证。
+\end{enumerate}
+
+PUMA560 的总变换矩阵为
+\[
+{}^0_6T(\theta)
+= {}^0_1T(\theta_1)
+{}^1_2T(\theta_2)
+{}^2_3T(\theta_3)
+{}^3_4T(\theta_4)
+{}^4_5T(\theta_5)
+{}^5_6T(\theta_6).
+\]
+也可按嵌套形式理解为
+\[
+{}^0_6T(\theta)
+= {}^0_1T(\theta_1)
+\left({}^1_2T(\theta_2)
+\left({}^2_3T(\theta_3)
+\left({}^3_4T(\theta_4)
+\left({}^4_5T(\theta_5)
+{}^5_6T(\theta_6)\right)\right)\right)\right).
+\]
+
