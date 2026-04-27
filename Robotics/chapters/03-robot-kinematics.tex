@@ -1176,3 +1176,214 @@ PUMA560 的总变换矩阵为
 {}^5_6T(\theta_6)\right)\right)\right)\right).
 \]
 
+\section{机器人逆运动学}
+
+\textbf{解的存在性}：逆运动学解的存在与否取决于期望姿态是否再机器人的工作空间内。
+\begin{itemize}
+    \item 如3R机器人的理想工作空间是外径$L_1+L_2$，内径$\left|L_1 - L_2\right|$的圆环
+    \item 考虑实际机器人关节不一定能旋转360°，工作空间会更小
+\end{itemize}
+
+\textbf{多解性}：逆运动学求解可能存在多解性。
+\begin{itemize}
+    \item 逆运动学的解的个数取决于机器人的自由度，也与连杆参数、运动空间范围有关
+\end{itemize}
+
+\subsection{几何法——以3R机器人为例}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\textwidth]{几何法——以3R机器人为例.png}
+\end{figure}
+
+\textcolor{whusakura}{
+    三角形成立的条件：
+    $$
+    |l_1 - l_2| \leq \sqrt{x^2 + y^2} \leq l_1 + l_2 \quad\text{（运动范围）}
+    $$
+}
+
+已知\((x,y)\)、(l1, l2)，反解关节变量\((\theta_1, \theta_2)\)
+
+求解：在$l_1l_2OA$组成的三角形中余弦定理
+\begin{itemize}
+    \item 由 \( x^2 + y^2 = l_1^2 + l_2^2 - 2l_1l_2 \cos(180^\circ - \theta_2) \) 计算 \(\theta_2\)。
+    \item 根据下式，可得 \(\theta_1 = \beta \pm \psi\)：
+    \[
+    \beta = \arctan(y/x),
+    \]
+    \[
+    \cos \psi = \frac{l_1^2 + (x^2 + y^2) - l_2^2}{2l_1\sqrt{x^2 + y^2}} \quad (0^\circ \leq \psi \leq 180^\circ).
+    \]
+\end{itemize}
+
+\subsection{代数法——以3R机器人为例}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.4\textwidth]{代数法——以3R机器人为例.png}
+\end{figure}
+
+对平面3R机器人，记
+\[
+\operatorname{c}_{1}=\cos\theta_1,\quad \operatorname{s}_{1}=\sin\theta_1,\quad
+\operatorname{c}_{12}=\cos(\theta_1+\theta_2),\quad \operatorname{s}_{12}=\sin(\theta_1+\theta_2),
+\]
+\[
+\operatorname{c}_{123}=\cos(\theta_1+\theta_2+\theta_3),\quad
+\operatorname{s}_{123}=\sin(\theta_1+\theta_2+\theta_3).
+\]
+
+其正运动学齐次变换矩阵为
+$$
+{}^{0}_{3}T=
+\begin{bmatrix}
+\operatorname{c}_{123} & -\operatorname{s}_{123} & 0 & L_1\operatorname{c}_{1}+L_2\operatorname{c}_{12}\\
+\operatorname{s}_{123} &  \operatorname{c}_{123} & 0 & L_1\operatorname{s}_{1}+L_2\operatorname{s}_{12}\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}.
+$$
+
+目标位姿矩阵写作
+$$
+{}^{W}_{B}T=
+\begin{bmatrix}
+\cos\phi & -\sin\phi & 0 & x\\
+\sin\phi &  \cos\phi & 0 & y\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}.
+$$
+
+已知
+$$
+{}^{W}_{B}T={}^0_3T.
+$$
+
+矩阵对应元素相等
+$$
+\begin{cases}
+\cos\phi=\operatorname{c}_{123},\\
+\sin\phi=\operatorname{s}_{123},\\
+x=L_1\operatorname{c}_{1}+L_2\operatorname{c}_{12},\\
+y=L_1\operatorname{s}_{1}+L_2\operatorname{s}_{12}.
+\end{cases}
+$$
+
+\subsubsection{求 $\theta_2$}
+
+由位置方程
+\[
+x=L_1\operatorname{c}_{1}+L_2\operatorname{c}_{12},\qquad
+ y=L_1\operatorname{s}_{1}+L_2\operatorname{s}_{12},
+\]
+对 $x$ 和 $y$ 平方求和，可得
+$$
+x^2+y^2=L_1^2+L_2^2+2L_1L_2\operatorname{c}_{2}.
+$$
+
+因此
+$$
+\operatorname{c}_{2}=\frac{x^2+y^2-L_1^2-L_2^2}{2L_1L_2}.
+$$
+
+进一步有
+$$
+\operatorname{s}_{2}=\pm\sqrt{1-\operatorname{c}_{2}^{\,2}}.
+$$
+
+于是
+$$
+\theta_2=\operatorname{atan2}(\operatorname{s}_{2},\operatorname{c}_{2}).
+$$
+
+其中 $\operatorname{s}_{2}$ 的正、负号通常对应两组不同的逆运动学解。
+
+\begin{note}
+    $$
+    \operatorname{atan2}(y,x)=
+    \begin{cases}
+    \arctan(y/x), & x>0,\\
+    \arctan(y/x)+\pi, & x<0\ \text{and}\ y\geq 0,\\
+    \arctan(y/x)-\pi, & x<0\ \text{and}\ y<0,\\
+    +\pi/2, & x=0\ \text{and}\ y>0,\\
+    -\pi/2, & x=0\ \text{and}\ y<0,\\
+    \text{undefined}, & x=0\ \text{and}\ y=0.
+    \end{cases}
+    $$
+\end{note}
+
+\subsection{求 $\theta_1$}
+
+由前面的关系式
+$$
+\begin{cases}
+\cos\phi=\operatorname{c}_{123},\\
+\sin\phi=\operatorname{s}_{123},\\
+x=L_1\operatorname{c}_{1}+L_2\operatorname{c}_{12},\\
+y=L_1\operatorname{s}_{1}+L_2\operatorname{s}_{12},
+\end{cases}
+$$
+定义
+$$
+ k_1=L_1+L_2\operatorname{c}_{2},\qquad k_2=L_2\operatorname{s}_{2}.
+$$
+
+此时 $k_1,k_2$ 均已知，并且位置方程可整理为
+$$
+\begin{cases}
+x=k_1\operatorname{c}_{1}-k_2\operatorname{s}_{1},\\
+y=k_1\operatorname{s}_{1}+k_2\operatorname{c}_{1}.
+\end{cases}
+$$
+
+令
+$$
+r=\sqrt{k_1^2+k_2^2},\qquad k_1=r\cos\gamma,\qquad k_2=r\sin\gamma.
+$$
+
+于是
+$$
+\gamma=\operatorname{atan2}(k_2,k_1).
+$$
+
+将 $k_1,k_2$ 代入位置方程并除以 $r$，得到
+$$
+\frac{x}{r}=\cos\gamma\cos\theta_1-\sin\gamma\sin\theta_1,
+$$
+$$
+\frac{y}{r}=\cos\gamma\sin\theta_1+\sin\gamma\cos\theta_1.
+$$
+
+因此
+$$
+\cos(\gamma+\theta_1)=\frac{x}{r},\qquad
+\sin(\gamma+\theta_1)=\frac{y}{r}.
+$$
+
+由双变量反正切函数，得到
+$$
+\gamma+\theta_1=\operatorname{atan2}\left(\frac{y}{r},\frac{x}{r}\right)=\operatorname{atan2}(y,x).
+$$
+
+最终求得
+$$
+\theta_1=\operatorname{atan2}(y,x)-\operatorname{atan2}(k_2,k_1)
+$$
+
+\subsection{求 $\theta_3$}
+
+由
+$$
+\cos\phi=\operatorname{c}_{123},\qquad \sin\phi=\operatorname{s}_{123},
+$$
+可得
+$$
+\theta_1+\theta_2+\theta_3=\operatorname{atan2}(\sin\phi,\cos\phi)=\phi.
+$$
+
+因此
+$$
+\theta_3=\phi-\theta_1-\theta_2
+$$
