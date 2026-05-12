@@ -1,0 +1,492 @@
+\chapter{机器人速度与静力学}
+\label{sec:04-robot-speed-and-statics}
+
+\section{微分运动：一阶运动学}
+
+\subsection{微分运动}
+
+\noindent 对于已知坐标系 $\{T\}$，对于基坐标系（\textbf{固定坐标系}），可表示 $T+\mathrm{d}T$ 为：
+\[
+    T + \mathrm{d}T = \underbrace{\operatorname{Trans}(d_x, d_y, d_z)}_{\text{\textcolor{whusakura}{\textbf{微分平移变换}}}} \underbrace{\operatorname{Rot}(f, \mathrm{d}\theta)}_{\text{\textcolor{whusakura}{\textbf{微分旋转变换}}}} T
+\]
+\begin{center}
+    $\Downarrow$
+\end{center}
+\[
+    \mathrm{d}T = \underbrace{\left[ \operatorname{Trans}(d_x, d_y, d_z)\operatorname{Rot}(f, \mathrm{d}\theta) - I \right]}_{\text{记为 } \Delta} T \quad \Rightarrow \quad \mathrm{d}T = \Delta T
+\]
+
+\vspace{1.5em} % 增加两部分之间的垂直间距
+
+\noindent 对于 $\{T\}$ 坐标系本身（\textbf{动坐标系}）：
+\[
+    T + \mathrm{d}T = T \, \operatorname{Trans}(d_x, d_y, d_z)\operatorname{Rot}(f, \mathrm{d}\theta)
+\]
+\begin{center}
+    $\Downarrow$
+\end{center}
+\[
+    \mathrm{d}T = T \underbrace{\left[ \operatorname{Trans}(d_x, d_y, d_z)\operatorname{Rot}(f, \mathrm{d}\theta) - I \right]}_{\text{记为 } ^T\Delta} \quad \Rightarrow \quad \mathrm{d}T = T \, ^T\Delta
+\]
+
+\subsection{微分平移、微分旋转}
+
+考虑相对基坐标系（固定坐标系）的情况：$\mathrm{d}T=\Delta T$
+$$
+\Delta = \operatorname{Trans}(d_x, d_y, d_z) \operatorname{Rot}(f, \mathrm{d}\theta) - I
+$$
+
+表示\textbf{微分平移}的齐次变换：
+$$
+\operatorname{Trans}(d_x, d_y, d_z) = 
+\begin{bmatrix}
+1 & 0 & 0 & d_x \\
+0 & 1 & 0 & d_y \\
+0 & 0 & 1 & d_z \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+$$
+
+\begin{note}
+    旋转变换通式
+    \[
+        R(\boldsymbol{k}, \theta) = 
+        \begin{bmatrix}
+        k_x k_x \operatorname{vers}\theta + \cos\theta & k_y k_x \operatorname{vers}\theta - k_z \sin\theta & k_z k_x \operatorname{vers}\theta + k_y \sin\theta \\
+        k_x k_y \operatorname{vers}\theta + k_z \sin\theta & k_y k_y \operatorname{vers}\theta + \cos\theta & k_z k_y \operatorname{vers}\theta - k_x \sin\theta \\
+        k_x k_z \operatorname{vers}\theta - k_y \sin\theta & k_y k_z \operatorname{vers}\theta + k_x \sin\theta & k_z k_z \operatorname{vers}\theta + \cos\theta
+        \end{bmatrix}
+    \]
+    （$\operatorname{vers}\theta=1-\cos\theta$）
+
+    特殊情况：
+    \begin{itemize}
+    \item 当 \( k_x = 1 \), \( k_y = k_z = 0 \)，绕 \(x\) 轴旋转
+    \item 当 \( k_y = 1 \), \( k_x = k_z = 0 \)，绕 \(y\) 轴旋转
+    \item 当 \( k_z = 1 \), \( k_y = k_x = 0 \)，绕 \(z\) 轴旋转
+    \end{itemize}
+\end{note}
+
+表示\textbf{微分旋转}的齐次变换：
+$$
+\begin{aligned}
+    \operatorname{Rot}(f, \mathrm{d}\theta) &= 
+    \begin{bmatrix}
+    f_x f_x \operatorname{vers}\theta + \cos\theta & f_y f_x \operatorname{vers}\theta - f_z \sin\theta & f_z f_x \operatorname{vers}\theta + f_y \sin\theta & 0\\
+    f_x f_y \operatorname{vers}\theta + f_z \sin\theta & f_y f_y \operatorname{vers}\theta + \cos\theta & f_z f_y \operatorname{vers}\theta - f_x \sin\theta & 0\\
+    f_x f_z \operatorname{vers}\theta - f_y \sin\theta & f_y f_z \operatorname{vers}\theta + f_x \sin\theta & f_z f_z \operatorname{vers}\theta + \cos\theta & 0\\
+    0 & 0 & 0 & 1\\
+    \end{bmatrix} \\
+    & = \begin{bmatrix}
+    1 & -f_z \mathrm{d}\theta & f_y \mathrm{d}\theta & 0 \\
+    f_z \mathrm{d}\theta & 1 & -f_x \mathrm{d}\theta & 0 \\
+    -f_y \mathrm{d}\theta & f_x \mathrm{d}\theta & 1 & 0 \\
+    0 & 0 & 0 & 1
+    \end{bmatrix}
+\end{aligned}
+$$
+
+\subsection{微分运动算子}
+
+微分运动算子$\Delta = \operatorname{Trans}(d_x, d_y, d_z) \operatorname{Rot}(f, \mathrm{d}\theta) - I$化简为
+\[
+\Delta = 
+\begin{bmatrix}
+0 & -f_z \mathrm{d}\theta & f_y \mathrm{d}\theta & d_x \\
+f_z \mathrm{d}\theta & 0 & -f_x \mathrm{d}\theta & d_y \\
+-f_y \mathrm{d}\theta & f_x \mathrm{d}\theta & 0 & d_z \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\]
+
+取
+\[
+f_x \mathrm{d}\theta = \delta_x \quad f_y \mathrm{d}\theta = \delta_y \quad f_z \mathrm{d}\theta = \delta_z
+\]
+于是
+\[
+\Delta = 
+\begin{bmatrix}
+0 & -\delta_z & \delta_y & d_x \\
+\delta_z & 0 & -\delta_x & d_y \\
+-\delta_y & \delta_x & 0 & d_z \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\]
+
+绕$f$旋转$\mathrm{d}\theta$，等价于绕$x$、$y$、$z$轴的微分旋转$\delta_x$、$\delta_y$、$\delta_z$
+
+\subsection{微分运动矢量}
+
+六维微分运动算子：
+\vspace{1in}
+$$
+    \Delta = \begin{bmatrix}
+    % 为矩阵的左上、右上、左下、右下角落的元素打上标签，方便后续自适应画框
+    \tikzmarknode{m11}{0} & -\delta_z & \tikzmarknode{m13}{\delta_y} & \tikzmarknode{m14}{d_x} \\[1ex]
+    \delta_z & 0 & -\delta_x & d_y \\[1ex]
+    \tikzmarknode{m31}{-\delta_y} & \delta_x & \tikzmarknode{m33}{0} & \tikzmarknode{m34}{d_z} \\[1ex]
+    0 & 0 & 0 & 0
+    \end{bmatrix}
+$$
+
+\begin{tikzpicture}[remember picture, overlay]
+    % 开启后台图层，避免框线遮挡公式本身的文字
+    \begin{scope}[on background layer]
+        % 1. 绘制红色虚线框 (3x3 旋转矩阵部分)
+        % fit 参数自动寻找 m11, m13, m31, m33 的边界来生成一个包裹的矩形
+        \node[draw=whusakura, dashed, thick, inner sep=4pt, fit=(m11) (m13) (m31) (m33)] (rotbox) {};
+        % 2. 绘制蓝色虚线框 (3x1 平移向量部分)
+        \node[draw=myb, dashed, thick, inner sep=4pt, fit=(m14) (m34)] (transbox) {};
+        % 3. 放置下方的文字节点
+        % 利用 calc 库相对于上方虚线框做相对定位
+        \node[anchor=north] (rottext) at ($(rotbox.south) + (-1in, -0.8cm)$) {微分旋转矢量: $\delta = [\delta_x \quad \delta_y \quad \delta_z]^T$};
+        \node[anchor=north] (transtext) at ($(transbox.south) + (0.6in, -0.8cm)$) {微分平移矢量: $d = [d_x \quad d_y \quad d_z]^T$};
+        % 4. 绘制从文字指向框的虚线连接线
+        % 旋转部分的连线指向红色框底边偏左约 30% 的位置，还原原图效果
+        \draw[whusakura, dashed, thick] (rottext.north) -- ($(rotbox.south west)!0.3!(rotbox.south east)$);
+        % 平移部分的连线直接指向蓝色框的底边中心
+        \draw[myb, dashed, thick] (transtext.north) -- (transbox.south);
+    \end{scope}
+\end{tikzpicture}
+
+\vspace{.5in}
+合并为六维微分运动矢量
+$$
+D=\begin{bmatrix} d_x \\ d_y \\ d_z \\ \delta_x \\ \delta_y \\ \delta_z \end{bmatrix}
+\text{或}
+\begin{bmatrix} d\\ \delta \end{bmatrix}
+$$
+
+微分运动算子与微分运动矢量的关系：
+$$
+\Delta = \hat{D} = [D]= \begin{bmatrix} S(\delta) & d \\ 0 & 0\end{bmatrix}
+$$
+
+\begin{note}
+    $S(\delta)$为$\delta$的反对称矩阵
+    $$
+    S(\delta) = \begin{bmatrix} 
+    0 & -\delta_z & \delta_y \\ 
+    \delta_z & 0 & -\delta_x \\ 
+    -\delta_y & \delta_x & 0 
+    \end{bmatrix}
+    $$
+
+    反对称矩阵的性质：
+    \begin{enumerate}
+        \item 操作符$S$是线性的，也就是说 $a, b \in \mathbb{R}^3$:
+        \[ S(\alpha a + \beta b) = \alpha S(a) + \beta S(b) \]
+        \item 对于任何属于 $\mathbb{R}^3$ 的向量 $a, p$:
+        \[ S(a)p = a \times p \]
+        \item 对于任何 $R \in SO(3)$ (特殊正交群/旋转矩阵群)，$a \in \mathbb{R}^3$:
+        \[ R S(a) R^T = S(Ra) \]
+        \item 对于一个 $n \times n$ 的反对称矩阵 $S$，以及任何一个向量 $X \in \mathbb{R}^n$:
+        \[ X^T S X = 0 \]
+    \end{enumerate}
+\end{note}
+
+\qs{}{
+    坐标系$\{T\}$的位置姿态矩阵为：
+    \[
+    T = \begin{bmatrix}
+    0 & 0 & 1 & 5 \\
+    1 & 0 & 0 & 15 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1
+    \end{bmatrix}
+    \]
+    其相\textbf{对基坐标系}的微分平移$d$，微分旋转$\delta$分别为：
+    $$
+    d = \begin{bmatrix} 1 \\ 0 \\ 0.5\end{bmatrix} \quad
+    \delta = \begin{bmatrix} 0.1 \\ 0 \\ 0\end{bmatrix}
+    $$
+    求微分运动变换$\mathrm{d}T$
+}
+\sol{
+    将$d = \begin{bmatrix} 1 \\ 0 \\ 0.5 \end{bmatrix}, \delta = \begin{bmatrix} 0.1 \\ 0 \\ 0 \end{bmatrix}$代入$\Delta = \begin{bmatrix} 0 & -\delta_z & \delta_y & d_x \\ \delta_z & 0 & -\delta_x & d_y \\ -\delta_y & \delta_x & 0 & d_z \end{bmatrix} $
+    得：
+    \[
+    \Delta = \begin{bmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & -0.1 & 0 \\
+    0 & 0.1 & 0 & 0.5 \\
+    0 & 0 & 0 & 0
+    \end{bmatrix}
+    \]
+    于是
+    $$
+    \mathrm{d}T = \Delta T = 
+    \begin{bmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & 0 & -0.1 & 0 \\
+    0 & 0.1 & 0 & 0.5 \\
+    0 & 0 & 0 & 0
+    \end{bmatrix}
+    \begin{bmatrix}
+    0 & 0 & 1 & 5 \\
+    1 & 0 & 0 & 15 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    0 & 0 & 0 & 1 \\
+    0 & -0.1 & 0 & 0 \\
+    0.1 & 0 & 0 & 2 \\
+    0 & 0 & 0 & 0
+    \end{bmatrix}
+    $$
+}
+
+将前面的例子改为相对\textbf{自身坐标系}$\{T\}$的微分平移${}^Td$，微分旋转${}^T\delta$，可得
+$$
+\mathrm{d}T = T^{T} \Delta = 
+\begin{bmatrix}
+0 & 0 & 1 & 5 \\
+1 & 0 & 0 & 15 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+0 & 0 & 0 & 1 \\
+0 & 0 & -0.1 & 0 \\
+0 & 0.1 & 0 & 0.5 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & 0.1 & 0 & 0.5 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & -0.1 & 0 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+$$
+
+\begin{note}
+    相对固定基坐标系和相对自身运动坐标系，左乘与右乘得到不同的微分运动变换
+\end{note}
+
+\subsection{微分运动的等价变换}
+
+\textcolor{whusakura}{为了得到相同的微分运动，$\Delta$与${}^T\Delta$应该满足怎样的条件？}
+$$
+\mathrm{d}T=\Delta T=T{}^T\Delta \Rightarrow \boxed{{}^T\Delta=T^{-1}\Delta T}
+$$
+得到
+$$
+{}^{T}\Delta = T^{-1}\Delta T = 
+\begin{bmatrix}
+0 & -\delta \cdot a & \delta \cdot o & \delta \cdot (p \times n) + d \cdot n \\
+\delta \cdot a & 0 & -\delta \cdot n & \delta \cdot (p \times o) + d \cdot o \\
+-\delta \cdot o & \delta \cdot n & 0 & \delta \cdot (p \times a) + d \cdot a \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+$$
+
+类似的，${}^T\Delta$得到$\Delta$，需要经过变换：
+$$
+\Delta=T^T\Delta T^{-1} \Rightarrow \boxed{\Delta=(T^{-1})^{-1}({}^{T}\Delta) (T^{-1})}
+$$
+
+\section{雅可比矩阵：机器人速度}
+
+\subsection{雅可比矩阵}
+\subsubsection{标量表达}
+
+\textbf{函数关系}
+
+系统可以通过一组标量方程来描述其函数关系：
+\begin{align*}
+    x_1 &= f_1 (q_1, q_2, \cdots, q_n) \\
+    x_2 &= f_2 (q_1, q_2, \cdots, q_n) \\
+    &\;\;\vdots \\
+    x_m &= f_m (q_1, q_2, \cdots, q_n)
+\end{align*}
+
+\textbf{微分关系}
+
+对上述函数关系求全微分，可得到系统变量之间的微分关系（线性化映射）：
+\begin{align*}
+    \delta x_1 &= \frac{\partial f_1}{\partial q_1} \delta q_1 + \frac{\partial f_1}{\partial q_2} \delta q_2 + \cdots + \frac{\partial f_1}{\partial q_n} \delta q_n \\
+    \delta x_2 &= \frac{\partial f_2}{\partial q_1} \delta q_1 + \frac{\partial f_2}{\partial q_2} \delta q_2 + \cdots + \frac{\partial f_2}{\partial q_n} \delta q_n \\
+    &\;\;\vdots \\
+    \delta x_m &= \frac{\partial f_m}{\partial q_1} \delta q_1 + \frac{\partial f_m}{\partial q_2} \delta q_2 + \cdots + \frac{\partial f_m}{\partial q_n} \delta q_n
+\end{align*}
+
+\subsubsection{矩阵表达}
+
+\textbf{函数关系}
+
+将标量方程组写成列向量形式，可得到紧凑的矩阵/向量表达：
+\begin{equation*}
+    \begin{bmatrix}
+    x_1 \\ \vdots \\ x_m
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    f_1(q_1, \cdots, q_n) \\
+    \vdots \\
+    f_m(q_1, \cdots, q_n)
+    \end{bmatrix}
+\end{equation*}
+简写为向量形式：
+\begin{equation}
+    \boldsymbol{X} = \boldsymbol{F}(\boldsymbol{q})
+\end{equation}
+
+\textbf{微分关系}
+
+将标量全微分方程组提取系数，转换为矩阵相乘的形式：
+\begin{equation*}
+    \begin{pmatrix}
+    \delta x_1 \\ \vdots \\ \delta x_m
+    \end{pmatrix}
+    =
+    \underbrace{
+    \begin{pmatrix}
+    \frac{\partial f_1}{\partial q_1} & \cdots & \frac{\partial f_1}{\partial q_n} \\
+    \vdots & \vdots & \vdots \\
+    \frac{\partial f_m}{\partial q_1} & \cdots & \frac{\partial f_m}{\partial q_n}
+    \end{pmatrix}
+    }_{\textcolor{red}{\textbf{雅可比矩阵 } \boldsymbol{J}}}
+    \begin{pmatrix}
+    \delta q_1 \\ \vdots \\ \delta q_n
+    \end{pmatrix}
+\end{equation*}
+由上式可知，由偏导数组成的 $m \times n$ 矩阵即为雅可比矩阵 (Jacobian Matrix, $J$)。
+
+其简写形式为：
+\begin{equation}
+    \delta \boldsymbol{X} = \frac{\partial \boldsymbol{F}(\boldsymbol{q})}{\partial \boldsymbol{q}} \delta \boldsymbol{q} 
+\end{equation}
+其中，可以定义 $\boldsymbol{J} = \dfrac{\partial \boldsymbol{F}(\boldsymbol{q})}{\partial \boldsymbol{q}}$，即 $\delta \boldsymbol{X} = \boldsymbol{J} \delta \boldsymbol{q}$。
+
+$$
+\begin{tikzpicture}[
+    line width=1pt,
+    >={Latex[length=4mm, width=3mm]}, % 设置箭头样式与大小
+    scale=.6
+]
+
+% ==================== 坐标定义 ====================
+\coordinate (O) at (0,0);       % 基座原点
+\coordinate (J1) at (4, 3.5);   % 关节1中心
+\coordinate (J2) at (7, 0);     % 关节2中心 (末端执行器)
+
+% 计算连杆角度用于精确绘制
+\def\angA{41.185}   % atan2(3.5, 4) - 连杆1的角度
+\def\angB{-49.398}  % atan2(-3.5, 3) - 连杆2的角度
+
+% ==================== 虚线辅助线 ====================
+% x0 轴的水平延伸虚线 (穿过末端执行器)
+\draw [dashed, line width=1pt] (2.5, 0) -- (10.5, 0);
+% 连杆1的延伸虚线
+\draw [dashed, line width=1pt] (J1) -- ++(\angA:3.5);
+
+% ==================== 连杆绘制 ====================
+\def\linkwidth{0.15cm} % 连杆单侧半宽
+
+% 连杆 1 (绘制两条平行线)
+\coordinate (O_up) at ($(O)!\linkwidth!90:(J1)$);
+\coordinate (O_dn) at ($(O)!\linkwidth!-90:(J1)$);
+\coordinate (J1_up1) at ($(J1)!\linkwidth!-90:(O)$);
+\coordinate (J1_dn1) at ($(J1)!\linkwidth!90:(O)$);
+\draw (O_up) -- (J1_up1);
+\draw (O_dn) -- (J1_dn1);
+
+% 连杆 2 (绘制两条平行线)
+\coordinate (J1_up2) at ($(J1)!\linkwidth!90:(J2)$);
+\coordinate (J1_dn2) at ($(J1)!\linkwidth!-90:(J2)$);
+\coordinate (J2_up) at ($(J2)!\linkwidth!-90:(J1)$);
+\coordinate (J2_dn) at ($(J2)!\linkwidth!90:(J1)$);
+\draw (J1_up2) -- (J2_up);
+\draw (J1_dn2) -- (J2_dn);
+
+% ==================== 基座绘制 ====================
+% 阴影线 (Hatching)
+\foreach \x in {-1.2, -0.9, -0.6, -0.3, 0, 0.3, 0.6, 0.9, 1.2, 1.5} {
+    \draw (\x, -0.8) -- (\x-0.3, -1.2);
+}
+% 地面基准线
+\draw (-1.5, -0.8) -- (1.5, -0.8);
+% 基座外壳 (半圆+矩形) - 使用 fill=white 遮挡内部网格或线条
+\draw [fill=white] (-0.6, -0.8) -- (-0.6, 0) arc (180:0:0.6) -- (0.6, -0.8) -- cycle;
+
+% ==================== 坐标系与关节 ====================
+% 基座坐标系 0
+\draw [->] (O) -- (2.5, 0) node[below right] {$x_0$};
+\draw [->] (O) -- (0, 3) node[left] {$y_0$};
+
+% 绘制关节圆和轴心点 (使用 fill=white 覆盖连杆端部的平行线连接处)
+\fill (O) circle (0.08);
+
+\draw [fill=white] (J1) circle (0.22);
+\fill (J1) circle (0.08);
+
+\draw [fill=white] (J2) circle (0.22);
+\fill (J2) circle (0.08);
+
+% ==================== 末端执行器坐标系 3 ====================
+% 速度向量 v_3
+\draw [->] (J2) -- ++(3, 0) node[above] {$v_3$};
+% 坐标轴 x_3 (与连杆2共线)
+\draw [->] (J2) -- ++(\angB:3) node[right] {$x_3$};
+% 坐标轴 y_3 (与 x_3 垂直)
+\draw [->] (J2) -- ++(\angB+90:3) node[above right] {$y_3$};
+
+% ==================== 角度标注 ====================
+% \theta_1 标注
+\draw [->] (1.8, 0) arc (0:\angA:1.8) node[midway, right=4pt] {$\theta_1$};
+% \theta_2 标注
+\draw [->] ($(J1) + (\angA:1.8)$) arc (\angA:\angB:1.8) node[midway, right=6pt] {$\theta_2$};
+
+\end{tikzpicture}
+$$
+
+2R平面机械手，有2个转动关节，关节变量$\theta_1$、$\theta_1$
+
+正向运动学
+$$
+x = l_1 \cos\theta_1 + l_2 \cos(\theta_1 + \theta_2)
+$$
+$$
+y = l_1 \sin\theta_1 + l_2 \sin(\theta_1 + \theta_2)
+$$
+
+雅可比矩阵
+$$
+\boldsymbol{J}(\boldsymbol{q}) = 
+\begin{bmatrix}
+-l_1 \sin\theta_1 - l_2 \sin(\theta_1 + \theta_2) & -l_2 \sin(\theta_1 + \theta_2) \\
+l_1 \cos\theta_1 + l_2 \cos(\theta_1 + \theta_2) & l_2 \cos(\theta_1 + \theta_2)
+\end{bmatrix}
+$$
+
+逆雅可比矩阵
+$$
+\boldsymbol{J}^{-1}(\boldsymbol{q}) = \frac{1}{l_1l_2\sin\theta_2}
+\begin{bmatrix}
+l_2 \cos(\theta_1 + \theta_2) & l_2 \sin(\theta_1 + \theta_2) \\
+l_1 \cos\theta_1 + l_2 \cos(\theta_1 + \theta_2) & -l_1 \sin\theta_1 - l_2 \sin(\theta_1 + \theta_2)
+\end{bmatrix}
+$$
+
+$\theta_2 = 0$或者$\theta_2 = \pi$，即机器人完全拉直或缩回时处于奇异状态；机器人末端只能沿一个方向（切向）运动，退化为1个自由度。
+
+\subsection{速度雅可比矩阵}
+
+机器人的雅可比矩阵：机器人的操作速度与关节速度的线性变换(从关节空间到操作空间的传动比)
+
+机器人末端在操作空间的运动方程为$x=x(q)$，对时间求导得$\dot{x}=J(q)\dot{q}$（$\dot{x}$为操作速度，$\dot{q}$为关节速度）。
+$$
+\begin{bmatrix}v \\ \omega \end{bmatrix} = 
+\begin{bmatrix}J_{l1} & J_{l2} & \cdots & J_{ln} \\ J_{a1} & J_{a2} & \cdots & J_{an} \end{bmatrix} \begin{bmatrix}\dot{q}_1 \\ \dot{q}_2 \\ \cdots \\ \dot{q}_n \\ \end{bmatrix}
+$$
+
+其中$D=\begin{bmatrix}v \\ \omega \end{bmatrix}$，为$6\times1$矢量，$\mathrm{d}q$为$n\times1$矢量，$n$为机器人自由度，则$J(q)$为$6\times n$阶矩阵。
+
+$J(q)$可以看作关节空间微分运动$\mathrm{d}q$到操作空间微分运动$D$的转换矩阵：
+$$
+D = J(q) \mathrm{d}q
+$$
