@@ -414,7 +414,16 @@ $$
 
 为了描述三维空间中更为一般的旋转运动，需要建立绕任意过原点单位轴 $k = [k_x, k_y, k_z]^T$ 旋转 $\theta$ 角的变换通式。
 
-结合向量正交性分析，引入Versine函数（$\operatorname{Vers}\theta = 1 - \cos\theta$），旋转变换矩阵 $R(k, \theta)$ 可完全由转轴的方向余弦与转角参数化表达。
+结合向量正交性分析，引入Versine函数（正矢函数，$\operatorname{Vers}\theta = 1 - \cos\theta$），旋转变换矩阵 $R(k, \theta)$ 可完全由转轴的方向余弦与转角参数化表达。
+
+$$
+\boldsymbol{R}(\boldsymbol{k}, \theta) = 
+\begin{bmatrix}
+k_x k_x \operatorname{Vers}\theta + \cos\theta & k_y k_x \operatorname{Vers}\theta - k_z \sin\theta & k_z k_x \operatorname{Vers}\theta + k_y \sin\theta \\
+k_x k_y \operatorname{Vers}\theta + k_z \sin\theta & k_y k_y \operatorname{Vers}\theta + \cos\theta & k_z k_y \operatorname{Vers}\theta - k_x \sin\theta \\
+k_x k_z \operatorname{Vers}\theta - k_y \sin\theta & k_y k_z \operatorname{Vers}\theta + k_x \sin\theta & k_z k_z \operatorname{Vers}\theta + \cos\theta
+\end{bmatrix}
+$$
 
 设已知矩阵$R$的元素构成为$\left[n, o, a\right]$，通过求取矩阵迹（对角线元素之和），可率先解得转角$\theta$：
 $$
