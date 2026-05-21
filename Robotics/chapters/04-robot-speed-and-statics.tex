@@ -769,6 +769,173 @@ $$
     $$
 }
 
+
+
+\ex{}{
+    图中所示为三自由度手臂，其中关节轴1与另外两轴不平行, 轴1和轴2之间的夹角为$90^{\circ}$，坐标系$\{4\}$位于手部末端且与坐标系$\{3\}$的方位相同，连杆长度为$L_3$，在坐标系$\{4\}$中写成操作臂的雅可比矩阵（要求：采用微分变换法求解物体雅可比矩阵${}^4J$）
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{homework-3-4-1.1.png}
+    \end{figure}
+}
+
+\sol{
+第2、3关节轴都与$z_4$平行，因此：
+$$
+z_2 = z_3 = \begin{bmatrix}0 \\ 0 \\ 1\end{bmatrix}
+$$
+第1关节轴是竖直向上的轴。由于末端$x_4$相对水平线转过了$\theta_2+\theta_3$，所以竖直方向在$\{4\}$中可表示为：
+$$
+z_1 = \begin{bmatrix}s_{23} \\ c_{23} \\ 0\end{bmatrix}
+$$
+
+接着写从各关节轴上一点到末端$\{4\}$原点的矢量，并全部表示在坐标系$\{4\}$中。
+
+从关节3到末端：
+$$
+{}^3p_4^0=
+\begin{bmatrix}
+L_3 \\ 0 \\ 0
+\end{bmatrix}
+$$
+从关节 2 到末端：
+$$
+{}^2p_4^0=
+\begin{bmatrix}
+L_2\cos\theta_3+L_3 \\
+-L_2\sin\theta_3 \\
+0
+\end{bmatrix}
+$$
+从关节 1 到末端：
+$$
+{}^1p_4^0=
+\begin{bmatrix}
+L_1\cos(\theta_2+\theta_3)+L_2\cos\theta_3+L_3 \\
+-L_1\sin(\theta_2+\theta_3)-L_2\sin\theta_3 \\
+0
+\end{bmatrix}
+$$
+\begin{note}
+    对于旋转关节$i$:
+    $$\boldsymbol{\omega} = \boldsymbol{z}_i \dot{q}_i \qquad \boldsymbol{v} = (\boldsymbol{z}_i \times {}^i\boldsymbol{p}_n^0) \dot{q}_i$$
+\end{note}
+
+逐列求雅可比矩阵。
+
+第1关节：
+$$
+{}^4\omega_1=
+\begin{bmatrix}
+s_{23} \\
+c_{23} \\
+0
+\end{bmatrix}
+\dot\theta_1
+$$
+$$
+{}^4v_1=
+{}^4z_1\times{}^1p_4^0\dot\theta_1 = 
+\begin{bmatrix}
+0 \\
+0 \\
+-\left(L_1+L_2\cos\theta_2+L_3\cos(\theta_2+\theta_3)\right)
+\end{bmatrix}
+\dot\theta_1
+$$
+
+所以第 1 列为：
+$$
+{}^4J_1=
+\begin{bmatrix}
+0 \\
+0 \\
+-\left(L_1+L_2c_2+L_3c_{23}\right) \\
+s_{23} \\
+c_{23} \\
+0
+\end{bmatrix}
+$$
+
+第 2 关节：
+$$
+{}^4\omega_2=
+\begin{bmatrix}
+0 \\ 0 \\ 1
+\end{bmatrix}
+\dot\theta_2
+$$
+$$
+{}^4v_2=
+{}^4z_2\times{}^2p_4^0\dot\theta_2 = 
+\begin{bmatrix}
+L_2\sin\theta_3 \\
+L_2\cos\theta_3+L_3 \\
+0
+\end{bmatrix}
+\dot\theta_2
+$$
+
+所以第 2 列为：
+$$
+{}^4J_2=
+\begin{bmatrix}
+L_2s_3 \\
+L_2c_3+L_3 \\
+0 \\
+0 \\
+0 \\
+1
+\end{bmatrix}
+$$
+
+第 3 关节：
+$$
+{}^4\omega_3=
+\begin{bmatrix}
+0 \\ 0 \\ 1
+\end{bmatrix}
+\dot\theta_3
+$$
+$$
+{}^4v_3=
+{}^4z_3\times{}^3p_4^0\dot\theta_3 = 
+\begin{bmatrix}
+0 \\
+L_3 \\
+0
+\end{bmatrix}
+\dot\theta_3
+$$
+
+所以第 3 列为：
+$$
+{}^4J_3=
+\begin{bmatrix}
+0 \\
+L_3 \\
+0 \\
+0 \\
+0 \\
+1
+\end{bmatrix}
+$$
+
+因此物体雅可比矩阵为：
+$$
+{}^4J=
+\begin{bmatrix}
+0 & L_2\sin\theta_3 & 0 \\
+0 & L_2\cos\theta_3+L_3 & L_3 \\
+-\left(L_1+L_2\cos\theta_2+L_3\cos(\theta_2+\theta_3)\right) & 0 & 0 \\
+\sin(\theta_2+\theta_3) & 0 & 0 \\
+\cos(\theta_2+\theta_3) & 0 & 0 \\
+0 & 1 & 1
+\end{bmatrix}
+$$
+}
+
+
 \subsection{矢量积法}
 
 $$
