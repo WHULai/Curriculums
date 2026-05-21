@@ -1470,3 +1470,156 @@ $$
 $$
 \theta_3=\phi-\theta_1-\theta_2
 $$
+
+\ex{}{
+    对于平面3R机器人的姿态逆运动学解，已知固定长度参数如下：$L_1 = 4$, $L_2 = 3$, $L_3 = 2$, 当已知末端执行器H（注意，不是坐标系3）相对机器人基座0的姿态时，计算$\theta_1$, $\theta_2$, $\theta_2$。
+    \begin{enumerate}
+        \item 手算机器人逆运动学解析解（提示：为简化方程，首先从${}^0_HT$和$L_3$计算${}^0_3T$）
+        \item 计算下面姿态下平面 3R 机器人的全部姿态逆运动学解：
+        $$
+        {}^0_H T = \begin{bmatrix} 1 & 0 & 0 & 9 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+        \quad
+        {}^0_H T = \begin{bmatrix} 0.5 & -0.866 & 0 & 7.5373 \\ 0.866 & 0.5 & 0 & 3.9266 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+        \quad
+        {}^0_H T = \begin{bmatrix} 0 & 1 & 0 & -3 \\ -1 & 0 & 0 & 2 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+        $$
+        $$
+        {}^0_H T = \begin{bmatrix} 0.866 & 0.5 & 0 & -3.1245 \\ -0.5 & 0.866 & 0 & 9.1674 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}
+        $$
+    \end{enumerate}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Homework-Part2-2.2.jpg}
+    \end{figure}
+}
+
+\sol{
+末端执行器$H$相对于坐标系3还有一段长度$L_3$，因此：
+$$
+{}^3_HT=
+\begin{bmatrix}
+1 & 0 & 0 & L_3 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+正运动学关系是：
+$$
+{}^0_HT={}^0_3T{}^3_HT
+$$
+
+先写正运动学。令
+$$
+\theta_{12}=\theta_1+\theta_2,\qquad
+\theta_{123}=\theta_1+\theta_2+\theta_3
+$$
+则坐标系 3 的位姿为：
+$$
+{}^0_3T=
+\begin{bmatrix}
+\cos\theta_{123} & -\sin\theta_{123} & 0 &
+L_1\cos\theta_1+L_2\cos\theta_{12} \\
+\sin\theta_{123} & \cos\theta_{123} & 0 &
+L_1\sin\theta_1+L_2\sin\theta_{12} \\
+0&0&1&0 \\s
+0&0&0&1
+\end{bmatrix}
+$$
+末端$H$的位姿为：
+$$
+{}^0_HT=
+\begin{bmatrix}
+\cos\theta_{123} & -\sin\theta_{123} & 0 &
+L_1\cos\theta_1+L_2\cos\theta_{12}+L_3\cos\theta_{123} \\
+\sin\theta_{123} & \cos\theta_{123} & 0 &
+L_1\sin\theta_1+L_2\sin\theta_{12}+L_3\sin\theta_{123} \\
+0&0&1&0 \\
+0&0&0&1
+\end{bmatrix}
+$$
+
+设题目给出的末端位姿为：
+$$
+{}^0_HT=
+\begin{bmatrix}
+r_{11} & r_{12} & 0 & x_H \\
+r_{21} & r_{22} & 0 & y_H \\
+0&0&1&0 \\
+0&0&0&1
+\end{bmatrix}
+$$
+末端姿态角为：
+$$
+\phi=\theta_1+\theta_2+\theta_3=\operatorname{atan2}(r_{21},r_{11})
+$$
+因为$H$相对于坐标系 3 只是沿$x_3$正方向平移$L_3$，所以有：
+$$
+{}^0_3T={}^0_HT({}^3_HT)^{-1}
+$$
+也就是：
+$$
+{}^0_3T={}^0_HT
+\begin{bmatrix}
+1&0&0&-L_3 \\
+0&1&0&0 \\
+0&0&1&0 \\
+0&0&0&1
+\end{bmatrix}
+$$
+因此坐标系 3 原点的位置为：
+$$
+x_3=x_H-L_3\cos\phi
+$$
+$$
+y_3=y_H-L_3\sin\phi
+$$
+
+接下来只需要解：
+$$
+x_3=L_1\cos\theta_1+L_2\cos(\theta_1+\theta_2)
+$$
+$$
+y_3=L_1\sin\theta_1+L_2\sin(\theta_1+\theta_2)
+$$
+两边平方相加，得：
+$$
+x_3^2+y_3^2 = L_1^2+L_2^2+2L_1L_2\cos\theta_2
+$$
+所以：
+$$
+\cos\theta_2 = 
+\frac{x_3^2+y_3^2-L_1^2-L_2^2}{2L_1L_2}
+$$
+记：
+$$
+D=
+\frac{x_3^2+y_3^2-L_1^2-L_2^2}{2L_1L_2}
+$$
+如果
+$$
+|D|>1
+$$
+则目标点超出机械臂工作空间，没有实数解。
+
+如果
+$$
+|D|\leq 1
+$$
+则：
+$$
+\theta_2=\operatorname{atan2}(\pm\sqrt{1-D^2},D)
+$$
+对应肘上、肘下两组解。然后：
+$$
+\theta_1=
+\operatorname{atan2}(y_3,x_3) - \operatorname{atan2}(L_2\sin\theta_2,L_1+L_2\cos\theta_2)
+$$
+最后：
+$$
+\theta_3=\phi-\theta_1-\theta_2
+$$
+这就是1的解析解。
+
+}
