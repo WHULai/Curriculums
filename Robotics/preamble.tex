@@ -23,7 +23,9 @@
 \usepackage[varbb]{newpxmath}
 \usepackage{xfrac}
 \usepackage{xeCJK}
-\setCJKmainfont{Source Han Serif}
+\IfFontExistsTF{Source Han Serif}
+    {\setCJKmainfont{Source Han Serif}}
+    {\setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf]}
 \usepackage[makeroom]{cancel}
 \usepackage{mathtools}
 \usepackage{bookmark}
