@@ -1073,3 +1073,199 @@ $$^{0}\dot{X}_{i+1} = \,^{0}J_{i+1}(q)\dot{q} = \begin{pmatrix} ^{0}\boldsymbol{
 {}^{A}J = \begin{pmatrix} {}^{A}_{B}\boldsymbol{R} & \boldsymbol{0} \\ \boldsymbol{0} & {}^{A}_{B}\boldsymbol{R} \end{pmatrix} {}^{B}J
 \]
 
+\ex{}{
+    考虑RRR操作臂：
+    \begin{enumerate}
+        \item 根据图中的坐标系定义写出D-H参数表
+        \item 利用D-H表给出前向运动学${}^0_4T$
+        \item 利用矢量积法求该机械臂的空间雅可比矩阵$J_0$（提示：线速度雅可比矩阵可以对位置求偏导直接获得）
+        \item 求在坐标系$\{1\}$中表示的线速度雅可比矩阵${}^1J_v$
+        \item 利用在4部分求得雅可比矩阵，找出该机械臂的奇异点（相对于线速度而言），并解释其物理意义。
+    \end{enumerate}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.8\textwidth]{Homework-Part3-4-1.2.jpg}
+    \end{figure}
+}
+
+\sol{
+Modified DH 表为
+\begin{table}[htbp]
+ \centering
+ \begin{tabular}{ccccc}
+   \toprule
+   $i$ & $\alpha_{i-1}$ & $a_{i-1}$ & $\theta_i$ & $d_i$ \\
+   \midrule
+   1 & $0$           & $0$ & $\theta_1$ & $0$ \\
+   2 & $-90^{\circ}$ & $1$ & $\theta_2$ & $0$ \\
+   3 & $90^{\circ}$  & $1$ & $\theta_3$ & $0$ \\
+   4 & $-90^{\circ}$ & $1$ & $0$        & $0$ \\
+   \bottomrule
+ \end{tabular}
+\end{table}
+\begin{note}
+    两个结构参数：
+    \begin{itemize}
+        \item 长度 \( a_{i-1} \)：第 \(i-1\) 轴指向第 \(i\) 轴的公法线长度（恒为正）。
+        \item 扭角 \( \alpha_{i-1} \)：第 \(i-1\) 轴绕公垂线转至第 \(i\) 轴的夹角（可正可负）。
+    \end{itemize}
+    两个连接参数：
+    \begin{itemize}
+        \item 偏置 \( d_i \)：两条公法线之间的距离（带正负号）。
+        \item 关节角 \( \theta_i \)：两条公法线之间的夹角（带正负号）。
+    \end{itemize}
+\end{note}
+
+各段变换矩阵为：
+$$
+{}_1^0T = \begin{bmatrix}
+c_1 & -s_1 & 0 & 0 \\
+s_1 & c_1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\quad
+{}_2^1T = \begin{bmatrix}
+c_2 & -s_2 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+-s_2 & -c_2 & 0 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\quad
+{}_3^2T = \begin{bmatrix}
+c_3 & -s_3 & 0 & 1 \\
+0 & 0 & -1 & 0 \\
+s_3 & c_3 & 0 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\quad
+{}_4^3T = \begin{bmatrix}
+1 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0 \\
+0 & -1 & 0 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+因此：
+$$
+{}^0_4T={}_1^0T {}_2^1T {}_3^2T {}_4^3T
+$$
+计算得到：
+$$
+{}_4^0T = \begin{bmatrix}
+c_1c_2c_3 - s_1s_3 & -c_1s_2 & -s_1c_3 - c_1c_2s_3 & c_1(1+c_2+c_2c_3) - s_1s_3 \\
+s_1c_2c_3 + c_1s_3 & -s_1s_2 & c_1c_3 - s_1c_2s_3 & s_1(1+c_2+c_2c_3) + c_1s_3 \\
+-s_2c_3 & -c_2 & s_2s_3 & -(1+c_3)s_2 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+所以末端位置为：
+$$
+{}^0p_4 = 
+\begin{bmatrix}
+    c_1(1+c_2+c_2c_3) - s_1s_3 \\
+    s_1(1+c_2+c_2c_3) + c_1s_3 \\
+    -(1+c_3)s_2
+\end{bmatrix}
+$$
+
+\begin{note}
+    对于旋转关节$i$:
+    $$\boldsymbol{\omega} = \boldsymbol{z}_i \dot{q}_i \qquad \boldsymbol{v} = (\boldsymbol{z}_i \times {}^i\boldsymbol{p}_n^0) \dot{q}_i$$
+\end{note}
+
+各关节轴方向和从各关节轴上一点到末端$\{4\}$原点的矢量为
+$$
+{}^0z_1 = \begin{bmatrix}0 \\ 0 \\ 1 \end{bmatrix} \quad
+{}^1p_3^0 = \begin{bmatrix}0 \\ 0 \\ 0 \end{bmatrix} - {}^0p_4
+$$
+$$
+{}^0z_2 = \begin{bmatrix}-s_1 \\ c_1 \\ 0 \end{bmatrix} \quad
+{}^2p_3^0 = \begin{bmatrix}c_1 \\ s_1 \\ 0 \end{bmatrix} - {}^0p_4
+$$
+$$
+{}^0z_3 = \begin{bmatrix}c_1s_1 \\ s_1s_2 \\ c_2 \end{bmatrix} \quad
+{}^3p_3^0 = \begin{bmatrix}(1+c_2)c_1 \\ (1+c_2)s_1 \\ -s_2 \end{bmatrix} - {}^0p_4
+$$
+于是
+$$
+{}^0J = \begin{bmatrix}
+-s_1(1+c_2+c_2c_3)-c_1s_3 & -c_1s_2(1+c_3) & -s_1c_3-c_1c_2s_3 \\
+c_1(1+c_2+c_2c_3)-s_1s_3 & -s_1s_2(1+c_3) & c_1c_3-s_1c_2s_3 \\
+0 & -c_2(1+c_3) & s_2s_3 \\
+0 & -s_1 & c_1s_2 \\
+0 & c_1 & s_1s_2 \\
+1 & 0 & c_2
+\end{bmatrix}
+$$
+
+求在坐标系$\{1\}$中表示的线速度雅可比矩阵${}^1J_v$。
+
+因为：
+$$
+{}^0R_1 = R_z(\theta_1)
+$$
+所以：
+$$
+{}^1J_v={}^1R_0{}^0J_v=({}^0R_1)^T{}^0J_v
+$$
+即：
+$$
+{}^1J_v=
+R_z(-\theta_1){}^0J_v
+$$
+计算得到：
+$$
+{}^1J_v=
+\begin{bmatrix}
+-s_3 & -(1+c_3)s_2 & -c_2s_3\
+1+c_2+c_2c_3 & 0 & c_3\
+0 & -(1+c_3)c_2 & s_2s_3
+\end{bmatrix}
+$$
+
+用${}^1J_v$分析奇异性，对${}^1J_v$求行列式：
+$$
+\det({}^1J_v)=(1+c_2)(1+c_3)s_3
+$$
+所以线速度奇异点满足：
+$$
+(1+\cos\theta_2)(1+\cos\theta_3)\sin\theta_3=0
+$$
+即：
+$$
+\theta_2=\pi+2k\pi
+$$
+或者：
+$$
+\theta_3=k\pi
+$$
+（其中$k\in\mathbb{Z}$）
+
+也就是说，主要奇异构型包括：
+$$
+\theta_2=\pi \quad \theta_3=0 \quad \theta_3=\pi
+$$
+
+它们的物理意义如下。
+
+当$\theta_3=0$时，第三段连杆与前一段处于伸直共线状态。此时某些关节转动对末端产生的线速度方向重合，${}^1J_v$的列向量线性相关，因此末端不能产生任意三维瞬时线速度。
+
+当$\theta_3=\pi$时，最后一段连杆反向折回。由于题目中相邻两段长度都为1，此时末端点会落到第 2 关节轴附近，使得第 2 关节转动对末端位置的瞬时影响退化，线速度自由度减少。
+
+当$\theta_2=\pi$时，前两段构型发生折叠，使第 3 关节轴与第 1 关节轴变成平行反向，并且相关线速度列向量退化。例如在$\theta_2=\pi$时，${}^1J_v$的第 1 列和第 3 列会变成相反方向的相关列，所以线速度雅可比矩阵降秩。
+
+最终答案可以概括为：
+$$
+\det({}^1J_v) = (1+\cos\theta_2)(1+\cos\theta_3)\sin\theta_3
+$$
+线速度奇异点：
+$$
+\theta_2=\pi+2k\pi
+\quad\text{或}\quad
+\theta_3=k\pi
+$$
+在这些位置，操作臂末端瞬时线速度的可达方向数减少，也就是线速度雅可比矩阵不再满秩。
+}
+
