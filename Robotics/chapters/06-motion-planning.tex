@@ -273,13 +273,13 @@ $$\theta_2(t) = a_{20} + a_{21}t + a_{22}t^2 + a_{23}t^3$$
 约束条件：
 $$
 \begin{cases}
-a_{10} = \theta_0 \\[6pt]
-a_{20} + a_{21}t_{f2} + a_{22}t_{f2}^2 + a_{23}t_{f2}^3 = \theta_g \\[6pt]
-a_{11} = 0 \\[6pt]
-a_{21} + 2a_{22}t_{f2} + 3a_{23}t_{f2}^2 = 0 \\[6pt]
-a_{10} + a_{11}t_{f1} + a_{12}t_{f1}^2 + a_{13}t_{f1}^3 = \theta_y \\[6pt]
-a_{20} = \theta_y \\[6pt]
-a_{11} + 2a_{12}t_{f1} + 3a_{13}t_{f1}^2 = a_{21} \\[6pt]
+a_{10} = \theta_0 \\
+a_{20} + a_{21}t_{f2} + a_{22}t_{f2}^2 + a_{23}t_{f2}^3 = \theta_g \\
+a_{11} = 0 \\
+a_{21} + 2a_{22}t_{f2} + 3a_{23}t_{f2}^2 = 0 \\
+a_{10} + a_{11}t_{f1} + a_{12}t_{f1}^2 + a_{13}t_{f1}^3 = \theta_y \\
+a_{20} = \theta_y \\
+a_{11} + 2a_{12}t_{f1} + 3a_{13}t_{f1}^2 = a_{21} \\
 2a_{12} + 6a_{13}t_{f1} = 2a_{22}
 \end{cases}
 $$
@@ -297,3 +297,443 @@ a_{22} = \dfrac{-12\theta_y + 6\theta_g + 6\theta_0}{4t_{f}^2},\\
 a_{23} = \dfrac{8\theta_y - 5\theta_g - 3\theta_0}{4t_f^3}
 \end{cases}
 $$
+
+\subsection{多个经过点的三次多项式插值}
+若有$N+1$个点$(x_i, y_i)$：
+$$
+\begin{cases}
+    1\text{个起始点} \\
+    N-1\text{个经过点} \\
+    1\text{个终止点}
+\end{cases}
+$$
+$$
+\begin{tikzpicture}[
+    >=stealth,
+    line cap=round,
+    line join=round,
+    scale=.6
+]
+% --- 1. 绘制坐标轴 ---
+\draw[->, very thick] (0,0) -- (6.2,0); % x轴
+\draw[->, very thick] (0,0) -- (0,4.5); % y轴
+% --- 2. 定义数据点坐标 ---
+\coordinate (p1) at (0.7, 3.3);
+\coordinate (p2) at (1.6, 2.4);
+\coordinate (p3) at (2.4, 3.1);
+\coordinate (pN) at (4.5, 2.1);
+\coordinate (pN1) at (5.4, 3.5);
+% --- 3. 绘制散点 ---
+\foreach \p in {p1, p2, p3, pN, pN1} {
+    \fill[whusakura] (\p) circle (2.8pt);
+}
+% --- 4. 标注 y_i（在点的上方） ---
+\node[above left,  inner sep=1pt] at (p1) {$y_1$};
+\node[above,       inner sep=1pt] at (p2) {$y_2$};
+\node[above right, inner sep=1pt] at (p3) {$y_3$};
+\node[above left,  inner sep=1pt] at (pN) {$y_N$};
+\node[above left,  inner sep=1pt] at (pN1) {$y_{N+1}$};
+% --- 5. 标注 x_i（在横轴下方） ---
+\node[below, inner sep=2pt] at (0.7,0) {$x_1$};
+\node[below, inner sep=2pt] at (1.6,0) {$x_2$};
+\node[below, inner sep=2pt] at (2.4,0) {$x_3$};
+\node[below, inner sep=2pt] at (4.5,0) {$x_N$};
+\node[below, inner sep=2pt] at (5.4,0) {$x_{N+1}$};
+% --- 6. 中间的省略号 ---
+\node at (3.45, 1.9) {\Large $\cdots$};
+\end{tikzpicture}
+$$
+
+$N-1$个经过点会产生$N$个三次多项式：
+$$
+s_j(x) = a_j + b_j x + c_j x^2 + d_j x^3, \quad x_j \leq x \leq x_{j+1}, \quad j = 1, 2, \cdots, N
+$$
+（共计$4N$个未知数）
+
+\begin{itemize}
+    \item 每段$s_j$终点的位置$\Longrightarrow$$N$段轨迹带来$2N$个约束条件
+    \item 每个经过点的速度和加速度连续$\Longrightarrow$$N-1$个经过点带来$2(N-1)$个约束条件
+\end{itemize}
+
+$$
+\begin{cases}
+    y_1=s_1(x_1) \\
+    y_2=s_1(x_2)
+\end{cases}
+$$
+$$
+\begin{cases}
+    y_2=s_2(x_2) \\
+    y_3=s_2(x_3)
+\end{cases}
+$$
+
+$$
+\dot{y}_2 = \dot{s}_1(x_2) = \dot{s}_2(x_2)
+$$
+$$
+\ddot{y}_2 = \ddot{s}_1(x_2) = \ddot{s}_2(x_2)
+$$
+
+起始加速度为0
+$$
+\ddot{s}_1(x_1) = \ddot{s}_N(x_{N+1}) = 0
+$$
+定义起始速度
+$$
+\dot{s}_1(x_1) = u,\quad \dot{s}_N(x_{N+1}) = v
+$$
+周期运动，起始速度和加速度相等
+$$
+\dot{s}_1(x_1) = \dot{s}_N(x_{N+1}),\quad \ddot{s}_1(x_1) = \ddot{s}_N(x_{N+1})
+$$
+
+\subsection{高阶多项式插值}
+如果对运动轨迹要求更为严格，约束条件增多，三次多项式不能满足需求，必须用更高阶的多项式对运动轨迹的路径段进行插值。
+
+\subsubsection{五次多项式插值：}
+如某段路径的起始点和终止点都规定了关节的位置、速度和加速度，则要用一个五次多项式进行插值：
+$$\theta(t) = a_0 + a_1 t + a_2 t^2 + a_3 t^3 + a_4 t^4 + a_5 t^5$$
+
+约束条件：
+$$\begin{cases}
+\theta_0 = a_0,\ \theta_f = a_0 + a_1 t_f + a_2 t_f^2 + a_3 t_f^3 + a_4 t_f^4 + a_5 t_f^5, \\
+\dot{\theta}_0 = a_1,\ \dot{\theta}_f = a_1 + 2a_2 t_f + 3a_3 t_f^2 + 4a_4 t_f^3 + 5a_5 t_f^4, \\
+\ddot{\theta}_0 = 2a_2,\ \ddot{\theta}_f = 2a_2 + 6a_3 t_f + 12a_4 t_f^2 + 20a_5 t_f^3
+\end{cases}$$
+系数解：
+$$\begin{cases}
+a_0 = \theta_0;\ a_1 = \dot{\theta}_0;\ a_2 = \dfrac{\ddot{\theta}_0}{2} \\
+a_3 = \big[20\theta_f - 20\theta_0 - (8\dot{\theta}_f + 12\dot{\theta}_0)t_f - (3\ddot{\theta}_0 - \ddot{\theta}_f)t_f^2\big](2t_f^3)^{-1} \\
+a_4 = \big[30\theta_0 - 30\theta_f + (14\dot{\theta}_f + 16\dot{\theta}_0)t_f + (3\ddot{\theta}_0 - 2\ddot{\theta}_f)t_f^2\big](2t_f^4)^{-1} \\
+a_5 = \big[12\theta_f - 12\theta_0 - (6\dot{\theta}_f + 6\dot{\theta}_0)t_f - (\ddot{\theta}_0 - \ddot{\theta}_f)t_f^2\big](2t_f^5)^{-1}
+\end{cases}$$
+
+\subsection{抛物线过渡的线性插值}
+单纯线性插值将导致在节点出关节运动不连续，加速度无限大。在使用线性插值时，把每个节点的领域内增加一段抛物线的“缓冲区段”，从而使整个轨迹上的位移和速度都连续
+$$
+\begin{tikzpicture}[
+    >={Triangle[width=6pt,length=8pt]}, % 匹配原图的实心三角箭
+    thick,
+    scale=.8
+]
+    % 定义关键点坐标
+    % 为了确保曲线完全平滑 (C1连续), 采用以下参数:
+    % P0(0, 0.8), P1(2, 1.3), P2(5, 2.8), P3(7, 3.3)
+    \coordinate (O) at (0,0);
+    \coordinate (P0) at (0, 0.8);
+    \coordinate (P1) at (2, 1.3);
+    \coordinate (P2) at (5, 2.8);
+    \coordinate (P3) at (7, 3.3);
+    % 坐标轴
+    \draw[->] (O) -- (8.5,0);
+    \draw[->] (O) -- (0,4.2) node[left] {$\theta$};
+    % 坐标轴标签与刻度
+    \node[below left] at (O) {$0$};
+    \node[left] at (0, 3.3) {$\theta_f$};
+    \draw (2,0) -- (2,0.15);
+    \node[below=4pt] at (2,0) {$t_b$};
+    \draw (5,0) -- (5,0.15);
+    \node[below=4pt] at (5,0) {$t_f - t_b$};
+    \node[below=4pt] at (7,0) {$t_f$};
+    % 辅助包络线
+    \draw (0,3.3) -- (7,3.3);
+    \draw (7,0) -- (7,3.3);
+    % 主运动轨迹曲线
+    % 第一段: 抛物线, 顶点在起始点 P0
+    % 第二段: 直线, 从 P1 到 P2
+    % 第三段: 抛物线, 顶点在终点 P3 (使用 bend at end 语法)
+    \draw[line width=1.2pt] (P0) parabola (P1) -- (P2) parabola[bend at end] (P3);
+    % 轨迹上的分段黑点
+    \fill (P0) circle (2.5pt);
+    \fill (P1) circle (2.5pt);
+    \fill (P2) circle (2.5pt);
+    \fill (P3) circle (2.5pt);
+    % 中文标注文字
+    \node[above] (para) at (3.5, 3.8) {抛物线};
+    \node[right] (line) at (7.5, 1.7) {直线};
+    % 指引虚线
+    % 蓝色虚线指向抛物线中点
+    \draw[densely dashed, whusakura, line width=0.6pt] (para.south) -- (0.9, 0.95);
+    \draw[densely dashed, whusakura, line width=0.6pt] (para.south) -- (6.1, 3.15);
+    % 紫色虚线指向直线部分
+    \draw[densely dashed, whusakura, line width=0.6pt] (3.8, 2.2) -- (line.west);
+\end{tikzpicture}
+$$
+
+假设两端的过渡线（抛物线）具有相同的持续时间，因而在这两个域中采用相同的恒加速度值，只是符号相反
+
+\begin{itemize}
+    \item 抛物线过渡域的加速度为 $\ddot{\theta}$，则过渡域 $[t_0, t_b]$ 终点的速度为：$$\dot{\theta}_{tb} = \ddot{\theta} t_b$$
+    \item 每个抛物线的位移为$$\frac{1}{2} \ddot{\theta} t_b^2$$
+    \item 中间直线段做匀速运动，速度等于$$\ddot{\theta} t_b$$
+    \item 中间直线段位移为$$\ddot{\theta} t_b (t_f - 2t_b)$$
+    \item 总体位移为$$\theta_f - \theta_0 = \frac{1}{2} \ddot{\theta} t_b^2 \times 2 + \ddot{\theta} t_b (t_f - 2t_b)$$
+\end{itemize}
+最终得出：$$t_b = \frac{t_f}{2} - \frac{\sqrt{\ddot{\theta}^2 t_f^2 - 4\ddot{\theta}(\theta_f - \theta_0)}}{2\ddot{\theta}}$$
+即$$\ddot{\theta} t_b^2 - \ddot{\theta} t_f t_b + (\theta_f - \theta_0) = 0$$
+
+为保证 $t_b$ 有解，过渡域加速度值 $\ddot{\theta}$ 必须选的足够大：
+$$\ddot{\theta} \geq \frac{4(\theta_f - \theta_0)}{t_f^2}$$
+
+$\ddot{\theta}$ 的最大值$\ddot{\theta}_{\max}$ 取决于驱动器的最大输出力/力矩
+
+$\ddot{\theta}$存在最小值$\ddot{\theta}_{\min}$
+\begin{itemize}
+    \item $\ddot{\theta} = \ddot{\theta}_{\min}$，直线段消失
+    \item $\ddot{\theta} < \ddot{\theta}_{\min}$，关节无法在给定时间内到达终止值
+\end{itemize}
+
+\ex{}{
+为一台六自由度工业机器人的其中一个关节设计运动轨迹。该关节需要在规定时间内从初始位置运动到目标位置，且必须保证运动的平滑性以减少机械冲击。
+\begin{enumerate}
+    \item 三阶多项式轨迹：已知初始时间 $t_{0} = 0$ ，终止时间 $t_f = 2 \mathrm{s}$ 。关节初始位置 $\theta(0)= 10^\circ$ ，终止位置 $\theta(2) = 70^\circ$ 。要求初始速度和终止速度均为0。
+    \item 五阶多项式轨迹：使用与1相同的起始和终止位置/时间。除了要求起止速度为0外，还要求初始加速度和终止加速度也为0。
+    \item 带中间点的三阶多项式规划：机器人需要依次经过以下三个点：起点： $\theta(0)= 0^\circ$ ，中间点： $\theta(2) = 45^\circ$ ，终点： $\theta(4) = 90^\circ$ ，起点和终点的速度为0，在中间点 $\left(t = 2 \right)$）处，第一段轨迹的终点速度必须等于第二段轨迹的起点速度，可以自行指定中间点的速度（建议使用启发式方法，如前后段平均速度）。
+\end{enumerate}
+}
+
+\sol{
+1. 三阶多项式轨迹
+
+设三阶轨迹为：
+$$
+\theta(t)=a_0+a_1t+a_2t^2+a_3t^3
+$$
+速度为：
+$$
+\dot{\theta}(t)=a_1+2a_2t+3a_3t^2
+$$
+题目条件为：
+$$
+t_0=0,\quad t_f=2,\quad \theta(0)=10^\circ,\quad \theta(2)=70^\circ,\quad \dot{\theta}(0)=0,\quad \dot{\theta}(2)=0
+$$
+代入初始条件，解得：
+$$
+\theta(t)=10+45t^2-15t^3,\quad 0\leq t\leq 2
+$$
+对应速度为：
+$$
+\dot{\theta}(t)=90t-45t^2
+$$
+对应加速度为：
+$$
+\ddot{\theta}(t)=90-90t
+$$
+
+检查边界条件：
+$$
+\theta(0)=10^\circ,\quad \theta(2)=70^\circ,\quad \dot{\theta}(0)=0,\quad \dot{\theta}(2)=0
+$$
+所以满足要求。
+
+\begin{note}
+    不过需要注意，三阶多项式只能保证位置和速度连续，不能保证起止加速度为 0。这里有：
+    $$
+    \ddot{\theta}(0)=90^\circ/\mathrm{s}^2,\quad \ddot{\theta}(2)=-90^\circ/\mathrm{s}^2
+    $$
+    所以它比五阶轨迹的平滑性差一些。
+\end{note}
+
+2. 五阶多项式轨迹
+
+设五阶轨迹为：
+$$
+\theta(t)=a_0+a_1t+a_2t^2+a_3t^3+a_4t^4+a_5t^5
+$$
+
+题目要求：
+$$
+\theta(0)=10^\circ,\quad \theta(2)=70^\circ,\quad \dot{\theta}(0)=0,\quad \dot{\theta}(2)=0,\quad \ddot{\theta}(0)=0,\quad \ddot{\theta}(2)=0
+$$
+
+因为起止速度、加速度都为 0，可以直接使用标准五阶多项式形式：
+$$
+\theta(t)=\theta_0+\Delta\theta
+\left[
+10\left(\frac{t}{T}\right)^3
+-15\left(\frac{t}{T}\right)^4
++6\left(\frac{t}{T}\right)^5
+\right]
+$$
+其中：
+$$
+\theta_0=10^\circ,\quad \theta_f=70^\circ,\quad \Delta\theta=\theta_f-\theta_0=60^\circ,\quad T=2 \mathrm{s}
+$$
+
+所以：
+$$
+\theta(t)=10+60
+\left[
+10\left(\frac{t}{2}\right)^3
+-15\left(\frac{t}{2}\right)^4
++6\left(\frac{t}{2}\right)^5
+\right]
+$$
+展开得到：
+$$
+\theta(t)=10+75t^3-56.25t^4+11.25t^5,\quad 0\leq t\leq 2
+$$
+
+速度为：
+$$
+\dot{\theta}(t) = 225t^2-225t^3+56.25t^4
+$$
+加速度为：
+$$
+\ddot{\theta}(t)=450t-675t^2+225t^3
+$$
+
+检查边界条件：
+
+当$t=0$时：
+$$
+\theta(0)=10^\circ,\quad \dot{\theta}(0)=0,\quad \ddot{\theta}(0)=0
+$$
+当$t=2$时：
+$$
+\theta(2)=70^\circ,\quad \dot{\theta}(2)=0,\quad \ddot{\theta}(2)=0
+$$
+因此五阶多项式轨迹满足题目全部要求。
+
+\begin{note}
+    相比三阶多项式，五阶多项式不仅速度在起止点为 0，而且加速度也为 0，因此运动更加平滑，机械冲击更小。
+\end{note}
+
+3. 带中间点的三阶多项式规划
+
+题目要求关节依次经过三个点：
+$$
+\theta(0)=0^\circ,\quad \theta(2)=45^\circ,\quad \theta(4)=90^\circ
+$$
+并且要求起点和终点速度为 0：
+$$
+\dot{\theta}(0)=0,\quad \dot{\theta}(4)=0
+$$
+中间点$t=2$处要求速度连续，也就是：
+$$
+\dot{\theta}_1(2)=\dot{\theta}_2(2)
+$$
+
+题目允许自行指定中间点速度。采用启发式方法，取前后两段平均速度：
+
+第一段平均速度为：
+$$
+\frac{45-0}{2-0}=22.5^\circ/\mathrm{s}
+$$
+第二段平均速度为：
+$$
+\frac{90-45}{4-2}=22.5^\circ/\mathrm{s}
+$$
+所以取中间点速度为：
+$$
+\dot{\theta}(2)=22.5^\circ/\mathrm{s}
+$$
+
+第一段轨迹：$0\leq t\leq 2$
+
+设第一段三阶多项式为：
+$$
+\theta_1(t)=a_0+a_1t+a_2t^2+a_3t^3
+$$
+边界条件为：
+$$
+\theta_1(0)=0,\quad \dot{\theta}_1(0)=0,\quad \theta_1(2)=45,\quad \dot{\theta}_1(2)=22.5
+$$
+解得：
+$$
+a_0=0,\quad a_1=0,\quad a_2=22.5,\quad a_3=-5.625
+$$
+
+因此第一段轨迹为：
+$$
+\theta_1(t)=22.5t^2-5.625t^3,\quad 0\leq t\leq 2
+$$
+速度为：
+$$
+\dot{\theta}_1(t)=45t-16.875t^2
+$$
+加速度为：
+$$
+\ddot{\theta}_1(t)=45-33.75t
+$$
+
+第二段轨迹：$2\leq t\leq 4$
+
+第二段从$t=2$开始，为了计算方便，引入局部时间：
+$$
+\tau=t-2 \quad (0\leq \tau\leq 2)
+$$
+
+设第二段轨迹为：
+$$
+\theta_2(\tau)=b_0+b_1\tau+b_2\tau^2+b_3\tau^3
+$$
+边界条件为：
+$$
+\theta_2(0)=45,\quad \dot{\theta}_2(0)=22.5,\quad \theta_2(2)=90,\quad \dot{\theta}_2(2)=0
+$$
+
+可得：
+$$
+b_0=45,\quad b_1=22.5,\quad b_2=11.25,\quad b_3=-5.625
+$$
+
+所以第二段轨迹为：
+$$
+\theta_2(t)
+45+22.5(t-2)+11.25(t-2)^2-5.625(t-2)^3,
+\quad 2\leq t\leq 4
+$$
+速度为：
+$$
+\dot{\theta}_2(t)
+22.5+22.5(t-2)-16.875(t-2)^2
+$$
+加速度为：
+$$
+\ddot{\theta}_2(t)
+22.5-33.75(t-2)
+$$
+
+最终分段轨迹
+
+因此带中间点的三阶多项式轨迹为：
+$$
+\theta(t)=
+\begin{cases}
+22.5t^2-5.625t^3, & 0\leq t\leq 2\\
+45+22.5(t-2)+11.25(t-2)^2-5.625(t-2)^3, & 2\leq t\leq 4
+\end{cases}
+$$
+对应速度为：
+$$
+\dot{\theta}(t)=
+\begin{cases}
+45t-16.875t^2, & 0\leq t\leq 2\\
+22.5+22.5(t-2)-16.875(t-2)^2, & 2\leq t\leq 4
+\end{cases}
+$$
+
+检查关键点：
+$$
+\theta(0)=0^\circ,\quad \theta(2)=45^\circ,\quad \theta(4)=90^\circ,\quad \dot{\theta}(0)=0,\quad \dot{\theta}(2^-)=22.5^\circ/\mathrm{s},\quad \dot{\theta}(2^+)=22.5^\circ/\mathrm{s},\quad \dot{\theta}(4)=0
+$$
+所以中间点处速度连续。
+
+不过加速度在中间点不连续。第一段末端加速度为：
+$$
+\ddot{\theta}_1(2)=45-33.75(2)=-22.5^\circ/\mathrm{s}^2
+$$
+第二段起点加速度为：
+$$
+\ddot{\theta}_2(2)=22.5^\circ/\mathrm{s}^2
+$$
+因此：
+$$
+\ddot{\theta}(2^-)\neq \ddot{\theta}(2^+)
+$$
+
+这说明带中间点的三阶多项式规划可以保证位置和速度连续，但一般不能保证加速度连续。如果要进一步减小机械冲击，通常应采用五阶多项式分段规划或三次样条轨迹规划。
+
+}
