@@ -1,0 +1,299 @@
+\chapter{运动规划}
+\label{sec:06-motion-planning}
+
+\section{轨迹规划中的一般问题}
+路径与轨迹的区别
+在机器人学中，路径与轨迹是两个不同的概念。
+\begin{itemize}
+    \item 路径是指机器人部件在工作过程中所经过的所有空间位置的集合，其与时间序列无关。
+    \item 而轨迹是机器人在某一状态时的空间位姿及其在相应状态下的速度与加速度的描述，它不仅要考虑机器人在某一时刻各部件所处的空间位置，还包括部件在每个时刻的位移、速度与加速度，其与时间有关。轨迹真正体现了机器人在每一时刻的运动特性。
+\end{itemize}
+
+\section{关节空间的轨迹规划}
+\subsection{三次多项式插值}
+
+\subsubsection{约束条件：}
+起止关节角度
+$$
+\begin{cases} 
+\theta(0) = \theta_0 \\ 
+\theta(f) = \theta_f 
+\end{cases}
+$$
+起止关节角速度
+$$
+\begin{cases} 
+\dot{\theta}(0) = \theta_0 \\ 
+\dot{\theta}(f) = \dot{\theta}_f
+\end{cases}
+$$
+
+\subsubsection{约束方程：}
+角度
+$$
+\theta(t) = a_0 + a_1t + a_2t^2 + a_3t^3
+$$
+角速度和角加速度：
+$$
+\begin{cases} 
+\dot{\theta}(0) = a_1 + 2a_2t + 3a_3t^2 \\ 
+\ddot{\theta}(f) = 2a_2 + 6a_3t
+\end{cases}
+$$
+
+\subsubsection{多项式系数为：}
+$$
+\begin{cases} 
+a_0 = \theta_0 \\ 
+a_1 = 0 \\
+a_2 = \dfrac{3}{t_f^2}\left(\theta_f-\theta_0\right) \\
+a_3 = -\dfrac{2}{t_f^3}\left(\theta_f-\theta_0\right)
+\end{cases}
+$$
+\begin{note}
+    注意：只适用于关节起始、终止速度为0的运动情况!
+\end{note}
+
+\ex{}{
+    设有一个旋转关节的单自由度操作臂处于静止状态时$\theta_0=15^\circ$，要在3s之内平稳运动到达终止位置：$\theta_f=75^\circ$，并且在终止点的速度为零。
+}
+\sol{
+\begin{note}
+    $$
+    \displaystyle
+    \begin{cases} 
+    a_0 = \theta_0 \\ 
+    a_1 = 0 \\
+    a_2 = \frac{3}{t_f^2}\left(\theta_f-\theta_0\right) \\
+    a_3 = -\frac{2}{t_f^3}\left(\theta_f-\theta_0\right)
+    \end{cases}
+    $$
+\end{note}
+把$\theta_0=15^\circ, \theta_f=75^\circ, t_f=3$代入上式，即可得到三次多项式的系数：
+$$
+a_0 = 15.0,\quad a_1=0.0,\quad a_2=20.0,\quad a_3=-4.44
+$$
+因此，操作臂的位移方程为
+$$
+\theta(t)=15.0+20.0t^2-4.44t^3
+$$
+再由上式求1、2阶导，则可确定操作臂的速度和加速度：
+$$
+\dot{\theta}(t) = 40.0t-13.32t^2
+$$
+$$
+\ddot{\theta}(t) = 40.0-26.64t
+$$
+
+$$
+\begin{tikzpicture}
+    \begin{groupplot}[
+        group style={
+            group size=3 by 1, % 1行3列
+            horizontal sep=1.6cm, % 子图之间的水平间距
+        },
+        width=5.5cm,
+        height=6cm,
+        axis x line=bottom, % x轴在底部
+        axis y line=left,   % y轴在左侧
+        tick align=inside,  % 刻度向内
+        enlargelimits=false,
+        ticklabel style={font=\small},
+        xlabel style={font=\small},
+        ylabel style={font=\small},
+        title style={at={(0.5,-0.25)}, anchor=north, align=center},
+        domain=0:3, % 定义域
+        samples=100, % 采样点数，确保曲线平滑
+        x tick label style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=1
+        }
+    ]
+    % 图 (a) 角位移
+    \nextgroupplot[
+        xmin=0, xmax=3.3,
+        ymin=15, ymax=80,
+        xtick={0.6, 1.2, 1.8, 2.4, 3.0},
+        ytick={15, 25, 35, 45, 55, 65, 75},
+        xlabel={$t / \mathrm{s}$},
+        ylabel={$\theta / (^\circ)$},
+        title={(a) 角位移}
+    ]
+    \addplot[black] {15.0 + 20.0*x^2 - 4.44*x^3};
+    % 图 (b) 角速度
+    \nextgroupplot[
+        xmin=0, xmax=3.3,
+        ymin=0, ymax=32,
+        xtick={0.6, 1.2, 1.8, 2.4, 3.0},
+        ytick={0, 5, 10, 15, 20, 25, 30},
+        xlabel={$t / \mathrm{s}$},
+        ylabel={$\dot{\theta} / (^\circ)\cdot\mathrm{s}^{-1}$},
+        title={(b) 角速度}
+    ]
+    \addplot[black] {40.0*x - 13.32*x^2};
+    % 图 (c) 角加速度
+    \nextgroupplot[
+        xmin=0, xmax=3.3,
+        ymin=-40, ymax=45,
+        xtick={0.6, 1.2, 1.8, 2.4, 3.0},
+        ytick={-40, -30, -20, -10, 0, 10, 20, 30, 40},
+        xlabel={$t / \mathrm{s}$},
+        ylabel={$\ddot{\theta} / (^\circ)\cdot\mathrm{s}^{-2}$},
+        title={(c) 角加速度}
+    ]
+    \addplot[black] {40.0 - 26.64*x};
+    \end{groupplot}
+\end{tikzpicture}
+$$
+}
+
+\clm{}{}{任何三次多项式函数的速度曲线均为抛物线，相应的加速度曲线均为直线。}
+
+\subsection{过路径点的三次多项式插值}
+将起始点和终止点之间的路径点作为“起始点”或“路径点”，求解逆运动学，获得关节矢量值，并求解各个部分的三次多项式函数。
+
+\subsubsection{约束条件：}
+关节角度
+$$
+\begin{cases} 
+\theta(0) = \theta_0 \\ 
+\theta(f) = \theta_f 
+\end{cases}
+$$
+关节角速度
+$$
+\begin{cases} 
+\dot{\theta}(0) = \theta_0 \\ 
+\dot{\theta}(f) = \dot{\theta}_f
+\end{cases}
+$$
+
+\subsubsection{多项式系数为：}
+$$
+\begin{cases} 
+a_0 = \theta_0 \\ 
+a_1 = \dot{\theta}_0 \\
+a_2 = \dfrac{3}{t_f^2}\left(\theta_f-\theta_0\right) - \dfrac{2}{t_f}\dot{\theta}_0  - \dfrac{1}{t_f}\dot{\theta}_f \\
+a_3 = -\dfrac{2}{t_f^3}\left(\theta_f-\theta_0\right) + \dfrac{1}{t_f^2}\left(\dot{\theta}_f+\dot{\theta}_0\right)
+\end{cases}
+$$
+
+\subsection{关节速度确定方法}
+\begin{enumerate}
+    \item 根据工具坐标系在直角坐标空间中瞬时线速度和角速度确定各路径点上关节速度；
+    \item 在直角坐标空间或关节空间中采用启发方式，由控制系统自动选择路径点上的关节速度；
+    \item 为保证每个路径点上的加速度连续，由控制系统自动选择路径上的关节速度
+\end{enumerate}
+
+\subsubsection{方法2：启发式方法}
+用直线段把路径点依次连接起来，若相邻的线段的斜率在路径点处改变符号，则把速度选定为零；若相线段不改变符号，则选取路径点两侧的线段斜率的平均值作为该点的速度
+$$
+\begin{tikzpicture}[>=latex, thick, scale=.75]
+    % 绘制坐标轴
+    \draw[->] (0,0) -- (9,0) node[below left] {$t$};
+    \draw[->] (0,0) -- (0,5.5) node[left] {$\theta$};
+    % 定义各个关键点坐标
+    \coordinate (P0) at (0, 1.8);
+    \coordinate (PA) at (2.2, 4.4);
+    \coordinate (PB) at (4.5, 1.5);
+    \coordinate (PC) at (6.5, 2.5);
+    \coordinate (PD) at (8.0, 4.8);
+    % 绘制虚线折线
+    \draw[dashed] (P0) -- (PA) -- (PB) -- (PC) -- (PD);
+    % 绘制各个点处的短实线 (切线或标记线)
+    \draw (-0.2, 1.8) -- (0.2, 1.8);         % theta_0 处的标记
+    \draw (PA) +(-0.3, -0.1) -- +(0.3, 0.1);      % A点
+    \draw (PB) +(-0.3, 0.05) -- +(0.3, -0.05);      % B点
+    \draw (PC) +(-0.3, -0.2) -- +(0.3, 0.2);      % C点
+    \draw (PD) +(-0.3, 0) -- +(0.3, 0);      % D点
+    % 添加文本标签
+    \node at (-0.4, 1.4) {$\theta_0$};
+    \node at (2.2, 4.9) {$\theta_A$};
+    \node at (4.5, 0.9) {$\theta_B$};
+    \node at (7.1, 2.2) {$\theta_C$};
+    \node at (8.0, 5.3) {$\theta_D$};
+\end{tikzpicture}
+$$
+\begin{note}
+    图中短实线段为该点的关节运动速度；$\theta_0$为起始点，$\theta_D$为终止点，$\theta_A$、$\theta_B$、$\theta_C$为路径点
+\end{note}
+
+图中速度确定：
+$$
+\begin{cases} 
+\dot{\theta}_A = \dot{\theta}_B = \dot{\theta}_D = 0 \\ 
+\dot{\theta}_C = \frac{1}{2}\left(k_{\theta_C}+k_{\theta_D}\right)
+\end{cases}
+$$
+位置连续且平滑，但不保证速度平滑，中间点加速度没有约束，可能存在突变；每一段独立计算
+
+\subsubsection{方法3}
+约束条件：连接处不仅速度连续，而且\textcolor{whusakura}{加速度连续}
+$$
+\begin{tikzpicture}[>=stealth, scale=0.75]
+    % 定义坐标变量以便调整比例
+    \def\tzero{0}
+    \def\tone{3}
+    \def\ttwo{6.5}
+    \def\thzero{1.5}
+    \def\thg{3}
+    \def\thy{4.5}
+    % 绘制坐标轴
+    \draw[->, thick] (0,0) -- (8,0);
+    \draw[->, thick] (0,0) -- (0,6) node[left] {$\theta$};
+    % 绘制蓝色的辅助虚线
+    \draw[dashed, thick] (0,\thy) node[left, text=black] {$\theta_y$} -- (\tone,\thy) -- (\tone,0) node[below, text=black] {$t_1$};
+    \draw[dashed, thick] (0,\thg) node[left, text=black] {$\theta_g$} -- (\ttwo,\thg) -- (\ttwo,0) node[below, text=black] {$t_2$};
+    % 绘制 t0 和 theta0 标签
+    \node[left] at (0,\thzero) {$\theta_0$};
+    \node[below] at (0,0) {$t_0$};
+    % 绘制红色数据点 (使用暗红色填充，黑色描边)
+    \filldraw[fill=whusakura, thick] (\tzero,\thzero) circle (0.2cm);
+    \filldraw[fill=whusakura, thick] (\tone,\thy) circle (0.2cm);
+    \filldraw[fill=whusakura, thick] (\ttwo,\thg) circle (0.2cm);
+    % 绘制底部的时间间隔箭头 tf1 和 tf2
+    \draw[<->, thick] (0.4, -0.8) -- (\tone - 0.4, -0.8) node[midway, below] {$t_{f1}$};
+    \draw[<->, thick] (\tone + 0.4, -0.8) -- (\ttwo - 0.4, -0.8) node[midway, below] {$t_{f2}$};
+\end{tikzpicture}
+$$
+
+路径点处的关节角度为 $\theta_y$，与该点相邻的前后两关节点的关节角度分别为 $\theta_0$ 和 $\theta_g$
+
+从 $\theta_0$ 到 $\theta_y$ 插值三次多项式为：
+$$\theta(t) = a_{10} + a_{11}t + a_{12}t^{2} + a_{13}t^{3}$$
+时间区间为 $[0, t_{f1}]$
+
+从 $\theta_y$ 到 $\theta_g$ 插值三次多项式为：
+$$\theta(t) = a_{20} + a_{21}t + a_{22}t^{2} + a_{23}t^{3}$$
+时间区间为 $[0, t_{f2}]$
+
+$$\theta_1(t) = a_{10} + a_{11}t + a_{12}t^2 + a_{13}t^3$$
+$$\theta_2(t) = a_{20} + a_{21}t + a_{22}t^2 + a_{23}t^3$$
+
+约束条件：
+$$
+\begin{cases}
+a_{10} = \theta_0 \\[6pt]
+a_{20} + a_{21}t_{f2} + a_{22}t_{f2}^2 + a_{23}t_{f2}^3 = \theta_g \\[6pt]
+a_{11} = 0 \\[6pt]
+a_{21} + 2a_{22}t_{f2} + 3a_{23}t_{f2}^2 = 0 \\[6pt]
+a_{10} + a_{11}t_{f1} + a_{12}t_{f1}^2 + a_{13}t_{f1}^3 = \theta_y \\[6pt]
+a_{20} = \theta_y \\[6pt]
+a_{11} + 2a_{12}t_{f1} + 3a_{13}t_{f1}^2 = a_{21} \\[6pt]
+2a_{12} + 6a_{13}t_{f1} = 2a_{22}
+\end{cases}
+$$
+
+多项式系数：
+$$
+\begin{cases}
+a_{10} = \theta_0,\\
+a_{11} = 0,\\
+a_{12} = \dfrac{12\theta_y - 3\theta_g - 9\theta_0}{4t_{f}^2},\\
+a_{13} = \dfrac{-8\theta_y + 3\theta_g + 5\theta_0}{4t_{f}^2}, \\
+a_{20} = \theta_v,\\
+a_{21} = \dfrac{3(\theta_g - \theta_y)}{4t_f},\\
+a_{22} = \dfrac{-12\theta_y + 6\theta_g + 6\theta_0}{4t_{f}^2},\\
+a_{23} = \dfrac{8\theta_y - 5\theta_g - 3\theta_0}{4t_f^3}
+\end{cases}
+$$
