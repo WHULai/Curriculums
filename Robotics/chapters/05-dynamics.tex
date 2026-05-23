@@ -1,0 +1,302 @@
+\chapter{动力学}
+\label{sec:04-dynamics}
+
+\section{连杆动力学——拉格朗日动力学方程}
+
+机器人动力学：研究机器人运动与关节力矩之间关系
+\begin{quote}
+    Robot dynamics is the relationship between the forces acting on a robot and the resulting motion of the robot.
+\end{quote}
+
+两类问题：
+\begin{itemize}
+    \item 动力学正问题：已知机器人各关节的驱动力矩，求机器人各关节的位置、速度、加速度，用于机器人仿真；
+    \item 动力学逆问题：已知机器人各关节瞬时位置、速度、加速度，求当前时刻各关节驱动力矩，应用于机器人控制
+\end{itemize}
+
+两种动力学基本理论：
+\begin{enumerate}
+    \item 牛顿—欧拉方程（\textcolor{whusakura}{运动角度}）
+        $$
+        f_i = m\dot{v}_i,\quad u_i = I_i\dot{w} + w \times Iw
+        $$
+    \item 拉格朗日力学方程（\textcolor{whusakura}{能量角度}）.
+        拉格朗日函数L被定义为系统的动能$K$和位能$U$之差:
+        $$
+        L = K - P
+        $$
+        系统动力学方程式，即拉格朗日方程如下：
+        $$
+        F_i = \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial \dot{q}_i} - \frac{\partial L}{\partial q_i}, i = 1, 2, \cdots, n
+        $$
+        式中：$q_i$为表示动能和位能的坐标，$\dot{q}_i$为相应的速度，$F_i$为作用在第$i$个坐标上的力或是力矩
+\end{enumerate}
+
+\subsection{机器人系统动能}
+单根连杆的动能为由质心线速度产生的动能与连杆绕质心旋转产生的角动能之和
+$$
+K = \sum_{i=1}^n K_i
+$$
+
+$$
+    K_i = 
+    % 使用 tikzmarknode 标记第一项
+    \tikzmarknode{term1}{\frac{1}{2} m_i \boldsymbol{v}_{C_i}^T \boldsymbol{v}_{C_i}} 
+    + 
+    % 使用 tikzmarknode 标记第二项
+    \tikzmarknode{term2}{\frac{1}{2} {}^{i}\boldsymbol{\omega}_i^T {}^{C_i}\boldsymbol{I}_i {}^{i}\boldsymbol{\omega}_i}
+$$
+
+\begin{tikzpicture}[remember picture, overlay]
+    \begin{scope}[on background layer]
+        % 绘制虚线框 (圈出对应的公式项)
+        % inner sep 用于控制虚线框与公式的间距
+        \node[draw=whusakura, dashed, thick, inner sep=4pt, fit=(term1)] (box1) {};
+        \node[draw=whusakura, dashed, thick, inner sep=4pt, fit=(term2)] (box2) {};
+        % 在虚线框正下方添加文字注释
+        \node[anchor=north west, text=whusakura, align=left] at ([xshift=-1.5cm, yshift=-0.15cm]box1.south west) {构件$i$质心线速度动能};
+        \node[anchor=north east, text=whusakura, align=right] at ([xshift=1.2cm, yshift=-0.15cm]box2.south east) {构件$i$角速度动能};
+    \end{scope}
+\end{tikzpicture}
+
+\begin{itemize}
+    \item \( K_i \) 为构件 \( i \) 的动能
+    \item \( m_i \) 为构件 \( i \) 的质量
+    \item \( C_i I_i \) 为构件 \( i \) 的质心惯性张量
+    \item \( v_{C_i} \) 为构件 \( i \) 质心的线速度矢量，是 \( q, \dot{q} \) 的函数
+    \item \( \omega_i \) 为构件 \( i \) 的角速度矢量，是 \( q, \dot{q} \) 的函数
+\end{itemize}
+
+\subsection{二连杆的动能与位能}
+$$
+\begin{tikzpicture}[>=Latex, font=\normalsize]
+    % 定义全局参数（可在此处调整摆长和偏角）
+    \def\angOne{-60} % 摆杆1相对于水平x轴的绝对角度 (等价于与向下的垂线呈30度)
+    \def\angTwo{-30} % 摆杆2相对于水平x轴的绝对角度
+    \def\lenOne{3.5} % 摆杆1的长度
+    \def\lenTwo{3.0} % 摆杆2的长度
+    % 定义关键坐标点
+    \coordinate (O) at (0,0);
+    \coordinate (M1) at (\angOne:\lenOne);
+    \coordinate (M2) at ($(M1) + (\angTwo:\lenTwo)$);
+    % 1. 绘制坐标轴
+    \draw[-Latex, thin] (O) -- (3,0) node[right] {$x$};
+    \draw[-Latex, thin] (O) -- (0,2) node[above] {$y$};
+    % 2. 绘制垂线参考线
+    \draw[thin] (O) -- (0,-2.5);
+    % 3. 绘制摆杆1、摆锤1及标签
+    \draw[thick] (O) -- (M1) node[midway, above right] {$d_1$};
+    \filldraw (M1) circle (2pt) node[above right=1pt] {$m_1$};
+    \node[below left=1pt] at (M1) {$(x_1, y_1)$};
+    % 4. 绘制摆杆1的虚线延长线
+    \coordinate (M1ext) at ($(M1) + (\angOne:2.2)$);
+    \draw[dashed, thin] (M1) -- (M1ext);
+    % 5. 绘制摆杆2、摆锤2及标签
+    \draw[thick] (M1) -- (M2) node[midway, above right] {$d_2$};
+    \filldraw (M2) circle (2pt) node[above right=1pt] {$m_2$};
+    \node[below=4pt] at (M2) {$(x_2, y_2)$};
+    % 6. 绘制偏转角度 theta_1 和 theta_2
+    % theta_1 (从向下 -90 度到 \angOne)
+    \draw[-Latex, thin] (0,-1.6) arc (-90:\angOne:1.6) node[midway, below=2pt] {$\theta_1$};
+    % theta_2 (以 M1 为圆心，从延长线角度 \angOne 到 \angTwo)
+    \draw[-Latex, thin] ($(M1) + (\angOne:1.6)$) arc (\angOne:\angTwo:1.6) node[midway, below right=-2pt] {$\theta_2$};
+    % 7. 绘制力矩 T1 及其穿过摆杆的标记短线
+    \coordinate (tick1) at (\angOne:1.2);
+    \draw[thin] ($(tick1) + (\angOne+90:0.2)$) -- ($(tick1) + (\angOne-90:0.2)$);
+    \draw[-Latex, thin] (-80:1.2) arc (-80:-40:1.2) node[right=1pt] {$T_1$};
+    % 8. 绘制力矩 T2 及其穿过摆杆的标记短线
+    \coordinate (tick2) at ($(M1) + (\angTwo:1.2)$);
+    \draw[thin] ($(tick2) + (\angTwo+90:0.2)$) -- ($(tick2) + (\angTwo-90:0.2)$);
+    \draw[-Latex, thin] ($(M1) + (-50:1.2)$) arc (-50:-10:1.2) node[right=1pt] {$T_2$};
+    % 9. 绘制重力加速度 g 向量
+    \draw[-Latex, thick] (-0.6,-3.5) -- (-0.6,-4.7) node[midway, right=2pt] {$g$};
+\end{tikzpicture}
+$$
+
+如图， $m_1$和$m_2$为连杆1和连杆2的质量，且认为其分布在连杆末端， $d_1$和$d_2$为连杆的长度，$\theta_1$和$\theta_2$为广义坐标，重力加速度为$g$。
+
+对于连杆1，有:
+$$
+K_1 = \frac{1}{2}m_1v_1^2
+$$
+（其中$v_1 = d_1\dot{\theta}_1$）
+$$
+P_1 = m_1gh_1
+$$
+（其中$h_1 = -d_1\cos\theta_1$）
+
+对于连杆2，有:
+$$
+K_2 = \frac{1}{2}m_2v_2^2
+$$
+（其中$v_2^2 = \dot{x}_2^2 + \dot{y}_2^2$，$x_2 = d_1\sin\theta_1 + d_2\sin(\theta_1+\theta_2)$，$y_2 = -d_1\cos\theta-d_2\sin(\theta_1+\theta_2)$）
+$$
+P_2 = m_2gy_2
+$$
+（其中$h_1 = -d_1\cos\theta_1$）
+
+二连杆机械手的总动能和总位能：
+$$
+K = K_1 + K_2 = \frac{1}{2}(m_1 + m_2)d_1^2 \dot{\theta}_1^2 + \frac{1}{2}m_2 d_2^2 (\dot{\theta}_1 + \dot{\theta}_2)^2 + m_2 d_1 d_2 \cos\theta_2 (\dot{\theta}_1^2 + \dot{\theta}_1 \dot{\theta}_2)
+$$
+$$
+P = P_1 + P_2 = -(m_1 + m_2) g d_1 \cos\theta_1 - m_2 g d_2 \cos(\theta_1 + \theta_2)
+$$
+
+\subsection{拉格朗日功能平衡法}
+
+拉格朗日函数 $L$ 被定义为系统动能 $K$ 与位能 $P$ 之差（可以由任何坐标表示）：
+$$L = K - P$$
+系统的动力学方程式，即拉格朗日方程如下：
+$$F_{i} = \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial\dot{q}_{i}} - \frac{\partial L}{\partial q_{i}}, \quad i = 1,2,3,...n$$
+式中，$q_i$ 为用于表示动能和位能的坐标，$\dot{q}_{i}$ 为相应的速度，$F_i$ 为作用在 $i$ 坐标上的力或力矩。
+
+对于二连杆机械手，以 $\theta$ 作为描述的坐标，可列拉格朗日函数：
+$$
+\begin{aligned}
+    L = &K - P = \frac{1}{2}(m_{1}+m_{2})d_{1}^{2}\dot{\theta}_{1}^{2} + \frac{1}{2}m_{2}d_{2}^{2}(\dot{\theta}_{1}+\dot{\theta}_{2})^{2} +\\
+    &m_{2}d_{1}d_{2}\cos\theta_{2}(\dot{\theta}_{1}^{2}+\dot{\theta}_{1}\dot{\theta}_{2}) + (m_{1}+m_{2})g d_{1}\cos\theta_{1} + m_{2}g d_{2}\cos(\theta_{1}+\theta_{2})
+\end{aligned}
+$$
+
+$$F_{i} = \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial\dot{q}_{i}} - \frac{\partial L}{\partial q_{i}}, \quad i = 1,2,3,...n$$
+
+求 $L$ 各项偏导：
+$$\frac{\partial L}{\partial\theta_{1}} = -(m_{1}+m_{2})g d_{1}\sin\theta_{1} - m_{2}g d_{2}\sin(\theta_{1}+\theta_{2})$$
+$$\frac{\partial L}{\partial\theta_{2}} = m_{2}d_{1}d_{2}\sin\theta_{2}(\dot{\theta}_{1}^{2}+\dot{\theta}_{1}\dot{\theta}_{2}) - m_{2}g d_{2}\sin(\theta_{1}+\theta_{2})$$
+$$\frac{\partial L}{\partial\dot{\theta}_{1}} = (m_{1}+m_{2})d_{1}^{2}\dot{\theta}_{1} + m_{2}d_{2}^{2}\dot{\theta}_{1} + m_{2}d_{2}^{2}\dot{\theta}_{2} + 2m_{2}d_{1}d_{2}\cos\theta_{2}\dot{\theta}_{1} + m_{2}d_{1}d_{2}\cos\theta_{2}\dot{\theta}_{2}$$
+$$\frac{\partial L}{\partial\dot{\theta}_{2}} = m_{2}d_{2}^{2}\dot{\theta}_{1} + m_{2}d_{2}^{2}\dot{\theta}_{2} + m_{2}d_{1}d_{2}\cos\theta_{2}\dot{\theta}_{1}$$
+$$
+\begin{aligned}
+    \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial\dot{\theta}_{1}} = &[(m_{1}+m_{2})d_{1}^{2} + m_{2}d_{2}^{2} + 2m_{2}d_{1}d_{2}\cos\theta_{2}]\ddot{\theta}_{1} + \\
+    &(m_{2}d_{2}^{2} + m_{2}d_{1}d_{2}\cos\theta_{2})\ddot{\theta}_{2} - 2m_{2}d_{1}d_{2}\sin\theta_{2}\dot{\theta}_{2}\dot{\theta}_{1} - m_{2}d_{1}d_{2}\sin\theta_{2}\dot{\theta}_{2}^{2}
+\end{aligned}
+$$
+$$\frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial\dot{\theta}_{2}} = (m_{2}d_{2}^{2} + m_{2}d_{1}d_{2}\cos\theta_{2})\ddot{\theta}_{1} + m_{2}d_{2}^{2}\ddot{\theta}_{2} - m_{2}d_{1}d_{2}\sin\theta_{2}\dot{\theta}_{1}\dot{\theta}_{2}$$
+
+对于二连杆机械手，以 $\theta$ 作为描述的坐标，可列动力学方程：
+$$T_{1} = \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial\dot{\theta}_{1}} - \frac{\partial L}{\partial\theta_{1}}$$
+$$T_{2} = \frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial L}{\partial\dot{\theta}_{2}} - \frac{\partial L}{\partial\theta_{2}}$$
+代入得：
+$$
+\begin{aligned}
+    T_{1} =& [(m_{1}+m_{2})d_{1}^{2} + m_{2}d_{2}^{2} + 2m_{2}d_{1}d_{2}\cos\theta_{2}]\ddot{\theta}_{1} + [m_{2}d_{2}^{2} + m_{2}d_{1}d_{2}\cos\theta_{2}]\ddot{\theta}_{2} \\
+    &- 2m_{2}d_{1}d_{2}\sin\theta_{2}\dot{\theta}_{1}\dot{\theta}_{2} - m_{2}d_{1}d_{2}\sin\theta_{2}\dot{\theta}_{2}^{2} + (m_{1}+m_{2})g d_{1}\sin\theta_{1} + m_{2}g d_{2}\sin(\theta_{1}+\theta_{2})
+\end{aligned}
+$$
+$$T_{2} = [m_{2}d_{2}^{2} + m_{2}d_{1}d_{2}\cos\theta_{2}]\ddot{\theta}_{1} + m_{2}d_{2}^{2}\ddot{\theta}_{2} + m_{2}d_{1}d_{2}\sin\theta_{2}\dot{\theta}_{1}^{2} + m_{2}g d_{2}\sin(\theta_{1}+\theta_{2})$$
+记作：
+$$\begin{bmatrix} T_{1} \\ T_{2} \end{bmatrix} = \begin{bmatrix} D_{11} & D_{12} \\ D_{21} & D_{22} \end{bmatrix} \begin{bmatrix} \ddot{\theta}_{1} \\ \ddot{\theta}_{2} \end{bmatrix} + \begin{bmatrix} D_{111} & D_{122} \\ D_{211} & D_{222} \end{bmatrix} \begin{bmatrix} \dot{\theta}_{1}^{2} \\ \dot{\theta}_{2}^{2} \end{bmatrix} + \begin{bmatrix} D_{112} & D_{121} \\ D_{212} & D_{221} \end{bmatrix} \begin{bmatrix} \dot{\theta}_{1}\dot{\theta}_{2} \\ \dot{\theta}_{2}\dot{\theta}_{1} \end{bmatrix} + \begin{bmatrix} D_{1} \\ D_{2} \end{bmatrix}$$
+
+\ex{}{
+    已知有一平面2R连杆机构如图所示，并建立如图所示的坐标系。设机械臂的两根连杆长度分别为$l_1$和$l_2$，各杆件的质量分别为$m_1$和$m_2$，并且杆件的质量分布均匀，机械臂各关节角为$\theta_1$和$\theta_2$。若其机械臂末端与周围环境无相互作用，利用拉格朗日动力学建模方法写出系统总动能$K$和系统总势能$P$，以及拉格朗日函数$L$。（均匀杆的转动惯量为$I = \frac{1}{12}mL^2$）
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.4\textwidth]{Homework-Part4-1.1.jpg}
+    \end{figure}
+}
+
+\sol{
+对杆 1，质心速度平方为：
+$$
+v_{c1}^2=
+\left(\frac{l_1}{2}\dot{\theta}_1\right)^2 = \frac{l_1^2}{4}\dot{\theta}_1^2
+$$
+杆 1 的动能包括质心平动动能和绕质心转动动能：
+$$
+K_1=
+\frac{1}{2}m_1v_{c1}^2+
+\frac{1}{2}I_1\dot{\theta}_1^2
+$$
+其中：
+$$
+I_1=\frac{1}{12}m_1l_1^2
+$$
+所以：
+$$
+K_1 = \frac{1}{2}m_1\frac{l_1^2}{4}\dot{\theta}_1^2 + \frac{1}{2}\cdot\frac{1}{12}m_1l_1^2\dot{\theta}_1^2 = \frac{1}{6}m_1l_1^2\dot{\theta}_1^2
+$$
+
+杆 2 的质心位置为：
+$$
+{}^0p_{c2}=
+\begin{bmatrix}
+l_1\cos\theta_1+\frac{l_2}{2}\cos(\theta_1+\theta_2)\
+l_1\sin\theta_1+\frac{l_2}{2}\sin(\theta_1+\theta_2)
+\end{bmatrix}
+$$
+对时间求导：
+$$
+\dot{x}_{c2} = -l_1\sin\theta_1\dot{\theta}_1
+-\frac{l_2}{2}\sin(\theta_1+\theta_2)(\dot{\theta}_1+\dot{\theta}_2)
+$$
+$$
+\dot{y}_{c2} = l_1\cos\theta_1\dot{\theta}_1
++\frac{l_2}{2}\cos(\theta_1+\theta_2)(\dot{\theta}_1+\dot{\theta}_2)
+$$
+因此：
+$$
+v_{c2}^2=\dot{x}*{c2}^2+\dot{y}*{c2}^2 = l_1^2\dot{\theta}_1^2 + \frac{l_2^2}{4}(\dot{\theta}_1+\dot{\theta}_2)^2 + l_1l_2\cos\theta_2\dot{\theta}_1(\dot{\theta}_1+\dot{\theta}_2)
+$$
+（这里的$\cos\theta_2$来自两根杆方向之间的夹角。）
+
+所以杆 2 的动能为：
+$$
+K_2=
+\frac{1}{2}m_2v_{c2}^2+
+\frac{1}{2}I_2(\dot{\theta}_1+\dot{\theta}_2)^2
+$$
+代入得
+$$
+\begin{aligned}
+    K_2&=\frac{1}{2}m_2\left[l_1^2\dot{\theta}_1^2+\frac{l_2^2}{4}(\dot{\theta}_1+\dot{\theta}_2)^2+l_1l_2\cos\theta_2\dot{\theta}_1(\dot{\theta}_1+\dot{\theta}_2)\right]+\frac{1}{2}\cdot\frac{1}{12}m_2l_2^2(\dot{\theta}_1+\dot{\theta}_2)^2 \\
+    &=\frac{1}{2}m_2l_1^2\dot{\theta}_1^2+\frac{1}{6}m_2l_2^2(\dot{\theta}_1+\dot{\theta}_2)^2+\frac{1}{2}m_2l_1l_2\cos\theta_2\dot{\theta}_1(\dot{\theta}_1+\dot{\theta}_2)
+\end{aligned}
+$$
+
+所以系统总动能为：
+$$
+K=K_1+K_2=\frac{1}{6}m_1l_1^2\dot{\theta}_1^2+\frac{1}{2}m_2l_1^2\dot{\theta}_1^2+\frac{1}{6}m_2l_2^2(\dot{\theta}_1+\dot{\theta}_2)^2+\frac{1}{2}m_2l_1l_2\cos\theta_2\dot{\theta}_1(\dot{\theta}_1+\dot{\theta}_2)
+$$
+
+图中$y_0$竖直向上，取基座处$y=0$为重力势能零点。
+
+杆 1 质心高度为：
+$$
+y_{c1}=\frac{l_1}{2}\sin\theta_1
+$$
+杆 2 质心高度为：
+$$
+y_{c2} = l_1\sin\theta_1+\frac{l_2}{2}\sin(\theta_1+\theta_2)
+$$
+
+所以总势能为：
+$$
+P=m_1gy_{c1}+m_2gy_{c2}
+$$
+即：
+$$
+P=m_1g\frac{l_1}{2}\sin\theta_1+m_2g\left[l_1\sin\theta_1+\frac{l_2}{2}\sin(\theta_1+\theta_2)\right]
+$$
+
+整理一下：
+$$
+P=\left(\frac{1}{2}m_1+m_2\right)gl_1\sin\theta_1+\frac{1}{2}m_2gl_2\sin(\theta_1+\theta_2)
+$$
+
+势能可以相差一个任意常数，不影响拉格朗日方程。
+
+最后，拉格朗日函数定义为：
+$$
+L=K-P
+$$
+所以：
+$$
+\begin{aligned}
+L=&\frac{1}{6}m_1l_1^2\dot{\theta}_1^2+\frac{1}{2}m_2l_1^2\dot{\theta}_1^2+\frac{1}{6}m_2l_2^2(\dot{\theta}_1+\dot{\theta}_2)^2 \\
+&+\frac{1}{2}m_2l_1l_2\cos\theta_2\dot{\theta}_1(\dot{\theta}_1+\dot{\theta}_2)\\
+&-\left[\left(\frac{1}{2}m_1+m_2\right)gl_1\sin\theta_1+\frac{1}{2}m_2gl_2\sin(\theta_1+\theta_2)\right]
+\end{aligned}
+$$
+}
+
