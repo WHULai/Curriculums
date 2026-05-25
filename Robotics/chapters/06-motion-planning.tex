@@ -23,8 +23,8 @@ $$
 起止关节角速度
 $$
 \begin{cases} 
-\dot{\theta}(0) = \theta_0 \\ 
-\dot{\theta}(f) = \dot{\theta}_f
+\dot{\theta}(0) = 0 \\ 
+\dot{\theta}(f) = 0
 \end{cases}
 $$
 
@@ -163,7 +163,7 @@ $$
 关节角速度
 $$
 \begin{cases} 
-\dot{\theta}(0) = \theta_0 \\ 
+\dot{\theta}(0) = \dot{\theta}_0 \\ 
 \dot{\theta}(f) = \dot{\theta}_f
 \end{cases}
 $$
@@ -186,7 +186,7 @@ $$
 \end{enumerate}
 
 \subsubsection{方法2：启发式方法}
-用直线段把路径点依次连接起来，若相邻的线段的斜率在路径点处改变符号，则把速度选定为零；若相线段不改变符号，则选取路径点两侧的线段斜率的平均值作为该点的速度
+用直线段把路径点依次连接起来，\textcolor{whusakura}{若相邻的线段的斜率在路径点处改变符号，则把速度选定为零；若相线段不改变符号，则选取路径点两侧的线段斜率的平均值作为该点的速度}。
 $$
 \begin{tikzpicture}[>=latex, thick, scale=.75]
     % 绘制坐标轴
@@ -260,12 +260,9 @@ $$
 路径点处的关节角度为 $\theta_y$，与该点相邻的前后两关节点的关节角度分别为 $\theta_0$ 和 $\theta_g$
 
 从 $\theta_0$ 到 $\theta_y$ 插值三次多项式为：
-$$\theta(t) = a_{10} + a_{11}t + a_{12}t^{2} + a_{13}t^{3}$$
-时间区间为 $[0, t_{f1}]$
-
+$$\theta(t) = a_{10} + a_{11}t + a_{12}t^{2} + a_{13}t^{3}, \quad t \in \left[0, t_{f_1}\right]$$
 从 $\theta_y$ 到 $\theta_g$ 插值三次多项式为：
-$$\theta(t) = a_{20} + a_{21}t + a_{22}t^{2} + a_{23}t^{3}$$
-时间区间为 $[0, t_{f2}]$
+$$\theta(t) = a_{20} + a_{21}t + a_{22}t^{2} + a_{23}t^{3}, \quad t \in \left[0, t_{f2}\right]$$
 
 $$\theta_1(t) = a_{10} + a_{11}t + a_{12}t^2 + a_{13}t^3$$
 $$\theta_2(t) = a_{20} + a_{21}t + a_{22}t^2 + a_{23}t^3$$
