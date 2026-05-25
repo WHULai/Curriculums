@@ -1196,16 +1196,16 @@ PUMA560 的总变换矩阵为
 在这种取法下，Modified DH 表为：
 
 \[
-\begin{array}{c|c|c|c|c}
+\begin{array}{ccccc}
+\toprule
 i & \alpha_{i-1} & a_{i-1} & \theta_i & d_i \\
-\hline
+\midrule
 1 & 0 & 0 & \theta_1 & 0 \\
-2 & -90^\circ & L_1 & \theta_2 & 0 \\
-3 & 0 & L_2 & \theta_3 & 0
+2 & 90^\circ & L_1 & \theta_2 & 0 \\
+3 & 0 & L_2 & \theta_3 & 0 \\
+\bottomrule
 \end{array}
 \]
-
-这里的$-90^\circ$是因为$z_1$从“向上”转到$z_2$的“垂直纸面向外”，绕$x_1$按右手系方向为$-90^\circ$。
 
 于是：
 
@@ -1223,7 +1223,7 @@ $$
 {}^1_2T=
 \begin{bmatrix}
 c_2 & -s_2 & 0 & L_1 \\
-0 & 0 & 1 & 0 \\
+0 & 0 & -1 & 0 \\
 -s_2 & -c_2 & 0 & 0 \\
 0 & 0 & 0 & 1
 \end{bmatrix}
@@ -1250,9 +1250,9 @@ $$
 $$
 {}^0_3T=
 \begin{bmatrix}
-c_1c_{23} & -c_1s_{23} & -s_1 & c_1(L_1+L_2c_2) \\
-s_1c_{23} & -s_1s_{23} & c_1 & s_1(L_1+L_2c_2) \\
--s_{23} & -c_{23} & 0 & -L_2s_2 \\
+c_1c_{23} & -c_1s_{23} & s_1 & c_1(L_1+L_2c_2) \\
+s_1c_{23} & -s_1s_{23} & -c_1 & s_1(L_1+L_2c_2) \\
+s_{23} & c_{23} & 0 & L_2s_2 \\
 0 & 0 & 0 & 1
 \end{bmatrix}
 $$
