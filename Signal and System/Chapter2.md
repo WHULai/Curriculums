@@ -425,8 +425,152 @@ r_{zs} &= h(t) * e(t) = \frac{dr_\varepsilon(t)}{dt} * e(t) \\
 \end{aligned}
 $$
 
+(d)
+$$
+\begin{aligned}
+r_{zs} &= r_\varepsilon(t) * \frac{d}{dt}e(t) \\
+& = (2e^{-2t} - 1)\varepsilon(t) * \frac{d}{dt}\big\{t\big[\varepsilon(t)-\varepsilon(t-1)\big] - (t-1)\big[\varepsilon(t-1)-\varepsilon(t-2)\big]\big\} \\
+& = (2e^{-2t} - 1)\varepsilon(t) * \big[\varepsilon(t) - 2\varepsilon(t-1) + \varepsilon(t-2) - \delta(t-1) + \delta(t-2)\big] \\
+& = \left[\int_0^t (2e^{-2\tau} - 1)d\tau\right]\varepsilon(t) * \big[\delta(t) - 2\delta(t-1) + \delta(t-2)\big] - \big[2e^{-2(t-1)} - 1\big]\varepsilon(t-1)+ \big[2e^{-2(t-2)} - 1\big]\varepsilon(t-2) \\
+& = \big[1-t-e^{-2t}\big]\varepsilon(t) - 2\big[1-t+1-e^{-2(t-1)}\big]\varepsilon(t-1) + \big[1-t+2-e^{-2(t-2)}\big]\varepsilon(t-2) - \big[2e^{-2(t-1)} - 1\big]\varepsilon(t-1) + \big[2e^{-2(t-2)} - 1\big]\varepsilon(t-2) \\
+& = (1-t-e^{-2t})\varepsilon(t) - (3-2t)\varepsilon(t-1) + \big[2-t+e^{-2(t-2)}\big]\varepsilon(t-2)
+\end{aligned}
+$$
+
 ## 2.23
 
 > 如图所示电路，其输人电压为单个倒锯齿波，求零状态响应电压$u_L(t)$。
 >
-> 
+> ![](img/2.23.png)
+
+设电感支路的电流为$i(t)$，方向向下
+
+则由图可列出
+$$
+u_L(t)+5i_L(t)+2\times\left[i_L(t)+\dfrac{u_L(t)+5i_L(t)}{2}\right]=e(t)
+$$
+化简得
+$$
+2u_L(t)+12i_L(t)=e(t)
+$$
+又因为
+
+$$
+u_L(t) = L\dfrac{di_L(t)}{dt} = 0.3\dfrac{di_L(t)}{dt}
+$$
+
+
+所以
+
+$$
+2 \times 0.3 \times \dfrac{di_L(t)}{dt} + 12i_L(t) = e(t)
+$$
+
+
+化简得
+
+$$
+\dfrac{di_L(t)}{dt} + 20i_L(t) = \dfrac{5}{3}e(t)
+$$
+
+
+所以转移算子
+
+$$
+H(p) = \dfrac{\dfrac{5}{3}}{p+20}
+$$
+
+
+所以
+
+$$
+h_{i_L}(t) = \dfrac{5}{3}e^{-20t}\varepsilon(t)
+$$
+
+$$
+h_{u_L}(t) = L\dfrac{dh_{i_L}(t)}{dt} = \dfrac{1}{2}\left[-20e^{-20t}\varepsilon(t) + \delta(t)\right]= \dfrac{1}{2}\delta(t) - 10e^{-20t}\varepsilon(t)
+$$
+
+
+零状态响应
+
+$$
+\begin{aligned}
+u_L(t) &= e(t) * h_{u_L}(t) = e(t) * \left[\frac{1}{2}\delta(t) - 10e^{-20t}\varepsilon(t)\right] \\
+&= \frac{e(t)}{2} - 10e^{-20t}\varepsilon(t) * e(t)
+\end{aligned}
+$$
+
+$$
+e(t) = \frac{E}{T}(T-t)\big[\varepsilon(t) - \varepsilon(t-T)\big]
+$$
+
+$$
+e'(t) = E\delta(t) - \dfrac{E}{T}\big[\varepsilon(t) - \varepsilon(t-T)\big]
+$$
+
+
+所以
+$$
+\begin{aligned}
+u_L(t) &= \frac{E}{2T}(T-t)\big[\varepsilon(t) - \varepsilon(t-T)\big] - 10E\int_0^t e^{-20\tau}\varepsilon(\tau)d\tau * \left[\delta(t) - \frac{1}{T}\varepsilon(t) + \frac{1}{T}\varepsilon(t-T)\right] \\
+&= \frac{E}{2}e^{-20t}\varepsilon(t) - \frac{E}{40T}(1-e^{-20t})\varepsilon(t) + \frac{E}{40T}\left[1-e^{-20(t-T)}\right]\varepsilon(t-T)
+\end{aligned}
+$$
+
+## 2.26
+
+> 已知图电路中，元件参数如下：$R_1 = 1\,\Omega$, $R_2 = 2\,\Omega$, $L_1 = 1\,\mathrm{H}$, $L_2 = 2\,\mathrm{H}$, $M = \dfrac{1}{2}\,\mathrm{H}$, $E = 3\,\mathrm{V}$，设 $t = 0$ 时开关 S 断开，求初级电压 $u_1(t)$ 及次级电流 $i_2(t)$。
+
+开关 S 断开前，电路已达稳态，因为电感电流不能突变，可以求得初次级电流在 $t = 0_-$ 时的起始值，即
+
+$$
+i_1(0_-) = i_L(0_-) = \frac{E}{R_1} = 3\,\mathrm{A}
+$$
+
+$$
+i_2(0_-) = i_{L_2}(0_-) = 0
+$$
+
+S 断开时，设 $t = 0$，由KVL得
+$$
+-M\frac{di_1(t)}{dt} + L_2\frac{di_2(t)}{dt} + R_2 i_2(t) = 0
+$$
+因为
+
+$$
+i_1(t) = 3\varepsilon(-t)
+$$
+
+所以
+
+$$
+\frac{di_1(t)}{dt} = -3\delta(t)
+$$
+
+可得
+
+$$
+(p+1)i_2(t) = -\frac{3}{4}\delta(t)
+$$
+
+所以冲激响应为
+
+$$
+h_{i_2}(t) = -\frac{3}{4}e^{-t}\varepsilon(t)
+$$
+
+次级电流 $i_2(t)$ 为
+
+$$
+i_2(t) = h_{i_2}(t) = -\frac{3}{4}e^{-t}\varepsilon(t)
+$$
+
+初级电压 $u_1(t)$ 为
+$$
+\begin{aligned}
+u_1(t) &= L_1\frac{di_1(t)}{dt} - M\frac{di_2(t)}{dt} \\
+&= -3\delta(t) - \frac{1}{2}\left[\frac{3}{4}e^{-t}\varepsilon(t) - \frac{3}{4}\delta(t)\right] \\
+&= -\frac{21}{8}\delta(t) - \frac{3}{8}e^{-t}\varepsilon(t)
+\end{aligned}
+$$
