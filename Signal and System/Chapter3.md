@@ -133,6 +133,96 @@ $$
 c_n = \frac{1}{T} \int_{t_1}^{t_1+T} f(t) \mathrm{e}^{-jn\Omega t} \,\mathrm{d}t
 $$
 
+## 非周期信号的频谱
+
+非周期信号可看成是$T$趋于无穷大的周期信号。 
+
+当周期$T$趋于无穷大时，谱线间隔$\Omega$趋于无穷 小，离散频谱趋向于连续频谱。各频率分量的幅度也趋于无穷小，但各分量振幅存在相对差 别，且总和仍为一有限值。
+
+为了描述非周期信号的频谱特性，引入频谱密度函数，表示单位频带的频谱值，简称频谱函 数$F(jω)$。
+
+### 频谱函数
+
+当$T \rightarrow \infty$，周期信号趋于非周期信号
+
+- 复数振幅
+$$
+\dot{A}_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \mathrm{e}^{-jn\Omega t} \,\mathrm{d}t \rightarrow 0
+$$
+- 谱线间隔
+$$
+\Omega = \frac{2\pi}{T} \rightarrow \mathrm{d}\omega \quad \text{无穷小}
+$$
+- 离散变量
+$$
+n\Omega \rightarrow \omega \quad \text{连续变量}
+$$
+
+非周期信号的频谱由周期信号通过极限的方式得到，称为Fourier变换。
+
+定义频谱函数
+
+$$
+F(j\omega) = \lim_{T\to\infty} \frac{T\dot{A}_n}{2} = \lim_{\Omega\to 0} \pi \frac{\dot{A}_n}{\Omega}
+$$
+
+$$
+F(j\omega) = \lim_{T\to\infty} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \mathrm{e}^{-jn\Omega t} \,\mathrm{d}t = \int_{-\infty}^{\infty} f(t) \mathrm{e}^{-j\omega t} \,\mathrm{d}t
+$$
+
+### 非周期信号的频谱函数举例
+
+门函数（脉冲宽度为$\tau$）：
+
+$$
+G_\tau(t) = \begin{cases} A & -\dfrac{\tau}{2} < t < \dfrac{\tau}{2} \\
+0 & t < -\dfrac{\tau}{2} \text{或} t > \dfrac{\tau}{2} \end{cases}
+$$
+
+![](img/笔记3.1.png)
+
+频谱函数：
+$$
+\begin{aligned}
+F(j\omega) &= \int_{-\infty}^{\infty} f(t) \mathrm{e}^{-j\omega t} \,\mathrm{d}t = A \int_{-\frac{\tau}{2}}^{\frac{\tau}{2}} \mathrm{e}^{-j\omega t} \,\mathrm{d}t \\
+&= \frac{A}{-j\omega} \left[ \mathrm{e}^{-j\omega\frac{\tau}{2}} - \mathrm{e}^{j\omega\frac{\tau}{2}} \right] \\
+&= \frac{2A}{\omega} \sin\frac{\omega\tau}{2} \\
+&= A\tau \,\mathrm{Sa}\left(\frac{\omega\tau}{2}\right)
+\end{aligned}
+$$
+
+其中
+
+$$
+\mathrm{Sa}\left(\frac{\omega\tau}{2}\right) = \frac{\sin(\omega\tau/2)}{\omega\tau/2}
+$$
+
+门函数频谱
+$$
+F(j\omega) = A\tau \,\mathrm{Sa}\left(\frac{\omega\tau}{2}\right)
+$$
+
+模量（偶函数）
+$$
+|F(j\omega)| = A\tau \left| \mathrm{Sa}\left(\frac{\omega\tau}{2}\right) \right|
+$$
+
+相位
+
+$$
+\varphi(\omega) = \begin{cases} 0 & \dfrac{4n\pi}{\tau} < \omega < \dfrac{4n\pi + 2\pi}{\tau} \\ -\pi & \dfrac{4n\pi + 2\pi}{\tau} < \omega < \dfrac{4n\pi + 4\pi}{\tau} \end{cases}
+$$
+
+奇函数，$n = 0, 1, 2, \ldots$
+
+每隔 $\dfrac{2\pi}\tau$ 变换一次
+
+![](img/笔记3.2.png)
+
+## 常用函数的Fourier变换
+
+
+
 # 例题
 
 ## 例题1
