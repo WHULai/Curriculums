@@ -225,6 +225,10 @@ $$
 F(j\omega)=\mathscr{F}\{f(t)\}=\int_{-\infty}^\infty f(t)\mathrm{e}^{-j\omega t} \mathrm{d}t
 $$
 
+$$
+f(t)=\mathscr{F}^{-1}\left\{F(j\omega)\right\}=\frac{1}{2\pi}\int_{-\infty}^\infty F(j\omega)\mathrm{e}^{j\omega t}\mathrm{d}\omega
+$$
+
 
 
 - 冲激函数$δ(t)$，$δ’(t)$
@@ -250,7 +254,68 @@ $$
   $$
   \operatorname{sgn}=\begin{cases}-1, &t<0 \\1, &t>0\end{cases} \leftrightarrow \frac{2}{j\omega}
   $$
+  ![](img/笔记3.3.png)
   
+- 门函数
+  $$
+  G_{\tau}(t)=\begin{cases}A, &|t|<\dfrac{\tau}{2} \\ 0, &|t|>\dfrac{\tau}{2} \end{cases} \leftrightarrow A\tau \operatorname{Sa}\left(\dfrac{\omega\tau}{2}\right)
+  $$
+  
+- 三角函数
+  $$
+  \cos\omega_Ct \leftrightarrow \pi\left[\delta(\omega+\omega_C)+\delta(\omega-\omega_C)\right]
+  $$
+
+  $$
+  \sin\omega_Ct \leftrightarrow j\pi\left[\delta(\omega+\omega_C)-\delta(\omega-\omega_C)\right]
+  $$
+
+## Fourier变换的性质
+
+### 线性特性
+
+### 延时特性
+
+时域延时$t_0$ ，频域相位$ωt_0$
+$$
+f(t)\leftrightarrow F(j\omega)
+$$
+
+$$
+f(t-t_0)\leftrightarrow F(j\omega)\mathrm{e}^{-j\omega t_0}
+$$
+
+### 移频特性
+
+频域移频$ω_C$，时域乘上$e^{jω_Ct}$
+$$
+f(t)\leftrightarrow F(j\omega)
+$$
+
+$$
+f(t)\mathrm{e}^{j\omega t_0}\leftrightarrow F(j(\omega-\omega_C))
+$$
+
+推论：
+$$
+f(t)\cos\omega_C t \longleftrightarrow \frac{1}{2}\Big[F\big(j(\omega+\omega_C)\big)+F\big(j(\omega-\omega_C)\big)\Big]
+$$
+
+$$
+f(t)\sin\omega_C t \longleftrightarrow \frac{j}{2}\Big[F\big(j(\omega+\omega_C)\big)-F\big(j(\omega-\omega_C)\big)\Big]
+$$
+
+### 尺度变换特性
+
+$$
+f(t) \leftrightarrow F(j\omega)
+$$
+
+$$
+f(at) \leftrightarrow \frac{1}{|a|} F\left( j\frac{\omega}{a} \right)
+$$
+
+
 
 # 例题
 
@@ -413,16 +478,36 @@ $$
 \end{cases}
 $$
 
-
-
-
 ![](img/例题2.2.png)
+
+## 例题3
+
+> 求均匀冲激序列的Fourier变换
+> 
+> $$
+> \delta_T(t) = \delta(t) + \delta(t \pm T) + \delta(t \pm 2T) + \cdots
+> $$
+> (周期为$T$)
+> 
+> $$
+> \delta_T(t) \longleftrightarrow \Omega\delta_\Omega(\omega)
+> $$
+
+$$
+\dot{A}_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \mathrm{e}^{-jn\Omega t} \,\mathrm{d}t = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} \delta(t) \mathrm{e}^{-jn\Omega t} \,\mathrm{d}t = \frac{2}{T}, \quad \Omega = \frac{2\pi}{T}
+$$
+
+$$
+F(j\omega) = \pi \sum_{n=-\infty}^{\infty} \dot{A}_n \delta(\omega - n\Omega) = \frac{2\pi}{T} \sum_{n=-\infty}^{\infty} \delta(\omega - n\Omega) = \Omega\delta_\Omega(\omega)
+$$
+
+冲激序列的Fourier变换仍是冲激序列。
 
 ## 3.6
 
 > 利用周期性矩形脉冲与周期性三角脉冲的傅里叶级数展开式，求如图波形所示信号的傅里叶级数。
 >
-> ![](img/3.6.jpg)
+> ![](img/3.6.png)
 
 $f(t)$可看作是一个周期性矩形脉冲$f_1(t)$和一个周期性三角脉冲$f_2(t)$之差（如图所示）
 
@@ -727,3 +812,64 @@ f(t)=0.4A
 +\frac{0.8A}{\pi^2}\sum_{k=0}^{\infty}
 \frac{1}{(2k+1)^2}\cos(2k+1)\Omega t
 $$
+
+## 3.12
+
+> 利用傅里叶变换的频移特性求如图所示信号的傅里叶变换
+>
+> ![](img/3.12.png)
+
+
+(a) 由图(a)可知
+
+$$
+f_1(t) = \cos 5t \left[\varepsilon(t+\pi) - \varepsilon(t-\pi) \right] = (\cos 5t) \cdot G_{2\pi}(t)
+$$
+
+其中$G_{2\pi}(t) = \varepsilon(t+\pi) - \varepsilon(t-\pi)$
+
+因为
+$$
+G_{2\pi}(t) \longleftrightarrow 2\pi \,\mathrm{Sa}(\pi\omega)
+$$
+
+由傅里叶变换的移频性质知
+$$
+f(t)\cos(\omega_0 t) \longleftrightarrow \frac{1}{2}F[j(\omega+\omega_0)] + \frac{1}{2}F[j(\omega-\omega_0)]
+$$
+
+所以
+
+$$
+f_1(t) \longleftrightarrow \frac{1}{2} \cdot 2\pi \left\{ \mathrm{Sa}[\pi(\omega+5)] + \mathrm{Sa}[\pi(\omega-5)] \right\}
+$$
+
+$$
+F_1(j\omega) = \pi \left\{ \mathrm{Sa}[\pi(\omega+5)] + \mathrm{Sa}[\pi(\omega-5)] \right\}
+$$
+
+(b) 由图(b)可知
+
+$$
+f_2(t) = \cos 5t \cdot \left( 1 - \frac{|t|}{2\pi} \right)
+$$
+
+因为 $1 - \dfrac{|t|}{2\pi} \longleftrightarrow \pi \,\mathrm{Sa}^2\left(\dfrac{\pi\omega}{2}\right)$，所以由移频性质得
+
+$$
+F_2(j\omega) = \frac{\pi}{2} \left[ \mathrm{Sa}^2 \frac{\pi(\omega+5)}{2} + \mathrm{Sa}^2 \frac{\pi(\omega-5)}{2} \right]
+$$
+
+(c) 由图(c)可知，其波形由图(a)右移$2\pi$后得到，所以
+$$
+f_3(t)=\cos5t \left[\varepsilon(t-\pi)-\varepsilon(t-3\pi)\right]
+$$
+利用时移特性
+$$
+\left[\varepsilon(t-\pi)-\varepsilon(t-3\pi)\right] \longleftrightarrow 2\pi\operatorname{Sa}(\pi\omega)\mathrm{e}^{-j2\pi\omega}
+$$
+所以
+$$
+F_3(j\omega)=\pi\left\{\operatorname{Sa}\left[\pi(\omega+5)\right]+\operatorname{Sa}\left[\pi(\omega-5)\right]\right\}\mathrm{e}^{-2\pi j\omega}
+$$
+
