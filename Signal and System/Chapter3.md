@@ -317,6 +317,122 @@ $$
 
 
 
+### 对称特性
+
+$$
+f(t) \leftrightarrow F(j\omega)
+$$
+
+$$
+F(jt) \leftrightarrow 2\pi f(-\omega)
+$$
+
+### 时域微积分特性
+
+$$
+f(t) \leftrightarrow F(j\omega)
+$$
+
+时域求导相当于频域乘上因子$jω$。
+$$
+\frac{\mathrm{d}f(t)}{\mathrm{d}t} \leftrightarrow j\omega F(j\omega)
+$$
+
+$$
+\frac{\mathrm{d}^n f(t)}{\mathrm{d}t^n} \leftrightarrow (j\omega)^n F(j\omega)
+$$
+
+时域积分相当于频域除以因子$jω$。
+$$
+\int_{-\infty}^tf(\tau)\mathrm{d}\tau \leftrightarrow \frac{1}{j\omega}F(j\omega)
+$$
+
+### 频域微积分特性
+
+$$
+f(t) \leftrightarrow F(j\omega)
+$$
+
+$$
+-jtf(t) \leftrightarrow \frac{\mathrm{d}F(j\omega)}{\mathrm{d}\omega}
+$$
+
+$$
+\pi f(0)\delta(t) + j\frac{f(t)}{t} \leftrightarrow \int_{-\infty}^{\omega} F(j\Omega)\mathrm{d}\Omega
+$$
+
+### 卷积定理
+
+
+$$
+f_1(t) \leftrightarrow F_1(j\omega),\quad f_2(t) \leftrightarrow F_2(j\omega)
+$$
+时域卷积定理：时域的卷积运算相当于频域的乘法运算
+$$
+f_1(t) * f_2(t) \leftrightarrow F_1(j\omega)F_2(j\omega)
+$$
+频域卷积定理：频域的卷积运算相当于时域的乘法运算
+$$
+f_1(t)f_2(t) \leftrightarrow \frac{1}{2\pi}\left[F_1(j\omega)*F_2(j\omega)\right]
+$$
+
+## Parseval定理与能量频谱
+
+### 信号的分类——从能量的角度
+
+- 功率信号：能量无限大，功率有限
+
+  典型信号：周期信号
+
+- 能量信号：能量有限，功率为零
+
+  典型信号：非周期单脉冲信号
+
+### Parseval定理
+
+对周期信号，在时域和频域求得的信号功率相等，且功率等于该信号在完备正交函数集中各分量的功率之和。 
+
+Fourier级数
+$$
+\begin{align*} f(t) &= \frac{a_0}{2} + \sum_{n=1}^{N}\left( a_n \cos n\Omega t + b_n \sin n\Omega t \right) \\ &= \frac{1}{2}\sum_{n=-\infty}^{\infty} A_n e^{j\phi_n} e^{jn\Omega t} \end{align*}
+$$
+
+时域中的功率
+$$
+P = \overline{f^2(t)} = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}} \left[f(t)\right]^2 \mathrm{d}t
+$$
+
+时域功率等于各谐波分量功率之和：
+$$
+P = \sum_{n=-\infty}^{\infty}\left( \frac{A_n}{2} \right)^2 = \left( \frac{a_0}{2} \right)^2 + \sum_{n=1}^{\infty}\left( \frac{a_n^2+b_n^2}{2} \right)
+$$
+
+对能量信号，在时域中求得的能量等于该信号在频域中求得的能量。
+
+Rayleigh定理
+$$
+\begin{align*} W &= \int_{-\infty}^{\infty} \left[f(t)\right]^2 \mathrm{d}t \\ &= \frac{1}{2\pi}\int_{-\infty}^{\infty} \left|F(j\omega)\right|^2 \mathrm{d}\omega = \int_{-\infty}^{\infty} \left|F(j2\pi f)\right|^2 \mathrm{d}f \end{align*}
+$$
+
+定义能量密度频谱(能谱)函数$G(\omega)$，频带$\mathrm{d}\omega$内的信号能量为$G(\omega)\mathrm{d}\omega$，信号在整个频率范围内的能量为
+$$
+W = \int_{0}^{\infty} G(\omega)\mathrm{d}\omega,\quad G(\omega) = \frac{1}{\pi}\left|F(j\omega)\right|^2
+$$
+
+能谱与幅谱平方的形状相同，与相位频谱无关。
+
+### 频带宽度和脉冲宽度
+
+从能量角度，脉冲宽度 $\tau$ 定义为脉冲中绝大部分能量所集中的那段时间。
+$$
+\int_{-\frac{\tau}{2}}^{\frac{\tau}{2}} \left[f(t)\right]^2 \mathrm{d}t = \eta W
+$$
+
+从能量角度，频带宽度BW定义为脉冲中绝大部分能量所集中的那段频段。
+$$
+\frac{1}{\pi}\int_{0}^{\mathrm{BW}} \left|F(j\omega)\right|^2 \mathrm{d}\omega = \eta W
+$$
+
 # 例题
 
 ## 例题1
@@ -401,7 +517,7 @@ $$
 > 0, & -\dfrac{T}{2}<t<-\dfrac{\tau}{2} \quad \& \quad \dfrac{\tau}{2}<t<\dfrac{T}{2}
 > \end{cases}
 > $$
-> ![rectangular_pulse](img/例题2.png)
+> ![rectangular_pulse](img/例题3.2.png)
 
 指数形式傅里叶级数
 
@@ -478,7 +594,7 @@ $$
 \end{cases}
 $$
 
-![](img/例题2.2.png)
+![](img/例题3.2.2.png)
 
 ## 例题3
 
@@ -502,6 +618,58 @@ F(j\omega) = \pi \sum_{n=-\infty}^{\infty} \dot{A}_n \delta(\omega - n\Omega) = 
 $$
 
 冲激序列的Fourier变换仍是冲激序列。
+
+## 例题4
+
+> 求矩形调幅信号的Fourier变换
+> 信号表达式：
+> $$
+> f(t) = G_\tau(t)\cos \omega_0 t
+> $$
+> ![](img/例题3.4.png)
+
+门函数的傅里叶变换对：
+$$
+G_\tau(t) \leftrightarrow \tau \mathrm{Sa}\left( \frac{\omega \tau}{2} \right)
+$$
+
+移频特性及其推论
+设 $f(t) \leftrightarrow F(j\omega)$，则
+$$
+f(t)e^{j\omega_C t} \leftrightarrow F\left( j(\omega-\omega_C) \right)
+$$
+$$
+f(t)\cos \omega_C t \leftrightarrow \frac{1}{2}\left[ F\left( j(\omega+\omega_C) \right)+F\left( j(\omega-\omega_C) \right) \right]
+$$
+
+代入频谱得到最终结果：
+$$
+F(j\omega) = \frac{A\tau}{2}\left[ \mathrm{Sa}\left( \frac{\tau}{2}(\omega+\omega_0) \right)+\mathrm{Sa}\left( \frac{\tau}{2}(\omega-\omega_0) \right) \right]
+$$
+
+## 例题5
+
+> 求图示梯形脉冲的频谱
+>
+> ![](img/例题3.5.png)
+
+对信号做二阶时域微分：
+$$
+\frac{\mathrm{d}^2 f(t)}{\mathrm{d}t^2} = \frac{A}{b-a}\left[\delta(t+b)-\delta(t+a)-\delta(t-a)+\delta(t-b)\right]
+$$
+
+对等式两侧同时取傅里叶变换，由时域微分特性可得：
+$$
+(j\omega)^2 F(j\omega) = \frac{A}{b-a}\left[e^{j\omega b}-e^{j\omega a}-e^{-j\omega a}+e^{-j\omega b}\right]
+$$
+
+![](img/例题3.5.2.png)
+
+整理得
+$$
+F(j\omega)=\frac{2A}{b-a}\left[\frac{\cos b\omega-\cos a\omega}{\omega^2}\right]
+$$
+
 
 ## 3.6
 
@@ -873,3 +1041,251 @@ $$
 F_3(j\omega)=\pi\left\{\operatorname{Sa}\left[\pi(\omega+5)\right]+\operatorname{Sa}\left[\pi(\omega-5)\right]\right\}\mathrm{e}^{-2\pi j\omega}
 $$
 
+## 3.16
+
+> 试用下列特性求对应信号的傅里叶变换
+> 1. 用延时与线性特性；
+> 2. 用时域微分、积分特性。
+>
+> ![](img/3.16.png)
+
+图(a)对应信号
+$$
+f(t)=G_{2}(t) \cos \frac{\pi}{2} t
+$$
+
+方法一：延时与线性特性
+已知变换对：
+$$
+G_{2}(t) \leftrightarrow 2 \mathrm{Sa}(\omega)
+$$
+
+$$
+G_{2}(t+2) \leftrightarrow 2 \mathrm{Sa}(\omega)\mathrm{e}^{j2\omega}
+$$
+
+$$
+G_{2}(t-2) \leftrightarrow 2 \mathrm{Sa}(\omega)\mathrm{e}^{-j2\omega}
+$$
+
+所以
+$$
+\begin{aligned}
+F(j \omega) &= 2 \mathrm{Sa}(\omega)\mathrm{e}^{j2\omega} + 2 \mathrm{Sa}(\omega)\mathrm{e}^{-j2\omega} \\
+&=4 \mathrm{Sa}(\omega)\cos(2\omega) \\
+&= \frac2\omega \left(\sin 3\omega - \sin\omega\right)
+\end{aligned}
+$$
+
+
+方法二：时域微分、积分特性
+
+对信号求一阶导数：
+$$
+\begin{aligned}
+f'(t) &= \delta(t+3)-\delta(t+1)+\delta(t-1)-\delta(t-3) \\
+&\leftrightarrow e^{j3\omega}-e^{j\omega}+e^{-j\omega}-e^{-j3\omega}=j 4 \sin \omega \cos 2 \omega \\
+&= \frac{2}{\omega}(\sin 3 \omega-\sin \omega) \cdot j \omega
+\end{aligned}
+$$
+
+即
+$$
+f'(t) \leftrightarrow \frac{2}{\omega}(\sin 3 \omega-\sin \omega) \cdot j \omega
+$$
+
+结合时域微分特性，求得原信号频谱：
+$$
+f(t) \leftrightarrow \frac{2}{\omega}(\sin 3 \omega-\sin \omega)
+$$
+
+图(b)对应信号：
+$$
+f(t)=G_{2}(t) \cos \frac{\pi}{2} t
+$$
+
+方法一：延时与线性特性
+
+已知变换对：
+$$
+G_{2}(t) \leftrightarrow 2 \mathrm{Sa}(\omega)
+$$
+
+$$
+\cos \frac{\pi}{2} t \leftrightarrow \pi\left[\delta\left(\omega+\frac{\pi}{2}\right)+\delta\left(\omega-\frac{\pi}{2}\right)\right]
+$$
+
+根据频域卷积性质计算频谱：
+$$
+\begin{aligned}
+F(j \omega) &= \frac{1}{2 \pi}\left\{2 \mathrm{Sa}(\omega) * \pi\left[\delta\left(\omega+\frac{\pi}{2}\right)+\delta\left(\omega-\frac{\pi}{2}\right)\right]\right\} \\
+&= \mathrm{Sa}(\omega) * \delta\left(\omega+\frac{\pi}{2}\right)+\mathrm{Sa}(\omega) * \delta\left(\omega-\frac{\pi}{2}\right) \\
+&= \mathrm{Sa}\left(\omega+\frac{\pi}{2}\right)+\mathrm{Sa}\left(\omega-\frac{\pi}{2}\right) \\
+&= \frac{4 \pi \cos \omega}{\pi^{2}-4 \omega^{2}}
+\end{aligned}
+$$
+
+方法二：时域微分、积分特性
+
+将信号改写为：
+$$
+f(t)=\left(\cos \frac{\pi}{2} t\right) \cdot[\varepsilon(t+1)-\varepsilon(t-1)]
+$$
+
+对信号求一阶导数：
+$$
+\begin{aligned}
+f'(t) &= \left(-\frac{\pi}{2} \sin \frac{\pi}{2} t\right) \cdot[\varepsilon(t+1)-\varepsilon(t-1)]+\cos \frac{\pi}{2} t[\delta(t+1)-\delta(t-1)] \\
+&= \left(-\frac{\pi}{2} \sin \frac{\pi}{2} t\right) \cdot[\varepsilon(t+1)-\varepsilon(t-1)]
+\end{aligned}
+$$
+
+对信号求二阶导数：
+$$
+\begin{aligned}
+f''(t) &= \left[-\frac{\pi^{2}}{4} \cos \frac{\pi}{2} t\right] \cdot[\varepsilon(t+1)-\varepsilon(t-1)] - \frac{\pi}{2} \sin \frac{\pi}{2} t \cdot [\delta(t+1)-\delta(t-1)] \\
+&= -\frac{\pi^{2}}{4} f(t)+\frac{\pi}{2} \delta(t+1)+\frac{\pi}{2} \delta(t-1)
+\end{aligned}
+$$
+
+对等式两侧取傅里叶变换：
+$$
+\begin{aligned}
+f''(t) &\leftrightarrow -\frac{\pi^{2}}{4} F(j \omega)+\frac{\pi}{2} e^{j\omega}+\frac{\pi}{2} e^{-j \omega} \\
+&= -\frac{\pi^{2}}{4} F(j \omega)+\pi \cos \omega = (j \omega)^{2} F(j \omega)
+\end{aligned}
+$$
+
+整理求解频谱：
+$$
+F(j \omega)=\frac{\pi \cos \omega}{(j \omega)^{2}+\frac{\pi^{2}}{4}}=\frac{4 \pi \cos \omega}{\pi^{2}-4 \omega^{2}}
+$$
+
+![](img/3.16.2.png)
+
+## 3.20
+
+> 由冲激函数的傅里叶变换求如图所示波形信号的傅里叶变换
+>
+> ![](img/3.20.png)
+
+>对任意信号$f(t)$，由微积分关系可得
+>$$
+>f(t)=\int_{-\infty}^t f^\prime(\xi)\mathrm{d}\xi
+>$$
+>根据卷积定义，时域积分运算等价于信号与单位阶跃函数做卷积：
+>$$
+>\int_{-\infty}^{t} f_1'(\xi) \,\mathrm{d}\xi
+>= f_1'(t) * \varepsilon(t)
+>$$
+>时域卷积定理：若
+>$$
+>g(t) \leftrightarrow G(j\omega),\quad h(t) \leftrightarrow H(j\omega)
+>$$
+>则时域卷积对应频域相乘：
+>$$
+>g(t) * h(t) \leftrightarrow G(j\omega) \cdot H(j\omega)
+>$$
+>单位阶跃函数的傅里叶变换公式：
+>$$
+>\varepsilon(t) \leftrightarrow \frac{1}{j\omega} + \pi \delta(\omega)
+>$$
+>代入得
+>$$
+>f(t) \leftrightarrow \left[\frac{1}{j\omega} + \pi \delta(\omega)\right] \cdot \mathscr{F}\{f^\prime(t)\}
+>$$
+
+(1)
+$$
+f_{1}(t)=[\varepsilon(t+\tau)-\varepsilon(t)]-[\varepsilon(t)-\varepsilon(t-\tau)]
+$$
+
+对信号求一阶导数并进行傅里叶变换：
+
+$$
+\begin{aligned}
+f_{1}'(t) &= \delta(t+\tau)-\delta(t)-\delta(t)-\delta(t-\tau) \\
+&\leftrightarrow e^{j \omega \tau}-2+e^{-j \omega \tau} \\
+&= 2 \cos (\omega \tau)-2
+\end{aligned}
+$$
+
+结合时域积分特性求解原信号频谱：
+
+$$
+f_{1}(t) \leftrightarrow\left[\frac{1}{j \omega}+\pi \delta(\omega)\right] \cdot[2 \cos (\omega \tau)-2]=\frac{2}{j \omega}[\cos (\omega \tau)-1]=j \frac{4}{\omega} \sin ^{2}\left(\frac{\omega \tau}{2}\right)
+$$
+
+(2)
+
+$$
+f_{2}(t)=\varepsilon(t+2)+\varepsilon(t+1)-\varepsilon(t-1)-\varepsilon(t-2)
+$$
+
+对信号求一阶导数并进行傅里叶变换：
+
+$$
+\begin{aligned}
+f_{2}'(t) &= \delta(t+2)+\delta(t+1)-\delta(t-1)-\delta(t-2) \\
+&\leftrightarrow e^{j 2 \omega}+e^{j \omega}-e^{-j \omega}-e^{-j 2 \omega} \\
+&= 2 j(\sin \omega+\sin 2 \omega)
+\end{aligned}
+$$
+
+结合时域积分特性求解原信号频谱：
+
+$$
+f_{2}(t) \leftrightarrow\left[\pi \delta(\omega)+\frac{1}{j \omega}\right] \cdot[2 j(\sin \omega+\sin 2 \omega)]=\frac{2}{\omega}(\sin \omega+\sin 2 \omega)
+$$
+
+(3)
+
+$$
+f_{3}(t)=-\frac{1}{\tau}(t-\tau)[\varepsilon(t)-\varepsilon(t-\tau)]
+$$
+
+对信号求一阶导数：
+
+$$
+\begin{aligned}
+f_{3}'(t) &= -\frac{1}{\tau}[\varepsilon(t)-\varepsilon(t-\tau)]-\frac{1}{\tau}(t-\tau)[\delta(t)-\delta(t-\tau)] \\
+&= -\frac{1}{\tau}[\varepsilon(t)-\varepsilon(t-\tau)]+\delta(t)
+\end{aligned}
+$$
+
+对一阶导数求二阶导数，并做傅里叶变换：
+
+$$
+\begin{aligned}
+f_{3}''(t) &= -\frac{1}{\tau}[\delta(t)-\delta(t-\tau)]+\delta'(t) \\
+&\leftrightarrow -\frac{1}{\tau}\left(1-e^{-j \omega \tau}\right)+j \omega
+\end{aligned}
+$$
+
+结合时域微分特性求解原信号频谱：
+
+$$
+\begin{aligned}
+f_{3}(t) &\leftrightarrow \frac{1}{(j \omega)^{2}}\left[-\frac{1}{\tau}\left(1-e^{-j \omega \tau}\right)+j \omega\right] \\
+&= \frac{1}{(j \omega)^{2}}\left[j \omega-\frac{1}{\tau}\left(1-e^{-j \omega \tau}\right)\right] \\
+&= \frac{1}{j \omega}+\frac{1}{\tau \omega^{2}}\left(1-e^{-j \omega \tau}\right)
+\end{aligned}
+$$
+
+(4)
+
+信号组合关系：
+
+$$
+f_{4}(t)=f_{3}(t+\tau)+f_{3}(-t+\tau)
+$$
+
+结合傅里叶变换延时、反褶特性推导频谱：
+
+$$
+\begin{aligned}
+f_{4}(t) &\leftrightarrow F_{3}(\omega) e^{j \omega \tau}+F_{3}(-\omega) e^{-j \omega \tau} \\
+&= \left[\frac{1}{j \omega}+\frac{1}{\tau \omega^{2}}\left(1-e^{-j \omega \tau}\right)\right] e^{j \omega \tau}+\left[\frac{1}{-j \omega}+\frac{1}{\tau \omega^{2}}\left(1-e^{j \omega \tau}\right)\right] e^{-j \omega \tau} \\
+&= 2 \tau \mathrm{Sa}(\omega \tau)-\tau \mathrm{Sa}^{2}\left(\frac{\omega \tau}{2}\right)
+\end{aligned}
+$$
