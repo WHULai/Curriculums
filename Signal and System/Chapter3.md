@@ -221,7 +221,36 @@ $$
 
 ## 常用函数的Fourier变换
 
+$$
+F(j\omega)=\mathscr{F}\{f(t)\}=\int_{-\infty}^\infty f(t)\mathrm{e}^{-j\omega t} \mathrm{d}t
+$$
 
+
+
+- 冲激函数$δ(t)$，$δ’(t)$
+  $$
+  \delta(t) \leftrightarrow 1
+  $$
+
+  $$
+  \delta^\prime(t) \leftrightarrow j\omega
+  $$
+
+- 常数1
+  $$
+  1 \leftrightarrow 2\pi\delta(\omega)
+  $$
+
+- 阶跃函数
+  $$
+  \varepsilon(t) \leftrightarrow \pi\delta(\omega)+\frac{1}{j\omega}
+  $$
+
+- 符号函数
+  $$
+  \operatorname{sgn}=\begin{cases}-1, &t<0 \\1, &t>0\end{cases} \leftrightarrow \frac{2}{j\omega}
+  $$
+  
 
 # 例题
 
