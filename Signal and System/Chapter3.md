@@ -433,6 +433,56 @@ $$
 \frac{1}{\pi}\int_{0}^{\mathrm{BW}} \left|F(j\omega)\right|^2 \mathrm{d}\omega = \eta W
 $$
 
+## LTI系统的频域分析法
+
+### LTI系统时域和频域分析法特点
+
+时域分析法
+
+- 以时间为变量。
+
+  求解时域中的线性常系数微分方程。
+
+  信号分解为冲激函数，利用冲激响应和卷积积分求 得系统的零状态响应。
+
+- 频域分析法
+
+  以频率为变量。
+
+  求解频域中的代数方程。
+
+  信号分解为正弦函数或指数函数，利用Fourier变 换将时域问题转换到频域以简化运算。
+
+  缺点：增加两次积分运算
+
+共同处：利用线性系 统的叠加性和齐次性
+
+### 系统函数的定义
+
+输入激励
+$$
+e(t) \leftrightarrow E(j\omega)
+$$
+零状态响应
+$$
+r(t) \leftrightarrow R(j\omega)
+$$
+
+$$
+r(t)=e(t) * h(t) \leftrightarrow R(j\omega)=E(j\omega)H(j\omega)
+$$
+
+系统函数或频率响应函数：联系频域中零状态响应与输入激励的函数。
+$$
+H(j\omega)=\dfrac{R(j\omega)}{E(j\omega)}
+$$
+
+$$
+h(t) \leftrightarrow H(j\omega)
+$$
+
+系统函数和单位冲激响应为Fourier变换对
+
 # 例题
 
 ## 例题1
