@@ -141,3 +141,68 @@ $$
 \omega_{s}=\frac{2 \pi}{T_{s}}
 $$
 
+## LTI离散时间系统的描述和模拟
+
+### LTI离散时间系统
+
+- 线性特性
+  $$
+  C_1e_1(k)+C_2e_2(k) \rightarrow \boxed{\text{系统}} \rightarrow C_1r_1(k)+C_2r_2(k)
+  $$
+
+- 移不变特性
+  $$
+  e(k-N) \rightarrow \boxed{\text{系统}} \rightarrow r(k-N)
+  $$
+
+- 线性移不变特性
+  $$
+  C_1e_1(k-M)+C_2e_2(k-N) \rightarrow \boxed{\text{系统}} \rightarrow C_1r_1(k-M)+C_2r_2(k-N)
+  $$
+  
+
+### 差分运算
+
+$f(t)$的取样信号$f(kT)$，简写为$f(k)$。
+
+微分运算
+$$
+\frac{\mathrm{d}f(t)}{\mathrm{d} t}=\lim_{T \to 0}\frac{f(kT+T)-f(kT)}{T}
+$$
+差分运算
+
+- 一阶前向差分
+  $$
+  \frac{\Delta f(K)}{\Delta k}=\frac{f(k+1)-f(k)}{(k+1)-k}
+  $$
+
+- 一阶后向差分
+  $$
+  \frac{\nabla f(K)}{\nabla k}=\frac{f(k)-f(k-1)}{k-(k-1)}
+  $$
+  
+
+$f(k+1)$和$f(k-1)$称为$f(k)$的移位序列。
+
+### 输入输出方程一般形式：n阶常系数差分方程
+
+$$
+r(k+n)+a_{n-1}r(k+n-1)+\dots+a_1 r(k+1)+a_0 r(k)
+= b_m e(k+m)+b_{m-1} e(k+m-1)+\dots+b_1 e(k+1)+b_0 e(k)
+$$
+
+差分方程包含离散变量及其增序或减序函数，描述离散序列中相邻几个数据点之间的数学关系。
+
+差分方程的阶数等于自变量最高和最低移序量之差。
+
+对比LTI连续时间系统的数学模型 —— n阶微分方程：
+
+$$
+r^{(n)} + a_{n-1} r^{(n-1)} + \dots + a_1 r' + a_0 r
+= b_m e^{(m)} + b_{m-1} e^{(m-1)} + \dots + b_1 e' + b_0 e
+$$
+
+离散与连续系统的对应关系：
+$$
+r^{(n)} \to r(k+n)
+$$
