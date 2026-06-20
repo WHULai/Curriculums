@@ -89,6 +89,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Configuración de tipografía para chino
 \RequirePackage{fontspec}
+\RequirePackage{unicode-math}
 \setCJKmainfont[
     BoldFont = Source Han Serif SC Bold,
     ItalicFont = Source Han Serif SC,
@@ -98,12 +99,13 @@
     BoldFont = Source Han Sans SC Bold
 ]{Source Han Sans SC}
 \setmainfont[
-    Path = /usr/local/texlive/2026/texmf-dist/fonts/opentype/public/lm/,
+    Path = /usr/local/texlive/2025/texmf-dist/fonts/opentype/public/lm/,
     BoldFont = lmroman10-bold.otf,
     ItalicFont = lmroman10-italic.otf,
     BoldItalicFont = lmroman10-bolditalic.otf
 ]{lmroman10-regular.otf}
 \setsansfont{Fira Sans}
+\setmathfont{latinmodern-math.otf}
 \renewcommand{\labelitemi}{$\bullet$}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% --- Variables internas
