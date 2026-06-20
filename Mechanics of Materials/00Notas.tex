@@ -1,0 +1,89 @@
+% \documentclass[compacto,10pt]{aleph-notas}
+\documentclass[a4,10pt,comentarios]{aleph-notas}
+
+% -- 额外宏包
+\usepackage{enumitem}
+\usepackage{aleph-comandos}
+
+% -- 文档信息
+\institucion{武汉大学}
+\carrera{机器人工程}
+\asignatura{材料力学}
+\tema{笔记模板}
+\autor{Lai Wei}
+\date{\today}
+
+%% --> 校徽
+\logouno[5cm]{Logos/whulogo.png}
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+\begin{document}
+
+\encabezado
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{平面直角坐标系}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{defi}
+    平面直角坐标系是集合
+    \[
+        \R^2 = \{(x,y): x,y\in\R\}
+    \]
+    的图形表示。
+\end{defi}
+
+\begin{teo}[三角形面积]
+    若三角形的顶点为 $(x_1,y_1),(x_2,y_2),(x_3,y_3)\in\R^2$，则该三角形的面积为
+    \[
+        \frac{1}{2}
+        \begin{vmatrix}
+            x_1 & y_1 & 1 \\
+            x_2 & y_2 & 1 \\
+            x_3 & y_3 & 1 \\
+        \end{vmatrix}
+    \]
+    的绝对值。
+\end{teo}
+
+\begin{defi}[线段]
+    对于 $(x_1,y_1),(x_2,y_2)\in\R^2$，令
+    \[
+        A=(x_1,y_1)
+        \texty
+        B=(x_2,y_2),
+    \]
+    则形如
+    \[
+        A + t(B-A) = (x_1 + t(x_2-x_1),\ y_1 + t(y_2-y_1)),
+    \]
+    其中 $t\in[0,1]$ 的点，构成连接 $A$ 与 $B$ 的线段。
+\end{defi}
+
+
+
+\begin{comentarios}
+    此处可通过以下活动引入 GeoGebra 动画。
+
+    \begin{ejer}
+        定义两个点，并嵌入一个从一点移动到另一点的文字。
+    \end{ejer}
+    只需利用之前制作的活动，使用\emph{文本}工具在点 $C$ 上添加文字即可。
+\end{comentarios}
+
+
+\begin{advertencia}
+    若在上述定义中取 $t=1/2$，则点
+    \[
+        A + \tfrac{1}{2}(B-A) = \frac{1}{2}(A+B)
+        =\left(\frac{x_1+x_2}{2},\frac{y_1+y_2}{2} \right)
+    \]
+    为 $A$ 与 $B$ 的中点。
+\end{advertencia}
+
+
+
+
+\end{document}
