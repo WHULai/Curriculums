@@ -1,3 +1,4 @@
+# MacOS Desktop Service
 .DS_Store
 
 # LaTeX compilation artifacts
@@ -32,3 +33,10 @@
 *.synctex.gz
 *.synctex(busy)
 *.synctex
+
+# AI tools / Editor
+.mimocode
+.vscode
+.opencode
+.agent
+.codex
