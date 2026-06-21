@@ -14,7 +14,9 @@ $a_0 -a_{n-1}$, $a_n=1$, $b_0 -b_m$：常数系数
 
 ### 求解齐次方程
 
-$$\dfrac{d^n y}{dt^n} + a_{n-1}\dfrac{d^{n-1}y}{dt^{n-1}} + \ldots + a_1\dfrac{dy}{dt} + a_0 y = 0$$
+$$
+\dfrac{\mathrm{d}^n y}{\mathrm{d}t^n} + a_{n-1}\dfrac{\mathrm{d}^{n-1}y}{\mathrm{d}t^{n-1}} + \ldots + a_1\dfrac{\mathrm{d}y}{\mathrm{d}t} + a_0 y = 0
+$$
 
 **特征方程：** $p^n + a_{n-1}p^{n-1} + \ldots + a_1 p + a_0 = 0$
 
@@ -33,7 +35,9 @@ $$\dfrac{d^n y}{dt^n} + a_{n-1}\dfrac{d^{n-1}y}{dt^{n-1}} + \ldots + a_1\dfrac{d
 
 ### 与激励形式有关
 
-$$\dfrac{d^n y}{dt^n} + a_{n-1}\dfrac{d^{n-1}y}{dt^{n-1}} + \ldots + a_1\dfrac{dy}{dt} + a_0 y = f(t)$$
+$$
+\dfrac{\mathrm{d}^n y}{\mathrm{d}t^n} + a_{n-1}\dfrac{\mathrm{d}^{n-1}y}{\mathrm{d}t^{n-1}} + \ldots + a_1\dfrac{\mathrm{d}y}{\mathrm{d}t} + a_0 y = f(t)
+$$
 
 若 $f(t)$ 形如 $e^{\alpha t}P(t)$，$\alpha$ 为常数，$P(t)$ 为多项式。
 
@@ -57,7 +61,9 @@ $Q(t)$ 为与 $P(t)$ 同次的多项式，系数待定。
 - 零输入响应：系统没有外加激励的情况下，由系统初始储能形成的系统输出响应，$y_{zi}(t)$。
 
 - 即求解齐次算子方程
-  $$D(p)\,y(t) = 0$$
+  $$
+  D(p)\,y(t) = 0
+  $$
 
   解法参考微分方程求通解
 
@@ -67,7 +73,9 @@ $Q(t)$ 为与 $P(t)$ 同次的多项式，系数待定。
   4. 根据初始条件确定待定系数。
 
 - 特征方程
-  $$D(p) = 0$$
+  $$
+  D(p) = 0
+  $$
 
 ### 转移算子对应的冲激响应
 
@@ -130,47 +138,73 @@ $Q(t)$ 为与 $P(t)$ 同次的多项式，系数待定。
 
 
 > 描述某系统的微分方程如下，已知 $y(0^-)=2$，$y'(0^-)=0$，$f(t)=U(t)$。求该系统的零输入响应和零状态响应。
-> $$y''(t) + 3y'(t) + 2y(t) = 2f'(t) + 6f(t)$$
+> $$
+> y''(t) + 3y'(t) + 2y(t) = 2f'(t) + 6f(t)
+> $$
 
 
 (1) 零输入响应
 
-$$y_{zi}''(t) + 3y_{zi}'(t) + 2y_{zi}(t) = 0$$
+$$
+y_{zi}''(t) + 3y_{zi}'(t) + 2y_{zi}(t) = 0
+$$
 
 特征根为 $p_1 = -1$，$p_2 = -2$
 
-$$y_{zi}(t) = C_1 e^{-t} + C_2 e^{-2t} \Rightarrow C_1 + 2C_2 = 0$$
+$$
+y_{zi}(t) = C_1 e^{-t} + C_2 e^{-2t} \Rightarrow C_1 + 2C_2 = 0
+$$
 
-$$y_{zi}(0^+) = y_{zi}(0^-) = y(0^-) = 2 \Rightarrow C_1 + C_2 = 2$$
+$$
+y_{zi}(0^+) = y_{zi}(0^-) = y(0^-) = 2 \Rightarrow C_1 + C_2 = 2
+$$
 
-$$\Rightarrow \begin{cases} C_1 = 4 \\ C_2 = -2 \end{cases}$$
+$$
+\Rightarrow \begin{cases} C_1 = 4 \\ C_2 = -2 \end{cases}
+$$
 
-$$y_{zi}(t) = 4e^{-t} - 2e^{-2t} \quad t > 0$$
+$$
+y_{zi}(t) = 4e^{-t} - 2e^{-2t} \quad t > 0
+$$
 
 (2) 零状态响应
 
-$$y''(t) + 3y'(t) + 2y(t) = 2\delta(t) + 6U(t)$$
+$$
+y''(t) + 3y'(t) + 2y(t) = 2\delta(t) + 6U(t)
+$$
 
-$$y_{zs}(0^-) = y_{zs}'(0^-) = 0$$
+$$
+y_{zs}(0^-) = y_{zs}'(0^-) = 0
+$$
 
 由于 $y_{zs}(t)$ 连续，$y_{zs}(0^+) = y_{zs}(0^-) = 0$。
 
 由于等式右端含有 $\delta(t)$，故 $y_{zs}''(t)$ 含有 $\delta(t)$，所以 $y_{zs}'(t)$ 跃变，即 $y_{zs}'(0^+) \neq y_{zs}'(0^-)$。
 
 等式两端 $0^-$ 到 $0^+$ 积分：
-$$y_{zs}'(0^+) - y_{zs}'(0^-) = 2 \Rightarrow y_{zs}'(0^+) = 2$$
+$$
+y_{zs}'(0^+) - y_{zs}'(0^-) = 2 \Rightarrow y_{zs}'(0^+) = 2
+$$
 
 当 $t > 0$ 时：
-$$y''(t) + 3y'(t) + 2y(t) = 6$$
+$$
+y''(t) + 3y'(t) + 2y(t) = 6
+$$
 
 齐次解：$C_1 e^{-t} + C_2 e^{-2t}$　　特解：$3$
 
-$$y_{zs}(t) = C_1 e^{-t} + C_2 e^{-2t} + 3$$
+$$
+y_{zs}(t) = C_1 e^{-t} + C_2 e^{-2t} + 3
+$$
 
 由初始条件：
-$$\begin{cases} y_{zs}(0^+) = 0 \\ y_{zs}'(0^+) = 2 \end{cases} \Rightarrow \begin{cases} C_1 = -4 \\ C_2 = 1 \end{cases}$$
+$$
+\begin{cases} y_{zs}(0^+) = 0 \\ y_{zs}'(0^+) = 2 \end{cases} \Rightarrow \begin{cases} C_1 = -4 \\ C_2 = 1 \end{cases}
+$$
 
-$$y_{zs}(t) = -4e^{-t} + e^{-2t} + 3 \quad t \geq 0$$
+$$
+y_{zs}(t) = -4e^{-t} + e^{-2t} + 3 \quad t \geq 0
+$$
 
 
 ## 2.4
@@ -193,15 +227,21 @@ $$y_{zs}(t) = -4e^{-t} + e^{-2t} + 3 \quad t \geq 0$$
 
 系统的零输入响应为
 
-$$r(t)=c_1 e^{-t}+c_2 e^{-2t}$$
+$$
+r(t)=c_1 e^{-t}+c_2 e^{-2t}
+$$
 
 将 $r(0)=1$, $r'(0)=2$ 代入 $r(t)$、$r'(t)$，确定 $c_1$、$c_2$ 如下：
 
-$$\begin{cases} r(0)=c_1+c_2=1 \\ r'(0)=-c_1-2c_2=2 \end{cases} \Rightarrow \begin{cases} c_1=4 \\ c_2=-3 \end{cases}$$
+$$
+\begin{cases} r(0)=c_1+c_2=1 \\ r'(0)=-c_1-2c_2=2 \end{cases} \Rightarrow \begin{cases} c_1=4 \\ c_2=-3 \end{cases}
+$$
 
 所以系统的零输入响应
 
-$$r_{zi}(t)=(4e^{-t}-3e^{-2t}), \quad t>0$$
+$$
+r_{zi}(t)=(4e^{-t}-3e^{-2t}), \quad t>0
+$$
 
 自然频率为：$-1$, $-2$。
 
@@ -219,15 +259,21 @@ $$r_{zi}(t)=(4e^{-t}-3e^{-2t}), \quad t>0$$
 
 系统的零输入响应为
 
-$$r(t)=e^{-t}(c_1 \cos t+c_2 \sin t)$$
+$$
+r(t)=e^{-t}(c_1 \cos t+c_2 \sin t)
+$$
 
 将 $r(0)=1$, $r'(0)=2$ 代入 $r(t)$、$r'(t)$，确定 $c_1$、$c_2$ 如下：
 
-$$\begin{cases} r(0)=c_1=1 \\ r'(0)=-c_1+c_2=2 \end{cases} \Rightarrow \begin{cases} c_1=1 \\ c_2=3 \end{cases}$$
+$$
+\begin{cases} r(0)=c_1=1 \\ r'(0)=-c_1+c_2=2 \end{cases} \Rightarrow \begin{cases} c_1=1 \\ c_2=3 \end{cases}
+$$
 
 所以系统的零输入响应为
 
-$$r_{zi}(t)=e^{-t}(\cos t+3\sin t), \quad t>0$$
+$$
+r_{zi}(t)=e^{-t}(\cos t+3\sin t), \quad t>0
+$$
 
 系统的自然频率为：$-1+j$, $-1-j$。
 
@@ -243,15 +289,21 @@ $$r_{zi}(t)=e^{-t}(\cos t+3\sin t), \quad t>0$$
 
 所以系统的零输入响应为
 
-$$r(t)=c_1 e^{-t}+c_2 t e^{-t}$$
+$$
+r(t)=c_1 e^{-t}+c_2 t e^{-t}
+$$
 
 将 $r(0)=1$, $r'(0)=2$ 代入 $r(t)$、$r'(t)$，确定 $c_1$、$c_2$ 如下：
 
-$$\begin{cases} r(0)=c_1=1 \\ r'(0)=-c_1+c_2=2 \end{cases} \Rightarrow \begin{cases} c_1=1 \\ c_2=3 \end{cases}$$
+$$
+\begin{cases} r(0)=c_1=1 \\ r'(0)=-c_1+c_2=2 \end{cases} \Rightarrow \begin{cases} c_1=1 \\ c_2=3 \end{cases}
+$$
 
 所以系统的零输入响应为
 
-$$r_{zi}(t)=e^{-t}(1+3t), \quad t>0$$
+$$
+r_{zi}(t)=e^{-t}(1+3t), \quad t>0
+$$
 
 系统为自然频率为 $-1$。
 
@@ -340,67 +392,99 @@ $$
 
 算子方程为
 
-$$(p+2)r(t)=e(t)\quad\Longrightarrow\quad (p+2)h(t)=\delta(t)$$
+$$
+(p+2)r(t)=e(t)\quad\Longrightarrow\quad (p+2)h(t)=\delta(t)
+$$
 
 所以
 
-$$h(t)=H(p)\delta(t)=\dfrac{1}{p+2}\delta(t)=\mathrm{e}^{-2t}\varepsilon(t)$$
+$$
+h(t)=H(p)\delta(t)=\dfrac{1}{p+2}\delta(t)=\mathrm{e}^{-2t}\varepsilon(t)
+$$
 
 (2)
 
 算子方程为
 
-$$(2p+8)r(t)=e(t)$$
+$$
+(2p+8)r(t)=e(t)
+$$
 
 所以
 
-$$H(p)=\dfrac{1}{2p+8}$$
+$$
+H(p)=\dfrac{1}{2p+8}
+$$
 
-$$h(t)=H(p)\delta(t)=\dfrac{1}{2p+8}\delta(t)=\dfrac{1}{2}\cdot\dfrac{1}{p+4}\delta(t)=\dfrac{1}{2}\mathrm{e}^{-4t}\varepsilon(t)$$
+$$
+h(t)=H(p)\delta(t)=\dfrac{1}{2p+8}\delta(t)=\dfrac{1}{2}\cdot\dfrac{1}{p+4}\delta(t)=\dfrac{1}{2}\mathrm{e}^{-4t}\varepsilon(t)
+$$
 
 (3)
 
 算子方程为
 
-$$(p^{3}+p^{2}+2p+2)r(t)=(p^{2}+2)e(t)$$
+$$
+(p^{3}+p^{2}+2p+2)r(t)=(p^{2}+2)e(t)
+$$
 
 所以
 
-$$H(p)=\dfrac{p^{2}+2}{p^{3}+p^{2}+2p+2}$$
+$$
+H(p)=\dfrac{p^{2}+2}{p^{3}+p^{2}+2p+2}
+$$
 
-$$h(t)=H(p)\delta(t)=\dfrac{p^{2}+2}{p^{3}+p^{2}+2p+2}\delta(t)=\dfrac{1}{p+1}\delta(t)=\mathrm{e}^{-t}\varepsilon(t)$$
+$$
+h(t)=H(p)\delta(t)=\dfrac{p^{2}+2}{p^{3}+p^{2}+2p+2}\delta(t)=\dfrac{1}{p+1}\delta(t)=\mathrm{e}^{-t}\varepsilon(t)
+$$
 
 (4)
 
 算子方程为
 
-$$(p+3)r(t)=2p e(t)$$
+$$
+(p+3)r(t)=2p e(t)
+$$
 
 所以
 
-$$H(p)=\dfrac{2p}{p+3}$$
+$$
+H(p)=\dfrac{2p}{p+3}
+$$
 
-$$h(t)=H(p)\delta(t)=\dfrac{2p}{p+3}\delta(t)=\left(2-\dfrac{6}{p+3}\right)\delta(t)=2\delta(t)-6\mathrm{e}^{-3t}\varepsilon(t)$$
+$$
+h(t)=H(p)\delta(t)=\dfrac{2p}{p+3}\delta(t)=\left(2-\dfrac{6}{p+3}\right)\delta(t)=2\delta(t)-6\mathrm{e}^{-3t}\varepsilon(t)
+$$
 
 (5)
 
 算子方程为
 
-$$(p^{2}+3p+2)r(t)=(p^{3}+4p^{2}-5)e(t)$$
+$$
+(p^{2}+3p+2)r(t)=(p^{3}+4p^{2}-5)e(t)
+$$
 
 所以
 
-$$H(p)=\dfrac{p^{3}+4p^{2}-5}{p^{2}+3p+2}$$
+$$
+H(p)=\dfrac{p^{3}+4p^{2}-5}{p^{2}+3p+2}
+$$
 
-$$h(t)=H(p)\delta(t)=\dfrac{p^{3}+4p^{2}-5}{p^{2}+3p+2}\delta(t)$$
+$$
+h(t)=H(p)\delta(t)=\dfrac{p^{3}+4p^{2}-5}{p^{2}+3p+2}\delta(t)
+$$
 
 对有理分式进行分解（分母 $p^{2}+3p+2=(p+1)(p+2)$）：
 
-$$\dfrac{p^{3}+4p^{2}-5}{p^{2}+3p+2}=p+1+\dfrac{-2}{p+1}+\dfrac{-3}{p+2}$$
+$$
+\dfrac{p^{3}+4p^{2}-5}{p^{2}+3p+2}=p+1+\dfrac{-2}{p+1}+\dfrac{-3}{p+2}
+$$
 
 于是
 
-$$h(t)=\left(p+1+\dfrac{-2}{p+1}+\dfrac{-3}{p+2}\right)\delta(t)=\delta'(t)+\delta(t)-\bigl(2\mathrm{e}^{-t}+3\mathrm{e}^{-2t}\bigr)\varepsilon(t)$$
+$$
+h(t)=\left(p+1+\dfrac{-2}{p+1}+\dfrac{-3}{p+2}\right)\delta(t)=\delta'(t)+\delta(t)-\bigl(2\mathrm{e}^{-t}+3\mathrm{e}^{-2t}\bigr)\varepsilon(t)
+$$
 
 ## 2.21
 
@@ -412,14 +496,16 @@ $$h(t)=\left(p+1+\dfrac{-2}{p+1}+\dfrac{-3}{p+2}\right)\delta(t)=\delta'(t)+\del
 
 由图(a)可得
 
-$$e(t) = \varepsilon(t) - 2\varepsilon(t-2) + \varepsilon(t-3)$$
+$$
+e(t) = \varepsilon(t) - 2\varepsilon(t-2) + \varepsilon(t-3)
+$$
 
 所以
 $$
 \begin{aligned}
-r_{zs} &= h(t) * e(t) = \frac{dr_\varepsilon(t)}{dt} * e(t) \\
-&= r_\varepsilon(t) * \frac{d}{dt}e(t) \\
-&= (2e^{-2t} - 1)\varepsilon(t) * \frac{d}{dt}\big[\varepsilon(t) - 2\varepsilon(t-2) + \varepsilon(t-3)\big] \\
+r_{zs} &= h(t) * e(t) = \frac{\mathrm{d}r_\varepsilon(t)}{\mathrm{d}t} * e(t) \\
+&= r_\varepsilon(t) * \frac{\mathrm{d}}{\mathrm{d}t}e(t) \\
+&= (2e^{-2t} - 1)\varepsilon(t) * \frac{\mathrm{d}}{\mathrm{d}t}\big[\varepsilon(t) - 2\varepsilon(t-2) + \varepsilon(t-3)\big] \\
 &= (2e^{-2t} - 1)\varepsilon(t) * \big[\delta(t) - 2\delta(t-2) + \delta(t-3)\big] \\
 &= (2e^{-2t} - 1)\varepsilon(t) - 2\big[2e^{-2(t-2)} - 1\big]\varepsilon(t-2) + \big[2e^{-2(t-3)} - 1\big]\varepsilon(t-3)
 \end{aligned}
@@ -428,10 +514,10 @@ $$
 (d)
 $$
 \begin{aligned}
-r_{zs} &= r_\varepsilon(t) * \frac{d}{dt}e(t) \\
-& = (2e^{-2t} - 1)\varepsilon(t) * \frac{d}{dt}\big\{t\big[\varepsilon(t)-\varepsilon(t-1)\big] - (t-1)\big[\varepsilon(t-1)-\varepsilon(t-2)\big]\big\} \\
+r_{zs} &= r_\varepsilon(t) * \frac{\mathrm{d}}{\mathrm{d}t}e(t) \\
+& = (2e^{-2t} - 1)\varepsilon(t) * \frac{\mathrm{d}}{\mathrm{d}t}\big\{t\big[\varepsilon(t)-\varepsilon(t-1)\big] - (t-1)\big[\varepsilon(t-1)-\varepsilon(t-2)\big]\big\} \\
 & = (2e^{-2t} - 1)\varepsilon(t) * \big[\varepsilon(t) - 2\varepsilon(t-1) + \varepsilon(t-2) - \delta(t-1) + \delta(t-2)\big] \\
-& = \left[\int_0^t (2e^{-2\tau} - 1)d\tau\right]\varepsilon(t) * \big[\delta(t) - 2\delta(t-1) + \delta(t-2)\big] - \big[2e^{-2(t-1)} - 1\big]\varepsilon(t-1)+ \big[2e^{-2(t-2)} - 1\big]\varepsilon(t-2) \\
+& = \left[\int_0^t (2e^{-2\tau} - 1)\mathrm{d}\tau\right]\varepsilon(t) * \big[\delta(t) - 2\delta(t-1) + \delta(t-2)\big] - \big[2e^{-2(t-1)} - 1\big]\varepsilon(t-1)+ \big[2e^{-2(t-2)} - 1\big]\varepsilon(t-2) \\
 & = \big[1-t-e^{-2t}\big]\varepsilon(t) - 2\big[1-t+1-e^{-2(t-1)}\big]\varepsilon(t-1) + \big[1-t+2-e^{-2(t-2)}\big]\varepsilon(t-2) - \big[2e^{-2(t-1)} - 1\big]\varepsilon(t-1) + \big[2e^{-2(t-2)} - 1\big]\varepsilon(t-2) \\
 & = (1-t-e^{-2t})\varepsilon(t) - (3-2t)\varepsilon(t-1) + \big[2-t+e^{-2(t-2)}\big]\varepsilon(t-2)
 \end{aligned}
@@ -456,21 +542,21 @@ $$
 又因为
 
 $$
-u_L(t) = L\dfrac{di_L(t)}{dt} = 0.3\dfrac{di_L(t)}{dt}
+u_L(t) = L\dfrac{\mathrm{d}i_L(t)}{\mathrm{d}t} = 0.3\dfrac{\mathrm{d}i_L(t)}{\mathrm{d}t}
 $$
 
 
 所以
 
 $$
-2 \times 0.3 \times \dfrac{di_L(t)}{dt} + 12i_L(t) = e(t)
+2 \times 0.3 \times \dfrac{\mathrm{d}i_L(t)}{\mathrm{d}t} + 12i_L(t) = e(t)
 $$
 
 
 化简得
 
 $$
-\dfrac{di_L(t)}{dt} + 20i_L(t) = \dfrac{5}{3}e(t)
+\dfrac{\mathrm{d}i_L(t)}{\mathrm{d}t} + 20i_L(t) = \dfrac{5}{3}e(t)
 $$
 
 
@@ -488,7 +574,7 @@ h_{i_L}(t) = \dfrac{5}{3}e^{-20t}\varepsilon(t)
 $$
 
 $$
-h_{u_L}(t) = L\dfrac{dh_{i_L}(t)}{dt} = \dfrac{1}{2}\left[-20e^{-20t}\varepsilon(t) + \delta(t)\right]= \dfrac{1}{2}\delta(t) - 10e^{-20t}\varepsilon(t)
+h_{u_L}(t) = L\dfrac{\mathrm{d}h_{i_L}(t)}{\mathrm{d}t} = \dfrac{1}{2}\left[-20e^{-20t}\varepsilon(t) + \delta(t)\right]= \dfrac{1}{2}\delta(t) - 10e^{-20t}\varepsilon(t)
 $$
 
 
@@ -513,7 +599,7 @@ $$
 所以
 $$
 \begin{aligned}
-u_L(t) &= \frac{E}{2T}(T-t)\big[\varepsilon(t) - \varepsilon(t-T)\big] - 10E\int_0^t e^{-20\tau}\varepsilon(\tau)d\tau * \left[\delta(t) - \frac{1}{T}\varepsilon(t) + \frac{1}{T}\varepsilon(t-T)\right] \\
+u_L(t) &= \frac{E}{2T}(T-t)\big[\varepsilon(t) - \varepsilon(t-T)\big] - 10E\int_0^t e^{-20\tau}\varepsilon(\tau)\mathrm{d}\tau * \left[\delta(t) - \frac{1}{T}\varepsilon(t) + \frac{1}{T}\varepsilon(t-T)\right] \\
 &= \frac{E}{2}e^{-20t}\varepsilon(t) - \frac{E}{40T}(1-e^{-20t})\varepsilon(t) + \frac{E}{40T}\left[1-e^{-20(t-T)}\right]\varepsilon(t-T)
 \end{aligned}
 $$
@@ -534,7 +620,7 @@ $$
 
 S 断开时，设 $t = 0$，由KVL得
 $$
--M\frac{di_1(t)}{dt} + L_2\frac{di_2(t)}{dt} + R_2 i_2(t) = 0
+-M\frac{\mathrm{d}i_1(t)}{\mathrm{d}t} + L_2\frac{\mathrm{d}i_2(t)}{\mathrm{d}t} + R_2 i_2(t) = 0
 $$
 因为
 
@@ -545,7 +631,7 @@ $$
 所以
 
 $$
-\frac{di_1(t)}{dt} = -3\delta(t)
+\frac{\mathrm{d}i_1(t)}{\mathrm{d}t} = -3\delta(t)
 $$
 
 可得
@@ -569,7 +655,7 @@ $$
 初级电压 $u_1(t)$ 为
 $$
 \begin{aligned}
-u_1(t) &= L_1\frac{di_1(t)}{dt} - M\frac{di_2(t)}{dt} \\
+u_1(t) &= L_1\frac{\mathrm{d}i_1(t)}{\mathrm{d}t} - M\frac{\mathrm{d}i_2(t)}{\mathrm{d}t} \\
 &= -3\delta(t) - \frac{1}{2}\left[\frac{3}{4}e^{-t}\varepsilon(t) - \frac{3}{4}\delta(t)\right] \\
 &= -\frac{21}{8}\delta(t) - \frac{3}{8}e^{-t}\varepsilon(t)
 \end{aligned}

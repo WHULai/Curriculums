@@ -343,20 +343,36 @@ $$
 按分子分母阶次分情况：
 
 1. $m<n,\ b_{0}=0$
-$$H(S)=\sum \frac{A_{i}}{S-\gamma_{i}}$$
-$$h(k)=\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)$$
+$$
+H(S)=\sum \frac{A_{i}}{S-\gamma_{i}}
+$$
+$$
+h(k)=\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)
+$$
 
 2. $m=n,\ b_{0} \neq 0$
 - 形式一：
-  $$H(S)=S\left[\sum \frac{A_{i}}{S-\gamma_{i}}\right]$$
-  $$h(k)=\sum A_{i} \gamma_{i}^{k} \varepsilon(k)$$
+  $$
+  H(S)=S\left[\sum \frac{A_{i}}{S-\gamma_{i}}\right]
+  $$
+  $$
+  h(k)=\sum A_{i} \gamma_{i}^{k} \varepsilon(k)
+  $$
 - 形式二：
-  $$H(S)=1+\sum \frac{A_{i}}{S-\gamma_{i}}$$
-  $$h(k)=\delta(k)+\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)$$
+  $$
+  H(S)=1+\sum \frac{A_{i}}{S-\gamma_{i}}
+  $$
+  $$
+  h(k)=\delta(k)+\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)
+  $$
 
 3. $m<n,\ b_{0} \neq 0$
-$$H(S)=\sum \frac{A_{i}}{S-\gamma_{i}}$$
-$$h(k)=\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)$$
+$$
+H(S)=\sum \frac{A_{i}}{S-\gamma_{i}}
+$$
+$$
+h(k)=\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)
+$$
 
 ## 卷积和
 
