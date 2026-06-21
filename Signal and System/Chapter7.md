@@ -252,7 +252,119 @@ $$
 
 一般无法得到解析解。
 
-# 例题
+### LTI离散时间系统模拟框图
+
+## LTI离散时间系统的零输入响应
+
+### 零输入响应
+
+零输入响应即激励 $e(k)=0$ 时，齐次差分方程的解。
+
+n阶齐次差分方程的一般形式：
+$$
+r(k+n)+a_{n-1} r(k+n-1)+\dots+a_{1} r(k+1)+a_{0} r(k)=0
+$$
+
+用移位算子 $S$ 可表示为：
+$$
+\left[S^{n}+a_{n-1} S^{n-1}+\dots+a_{1} S+a_{0}\right] r(k)=0
+$$
+
+令特征多项式 $D(S)=0$，n阶系统对应 $n$ 个初始条件 $r(0),r(1),\dots,r(n-1)$。求解特征方程得到特征根 $\gamma_1,\gamma_2,\dots$ 后，按根的类型构造解的形式：
+- 单根 $\gamma_i$ 对应的解分量：$r_i(k)=C_i \gamma_i^{k}$
+- $p$ 重根 $\gamma_i$ 对应的解分量：$r_i(k)=\left(b_{1}+b_{2} k+\dots+b_{p} k^{p-1}\right) \gamma_{i}^{k}$
+
+与连续系统对比：连续系统中单根对应解为 $r_i(t)=C_i e^{\lambda_i t}$，$p$ 重根对应解为 
+$$
+r_i(t)=\left(b_{1}+b_{2} t+\dots+b_{p} t^{p-1}\right) e^{\lambda_i t}
+$$
+
+### 一阶系统零输入响应
+
+一阶系统零输入响应可通过迭代法推导，一阶齐次差分方程为：
+$$
+r(k+1)+a_{0} r(k)=0
+$$
+
+特征多项式 $D(S)=S+a_{0}$，特征根 $\gamma=-a_0$。
+
+迭代过程如下：
+$$
+r(1)=-a_{0} r(0)
+$$
+$$
+r(2)=-a_{0} r(1)=\left(-a_{0}\right)^{2} r(0)
+$$
+$$
+r(3)=-a_{0} r(2)=\left(-a_{0}\right)^{3} r(0)
+$$
+……
+
+归纳得到通解形式：
+$$
+r(k)=C \gamma^{k}
+$$
+
+代入初始条件 $k=0$，得 $C=r(0)$，因此一阶系统零输入响应为：
+$$
+r(k)=\left(-a_{0}\right)^{k} r(0)
+$$
+
+## 单位函数响应
+
+系统对单位样值序列$\delta(k)$的零状态响应，称单位函数响应，表示为$h(k)$。
+
+令$e(k)=\delta(k)$，求解差分方程
+$$
+\left(S^{n}+a_{n-1} S^{n-1}+\dots+a_{1} S+a_{0}\right) h(k)=\left(b_mS^{m}+b_{m-1} S^{m-1}+\dots+b_{1}S+b_{0}\right) \delta(k)
+$$
+
+从转移算子求解，利用部分分式法及下表
+$$
+H(S)=\frac{N(S)}{D(S)}=\sum H_{i}(S) \Rightarrow h(k)=\sum h_{i}(k)
+$$
+
+转移算子对应的单位函数响应见表：
+
+| 转移算子 $H(S)$ | 单位函数响应 $h(k)$ |
+| :--- | :--- |
+| 1 | $\delta(k)$ |
+| $\dfrac{1}{S-\gamma}$ | $\gamma^{k-1} \varepsilon(k-1)$ |
+| $\dfrac{S}{S-\gamma}$ | $\gamma^k \varepsilon(k)$ |
+| $\dfrac{S}{(S-\gamma)^2}$ | $k\gamma^k \varepsilon(k)$ |
+| $\dfrac{S}{(S-\gamma)^p}$ | $\dfrac{k(k-1)\cdots(k-p+2)}{(p-1)!}\gamma^{k-p+1}\varepsilon(k)$ |
+
+### n阶系统单位函数响应一般形式
+系统转移算子通式：
+$$
+H(S)=\frac{b_{m} S^{m}+b_{m-1} S^{m-1}+\dots+b_{1} S+b_{0}}{S^{n}+a_{n-1} S^{n-1}+\dots+a_{1} S+a_{0}}
+$$
+
+按分子分母阶次分情况：
+
+1. $m<n,\ b_{0}=0$
+$$H(S)=\sum \frac{A_{i}}{S-\gamma_{i}}$$
+$$h(k)=\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)$$
+
+2. $m=n,\ b_{0} \neq 0$
+- 形式一：
+  $$H(S)=S\left[\sum \frac{A_{i}}{S-\gamma_{i}}\right]$$
+  $$h(k)=\sum A_{i} \gamma_{i}^{k} \varepsilon(k)$$
+- 形式二：
+  $$H(S)=1+\sum \frac{A_{i}}{S-\gamma_{i}}$$
+  $$h(k)=\delta(k)+\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)$$
+
+3. $m<n,\ b_{0} \neq 0$
+$$H(S)=\sum \frac{A_{i}}{S-\gamma_{i}}$$
+$$h(k)=\sum A_{i} \gamma_{i}^{k-1} \varepsilon(k-1)$$
+
+## 卷积和
+
+## LTI离散时间系统的零状态响应
+
+# 作业
+
+## 例题1
 
 > 已知一阶线性微分方程
 > $$
@@ -278,4 +390,198 @@ $$
 合并同类项后，得到标准一阶线性差分方程：
 $$
 r(k+1) + (aT - 1) r(k) = bT e(k)
+$$
+
+## 零输入响应练习1
+
+> 已知差分方程 $r(k+2)+4r(k+1)+4r(k)=0$，初始条件 $r(0)=2$，$r(1)=2$，求零输入响应。
+
+特征方程：
+
+$$
+D(S)=S^{2}+4S+4=(S+2)^{2}=0
+$$
+
+特征根 $\gamma_{1,2}=-2$
+
+零输入响应形式：
+
+$$
+y_{zi}(k)=\left(C_{1}+C_{2}k\right)(-2)^{k}\varepsilon(k)
+$$
+
+
+代入初始条件求解系数：
+
+$$
+\begin{cases}
+r(0)=C_{1}=2 \\
+r(1)=\left(C_{1}+C_{2}\right)(-2)=2
+\end{cases}
+\Rightarrow
+\begin{cases}
+C_{1}=2 \\
+C_{2}=-3
+\end{cases}
+$$
+
+
+最终零输入响应：
+
+$$
+y_{zi}(k)=(2-3k)(-2)^{k}\varepsilon(k)
+$$
+
+## 零输入响应练习2
+
+> 已知差分方程 $r(k+3)+6r(k+2)+12r(k+1)+8r(k)=0$，初始条件 $r(0)=1$，$r(1)=1$，$r(2)=0$，求零输入响应。
+
+特征方程：
+
+$$
+D(S)=S^{3}+6S^{2}+12S+8=(S+2)^{3}=0
+$$
+
+特征根 $\gamma_{1,2,3}=-2$
+
+零输入响应形式：
+
+$$
+y_{zi}(k)=\left(C_{1}+C_{2}k+C_{3}k^{2}\right)(-2)^{k}\varepsilon(k)
+$$
+
+
+代入初始条件：
+
+$$
+r(0)=C_{1}=1
+$$
+
+
+$$
+r(1)=\left(C_{1}+C_{2}+C_{3}\right)(-2)=1
+$$
+
+
+$$
+r(2)=\left(C_{1}+2C_{2}+4C_{3}\right)(-2)^{2}=0
+$$
+
+## 零输入响应练习3
+
+> 已知差分方程 $r(k+4)-2r(k+3)+2r(k+2)-2r(k+1)+r(k)=0$，初始条件 $r(1)=1$，$r(2)=0$，$r(3)=1$，$r(5)=1$，求零输入响应。
+
+特征方程：
+
+$$
+D(S)=S^{4}-2S^{3}+2S^{2}-2S+1=(S-1)^{2}\left(S^{2}+1\right)=0
+$$
+
+特征根 $\gamma_{1,2}=1$，$\gamma_{3,4}=\pm j$
+
+零输入响应复指数形式：
+
+$$
+y_{zi}(k)=\left(C_{1}+C_{2}k\right)1^{k}+C_{3}j^{k}+C_{4}(-j)^{k}
+$$
+
+
+或实函数形式：
+
+$$
+y_{zi}(k)=\left(C_{1}+C_{2}k\right)1^{k}+C_{3}\cos\frac{k\pi}{2}+C_{4}\sin\frac{k\pi}{2}
+$$
+
+
+最终零输入响应：
+
+$$
+y_{zi}(k)=1+\cos\frac{k\pi}{2}
+$$
+
+## 单位函数响应练习1
+> 一阶系统，差分方程：$h(k+1)-\gamma h(k)=\delta(k)$
+
+转移算子：
+$$
+H(S)=\frac{1}{S-\gamma}
+$$
+
+初始值递推计算：
+$$
+\begin{aligned}
+h(0)&=\delta(-1)+\gamma h(-1)=0 \\
+h(1)&=\delta(0)+\gamma h(0)=1=\gamma^{0} \\
+h(2)&=\delta(1)+\gamma h(1)=\gamma h(1)=\gamma \\
+\end{aligned}
+$$
+
+通用递推推导：
+$$
+\begin{aligned}
+h(k) & =\delta(k-1)+\gamma h(k-1) \\
+& =\gamma h(k-1) \\
+& =\gamma\left[\gamma h(k-2)\right] \\
+& =\gamma^{k-1} h(1)
+\end{aligned}
+$$
+
+最终单位函数响应：
+$$
+h(k)=\gamma^{k-1} \varepsilon(k-1)
+$$
+
+其中单位序列定义：
+$$\delta(k)=
+\begin{cases}
+1 & k=0 \\
+0 & k \neq 0
+\end{cases}$$
+
+## 单位函数响应练习2
+
+> 差分方程：$r(k+1)-\gamma r(k)=e(k+1)$
+
+转移算子拆分：
+$$
+H(S)=\frac{r(k)}{e(k)}=\frac{S}{S-\gamma}=1+\frac{\gamma}{S-\gamma}
+$$
+
+单位函数响应推导：
+$$
+\begin{aligned}
+h(k) & =\delta(k)+\gamma \cdot \gamma^{k-1} \varepsilon(k-1) \\
+& =\delta(k)+\gamma^{k}\left[\varepsilon(k)-\delta(k)\right]=\gamma^{k} \varepsilon(k)
+\end{aligned}
+$$
+
+结论：当系统转移算子满足 $m=n$ 且比值常数为1时，输出响应中包含一个输入激励的直通分量。
+
+## 单位函数响应练习3
+> 已知差分方程 $r(k+2)+2 r(k+1)-3 r(k)=e(k+1)+2 e(k)$，求单位函数响应
+
+对转移算子做部分分式展开：
+$$
+H(S)=\frac{S+2}{S^{2}+2 S-3}=\frac{3 / 4}{S-1}+\frac{1 / 4}{S+3}
+$$
+
+单位函数响应：
+$$
+h(k)=\frac{3}{4} \cdot 1^{k-1} \varepsilon(k-1)+\frac{1}{4}(-3)^{k-1} \varepsilon(k-1)
+$$
+
+## 单位函数响应练习4
+> 已知差分方程 $r(k+2)-2 \gamma r(k+1)+\gamma^{2} r(k)=e(k)$，求单位函数响应
+
+对转移算子做变形拆分：
+$$
+H(S)=\frac{1}{(S-\gamma)^{2}}=\left[\frac{S}{(S-\gamma)^{2}}-\frac{1}{S-\gamma}\right] \frac{1}{\gamma}
+$$
+
+单位函数响应推导：
+$$
+\begin{aligned}
+h(k) & =\left[k \gamma^{k-1} \varepsilon(k)-\gamma^{k-1} \varepsilon(k-1)\right] \gamma^{-1} \\
+& =(k-1) \gamma^{k-2} \varepsilon(k-1)
+\end{aligned}
 $$
