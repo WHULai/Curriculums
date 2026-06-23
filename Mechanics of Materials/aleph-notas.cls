@@ -99,7 +99,7 @@
     BoldFont = Source Han Sans SC Bold
 ]{Source Han Sans SC}
 \setmainfont[
-    Path = /usr/local/texlive/2025/texmf-dist/fonts/opentype/public/lm/,
+    Path = D:/texlive/2025/texmf-dist/fonts/opentype/public/lm/,
     BoldFont = lmroman10-bold.otf,
     ItalicFont = lmroman10-italic.otf,
     BoldItalicFont = lmroman10-bolditalic.otf
