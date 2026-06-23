@@ -378,6 +378,53 @@ $$
 
 ## LTI离散时间系统的零状态响应
 
+利用卷积和求系统零状态响应
+
+离散序列的冲激分解：
+$$
+e(k)=\sum_{j=0}^{k} e(j) \delta(k-j)=e(k) * \delta(k)
+$$
+
+离散系统零状态响应：
+$$
+r_{zs}(k)=\sum_{j=0}^{k} e(j) h(k-j)=e(k) * h(k)
+$$
+
+对比连续时间系统零状态响应：
+$$
+e(t)=\int_{0}^{t} e(\tau) \delta(t-\tau) \mathrm{d}\tau=e(t) * \delta(t)
+$$
+$$
+r_{zs}(t)=\int_{0}^{t} e(\tau) h(t-\tau) \mathrm{d}\tau=e(t) * h(t)
+$$
+
+### 离散时间系统全响应
+
+全响应分解为零输入响应与零状态响应之和：
+$$
+\begin{aligned}
+r(k) & =r_{zi}(k)+r_{zs}(k) \\
+& =\sum C_{i} \gamma_{i}^{k} \varepsilon(k)+e(k) * h(k)
+\end{aligned}
+$$
+
+对比连续时间系统全响应：
+$$
+\begin{aligned}
+r(t) & =r_{zi}(t)+r_{zs}(t) \\
+& =\sum C_{i} e^{\lambda_{i} t} \varepsilon(t)+e(t) * h(t)
+\end{aligned}
+$$
+
+离散与连续系统的对应关系：
+$$
+\begin{aligned}
+t&=k T_{S} \\
+e^{\lambda t} &\to \gamma^{k} \\
+e^{\lambda T_{S}} &\to \gamma
+\end{aligned}
+$$
+
 # 作业
 
 ## 例题1
@@ -601,3 +648,161 @@ h(k) & =\left[k \gamma^{k-1} \varepsilon(k)-\gamma^{k-1} \varepsilon(k-1)\right]
 & =(k-1) \gamma^{k-2} \varepsilon(k-1)
 \end{aligned}
 $$
+
+## 离散时间系统综合练习1
+> 已知系统差分方程：$r(k+2)-3 r(k+1)+2 r(k)=e(k+1)-3 e(k)$
+> 激励 $e(k)=\varepsilon(k)$，零输入初始条件 $r_{zi}(0)=1,\ r_{zi}(1)=0$，求系统全响应。
+
+**单位函数响应**
+系统转移算子及部分分式展开：
+$$
+H(S)=\frac{r(k)}{e(k)}=\frac{S-3}{S^{2}-3 S+2}=\frac{2}{S-1}+\frac{-1}{S-2}
+$$
+
+单位函数响应推导：
+$$
+\begin{aligned}
+h(k) & =\left[2(1)^{k-1}-(2)^{k-1}\right] \varepsilon(k-1) \\
+& =\left[2(1)^{k-1}-(2)^{k-1}\right][\varepsilon(k)-\delta(k)] \\
+& =\left[2-\frac{1}{2} 2^{k}\right] \varepsilon(k)-\frac{3}{2} \delta(k)
+\end{aligned}
+$$
+
+**零输入响应**
+零输入响应通式：
+$$r_{zi}(k)=\left[C_{1}(1)^{k}+C_{2}(2)^{k}\right] \varepsilon(k)$$
+
+代入初始条件求解系数：
+$$
+\left\{
+\begin{array}{c}
+r_{zi}(0)=C_{1}+C_{2}=1 \\
+r_{zi}(1)=C_{1}+2 C_{2}=0
+\end{array}
+\right.
+\Rightarrow
+\left\{
+\begin{array}{c}
+C_{1}=2 \\
+C_{2}=-1
+\end{array}
+\right.
+$$
+
+得零输入响应：
+$$
+r_{zi}(k)=\left[2-2^{k}\right] \varepsilon(k)
+$$
+
+**零状态响应**
+零状态响应由卷积和计算：$r_{zs}(k)=e(k) * h(k)$
+
+用到卷积公式：
+$$
+\gamma^{k} \varepsilon(k) * \varepsilon(k)=\frac{1-\gamma^{k+1}}{1-\gamma} \varepsilon(k)
+$$
+
+代入 $e(k)=\varepsilon(k)$ 与 $h(k)$ 计算：
+$$
+\begin{aligned}
+r_{zs}(k) & =\varepsilon(k) *\left[2-\frac{1}{2} 2^{k}\right] \varepsilon(k)-\varepsilon(k) * \frac{3}{2} \delta(k) \\
+& =\left[2 k+\frac{1}{2}\left(1-2^{k+1}\right)\right] \varepsilon(k)-\frac{3}{2} \varepsilon(k) \\
+& =\left[2 k-2^{k}-1\right] \varepsilon(k)
+\end{aligned}
+$$
+
+**全响应**
+全响应为零输入响应与零状态响应之和：
+$$
+\begin{aligned}
+r(k) & =r_{zi}(k)+r_{zs}(k) \\
+& =\left[2-2^{k}\right] \varepsilon(k)+\left[2 k-2^{k}-1\right] \varepsilon(k) \\
+& =\left[2 k-2^{k+1}+1\right] \varepsilon(k)
+\end{aligned}
+$$
+
+## 离散时间系统综合练习2
+
+> 已知系统差分方程：$r(k+2)+3 r(k+1)+2 r(k)=e(k+2)$
+> 激励 $e(k)=2^{k} \varepsilon(k)$，初始条件 $r(-1)=0$，$r(-2)=0.5$，求系统零输入响应、零状态响应、全响应。
+
+**零输入响应**
+零输入响应满足齐次差分方程：
+$$
+r_{zi}(k+2)+3 r_{zi}(k+1)+2 r_{zi}(k)=0
+$$
+
+初始条件分解：零输入响应继承系统初始条件，零状态响应在负时刻取值为0
+$$
+r_{zi}(-1)=r(-1)=0,\quad r_{zi}(-2)=r(-2)=0.5
+$$
+$$
+r_{zs}(-1)=0,\quad r_{zs}(-2)=0
+$$
+
+代入齐次方程递推$k \geq 0$的初始值：
+$$
+r_{zi}(0)+3 r_{zi}(-1)+2 r_{zi}(-2)=0 \Rightarrow r_{zi}(0)=-1
+$$
+$$
+r_{zi}(1)+3 r_{zi}(0)+2 r_{zi}(-1)=0 \Rightarrow r_{zi}(1)=3
+$$
+
+系统特征根为两个单根：$\gamma_{1}=-1,\ \gamma_{2}=-2$，零输入响应通式为
+$$
+r_{zi}(k)=\left[C_{1}(-1)^{k}+C_{2}(-2)^{k}\right] \varepsilon(k)
+$$
+
+代入初始值求解系数：
+$$
+\left\{
+\begin{array}{c}
+r_{zi}(0) = -1 \\
+r_{zi}(1) = 3
+\end{array}
+\right.
+\Rightarrow
+\left\{
+\begin{array}{c}
+C_{1}=1 \\
+C_{2}=-2
+\end{array}
+\right.
+$$
+
+最终零输入响应：
+$$
+r_{zi}(k)=\left[(-1)^{k}-2(-2)^{k}\right] \varepsilon(k)
+$$
+
+**零状态响应**
+
+系统转移算子及部分分式展开：
+$$
+H(S)=\frac{S^{2}}{S^{2}+3 S+2}=\frac{-S}{S+1}+\frac{2 S}{S+2}
+$$
+
+单位函数响应：
+$$
+h(k)=\left[-(-1)^{k}+2(-2)^{k}\right] \varepsilon(k)
+$$
+
+零状态响应由卷积和计算 $r_{zs}(k)=e(k) * h(k)$，代入激励与单位响应：
+$$
+\begin{aligned}
+r_{zs}(k) &=2^{k} \varepsilon(k) *\left[-(-1)^{k}+2(-2)^{k}\right] \varepsilon(k) \\
+&=-\frac{2^{k+1}-(-1)^{k+1}}{3} \varepsilon(k)+2 \cdot\frac{2^{k+1}-(-2)^{k+1}}{4} \varepsilon(k) \\
+&=\left[\frac{1}{3} 2^{k}-\frac{1}{3}(-1)^{k}+(-2)^{k}\right] \varepsilon(k)
+\end{aligned}
+$$
+对应零状态初始值：$\begin{cases} r_{zs}(0)=1 \\ r_{zs}(1)=-1 \end{cases}$
+
+**全响应**
+全响应为零输入响应与零状态响应之和：
+$$
+\begin{aligned}
+r(k) &=r_{zi}(k)+r_{zs}(k) \\
+&=\left[\frac{1}{3} 2^{k}+\frac{2}{3}(-1)^{k}-(-2)^{k}\right] \varepsilon(k)
+\end{aligned}
+$$
+对应全响应初始值：$\begin{cases} r(0)=0 \\ r(1)=2 \end{cases}$
