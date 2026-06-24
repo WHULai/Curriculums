@@ -1054,6 +1054,58 @@ $\sigma_{\max}=\tau,\ \sigma_{\min}=-\tau,\
     组合变形中先求危险点的应力状态，再代入相当应力公式。
 \end{advertencia}
 
+\begin{ejer}
+    图示单元体，已知 \(\sigma_{x}=-40\ \text{MPa}\)，\(\sigma_{y}=60\ \text{MPa}\)，\(\tau_{x}=-50\ \text{MPa}\)。试求 \(ef\) 截面上的应力情况及主应力和主平面的方位。
+    \figcrop[0.3\linewidth]{讲义17例题图1.jpg}{讲义17例题图1}
+\end{ejer}
+
+\begin{proof}[解]
+    \textbf{求ef截面上的应力}
+
+    截面方位角 \(\alpha=-30^\circ\)，代入斜截面应力公式计算。
+
+    正应力：
+    \[
+    \begin{aligned}
+    \sigma_{-30^\circ} & =\frac{\sigma_{x}+\sigma_{y}}{2}+\frac{\sigma_{x}-\sigma_{y}}{2}\cos2\alpha-\tau_{x}\sin2\alpha \\
+    & =\frac{-40+60}{2}+\frac{-40-60}{2}\cos\left(-60^\circ\right)-(-50)\sin\left(-60^\circ\right) \\
+    & =-58.3\ \text{MPa}
+    \end{aligned}
+    \]
+
+    切应力：
+    \[
+    \begin{aligned}
+    \tau_{-30^\circ} & =\frac{\sigma_{x}-\sigma_{y}}{2}\sin2\alpha+\tau_{x}\cos2\alpha \\
+    & =\frac{-40-60}{2}\sin\left(-60^\circ\right)+(-50)\cos\left(-60^\circ\right) \\
+    & =18.3\ \text{MPa}
+    \end{aligned}
+    \]
+
+    \textbf{求主应力的大小}
+
+    由平面应力状态主应力公式：
+    \[
+    \left\{\begin{array}{l}\sigma_{\text{max}} \\ \sigma_{\text{min}}\end{array} \right.
+    =\frac{\sigma_{x}+\sigma_{y}}{2}\pm\sqrt{\left(\frac{\sigma_{x}-\sigma_{y}}{2}\right)^{2}+\tau_{x}^{2}}
+    =
+    \left\{\begin{array}{l} 80.7\ \text{MPa} \\ -60.7\ \text{MPa} \end{array} \right.
+    \]
+    按代数值排序得主应力：
+    \(\sigma_{1}=80.7\ \text{MPa}\)，\(\sigma_{3}=-60.7\ \text{MPa}\)
+
+    \textbf{求主平面的方位}
+
+    主平面方位角满足：
+    \[
+    \tan2\alpha_{0}=\frac{-2\tau_{x}}{\sigma_{x}-\sigma_{y}}=-\frac{2\times(-50)}{-40-60}=-1
+    \]
+    解得 \(2\alpha_{0}=-45^\circ\)，即 \(\alpha_{0}=-22.5^\circ\)。
+
+    因 \(\sigma_{x}<\sigma_{y}\)，故 \(\alpha_{0}=-22.5^\circ\) 为 \(\sigma_{x}\) 与 \(\sigma_{3}\) 之间的夹角。
+    \figcrop[0.3\linewidth]{讲义17例答图1.jpg}{讲义17例答图1}
+\end{proof}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{组合变形及连接部分的计算}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

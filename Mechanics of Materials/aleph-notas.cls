@@ -99,11 +99,11 @@
     BoldFont = Source Han Sans SC Bold
 ]{Source Han Sans SC}
 \setmainfont[
-    Path = D:/texlive/2025/texmf-dist/fonts/opentype/public/lm/,
-    BoldFont = lmroman10-bold.otf,
-    ItalicFont = lmroman10-italic.otf,
-    BoldItalicFont = lmroman10-bolditalic.otf
-]{lmroman10-regular.otf}
+    Extension = .otf,
+    BoldFont = lmroman10-bold,
+    ItalicFont = lmroman10-italic,
+    BoldItalicFont = lmroman10-bolditalic
+]{lmroman10-regular}
 \setsansfont{Fira Sans}
 \setmathfont{latinmodern-math.otf}
 \renewcommand{\labelitemi}{$\bullet$}
