@@ -118,8 +118,9 @@
 %% --- Colores predeterminados
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Los siguientes son los colores predefinidos de la clase.
-\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
-\definecolor{colortext}{cmyk}{0.81,0.62,0.00,0.22}
+\definecolor{colordef}{cmyk}{0.89,0.19,0.72,0.60}
+% \definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+\definecolor{colortext}{cmyk}{0.89,0.19,0.72,0.60}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% --- Espaciado
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
