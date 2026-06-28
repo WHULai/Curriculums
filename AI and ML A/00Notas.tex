@@ -1,0 +1,1411 @@
+% \documentclass[compacto,10pt]{aleph-notas}
+\documentclass[a4,10pt,comentarios]{aleph-notas}
+
+% -- 额外宏包
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{aleph-comandos}
+\usetikzlibrary{arrows.meta,calc,decorations.pathmorphing,patterns}
+
+% -- 文档信息
+\institucion{武汉大学}
+\carrera{机器人工程}
+\asignatura{材料力学}
+\tema{期末复习笔记}
+\autor{Lai Wei}
+\fecha{\today}
+
+%% --> 校徽
+\logouno[5cm]{Logos/whulogo.png}
+\definecolor{colordef}{cmyk}{0.89,0.19,0.72,0.60}
+% \definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+\definecolor{noteblue}{RGB}{17,87,64}
+% \definecolor{noteblue}{RGB}{25,70,140}
+\definecolor{notered}{RGB}{175,35,35}
+\definecolor{softgreen}{RGB}{235,248,237}
+\definecolor{softyellow}{RGB}{255,249,210}
+
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\figcrop}[3][0.70\linewidth]{%
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#1]{figures/crops/#2}
+        \caption{#3}
+    \end{figure}
+}
+
+\setlist[itemize]{itemsep=1mm,topsep=1mm}
+\setlist[enumerate]{itemsep=1mm,topsep=1mm}
+
+\setlength{\footskip}{46.27646pt}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\includegraphics[width=1.5cm]{qr_code.png}}
+
+\begin{document}
+
+\encabezado
+
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{绪论及基本概念}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{defi}[材料力学的任务]
+    材料力学研究可变形固体构件在外力作用下的内力、应力、变形和失效规律。
+    工程设计的基本要求是：构件既要\textbf{安全}，又要\textbf{经济}；安全性主要体现为强度、刚度和稳定性。
+\end{defi}
+
+\subsection{基本假设}
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{连续性：}忽略材料微观孔隙，把位移、应变、应力看作连续场。
+    \item \textbf{均匀性：}材料各处的力学性质相同。
+    \item \textbf{各向同性：}材料在各方向具有相同弹性性质。
+    \item \textbf{小变形：}变形远小于构件原尺寸，列平衡方程时可采用变形前几何。
+\end{enumerate}
+
+\subsection{杆件的基本变形}
+
+杆件是长度远大于横向尺寸的构件。基本变形可归纳为拉压、剪切、扭转和弯曲；复杂构件常可分解为这些基本变形的组合。
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=.9]
+        \foreach \x/\name in {0/拉压,3/剪切,6/扭转,9/弯曲}{
+            \draw[very thick] (\x,0) rectangle ++(1.8,.35);
+            \node[below] at (\x+.9,-.15) {\name};
+        }
+        \draw[->,thick,notered] (-.55,.175)--(0,.175);
+        \draw[->,thick,notered] (2.35,.175)--(1.8,.175);
+        \draw[->,thick,notered] (3.2,.85)--(4.65,.85);
+        \draw[->,thick,notered] (3.0,-.35)--(4.45,-.35);
+        \draw[->,thick,notered] (5.75,.15) arc[start angle=190,end angle=70,radius=.55];
+        \draw[->,thick,notered] (8.05,.25) arc[start angle=10,end angle=-110,radius=.55];
+        \draw[thick,notered] (9.05,.7) .. controls (9.45,1.05) and (10.35,1.05) .. (10.75,.7);
+        \draw[->,thick,notered] (9.35,.9)--(9.35,.4);
+        \draw[->,thick,notered] (10.45,.9)--(10.45,.4);
+    \end{tikzpicture}
+    \caption{杆件的四类基本变形}
+\end{figure}
+
+\begin{advertencia}
+    解题主线是
+    \[
+        \text{外力}\to\text{内力}\to\text{应力与变形}\to\text{强度、刚度或稳定性条件}.
+    \]
+\end{advertencia}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{轴向拉伸和压缩}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{截面法与轴力}
+
+截面法的步骤是“一截、二取、三平衡”。对杆件作假想截面，取一侧为脱离体，由轴向平衡求截面内力 $F_N$。常用约定是：轴力以拉为正。
+
+\[
+    F_N=\sum F_{\text{左}}
+    \qquad\text{或}\qquad
+    F_N=\sum F_{\text{右}}.
+\]
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=.95]
+        \draw[very thick] (0,0) rectangle (6,.5);
+        \draw[dashed,thick] (3.3,-.35)--(3.3,.85) node[above] {$m$};
+        \draw[->,thick] (-.75,.25)--(0,.25) node[midway,above] {$F_1$};
+        \draw[->,thick] (2.0,.9)--(2.65,.9) node[midway,above] {$F_2$};
+        \draw[->,thick] (6.75,.25)--(6,.25) node[midway,above] {$F_3$};
+        \draw[->,very thick,notered] (3.3,.25)--(4.25,.25) node[midway,below] {$F_N$};
+        \node[below] at (3,-.55) {取左段脱离体：$-F_1+F_2+F_N=0$};
+    \end{tikzpicture}
+    \caption{轴向杆截面法示意}
+\end{figure}
+
+\(F\)取离开截面为正，指向截面为负。
+
+\subsection{应力、应变与胡克定律}
+
+轴向拉压杆横截面上的平均正应力为
+\[
+    \sigma=\frac{F_N}{A},
+    \qquad
+    \varepsilon=\frac{\Delta l}{l}.
+\]
+在线弹性范围内，
+\[
+    \sigma=E\varepsilon,
+    \qquad
+    \Delta l=\frac{F_Nl}{EA}.
+\]
+其中 $E$ 为弹性模量，$EA$ 为抗拉压刚度。泊松比定义为
+\[
+    \nu=-\frac{\varepsilon_{\text{横}}}{\varepsilon_{\text{纵}}}.
+\]
+
+\begin{teo}[拉压强度条件]
+    危险截面最大正应力应满足
+    \[
+        \sigma_{\max}=\frac{F_{N,\max}}{A}\leq[\sigma].
+    \]
+    因而三类常见计算为
+    \[
+        \text{校核：}\frac{F_{N,\max}}{A}\leq[\sigma],
+        \qquad
+        \text{设计：}A\geq\frac{F_{N,\max}}{[\sigma]},
+        \qquad
+        \text{荷载：}F_{N,\max}\leq A[\sigma].
+    \]
+\end{teo}
+
+\subsection{低碳钢拉伸曲线与塑性指标}
+
+低碳钢拉伸的应力--应变曲线可分为比例阶段、屈服阶段、强化阶段和颈缩断裂阶段。
+比例极限 $\sigma_p$、弹性极限 $\sigma_e$、屈服极限 $\sigma_s$ 和强度极限 $\sigma_b$ 是常用强度特征值。
+
+\figcrop[0.6\linewidth]{strain_curve.png}{低碳钢拉伸应力--应变曲线示意}
+
+塑性可用断后伸长率和断面收缩率衡量：
+\[
+    \delta=\frac{l'-l}{l}\times100\%
+    =\frac{\Delta l}{l}\times100\%,
+    \qquad
+    \psi=\frac{A-A'}{A}\times100\%.
+\]
+一般 $\delta\geq5\%$ 为塑性材料，$\delta<5\%$ 为脆性材料。Q235 钢常有
+$\delta=20\%\sim30\%$、$\psi\approx60\%$；铸铁的 $\delta$ 约为 $0.4\%$。
+
+\figcrop[0.28\linewidth]{necking_specimen.png}{低碳钢拉伸断口附近的颈缩形貌}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{扭转}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{外力偶矩、扭矩与剪切胡克定律}
+
+传动轴由功率 $P$ 和转速 $n$ 确定外力偶矩：
+\[
+    M_e=9.55\frac{P}{n}\quad(\mathrm{kN\cdot m}),
+    \qquad
+    P:\mathrm{kW},\quad n:\mathrm{r/min}.
+\]
+扭矩 $T$ 的方向由右手螺旋定则判定，通常取拇指离开截面为正。截面法求扭矩：
+\[
+    T=\sum M_{e,\text{左}}
+    \qquad\text{或}\qquad
+    T=\sum M_{e,\text{右}}.
+\]
+在线弹性剪切范围内，
+\begin{teo}[剪切虎克定律]
+    \[
+        \tau=G\gamma
+    \]
+\end{teo}
+其中 $G$ 为剪切模量。
+
+
+\begin{teo}[剪应力互等定理]
+    \[
+        \tau=\tau^\prime
+    \]
+\end{teo}
+
+\subsection{圆轴扭转切应力}
+
+圆轴受扭时，切应力沿半径线性分布：
+\[
+    \tau_\rho=\frac{T\rho}{I_p},
+    \qquad
+    \tau_{\max}=\frac{T}{W_p},
+    \qquad
+    W_p=\frac{I_p}{\rho_{\max}}.
+\]
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=1]
+        \draw[fill=softgreen,thick] (0,0) circle (1.25);
+        \draw[->] (0,0)--(1.0,.55) node[midway,above] {$\rho$};
+        \draw[->,very thick,notered] (1.0,.55)--(1.35,1.2) node[right] {$\tau_\rho$};
+        \draw[->,very thick,notered] (1.25,0)--(1.25,.95) node[right] {$\tau_{\max}$};
+        \draw[->] (-1.6,0)--(1.7,0) node[right] {$z$};
+        \draw[->] (0,-1.6)--(0,1.7) node[above] {$y$};
+        \node at (-.18,-.18) {$O$};
+        \begin{scope}[xshift=4.4cm]
+            \draw[->] (0,0)--(3,0) node[right] {$\rho$};
+            \draw[->] (0,0)--(0,2.3) node[above] {$\tau$};
+            \draw[very thick,notered] (0,0)--(2.4,1.8);
+            \draw[dashed] (2.4,0)--(2.4,1.8)--(0,1.8);
+            \node[below] at (2.4,0) {$R$};
+            \node[left] at (0,1.8) {$\tau_{\max}$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{圆轴扭转切应力线性分布}
+\end{figure}
+
+常用圆截面公式：
+\[
+    \begin{aligned}
+    &\text{实心圆：}&&I_p=\frac{\pi d^4}{32},\qquad W_p=\frac{\pi d^3}{16},\\
+    &\text{空心圆：}&&I_p=\frac{\pi D^4}{32}(1-\alpha^4),\qquad
+      W_p=\frac{\pi D^3}{16}(1-\alpha^4),\quad \alpha=\frac{d}{D}.
+    \end{aligned}
+\]
+
+\subsection{扭转变形、强度与刚度}
+
+两横截面的相对角位移称为扭转角 $\varphi$。单位长度扭转角满足
+\[
+    \frac{\dd\varphi}{\dd x}=\frac{T}{GI_p}.
+\]
+若计算段内 $T,G,I_p$ 为常量，
+\[
+    \varphi=\frac{Tl}{GI_p};
+    \qquad
+    \text{分段常量时}\quad
+    \varphi=\sum_i\frac{T_il_i}{G_iI_{p,i}}.
+\]
+
+\begin{teo}[扭转胡克定律]
+    当两横截面之间扭矩$T$及材料的剪切模量$G$为常量时有：
+    \[
+        \varphi=\frac{Tl}{GI_p}
+    \]
+\end{teo}
+
+\figcrop[0.58\linewidth]{torsion_deformation.png}{圆轴扭转角与杆长关系的局部示意}
+
+扭转强度条件：
+\[
+    \tau_{\max}=\frac{T_{\max}}{W_p}\leq[\tau].
+\]
+
+\begin{advertencia}
+    强度计算三方面：
+    \begin{enumerate}
+        \item 强度校核：$$\tau_{max}=\dfrac{T_{max}}{W_p} \leq \left[\tau\right]$$
+        \item 截面设计：$$W_p \geq \dfrac{T_{max}}{\left[\tau\right]}$$
+        \item 确定荷载：$$T_{max}\leq \left[\tau\right]W_p$$
+    \end{enumerate}
+\end{advertencia}
+
+扭转刚度条件：
+\[
+    \varphi'_{\max}=\frac{T_{\max}}{GI_p}\leq[\varphi']\quad(\mathrm{rad/m}),
+    \qquad
+    \frac{T_{\max}}{GI_p}\frac{180}{\pi}\leq[\varphi']\quad({}^\circ/\mathrm{m}).
+\]
+
+\begin{ejer}
+    图示阶梯状圆轴，AB段直径 \(d_1=120\ \text{mm}\)，BC段直径 \(d_2=100\ \text{mm}\)。扭转力偶矩 \(M_{eA}=22\ \text{kN·m}\)，\(M_{eB}=36\ \text{kN·m}\)，\(M_{eC}=14\ \text{kN·m}\)，材料的许用剪应力 \([\tau]=80\ \text{MPa}\)。试校核该轴的强度。
+    \figcrop[0.6\linewidth]{习题课题图1.png}{习题课题图1}
+\end{ejer}
+
+\begin{proof}[解]
+    \textbf{绘扭矩图}
+    $$
+        \begin{tikzpicture}[scale=0.3]
+            % 上方矩形（标注 22，带 + 号）
+            \draw[line width=1.0pt] (0,0) rectangle (6, 4.4);
+            \foreach \x in {0.4, 0.8, ..., 6} {
+                \draw[line width=0.5pt] (\x, 0) -- (\x, 4.4);
+            }
+            \draw[line width=1.0pt] (2.4, 2.2) circle (0.35);
+            \draw[line width=1.0pt] 
+                (1.99, 2.2) -- (2.81, 2.2)
+                (2.4, 1.79) -- (2.4, 2.61);
+            \node[above, font=\normalsize] at (3, 4.4) {22};
+            % 下方矩形（标注 14，带 - 号）
+            \draw[line width=1.0pt] (6, 0) rectangle (12, -2.8);
+            \foreach \x in {6.4, 6.8, ..., 12} {
+                \draw[line width=0.5pt] (\x, 0) -- (\x, -2.8);
+            }
+            \draw[line width=1.0pt] (9.6, -1.4) circle (0.35);
+            \draw[line width=1.0pt] 
+                (9.19, -1.4) -- (10.01, -1.4);
+            \node[below, font=\normalsize] at (9, -2.8) {14};
+        \end{tikzpicture}
+    $$
+
+    \textbf{求每段轴的横截面上的最大剪应力}
+
+    AB段内
+    \[
+    \tau_{1,\text{max}}=\frac{T_1}{W_{p1}}=\frac{22\times10^3\ \text{N·m}}{\frac{\pi}{16}\left(120\times10^{-3}\ \text{m}\right)^3}=64.8\times10^6\ \text{Pa}=64.8\ \text{MPa}
+    \]
+    BC段内
+    \[
+    \tau_{2,\text{max}}=\frac{T_2}{W_{p2}}=\frac{14\times10^3\ \text{N·m}}{\frac{\pi}{16}\left(100\times10^{-3}\ \text{m}\right)^3}=71.3\times10^6\ \text{Pa}=71.3\ \text{MPa}
+    \]
+    
+    \textbf{校核强度}
+
+    \(\tau_{2,\text{max}}>\tau_{1,\text{max}}\)，但 \(\tau_{2,\text{max}}<[\tau]=80\ \text{MPa}\)，故该轴满足强度条件。
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{弯曲应力}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{预备：截面的几何性质}
+
+弯曲应力公式中的 $I_z,W_z$ 来自截面几何性质。复合截面计算的基本套路是：
+先把截面分解为若干简单图形，再计算面积、形心、惯性矩和惯性积，最后平移到形心轴或转到主轴。
+
+\begin{defi}[面积矩、形心与惯性矩]
+    对平面图形 $A$，取互相垂直的 $y,z$ 轴，则
+    \[
+        S_y=\int_A z\,\dd A,\qquad
+        S_z=\int_A y\,\dd A,\qquad
+        \bar y=\frac{S_z}{A},\qquad
+        \bar z=\frac{S_y}{A}.
+    \]
+    惯性矩和惯性积定义为
+    \[
+        I_y=\int_A z^2\,\dd A,\qquad
+        I_z=\int_A y^2\,\dd A,\qquad
+        I_{yz}=\int_A yz\,\dd A.
+    \]
+\end{defi}
+
+组合图形对某轴的面积矩和惯性矩等于各组成部分的代数和；挖孔按负面积处理。
+\[
+    A=\sum_i A_i,\qquad
+    S_y=\sum_i A_i z_i,\qquad
+    S_z=\sum_i A_i y_i.
+\]
+
+\begin{center}
+\begin{tblr}{
+    colspec={Q[c,0.20\linewidth]Q[c,0.38\linewidth]Q[c,0.32\linewidth]},
+    hlines,vlines,
+    row{1}={font=\bfseries}
+}
+截面 & 惯性矩 & 相关量\\
+矩形 $b\times h$ &
+$I_z=\dfrac{bh^3}{12},\quad I_y=\dfrac{hb^3}{12}$ &
+$W_z=\dfrac{I_z}{h/2}=\dfrac{bh^2}{6}$\\
+实心圆 $d$ &
+$I_y=I_z=\dfrac{\pi d^4}{64}$ &
+$i_y=i_z=\sqrt{I/A}=\dfrac{d}{4}$\\
+空心圆 $D,d$ &
+$I_y=I_z=\dfrac{\pi D^4}{64}(1-\alpha^4)$ &
+$\alpha=\dfrac{d}{D}$\\
+\end{tblr}
+\end{center}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=.95]
+        \draw[fill=softgreen,thick] (-2.7,-.7) rectangle (-.7,.7);
+        \draw[->] (-2.95,0)--(-.35,0) node[right] {$z$};
+        \draw[->] (-1.7,-1.05)--(-1.7,1.08) node[above] {$y$};
+        \draw[<->] (-2.7,-.95)--(-.7,-.95) node[midway,below] {$b$};
+        \draw[<->] (-2.95,-.7)--(-2.95,.7) node[midway,left] {$h$};
+        \node[below] at (-1.7,-1.3) {矩形};
+        \draw[fill=softgreen,thick] (1.0,0) circle (.8);
+        \draw[->] (.0,0)--(2.05,0) node[right] {$z$};
+        \draw[->] (1.0,-1.05)--(1.0,1.08) node[above] {$y$};
+        \draw[<->] (.2,-.95)--(1.8,-.95) node[midway,below] {$d$};
+        \node[below] at (1,-1.3) {实心圆};
+        \draw[fill=softgreen,thick] (4,0) circle (.9);
+        \draw[fill=white,thick] (4,0) circle (.45);
+        \draw[->] (2.9,0)--(5.15,0) node[right] {$z$};
+        \draw[->] (4,-1.1)--(4,1.15) node[above] {$y$};
+        \draw[<->] (3.1,-1.05)--(4.9,-1.05) node[midway,below] {$D$};
+        \draw[<->] (3.55,.62)--(4.45,.62) node[midway,above] {$d$};
+        \node[below] at (4,-1.35) {空心圆};
+    \end{tikzpicture}
+    \caption{常用截面的形心轴与尺寸}
+\end{figure}
+
+惯性半径用于压杆稳定等问题：
+\[
+    i_y=\sqrt{\frac{I_y}{A}},\qquad
+    i_z=\sqrt{\frac{I_z}{A}}.
+\]
+
+\subsection{平行移轴、转轴与主惯性矩}
+
+若 $y_c,z_c$ 为形心轴，且形心 $C$ 在新坐标系中的坐标为 $(a,b)$，则平行移轴公式为
+\[
+    I_y=I_{y_c}+a^2A,\qquad
+    I_z=I_{z_c}+b^2A,\qquad
+    I_{yz}=I_{y_cz_c}+abA.
+\]
+在一组平行轴中，截面对形心轴的惯性矩最小；惯性积公式中的 $a,b$ 必须带符号。
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=.9]
+        \draw[fill=softgreen,thick,rotate=8] (0,0) ellipse (1.25 and .75);
+        \coordinate (C) at (.15,.15);
+        \fill (C) circle (1.5pt) node[above right] {$C$};
+        \draw[->] (-2,0)--(2,0) node[right] {$y$};
+        \draw[->] (0,-1.45)--(0,1.55) node[above] {$z$};
+        \draw[->,noteblue] ($(C)+(-1.55,0)$)--($(C)+(1.65,0)$) node[right] {$y_c$};
+        \draw[->,noteblue] ($(C)+(0,-1.15)$)--($(C)+(0,1.25)$) node[above] {$z_c$};
+        \draw[dashed] (C)--(.15,0) node[midway,right] {$b$};
+        \draw[dashed] (C)--(0,.15) node[midway,above] {$a$};
+        \node[below] at (0,-1.75) {平行轴与形心轴};
+    \end{tikzpicture}
+    \caption{平行移轴中 $a,b$ 为形心坐标}
+\end{figure}
+
+若同一点处坐标轴旋转角为 $\alpha$，则有转轴公式
+\[
+    I_{y_1}
+    =\frac{I_y+I_z}{2}
+    +\frac{I_y-I_z}{2}\cos2\alpha
+    -I_{yz}\sin2\alpha,
+\]
+\[
+    I_{z_1}
+    =\frac{I_y+I_z}{2}
+    -\frac{I_y-I_z}{2}\cos2\alpha
+    +I_{yz}\sin2\alpha,
+\]
+\[
+    I_{y_1z_1}
+    =\frac{I_y-I_z}{2}\sin2\alpha
+    +I_{yz}\cos2\alpha.
+\]
+特别地，
+\[
+    I_{y_1}+I_{z_1}=I_y+I_z=I_p.
+\]
+形心主轴满足 $I_{y_1z_1}=0$，故
+\[
+    \tan2\alpha_0=-\frac{2I_{yz}}{I_y-I_z},
+\]
+形心主惯性矩为
+\[
+    I_{\max,\min}
+    =\frac{I_y+I_z}{2}
+    \pm
+    \sqrt{\left(\frac{I_y-I_z}{2}\right)^2+I_{yz}^2}.
+\]
+
+\begin{advertencia}
+    截面有对称轴时，对称轴及其垂直轴就是形心主轴，惯性积为零。
+    无对称轴组合截面通常要先求形心，再用平行移轴求 $I_{y_c},I_{z_c},I_{y_cz_c}$，最后用转轴公式求主轴和主惯性矩。
+\end{advertencia}
+
+求组合截面形心主惯性矩可按以下顺序整理：
+\begin{enumerate}[label=\arabic*.]
+    \item 建立便于分解的参考坐标系，列出各组成部分面积 $A_i$ 和形心坐标。
+    \item 由 $S_y,S_z$ 求整体形心 $C(\bar y,\bar z)$。
+    \item 建立形心坐标系，利用平行移轴公式求 $I_{y_c},I_{z_c},I_{y_cz_c}$。
+    \item 用 $\tan2\alpha_0$ 求形心主轴方向。
+    \item 代入 $I_{\max,\min}$ 公式求形心主惯性矩。
+\end{enumerate}
+
+\subsection{梁的内力与图形关系}
+
+横力弯曲梁截面内力包括剪力 $F_S$ 和弯矩 $M$。讲义采用的符号约定为：
+剪力左上右下为正，弯矩左顺右逆为正。截面法可写为
+\[
+    F_S=\sum F_{\text{左}}\quad\text{或}\quad \sum F_{\text{右}},
+    \qquad
+    M=\sum M_{\text{左}}\quad\text{或}\quad \sum M_{\text{右}}.
+\]
+
+若分布荷载为 $q(x)$，则
+\[
+    \frac{\dd F_S(x)}{\dd x}=q(x),
+    \qquad
+    \frac{\dd M(x)}{\dd x}=F_S(x),
+    \qquad
+    \frac{\dd^2M(x)}{\dd x^2}=q(x).
+\]
+积分关系为
+\[
+    F_S(b)=F_S(a)+\int_a^b q(x)\,\dd x,
+    \qquad
+    M(b)=M(a)+\int_a^b F_S(x)\,\dd x.
+\]
+
+\figcrop[0.88\linewidth]{load_shear_moment_features.png}{荷载、剪力图和弯矩图特征的局部整理图}
+
+图形规则可快速用于画内力图：
+\begin{itemize}
+    \item 无外力段：$F_S$ 为水平线，$M$ 为斜直线。
+    \item 均布荷载段：$F_S$ 为斜直线，$M$ 为二次曲线；$q>0$ 时剪力增、$q<0$ 时剪力减。
+    \item 集中力：$F_S$ 突变，突变量等于集中力；$M$ 连续但有折角。
+    \item 集中力偶：$F_S$ 不变，$M$ 突变，突变量等于力偶矩。
+\end{itemize}
+
+\subsection{弯曲正应力}
+
+平面弯曲时，梁横截面正应力沿高度线性分布：
+\[
+    \sigma=\frac{My}{I_z}.
+\]
+其中 $y$ 为计算点到中性轴的距离，$I_z$ 为截面对中性轴 $z$ 的惯性矩。
+
+\figcrop[0.28\linewidth]{stress_distribution.png}{弯曲正应力分布}
+
+若中性轴为对称轴，则
+\[
+    \sigma_{\max}=\frac{M y_{\max}}{I_z}
+    =\frac{M}{W_z},
+    \qquad
+    W_z=\frac{I_z}{y_{\max}}.
+\]
+强度条件为
+\[
+    \frac{|M|_{\max}}{W_z}\leq[\sigma].
+\]
+
+若中性轴不是对称轴，截面上受拉区和受压区到中性轴的最远距离不同，应分别计算
+\[
+    \sigma_{t,\max}=\frac{M y_{t,\max}}{I_z},
+    \qquad
+    \sigma_{c,\max}=\frac{M y_{c,\max}}{I_z}.
+\]
+对铸铁等脆性材料，通常 $[\sigma_t]\ne[\sigma_c]$，需分别校核
+\[
+    \sigma_{t,\max}\leq[\sigma_t],
+    \qquad
+    \sigma_{c,\max}\leq[\sigma_c].
+\]
+
+\subsection{弯曲切应力}
+
+横力弯曲切应力公式为
+\[
+    \tau=\frac{F_S S_z^*}{I_z b}.
+\]
+其中 $S_z^*$ 是计算点所在水平线一侧截面面积 $A^*$ 对中性轴 $z$ 的面积矩；
+$b$ 是该处截面宽度。箱形截面中若两块腹板共同受剪，有效宽度常取 $b=2\delta$。
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=.95]
+        \draw[fill=softgreen,thick] (-.55,-1.55) rectangle (.55,1.55);
+        \draw[->] (-1.15,0)--(1.25,0) node[right] {$z$};
+        \draw[->] (0,-1.85)--(0,1.9) node[above] {$y$};
+        \draw[domain=-1.55:1.55,smooth,variable=\y,very thick,notered]
+            plot ({2.0-0.55*(\y*\y)/2.40}, {\y});
+        \draw[thick] (1.45,-1.55)--(1.45,1.55);
+        \draw[dashed] (1.45,0)--(2.0,0);
+        \node[right] at (2,0) {$\tau_{\max}$};
+        \node[below] at (.25,-1.95) {矩形：抛物线分布};
+        \begin{scope}[xshift=5.2cm]
+            \draw[fill=softgreen,thick] (-.9,1.1) rectangle (.9,1.45);
+            \draw[fill=softgreen,thick] (-.9,-1.45) rectangle (.9,-1.1);
+            \draw[fill=softgreen,thick] (-.18,-1.1) rectangle (.18,1.1);
+            \draw[->] (-1.2,0)--(1.25,0) node[right] {$z$};
+            \draw[very thick,notered] (1.55,-1.15)--(1.85,0)--(1.55,1.15);
+            \draw[thick] (1.45,-1.15)--(1.45,1.15);
+            \node[right] at (1.85,0) {$\tau_{\max}$};
+            \node[below] at (0,-1.95) {工字形：腹板承担主要剪力};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{常见截面弯曲切应力分布示意}
+\end{figure}
+
+常见截面最大切应力为
+\[
+    \text{矩形：}\quad \tau_{\max}=\frac{3F_S}{2A}=1.5\bar\tau,
+    \qquad
+    \text{圆形：}\quad \tau_{\max}=\frac{4F_S}{3A}=\frac{4}{3}\bar\tau,
+\]
+\[
+    \text{工字形薄腹板：}\quad \tau_{\max}\approx\frac{F_S}{A_w},
+    \qquad
+    \text{薄壁圆环：}\quad \tau_{\max}\approx\frac{2F_S}{A}=2\bar\tau.
+\]
+切应力强度条件为
+\[
+    \tau_{\max}
+    =\frac{F_{S,\max}S_{z,\max}^*}{I_zb}
+    \leq[\tau].
+\]
+
+\begin{advertencia}
+    一般梁的强度校核以弯曲正应力为主；短而高的梁、腹板很薄的型钢梁、靠近支座的截面，还要重视切应力校核。
+\end{advertencia}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{梁弯曲时的位移}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{挠曲线近似微分方程}
+
+梁弯曲后的轴线称为挠曲线，横向位移记为 $w(x)$，转角为
+\[
+    \theta=w'(x).
+\]
+小变形条件下，等截面直梁的挠曲线近似微分方程为
+\[
+    w''=-\frac{M(x)}{EI}.
+\]
+若 $EI$ 为常量，积分一次得转角方程
+\[
+    \theta=w'
+    =-\frac{1}{EI}\left[\int M(x)\,\dd x+C\right],
+\]
+积分两次得挠度方程
+\[
+    w=-\frac{1}{EI}
+    \left\{\int\left[\int M(x)\,\dd x\right]\dd x+Cx+D\right\}.
+\]
+
+\subsection{边界条件与连续条件}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{p{0.28\linewidth} p{0.62\linewidth}}
+    \toprule
+    条件来源 & 常见形式 \\
+    \midrule
+    固定端 & $w=0,\ \theta=0$ \\
+    铰支或滚支 & $w=0$，转角一般不为零 \\
+    自由端 & 无位移边界，常由端部内力条件确定 $M,F_S$ \\
+    对称截面 & 对称点 $\theta=0$；反对称变形点常有 $w=0$ \\
+    分段连接处 & 同一物理截面两侧 $w$ 与 $\theta$ 连续 \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=1]
+        \draw[very thick] (0,0)--(6,0);
+        \draw[fill=softgreen,thick] (.55,-.15)--(.25,-.65)--(.85,-.65)--cycle;
+        \draw[fill=softgreen,thick] (5.4,-.15)--(5.1,-.65)--(5.7,-.65)--cycle;
+        \draw[noteblue,very thick] (0,0) .. controls (1.5,-.25) and (4.5,-.25) .. (6,0);
+        \draw[->,thick,notered] (3,.6)--(3,.05) node[midway,right] {$F$};
+        \draw[dashed] (0,0)--(6,0);
+        \node[below] at (3,-.95) {边界给出端点位移，积分常数由 $w,\theta$ 条件确定};
+    \end{tikzpicture}
+    \caption{简支梁挠曲线示意}
+\end{figure}
+
+积分法解题步骤：
+\begin{enumerate}[label=\arabic*.]
+    \item 选坐标并分段写出弯矩函数 $M(x)$。
+    \item 代入 $w''=-M/(EI)$，逐段积分。
+    \item 根据支承边界条件和相邻段连续光滑条件求积分常数。
+    \item 回代得到所求截面的转角或挠度，并检查正负号和量纲。
+\end{enumerate}
+
+\begin{advertencia}
+    多段梁不要把不同区段的积分常数混用；同一物理截面处，挠度和转角连续，但剪力和弯矩可因集中力或集中力偶发生突变。
+\end{advertencia}
+
+\begin{ejer}
+    外伸梁如作业题图5-4所示，试用积分法求 \(w_{A}\)、\(w_{C}\) 和 \(w_{E}\)。
+    \figcrop[0.6\linewidth]{作业题图5-4.png}{作业题图5-4}
+\end{ejer}
+
+\begin{proof}[解]
+    建立坐标系，对梁进行受力分析，并根据梁的平衡条件求得铰支座B、D处的支反力，如作业答图5-4所示。
+    \figcrop[0.6\linewidth]{作业答图5-4.png}{作业答图5-4}
+
+    列各段弯矩方程且由此可得到梁的挠曲线近似微分方程：
+    \[
+    E I w_{1}''=-M\left(x_{1}\right)=\frac{1}{2} q x_{1}^{2}=\frac{F}{2 a} x_{1}^{2} \quad\left(0 \leq x_{1} \leq a\right)
+    \]
+    \[
+    E I w_{2}''=-M\left(x_{2}\right)=\frac{1}{4} F x_{2}+\frac{1}{4} F a \quad\left(a \leq x_{2} \leq 3 a\right)
+    \]
+    \[
+    E I w_{3}''=-M\left(x_{3}\right)=4 F a-F x_{3} \quad\left(3 a \leq x_{3} \leq 4 a\right)
+    \]
+
+    积分得到：
+    \[
+    E I w_{1}'=\frac{F}{6 a} x_{1}^{3}+C_{1} \quad\left(0 \leq x_{1} \leq a\right)
+    \]
+    \[
+    E I w_{2}'=\frac{1}{8} F x_{2}^{2}+\frac{1}{4} F a x_{2}+D_{1} \quad\left(a \leq x_{2} \leq 3 a\right)
+    \]
+    \[
+    E I w_{3}'=4 F a x_{3}-\frac{F}{2} x_{3}^{2}+H_{1} \quad\left(3 a \leq x_{3} \leq 4 a\right)
+    \]
+    \[
+    E I w_{1}=\frac{F}{24 a} x_{1}^{4}+C_{1} x_{1}+C_{2} \quad\left(0 \leq x_{1} \leq a\right)
+    \]
+    \[
+    E I w_{2}=\frac{1}{24} F x_{2}^{3}+\frac{1}{8} F a x_{2}^{2}+D_{1} x_{2}+D_{2} \quad\left(a \leq x_{2} \leq 3 a\right)
+    \]
+    \[
+    E I w_{3}=2 F a x_{3}^{2}-\frac{F}{6} x_{3}^{3}+H_{1} x_{3}+H_{2} \quad\left(3 a \leq x_{3} \leq 4 a\right)
+    \]
+
+    确定积分常数：
+
+    该梁的位移边界条件：\(x_{1}=a\) 时，\(w_{1}=0\)；\(x_{2}=3a\) 时，\(w_{2}=0\)。
+    光滑连续条件：\(x_{1}=x_{2}=a\) 时，\(w_{1}=w_{2}\)，\(w_{1}'=w_{2}'\)；\(x_{2}=x_{3}=3a\) 时，\(w_{2}=w_{3}\)，\(w_{2}'=w_{3}'\)。
+
+    代入各方程即可得到各积分常数：\(C_{1}=-\frac{5}{6} F a^{2}\)
+
+    挠曲线方程
+    \[
+    \displaystyle
+    w(x)=
+    \begin{cases}
+    \dfrac{1}{E I}\left(\dfrac{F x^{4}}{24 a}-\dfrac{5}{6} F a^{2} x+\dfrac{19}{24} F a^{3}\right) & (0 \leq x \leq a) \\
+    \dfrac{1}{E I}\left(\dfrac{F}{24} x^{3}+\dfrac{1}{8} F a x^{2}-\dfrac{25}{24} F a^{2} x+\dfrac{7}{8} F a^{3}\right) & (a \leq x \leq 3a) \\
+    \dfrac{1}{E I}\left(-\dfrac{1}{6} F x^{3}+2 F a x^{2}-\dfrac{20}{3} F a^{2} x+\dfrac{13}{2} F a^{3}\right) & (3a \leq x \leq 4a)
+    \end{cases}
+    \]
+    故
+    \[
+    \left.w_{A}=w(x)\right|_{x=0}=\frac{19 F a^{3}}{24 E I},\quad w_{C}=\left.w(x)\right|_{x=2a}=-\frac{3 F a^{3}}{8 E I},\quad w_{E}=\left.w(x)\right|_{x=4a}=\frac{7 F a^{3}}{6 E I}
+    \]
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{简单的超静定问题}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{力法思想}
+
+超静定问题中，未知约束反力或内力数多于独立平衡方程数，需要补充变形协调条件。
+最常用的想法是：去掉多余约束得到静定基本体系，把被去掉的约束反力作为多余未知力，再令相应位移满足原结构约束。
+
+\[
+    \text{平衡方程}+\text{变形协调方程}+\text{物理方程}
+    \quad\Longrightarrow\quad
+    \text{全部未知量}.
+\]
+
+求解步骤为：
+\begin{enumerate}[label=\arabic*.]
+    \item 判定超静定次数，选取多余约束，建立基本体系。
+    \item 根据静力学关系列平衡方程。
+    \item 根据原结构约束写几何方程，即变形协调条件。
+    \item 根据胡克定律等物理关系写变形表达式。
+    \item 将物理方程代入协调条件，联立求解。
+\end{enumerate}
+
+\subsection{轴向超静定、温度应力和装配应力}
+
+轴向杆件常用总变形式为
+\[
+    \Delta=\sum_i\frac{F_{N,i}l_i}{E_iA_i}.
+\]
+若有温度变化，还需叠加自由热变形：
+\[
+    \Delta
+    =\sum_i\frac{F_{N,i}l_i}{E_iA_i}
+    +\sum_i \alpha_i\Delta T_i l_i.
+\]
+两端完全固定的均匀杆件若升温而不能自由伸长，则力学变形抵消自由热变形：
+\[
+    \frac{F_Nl}{EA}+\alpha\Delta T\,l=0,
+    \qquad
+    \sigma_T=\frac{F_N}{A}=-E\alpha\Delta T.
+\]
+装配误差问题同理：若原本长短误差为 $\Delta_0$，则协调方程常写成
+\[
+    \sum_i\frac{F_{N,i}l_i}{E_iA_i}+\Delta_T+\Delta_0=0,
+\]
+正负号由实际装配方向决定。
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=1]
+        \draw[pattern=north east lines] (-.25,-.45) rectangle (0,.45);
+        \draw[pattern=north east lines] (6,-.45) rectangle (6.25,.45);
+        \draw[very thick,fill=softgreen] (0,.18) rectangle (6,-.18);
+        \draw[->,thick,notered] (3,.9)--(3,.25) node[midway,right] {$\Delta T>0$};
+        \draw[->,thick,noteblue] (.8,0)--(.15,0) node[midway,above] {$F_N$};
+        \draw[->,thick,noteblue] (5.2,0)--(5.85,0) node[midway,above] {$F_N$};
+        \node[below] at (3,-.65) {两端固定杆：自由热伸长被约束，产生温度应力};
+    \end{tikzpicture}
+    \caption{温度应力的变形协调}
+\end{figure}
+
+\begin{advertencia}
+    超静定题的关键是找到正确的变形协调条件。先判断“这个约束限制了哪个位移”，再写方程。
+\end{advertencia}
+
+\begin{ejer}
+    已知AB为刚性梁，1、2两杆的横截面面积相等，材料相同。求：1、2两杆的内力。
+    \figcrop[0.4\linewidth]{习题课题图2.png}{习题课题图2}
+\end{ejer}
+
+\begin{proof}[解]
+    超静定次数为1次，设变形后C、D点移至\(C'\)、\(D'\)点。
+
+    \textbf{静力平衡方程}
+    \[
+    \sum M_{A}=0
+    \]
+    \[
+    F_{N1} a + F_{N2} \cos\alpha \cdot 2a - F \cdot 3a = 0
+    \]
+
+    \textbf{变形协调方程}
+    \[
+    \overline{DD'} = 2\Delta l_1,\quad \overline{DD'} = \frac{\Delta l_2}{\cos\alpha}
+    \]
+    \[
+    \frac{\Delta l_2}{\cos\alpha} = 2\Delta l_1
+    \]
+
+    \textbf{物理方程}
+    \[
+    \Delta l_1 = \frac{F_{N1} l}{E A},\quad \Delta l_2 = \frac{F_{N2} l}{E A \cos\alpha}
+    \]
+
+    \textbf{联立求解}
+    \[
+    F_{N1} = \frac{3F}{4\cos^3\alpha + 1}
+    \]
+    \[
+    F_{N2} = \frac{6F \cos^2\alpha}{4\cos^3\alpha + 1}
+    \]
+\end{proof}
+
+\begin{ejer}
+    作业题图6-6所示结构，已知杆AD、CE、BF的横截面面积均为\(A\)，杆材料的弹性模量为 \(E\)，许用应力为 \([\sigma]\)，梁 \(AB\) 可视为刚体。试求结构的许可荷载 \([F]\)。
+    \figcrop[0.6\linewidth]{作业题图6-6.png}{作业题图6-6}
+\end{ejer}
+
+\begin{proof}[解]
+    对梁AB进行受力分析，并作该梁在各力作用下的位移图。
+    \figcrop[0.8\linewidth]{作业答图6-6.png}{作业答图6-6}
+
+    根据静力平衡条件可得：
+    \[
+    \sum F_y = 0,\quad F_{\text{N}1} + F_{\text{N}2} + F_{\text{N}3} - F = 0
+    \]
+    \[
+    \sum M_C = 0,\quad F_{\text{N}1} \cdot a - F_{\text{N}2} \cdot a = 0
+    \]
+
+    补充方程：
+
+    分析可得三杆伸长量间的几何关系：
+    \[
+    \Delta l_1 = \Delta l_2 = \Delta l_3
+    \]
+    其中根据胡克定律可知各杆伸长量：
+    \[
+    \Delta l_1 = \frac{F_{\text{N}1} l_1}{EA} = \frac{F_{\text{N}1} l}{EA},\quad \Delta l_2 = \frac{F_{\text{N}2} l_2}{EA} = \frac{F_{\text{N}2} l}{EA},\quad \Delta l_3 = \frac{F_{\text{N}3} l_3}{EA} = \frac{2F_{\text{N}3} l}{EA}
+    \]
+    代入可得补充方程：
+    \[
+    F_{\text{N}1} = F_{\text{N}2} = 2F_{\text{N}3}
+    \]
+
+    求解
+
+    联立可得各杆轴力：
+    \[
+    F_{\text{N}1} = F_{\text{N}2} = \frac{2}{5}F,\quad F_{\text{N}3} = \frac{1}{5}F
+    \]
+
+    根据 \(AD\)、\(BF\) 杆的强度条件 \(\sigma_1 = \sigma_2 = \frac{F_{\text{N}1}}{A} \leqslant [\sigma]\) 确定，即
+    \[
+    \frac{\dfrac{2}{5}F}{A} \leqslant [\sigma]
+    \]
+    解得：\(F \leqslant 2.5\,[\sigma]A\)
+
+    根据 \(EC\) 杆的强度条件 \(\sigma_3 = \frac{F_{\text{N}3}}{A} \leqslant [\sigma]\) 确定，即
+    \[
+    \frac{\dfrac{1}{5}F}{A} \leqslant [\sigma]
+    \]
+    解得：\(F \leqslant 5\,[\sigma]A\)
+
+    综上所述，该结构的许可荷载取 \([F] = 2.5\,[\sigma]A\)。
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{应力状态和强度理论}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{平面应力状态与符号}
+
+平面应力状态常用 $\sigma_x,\sigma_y,\tau_x$ 描述。
+\begin{itemize}
+    \item 正应力：以拉为正；
+    \item 切应力：以使研究对象产生顺时针转动趋势者为正。
+    \item 斜截面角$\alpha$：正向为从 $x$ 轴正向逆时针转到斜截面外法线 $n$。
+\end{itemize}
+
+
+\figcrop[0.45\linewidth]{plane_stress_state.png}{平面应力状态与斜截面外法线}
+
+\subsection{斜截面应力、主应力与最大切应力}
+
+斜截面外法线与 $x$ 轴夹角为 $\alpha$ 时，
+\[
+    \sigma_\alpha
+    =\frac{\sigma_x+\sigma_y}{2}
+    +\frac{\sigma_x-\sigma_y}{2}\cos2\alpha
+    -\tau_x\sin2\alpha,
+\]
+\[
+    \tau_\alpha
+    =\frac{\sigma_x-\sigma_y}{2}\sin2\alpha
+    +\tau_x\cos2\alpha.
+\]
+\figcrop[0.45\linewidth]{stress_on_the_oblique_section.png}{斜截面上应力}
+主平面上切应力为零，因此主平面方向满足
+\[
+    \tan2\alpha_0=-\frac{2\tau_x}{\sigma_x-\sigma_y}.
+\]
+两主应力为
+\[
+    \sigma_{\max,\min}
+    =\frac{\sigma_x+\sigma_y}{2}
+    \pm
+    \sqrt{\left(\frac{\sigma_x-\sigma_y}{2}\right)^2+\tau_x^2}.
+\]
+最大和最小平面内切应力为
+\[
+    \tau_{\max,\min}
+    =\pm
+    \sqrt{\left(\frac{\sigma_x-\sigma_y}{2}\right)^2+\tau_x^2}.
+\]
+
+若约定 $|\alpha_0|<45^\circ$，主应力方向可用“大偏大，小偏小”判断：
+\begin{itemize}
+    \item 当 $\sigma_x>\sigma_y$ 时，$\alpha_0$ 是 $\sigma_x$ 与 $\sigma_{\max}$ 之间的夹角。
+    \item 当 $\sigma_x<\sigma_y$ 时，$\alpha_0$ 是 $\sigma_x$ 与 $\sigma_{\min}$ 之间的夹角。
+    \item 当 $\sigma_x=\sigma_y$ 时，$\alpha_0=45^\circ$，主应力方向可由剪应力转动趋势直观判断。
+\end{itemize}
+
+\subsection{两个重要特例}
+
+\begin{center}
+\begin{tblr}{
+    colspec={Q[c,0.18\linewidth]Q[c,0.37\linewidth]Q[c,0.35\linewidth]},
+    hlines,vlines,
+    row{1}={font=\bfseries}
+}
+应力状态 & 斜截面应力 & 极值\\
+单向拉伸 &
+$\sigma_\alpha=\dfrac{\sigma}{2}(1+\cos2\alpha)$,\quad
+$\tau_\alpha=\dfrac{\sigma}{2}\sin2\alpha$ &
+$\sigma_{\max}=\sigma,\ \sigma_{\min}=0,\ 
+\tau_{\max}=\dfrac{\sigma}{2},\ \tau_{\min}=-\dfrac{\sigma}{2}$\\
+纯剪切 &
+$\sigma_\alpha=-\tau\sin2\alpha$,\quad
+$\tau_\alpha=\tau\cos2\alpha$ &
+$\sigma_{\max}=\tau,\ \sigma_{\min}=-\tau,\ 
+\tau_{\max}=\tau,\ \tau_{\min}=-\tau$\\
+\end{tblr}
+\end{center}
+
+\subsection{广义胡克定律}
+
+各向同性线弹性材料三向应力状态下：
+\[
+    \varepsilon_x=\frac{1}{E}\left[\sigma_x-\nu(\sigma_y+\sigma_z)\right],
+    \quad
+    \varepsilon_y=\frac{1}{E}\left[\sigma_y-\nu(\sigma_z+\sigma_x)\right],
+    \quad
+    \varepsilon_z=\frac{1}{E}\left[\sigma_z-\nu(\sigma_x+\sigma_y)\right],
+\]
+\[
+    \gamma_{xy}=\frac{\tau_{xy}}{G},\qquad
+    \gamma_{yz}=\frac{\tau_{yz}}{G},\qquad
+    \gamma_{zx}=\frac{\tau_{zx}}{G}.
+\]
+平面应力状态下 $\sigma_z=\tau_{yz}=\tau_{zx}=0$，故
+\[
+    \varepsilon_x=\frac{\sigma_x-\nu\sigma_y}{E},\qquad
+    \varepsilon_y=\frac{\sigma_y-\nu\sigma_x}{E},\qquad
+    \varepsilon_z=-\frac{\nu(\sigma_x+\sigma_y)}{E},\qquad
+    \gamma_{xy}=\frac{\tau_{xy}}{G}.
+\]
+线弹性各向同性材料还满足
+\[
+    E=2G(1+\nu).
+\]
+
+\subsection{四个强度理论}
+
+设主应力排序为 $\sigma_1\geq\sigma_2\geq\sigma_3$。强度条件统一写作
+\[
+    \sigma_r\leq[\sigma],
+\]
+其中相当应力为
+\[
+    \sigma_{r1}=\sigma_1
+    \qquad\text{(最大拉应力理论，脆性断裂),}
+\]
+\[
+    \sigma_{r2}=\sigma_1-\nu(\sigma_2+\sigma_3)
+    \qquad\text{(最大伸长线应变理论，脆性断裂),}
+\]
+\[
+    \sigma_{r3}=\sigma_1-\sigma_3
+    \qquad\text{(最大切应力理论，塑性屈服),}
+\]
+\[
+    \sigma_{r4}=
+    \sqrt{\frac{(\sigma_1-\sigma_2)^2+(\sigma_2-\sigma_3)^2+(\sigma_3-\sigma_1)^2}{2}}
+    \qquad\text{(形状改变比能理论，塑性屈服).}
+\]
+
+\begin{advertencia}
+    脆性材料优先关注最大拉应力；塑性材料常用第三或第四强度理论。
+    组合变形中先求危险点的应力状态，再代入相当应力公式。
+\end{advertencia}
+
+\begin{ejer}
+    图示单元体，已知 \(\sigma_{x}=-40\ \text{MPa}\)，\(\sigma_{y}=60\ \text{MPa}\)，\(\tau_{x}=-50\ \text{MPa}\)。试求 \(ef\) 截面上的应力情况及主应力和主平面的方位。
+    \figcrop[0.3\linewidth]{讲义17例题图1.jpg}{讲义17例题图1}
+\end{ejer}
+
+\begin{proof}[解]
+    \textbf{求ef截面上的应力}
+
+    截面方位角 \(\alpha=-30^\circ\)，代入斜截面应力公式计算。
+
+    正应力：
+    \[
+    \begin{aligned}
+    \sigma_{-30^\circ} & =\frac{\sigma_{x}+\sigma_{y}}{2}+\frac{\sigma_{x}-\sigma_{y}}{2}\cos2\alpha-\tau_{x}\sin2\alpha \\
+    & =\frac{-40+60}{2}+\frac{-40-60}{2}\cos\left(-60^\circ\right)-(-50)\sin\left(-60^\circ\right) \\
+    & =-58.3\ \text{MPa}
+    \end{aligned}
+    \]
+
+    切应力：
+    \[
+    \begin{aligned}
+    \tau_{-30^\circ} & =\frac{\sigma_{x}-\sigma_{y}}{2}\sin2\alpha+\tau_{x}\cos2\alpha \\
+    & =\frac{-40-60}{2}\sin\left(-60^\circ\right)+(-50)\cos\left(-60^\circ\right) \\
+    & =18.3\ \text{MPa}
+    \end{aligned}
+    \]
+
+    \textbf{求主应力的大小}
+
+    由平面应力状态主应力公式：
+    \[
+    \left\{\begin{array}{l}\sigma_{\text{max}} \\ \sigma_{\text{min}}\end{array} \right.
+    =\frac{\sigma_{x}+\sigma_{y}}{2}\pm\sqrt{\left(\frac{\sigma_{x}-\sigma_{y}}{2}\right)^{2}+\tau_{x}^{2}}
+    =
+    \left\{\begin{array}{l} 80.7\ \text{MPa} \\ -60.7\ \text{MPa} \end{array} \right.
+    \]
+    按代数值排序得主应力：
+    \(\sigma_{1}=80.7\ \text{MPa}\)，\(\sigma_{3}=-60.7\ \text{MPa}\)
+
+    \textbf{求主平面的方位}
+
+    主平面方位角满足：
+    \[
+    \tan2\alpha_{0}=\frac{-2\tau_{x}}{\sigma_{x}-\sigma_{y}}=-\frac{2\times(-50)}{-40-60}=-1
+    \]
+    解得 \(2\alpha_{0}=-45^\circ\)，即 \(\alpha_{0}=-22.5^\circ\)。
+
+    因 \(\sigma_{x}<\sigma_{y}\)，故 \(\alpha_{0}=-22.5^\circ\) 为 \(\sigma_{x}\) 与 \(\sigma_{3}\) 之间的夹角。
+    \figcrop[0.3\linewidth]{讲义17例答图1.jpg}{讲义17例答图1}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{组合变形及连接部分的计算}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{组合变形的叠加}
+
+组合变形的处理原则是：先求危险截面的各内力分量，再按同一点应力叠加，最后用合适的强度理论校核。
+常见应力分量可写成
+\[
+    \sigma
+    =\frac{F_N}{A}
+    \pm\frac{M_z y}{I_z}
+    \pm\frac{M_y z}{I_y},
+    \qquad
+    \tau_T=\frac{T\rho}{I_p}.
+\]
+轴力和弯矩产生正应力，扭矩和剪力产生切应力；危险点通常取正应力和切应力同时较大的位置。
+
+当危险点同时有正应力 $\sigma$ 与切应力 $\tau$ 时，常用相当应力为
+\[
+    \sigma_{r3}=\sqrt{\sigma^2+4\tau^2},
+    \qquad
+    \sigma_{r4}=\sqrt{\sigma^2+3\tau^2}.
+\]
+
+\subsection{圆截面杆弯扭组合}
+
+圆截面外缘危险点处
+\[
+    \sigma=\frac{M}{W},
+    \qquad
+    \tau=\frac{T}{W_p}=\frac{T}{2W},
+    \qquad
+    W_p=2W.
+\]
+因此按第三、第四强度理论分别得到
+\[
+    \sigma_{r3}
+    =\frac{\sqrt{M^2+T^2}}{W}\leq[\sigma],
+    \qquad
+    \sigma_{r4}
+    =\frac{\sqrt{M^2+0.75T^2}}{W}\leq[\sigma].
+\]
+
+\subsection{连接件强度计算}
+
+连接件常见破坏包括剪切破坏、挤压破坏和被连接板的拉断。计算时应先判断实际受力面，再选面积。
+
+\textbf{强度校核：}
+\begin{center}
+\begin{tblr}{colspec={Q[c,0.18\linewidth]Q[c,0.32\linewidth]Q[l,0.40\linewidth]},
+    hlines,vlines,row{1}={font=\bfseries}}
+校核项目 & 强度条件 & 面积含义\\
+剪切 & $\tau=\dfrac{F_S}{A_S}\leq[\tau]$ & $A_S$ 为剪切面面积；双剪时剪切面数加倍\\
+挤压 & $\sigma_{bs}=\dfrac{F_{bs}}{A_{bs}}\leq[\sigma_{bs}]$ & $A_{bs}$ 为投影挤压面积，常取 $dt$\\
+拉压 & $\sigma=\dfrac{F}{A}\leq[\sigma]$ & $A$ 可为净截面面积\\
+\end{tblr}
+\end{center}
+
+\textbf{截面设计：}
+\[
+    A_S\geq\frac{F_S}{[\tau]},
+    \qquad
+    A_{bs}\geq\frac{F_{bs}}{[\sigma_{bs}]},
+    \qquad
+    A\geq\frac{F}{[\sigma]}.
+\]
+\textbf{确定许可荷载：}
+\[
+    F_S\leq A_S[\tau],
+    \qquad
+    F_{bs}\leq A_{bs}[\sigma_{bs}],
+    \qquad
+    F\leq A[\sigma].
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{压杆稳定}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{欧拉临界力与长度系数}
+
+轴心受压杆可能在压应力尚未达到材料强度极限前发生屈曲失稳。
+细长压杆的欧拉临界力为
+\[
+    F_{cr}=\frac{\pi^2EI}{(\mu l)^2}
+    =\frac{\pi^2EI}{l_0^2},
+    \qquad
+    l_0=\mu l.
+\]
+其中 $\mu$ 为长度系数，$l_0$ 为相当长度。
+\[
+    \mu=1\ \text{(铰--铰)},\qquad
+    \mu=2\ \text{(自由--固定)},\qquad
+    \mu\approx0.7\ \text{(铰--固定)},\qquad
+    \mu=0.5\ \text{(固定--固定)}.
+\]
+
+\figcrop[0.7\linewidth]{buckling_morphology.png}{不同端部约束下压杆屈曲形态示意}
+
+\subsection{柔度与临界应力}
+
+柔度定义为
+\[
+    \lambda=\frac{l_0}{i},
+    \qquad
+    i=\sqrt{\frac{I}{A}}.
+\]
+由欧拉公式可得细长杆临界应力
+\[
+    \sigma_{cr}=\frac{F_{cr}}{A}
+    =\frac{\pi^2E}{\lambda^2}
+    \qquad(\lambda\geq\lambda_p).
+\]
+若比例极限为 $\sigma_p$，则欧拉公式适用的界限柔度可写为
+\[
+    \lambda_p=\pi\sqrt{\frac{E}{\sigma_p}}.
+\]
+稳定失效形式可按柔度划分：
+\begin{itemize}
+    \item $\lambda\leq\lambda_0$：短粗杆，主要发生强度破坏。
+    \item $\lambda_0<\lambda<\lambda_p$：中长杆，发生弹塑性屈曲。
+    \item $\lambda\geq\lambda_p$：细长杆，发生弹性失稳，可用欧拉公式。
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Latex,scale=1]
+        \draw[->] (0,0)--(6.4,0) node[right] {$\lambda$};
+        \draw[->] (0,0)--(0,3.8) node[above] {$\sigma_{cr}$};
+        \draw[dashed] (1.55,0) node[below] {$\lambda_0$}--(1.55,3.1);
+        \draw[dashed] (3.45,0) node[below] {$\lambda_p$}--(3.45,2.1);
+        \draw[very thick,notered] (0,3.1)--(1.55,3.1);
+        \draw[very thick,notered] (1.55,3.1) -- (3.45,2.1);
+        \draw[very thick,notered] (3.45,2.1).. controls (4.8,.95)..(6.1,.48);
+        \node[left] at (0,3.1) {$\sigma_s$};
+        \node[left] at (0,2.1) {$\sigma_p$};
+        \draw[dashed] (0,2.1)--(3.45,2.1);
+        \node at (.78,-.55) {短粗杆};
+        \node at (2.5,-.55) {中长杆};
+        \node at (4.9,-.55) {细长杆};
+        \node[align=center] at (5.15,1.85) {$\sigma_{cr}=\dfrac{\pi^2E}{\lambda^2}$};
+        \node[align=center] at (3.25,2.7) {$\sigma_{cr}=a-b\lambda$};
+        \node[align=center] at (0.8,3.4) {$\sigma_{cr}=a\sigma_s$};
+    \end{tikzpicture}
+    \caption{临界应力总图}
+\end{figure}
+
+\subsection{稳定条件}
+
+引入稳定安全因数 $n_{st}$ 后，稳定许用应力为
+\[
+    [\sigma]_{st}=\frac{\sigma_{cr}}{n_{st}}.
+\]
+压杆稳定条件写作
+\[
+    \sigma=\frac{F}{A}\leq[\sigma]_{st}.
+\]
+工程中也常用稳定系数 $\varphi$ 表示：
+\[
+    \frac{F}{A}\leq\varphi[\sigma].
+\]
+
+压杆稳定计算流程：
+\begin{enumerate}[label=\arabic*.]
+    \item 判断端部约束，确定 $\mu$ 和 $l_0=\mu l$。
+    \item 求截面最小惯性半径 $i_{\min}=\sqrt{I_{\min}/A}$。
+    \item 求柔度 $\lambda=l_0/i_{\min}$，判定杆类。
+    \item 选取对应的临界应力或稳定系数，校核 $F/A$。
+\end{enumerate}
+
+\begin{advertencia}
+    压杆不能只按压缩强度校核。长细杆往往在 $\sigma=F/A$ 远小于材料强度时就会失稳。
+\end{advertencia}
+
+\begin{ejer}
+    如图所示，已知梁AB是T字形截面铸铁梁，惯性矩 \(I_{z}=5315\ \text{cm}^4\)，许用拉应力 \([\sigma_t]=50\ \text{MPa}\)，许用压应力 \([\sigma_c]=200\ \text{MPa}\)；杆CD是两端铰支的圆截面压杆，直径 \(d=40\ \text{mm}\)，材料为Q235钢，弹性模量 \(E=200\ \text{GPa}\)，\(\sigma_p=200\ \text{MPa}\)，稳定安全因数 \(n_{\text{st}}=2.5\)。试校核梁AB的强度和杆CD的稳定性。
+    \figcrop[0.8\linewidth]{习题课题图4-1.png}{习题课题图4-1}
+\end{ejer}
+
+\begin{proof}[解]
+    \textbf{求CD杆的轴力}
+
+    由 \(\sum M_{A}=0\)
+    \[
+    F_{NCD} \times 2000 - 30 \times 2600 = 0
+    \]
+    得
+    \[
+    F_{NCD}=39\ \text{kN}
+    \]
+    \figcrop[0.5\linewidth]{习题课答图4-1.png}{习题课答图4-1}
+
+    \textbf{校核AB梁的强度}
+
+    作梁的弯矩图，由弯矩图可知，C截面为危险截面，上端受拉，下端受压。
+    \[
+    \sigma_{t,\text{max}}^{C} = \frac{M_{C} \cdot y_1}{I_z} = \frac{18 \times 10^{3} \times 75 \times 10^{-3}}{5315 \times 10^{-8}} \times 10^{-6} = 25.4\ \text{MPa} < [\sigma_t]
+    \]
+    \[
+    \sigma_{c,\text{max}}^{C} = \frac{M_{C} \cdot y_2}{I_z} = \frac{18 \times 10^{3} \times 125 \times 10^{-3}}{5315 \times 10^{-8}} \times 10^{-6} = 42.3\ \text{MPa} < [\sigma_c]
+    \]
+    满足强度条件。
+    \figcrop[0.4\linewidth]{习题课答图4-2.png}{习题课答图4-2}
+
+    \textbf{校核CD杆的稳定性}
+
+    判断CD杆的类型：
+    \[
+    \lambda = \frac{\mu l}{i} = \frac{1 \times 1.5 \times 10^{3} \times 4}{40} = 150
+    \]
+    \[
+    \lambda_p = \sqrt{\frac{\pi^2 E}{\sigma_p}} = \sqrt{\frac{3.14^{2} \times 200 \times 10^{3}}{200}} = 100
+    \]
+    因 \(\lambda > \lambda_p\)，故CD杆为细长杆。
+
+    临界压力
+    \[
+    F_{\text{cr}} = \frac{\pi^2 E I}{(\mu l)^2} = \frac{3.14^{2} \times 200 \times 10^{9} \times 3.14 \times 40^{4} \times 10^{-12}}{64 \times 1.5^2} \times 10^{-3} = 110\ \text{kN}
+    \]
+    许用压力
+    \[
+    [F] = \frac{F_{\text{cr}}}{n_{\text{st}}} = \frac{110}{2.5} = 44\ \text{kN}
+    \]
+    因 \(F_{NCD} < [F]\)，故CD杆满足稳定性条件。
+\end{proof}
+
+\begin{ejer}
+    直径为 \(d=0.1\ \text{m}\) 的圆杆受力如图，\(M=5\ \text{kN·m}\)，\(F=100\ \text{kN}\)，为铸铁构件，\([\sigma_t]=40\ \text{MPa}\)，\([\sigma_c]=150\ \text{MPa}\)，试用强度理论校核杆的强度。
+    \figcrop[0.4\linewidth]{习题课题图5-1.png}{习题课题图5-1}
+\end{ejer}
+
+\begin{proof}[解]
+    危险点A的应力状态分析如下：
+    切应力
+    \[
+    \tau = \frac{T}{W_P} = \frac{16 \times 5}{\pi \times 100^3} \times 10^6 = 25.46\ \text{MPa}
+    \]
+    轴向正应力
+    \[
+    \sigma = \frac{F}{A} = \frac{4 \times 100}{\pi \times 100^2} \times 10^3 = 12.73\ \text{MPa}
+    \]
+    平面应力状态的主应力
+    \[
+    \left.\begin{array}{c}\sigma_1' \\ \sigma_2' \end{array}\right\}
+    = \frac{\sigma}{2} \pm \sqrt{\left(\frac{\sigma}{2}\right)^2 + \tau^2}
+    = \frac{12.73}{2} \pm \sqrt{\left(\frac{12.73}{2}\right)^2 + 25.46^2}
+    = \left\{
+    \begin{array}{l}32.61 \\ -19.88 \end{array} \right.\ \text{MPa}
+    \]
+    按代数值排序后三个主应力为
+    \[
+    \sigma_1 = 32.61\ \text{MPa},\quad \sigma_2 = 0,\quad \sigma_3 = -19.88\ \text{MPa}
+    \]
+    铸铁为脆性材料，以受拉为主，采用第一强度理论校核：
+    \[
+    \sigma_{r1} = \sigma_1 < [\sigma_t]
+    \]
+    故杆满足强度要求，安全。
+\end{proof}
+
+\begin{ejer}
+    图示刚架各杆的弯曲刚度均为 \(EI\)，不计剪力和轴力对位移的影响。试用卡氏第二定理求A截面的铅垂位移 \(\Delta_{Ay}\)。
+    \figcrop[0.8\linewidth]{习题课题图6-1.png}{习题课题图6-1}
+\end{ejer}
+
+\begin{proof}[解]
+    由于刚架上A和C截面的外力均为 \(F\)，求A截面的铅垂位移时，应将A处的力记为 \(F_A\) 与C处的力 \(F\) 区分开；应用卡氏第二定理后，再令 \(F_A=F\)，即
+    \[
+    \Delta_{Ay} = \left. \frac{\partial V_\varepsilon}{\partial F_A} \right|_{F_A=F}
+    \]
+
+    各段的弯矩方程及其对 \(F_A\) 的偏导数分别为：
+    AB段（\(0 \leq x \leq l\)）
+    \[
+    M(x) = -F_A x,\quad \frac{\partial M(x)}{\partial F_A} = -x
+    \]
+
+    BC段（\(0 \leq y_1 \leq l/2\)）
+    \[
+    M(y_1) = -F_A l,\quad \frac{\partial M(y_1)}{\partial F_A} = -l
+    \]
+
+    CD段（\(0 \leq y_2 \leq l/2\)）
+    \[
+    M(y_2) = -F_A l - F y_2,\quad \frac{\partial M(y_2)}{\partial F_A} = -l
+    \]
+
+    代入卡氏第二定理公式，令 \(F_A=F\) 后积分：
+    \[
+    \Delta_{Ay} = \frac{1}{EI} \left[
+    \int_{0}^{l} F x^2 \, \text{d}x
+    + \int_{0}^{l/2} F l^2 \, \text{d}y_1
+    + \int_{0}^{l/2} \left(F l^2 + F l y_2\right) \text{d}y_2
+    \right]
+    \]
+    计算得
+    \[
+    \Delta_{Ay} = \frac{35 F l^3}{24 EI} \quad (\downarrow)
+    \]
+\end{proof}
+
+\end{document}
