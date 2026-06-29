@@ -205,7 +205,7 @@ AUC &= \frac{\frac14}{2}\left(\frac12+\frac12\right)
 
 \qtitle{一、名词解释}
 
-\begin{ejer}[名词解释]
+\begin{ejer}[一、名词解释]
 解释以下概念：后验概率、朴素贝叶斯分类器。
 \end{ejer}
 
@@ -228,25 +228,40 @@ AUC &= \frac{\frac14}{2}\left(\frac12+\frac12\right)
 
 \qtitle{五、贝叶斯决策}
 
-\begin{ejer}[贝叶斯决策]
-已知 $P(\omega_1)=0.7$，$P(\omega_2)=0.3$，
-$P(x\mid\omega_1)=0.15$，$P(x\mid\omega_2)=0.45$，损失矩阵为
+\begin{ejer}[五、贝叶斯决策]
+假定对某一类人群进行疾病筛查，正常人群为 $\omega_1$，患者为 $\omega_2$，
+设正常和患者的先验概率为：
+\[
+P(\omega_1)=0.7,\quad P(\omega_2)=0.3.
+\]
+现有一位被检查者，其观测值为 $x$，从类条件概率密度曲线上查得：
+\[
+P(x\mid \omega_1)=0.15,\quad P(x\mid \omega_2)=0.45.
+\]
+同时已知风险损失函数为：
 \[
 \begin{pmatrix}
-0&5\\
-1&0
+\lambda_{11} & \lambda_{12}\\
+\lambda_{21} & \lambda_{22}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 5\\
+1 & 0
 \end{pmatrix}.
 \]
-分别用最小错误率和最小风险的贝叶斯决策对样本 $x$ 分类，并写出判别函数和决策方程。
+试对该被检查者用以下两种方式进行分类：
+（1）用最小错误率的贝叶斯决策，并写出判别函数和决策方程；
+（2）用最小风险的贝叶斯决策，并写出判别函数和决策方程。
 \end{ejer}
 
-未归一化后验为
+先计算后验概率。未归一化后验为
 \[
     P(x\mid\omega_1)P(\omega_1)=0.15\times0.7=0.105,
     \qquad
     P(x\mid\omega_2)P(\omega_2)=0.45\times0.3=0.135.
 \]
-归一化因子为 $0.24$，因此
+归一化因子为 $P(x|\omega_1)P(\omega_1)+P(x|\omega_2)P(\omega_2)=0.24$，因此
 \[
     P(\omega_1\mid x)=0.4375,\qquad
     P(\omega_2\mid x)=0.5625.
@@ -263,9 +278,31 @@ $P(x\mid\omega_1)=0.15$，$P(x\mid\omega_2)=0.45$，损失矩阵为
     \[
         \hat\omega=\arg\max_i g_i(x).
     \]
-    因为 $g_2(x)=0.135>g_1(x)=0.105$，所以判为 $\omega_2$，即患者。
+    本题中
+    \[
+        g_1(x)=0.105,\qquad g_2(x)=0.135,
+    \]
+    因为 $g_2(x)>g_1(x)$，所以按最小错误率判为 $\omega_2$，即患者。
 
-    \item 设 $\lambda_{ij}$ 表示判为 $\omega_i$ 而真实为 $\omega_j$ 的损失。
+    \item 按贝叶斯决策中常用记号，设
+    $\lambda_{ij}=\lambda(\alpha_i\mid\omega_j)$，即行对应采取的决策，
+    列对应真实类别。风险判别函数可取
+    \[
+        r_i(x)=R(\alpha_i\mid x)=\sum_j \lambda_{ij}P(\omega_j\mid x),
+    \]
+    并选择风险较小的决策。
+    损失矩阵是：
+    \[
+    \begin{pmatrix}
+    \lambda_{11} & \lambda_{12}\\
+    \lambda_{21} & \lambda_{22}
+    \end{pmatrix}=
+    \begin{pmatrix}
+    0 & 5\\
+    1 & 0
+    \end{pmatrix}
+    \]
+    通常理解为：\(\lambda_{ij}\) 表示“把样本判为 \(\omega_i\)，但真实类别是 \(\omega_j\)”的损失。
     两个决策风险为
     \[
         R(\alpha_1\mid x)=0\cdot P(\omega_1\mid x)+5P(\omega_2\mid x)=2.8125,
@@ -277,7 +314,7 @@ $P(x\mid\omega_1)=0.15$，$P(x\mid\omega_2)=0.45$，损失矩阵为
     \[
         \hat\alpha=\arg\min_i R(\alpha_i\mid x).
     \]
-    因为 $R(\alpha_2\mid x)<R(\alpha_1\mid x)$，所以仍判为 $\omega_2$。
+    因为 $R(\alpha_2\mid x)<R(\alpha_1\mid x)$，所以按最小风险判为 $\omega_2$，即患者。
     等价地，当
     \[
         5P(\omega_2\mid x)<P(\omega_1\mid x)
@@ -287,18 +324,38 @@ $P(x\mid\omega_1)=0.15$，$P(x\mid\omega_2)=0.45$，损失矩阵为
 
 \qtitle{六、朴素贝叶斯分类器}
 
-\begin{ejer}[朴素贝叶斯分类器]
-根据题中给定的 15 个二维离散样本构造朴素贝叶斯分类器，
-判断 $x=(2020,P)^T$ 的类别。两个特征取值分别为
-$\{2019,2020,2021\}$ 和 $\{P,N,T\}$，类别为 $\{-1,1\}$。
+\begin{ejer}[六、朴素贝叶斯分类器]
+请从下列样本中构造一个朴素贝叶斯分类器，确定样本 $x=(2020,\ P)^T$ 的类别。
+样本 $x$ 具有二维特征属性，取值分别为 $\{2019,2020,2021\}$ 和 $\{P,N,T\}$，
+$y$ 为监督标记 $\{-1,1\}$，代表正类和反类。
+
+\begin{center}
+\scriptsize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{c|ccccccccccccccc}
+\toprule
+$i$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15\\
+\midrule
+$x_1$ & 2019 & 2019 & 2019 & 2019 & 2019 & 2020 & 2020 & 2020 & 2020 & 2020 & 2021 & 2021 & 2021 & 2021 & 2021\\
+$x_2$ & P & N & N & P & P & P & N & N & T & T & T & N & N & T & T\\
+$y$ & -1 & -1 & 1 & 1 & -1 & -1 & -1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & -1\\
+\bottomrule
+\end{tabular}%
+}
+\end{center}
 \end{ejer}
 
-类别先验概率为
+由样本表统计得
 \[
     P(y=1)=\frac{9}{15}=\frac35,\qquad
     P(y=-1)=\frac{6}{15}=\frac25.
 \]
-不使用拉普拉斯平滑时，
+题目未要求平滑，朴素贝叶斯分类器取
+\[
+    \hat y=\arg\max_{c\in\{-1,1\}}
+    P(y=c)P(x_1=2020\mid y=c)P(x_2=P\mid y=c).
+\]
+各条件概率为
 \[
     P(x_1=2020\mid y=1)=\frac{3}{9}=\frac13,\qquad
     P(x_2=P\mid y=1)=\frac{1}{9},
@@ -318,11 +375,11 @@ $\{2019,2020,2021\}$ 和 $\{P,N,T\}$，类别为 $\{-1,1\}$。
     =\frac25\cdot\frac13\cdot\frac12
     =\frac1{15}.
 \]
-由于 $\frac1{15}>\frac1{45}$，故
+由于 $\dfrac1{15}>\dfrac1{45}$，故
 \[
-    x=(2020,P)^T \quad \text{判为} \quad y=-1.
+    \hat y=-1.
 \]
-若采用拉普拉斯平滑，结论仍为 $y=-1$。
+因此样本 $x=(2020,P)^T$ 的预测类别为标签 $-1$ 所对应的类别。
 
 \section{第 4 章：线性模型}
 
