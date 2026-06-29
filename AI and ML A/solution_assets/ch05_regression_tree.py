@@ -1,8 +1,33 @@
 from pathlib import Path
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 
+PALETTE = {
+    "blue_main": "#0F4D92",
+    "blue_secondary": "#3775BA",
+    "red_strong": "#B64342",
+    "neutral_light": "#CFCECE",
+    "neutral_mid": "#767676",
+    "neutral_dark": "#4D4D4D",
+    "neutral_black": "#272727",
+    "green_3": "#8BCF8B",
+    "teal": "#42949E",
+    "gold": "#FFD700",
+}
+
+mpl.rcParams.update({
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
+    "svg.fonttype": "none",
+    "pdf.fonttype": 42,
+    "font.size": 7,
+    "axes.spines.right": False,
+    "axes.spines.top": False,
+    "axes.linewidth": 0.8,
+    "legend.frameon": False,
+})
 
 x = np.arange(1, 11, dtype=float)
 y = np.array([4.50, 4.75, 4.91, 5.34, 5.80, 7.05, 7.90, 8.23, 8.70, 9.50])
@@ -52,47 +77,47 @@ edges = [
     ("rr", "h", "no"),
 ]
 
-plt.rcParams.update(
-    {
-        "pdf.fonttype": 42,
-        "ps.fonttype": 42,
-        "font.size": 10,
-    }
-)
-
 fig, (ax_fit, ax_tree) = plt.subplots(
-    1, 2, figsize=(10.5, 4.3), gridspec_kw={"width_ratios": [1.05, 1.35]}
+    2, 1, figsize=(3.5, 6.0), gridspec_kw={"height_ratios": [1.0, 1.2]}
 )
 
-ax_fit.scatter(x, y, color="#1f77b4", zorder=3, label="samples")
+ax_fit.scatter(x, y, color=PALETTE["blue_main"], s=20, zorder=3, label="samples",
+               edgecolors="white", linewidths=0.4)
 for left, right, value in leaf_intervals:
-    ax_fit.hlines(value, left, right, colors="#d62728", linewidth=2.2)
+    ax_fit.hlines(value, left, right, colors=PALETTE["red_strong"], linewidth=1.8)
 for threshold in [1.5, 3.5, 4.5, 5.5, 6.5, 8.5, 9.5]:
-    ax_fit.axvline(threshold, color="0.75", linestyle="--", linewidth=0.8)
-ax_fit.set_xlabel(r"$x$")
-ax_fit.set_ylabel(r"$y$")
+    ax_fit.axvline(threshold, color=PALETTE["neutral_light"], linestyle="--",
+                   linewidth=0.6)
+ax_fit.set_xlabel(r"$x$", fontsize=7)
+ax_fit.set_ylabel(r"$y$", fontsize=7)
 ax_fit.set_xlim(0.7, 10.3)
 ax_fit.set_ylim(4.2, 9.8)
-ax_fit.set_title("Piecewise constant prediction")
-ax_fit.grid(True, alpha=0.2)
+ax_fit.set_title("Piecewise constant prediction", fontsize=8, fontweight="bold",
+                  color=PALETTE["neutral_black"])
+ax_fit.legend(fontsize=6)
+ax_fit.grid(True, alpha=0.15, linewidth=0.5)
 
 ax_tree.axis("off")
 for parent, child, label in edges:
     x0, y0, _ = nodes[parent]
     x1, y1, _ = nodes[child]
-    ax_tree.plot([x0, x1], [y0 - 0.03, y1 + 0.03], color="0.35", linewidth=1)
-    ax_tree.text((x0 + x1) / 2, (y0 + y1) / 2, label, fontsize=8, color="0.35")
+    ax_tree.plot([x0, x1], [y0 - 0.03, y1 + 0.03], color=PALETTE["neutral_mid"],
+                 linewidth=0.8)
+    ax_tree.text((x0 + x1) / 2, (y0 + y1) / 2, label, fontsize=5.5,
+                 color=PALETTE["neutral_mid"], ha="center", va="center")
 
 for name, (nx, ny, text) in nodes.items():
     is_leaf = name in list("abcdefgh")
     bbox = dict(
-        boxstyle="round,pad=0.25",
-        facecolor="#fff7ed" if is_leaf else "#e0f2fe",
-        edgecolor="#334155",
-        linewidth=1,
+        boxstyle="round,pad=0.2",
+        facecolor="#FFF7ED" if is_leaf else "#E8F0FE",
+        edgecolor=PALETTE["neutral_dark"],
+        linewidth=0.6,
     )
-    ax_tree.text(nx, ny, text, ha="center", va="center", bbox=bbox)
-ax_tree.set_title("Least-squares regression tree, max_depth=3")
+    ax_tree.text(nx, ny, text, ha="center", va="center", fontsize=6, bbox=bbox)
+ax_tree.set_title("Regression tree (max depth = 3)", fontsize=8,
+                   fontweight="bold", color=PALETTE["neutral_black"])
 
-fig.tight_layout()
-fig.savefig(Path(__file__).with_suffix(".pdf"))
+fig.tight_layout(pad=1.5)
+fig.savefig(Path(__file__).with_suffix(".pdf"), bbox_inches="tight")
+plt.close(fig)

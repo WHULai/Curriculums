@@ -1,35 +1,16 @@
 \documentclass[a4,10pt]{aleph-notas}
 
 \usepackage{booktabs}
-\usepackage{listings}
 \usepackage{array}
 \usepackage{aleph-comandos}
 
 \institucion{武汉大学}
 \carrera{机器人工程}
-\asignatura{人工智能与机器学习}
-\tema{章节作业解答}
+\asignatura{人工智能与机器学习A}
+\tema{章节课后作业}
 \autor{Lai Wei}
 \fecha{\today}
 \logouno[5cm]{Logos/whulogo.png}
-
-\lstset{
-    language=Python,
-    basicstyle=\ttfamily\scriptsize,
-    keywordstyle=\color{blue!60!black},
-    commentstyle=\color{green!40!black},
-    stringstyle=\color{red!55!black},
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    stepnumber=1,
-    numbersep=6pt,
-    frame=single,
-    breaklines=true,
-    columns=fullflexible,
-    keepspaces=true,
-    showstringspaces=false,
-    tabsize=4
-}
 
 \newcommand{\qtitle}[1]{\subsection*{#1}\addcontentsline{toc}{subsection}{#1}}
 \providecommand{\R}{\mathbb{R}}
@@ -151,9 +132,6 @@ $AUC=13/16=0.8125$；标准做法通常采用并列平均，因此这里取 $0.7
     \includegraphics[width=0.52\linewidth]{solution_assets/ch02_roc.pdf}
     \caption{8 个测试样本的 ROC 曲线}
 \end{figure}
-
-作图代码如下。
-\lstinputlisting{solution_assets/ch02_roc.py}
 
 \section{第 3 章：贝叶斯分类器}
 
@@ -343,9 +321,6 @@ g_3(x)=-x_1+x_2.
     \caption{一对多判别边界与确定分类区域}
 \end{figure}
 
-作图代码如下。
-\lstinputlisting{solution_assets/ch04_ovr_regions.py}
-
 \qtitle{四、LDA 投影}
 
 \begin{ejer}[LDA 投影]
@@ -480,12 +455,9 @@ x>9.5 & 9.50
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\linewidth]{solution_assets/ch05_regression_tree.pdf}
+    \includegraphics[width=0.5\linewidth]{solution_assets/ch05_regression_tree.pdf}
     \caption{深度为 3 的最小二乘回归树}
 \end{figure}
-
-作图代码如下。
-\lstinputlisting{solution_assets/ch05_regression_tree.py}
 
 \qtitle{五、ID3 与 CART 决策树}
 
@@ -691,12 +663,9 @@ t & h_t & \text{错分样本} & e_t & \alpha_t\\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.82\linewidth]{solution_assets/ch07_pca_lda_examples.pdf}
+    \includegraphics[width=0.92\linewidth]{solution_assets/ch07_pca_lda_examples.pdf}
     \caption{PCA 与 LDA 投影方向示例}
 \end{figure}
-
-作图代码如下。
-\lstinputlisting{solution_assets/ch07_pca_lda_examples.py}
 
 \qtitle{六、PCA 主分量与方差贡献率}
 

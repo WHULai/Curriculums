@@ -1,7 +1,32 @@
 from pathlib import Path
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+
+PALETTE = {
+    "blue_main": "#0F4D92",
+    "blue_secondary": "#3775BA",
+    "red_strong": "#B64342",
+    "neutral_light": "#CFCECE",
+    "neutral_mid": "#767676",
+    "neutral_dark": "#4D4D4D",
+    "neutral_black": "#272727",
+    "teal": "#42949E",
+    "violet": "#9A4D8E",
+}
+
+mpl.rcParams.update({
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
+    "svg.fonttype": "none",
+    "pdf.fonttype": 42,
+    "font.size": 7,
+    "axes.spines.right": False,
+    "axes.spines.top": False,
+    "axes.linewidth": 0.8,
+    "legend.frameon": False,
+})
 
 
 def unit(v):
@@ -48,30 +73,26 @@ bad_b = np.vstack([offsets + (-1, 1), offsets + (1, -1)])
 bad_x = np.vstack([bad_a, bad_b])
 bad_y = np.array([0] * len(bad_a) + [1] * len(bad_b))
 
-plt.rcParams.update(
-    {
-        "pdf.fonttype": 42,
-        "ps.fonttype": 42,
-        "font.size": 10,
-    }
-)
-
-fig, axes = plt.subplots(1, 2, figsize=(9.2, 4.1))
+fig, axes = plt.subplots(1, 2, figsize=(6.5, 3.0))
 for ax, x, y, title in [
-    (axes[0], good_x, good_y, "PCA and LDA find the same useful direction"),
+    (axes[0], good_x, good_y, "PCA and LDA find the same direction"),
     (axes[1], bad_x, bad_y, "XOR: no good linear projection"),
 ]:
-    ax.scatter(x[y == 0, 0], x[y == 0, 1], marker="o", facecolors="none", edgecolors="#2563eb", label="class 0")
-    ax.scatter(x[y == 1, 0], x[y == 1, 1], marker="+", color="#dc2626", s=65, label="class 1")
+    ax.scatter(x[y == 0, 0], x[y == 0, 1], marker="o", facecolors="none",
+               edgecolors=PALETTE["blue_main"], s=20, linewidths=0.8,
+               label="class 0")
+    ax.scatter(x[y == 1, 0], x[y == 1, 1], marker="+", color=PALETTE["red_strong"],
+               s=35, linewidths=0.8, label="class 1")
     center = x.mean(axis=0)
     p_dir = pca_direction(x)
     l_dir = lda_direction(x, y)
     for direction, color, name, offset in [
-        (p_dir, "#0f766e", "PCA", 0.10),
-        (l_dir, "#9333ea", "LDA", -0.10),
+        (p_dir, PALETTE["teal"], "PCA", 0.10),
+        (l_dir, PALETTE["violet"], "LDA", -0.10),
     ]:
         if np.linalg.norm(direction) < 1e-12:
-            ax.text(center[0] - 1.1, center[1] - 1.45, "LDA direction undefined", color=color)
+            ax.text(center[0] - 1.1, center[1] - 1.45,
+                    "LDA direction undefined", color=color, fontsize=6)
             continue
         start = center - 1.5 * direction + offset * np.array([-direction[1], direction[0]])
         end = center + 1.5 * direction + offset * np.array([-direction[1], direction[0]])
@@ -79,15 +100,18 @@ for ax, x, y, title in [
             "",
             xy=end,
             xytext=start,
-            arrowprops=dict(arrowstyle="->", color=color, linewidth=2),
+            arrowprops=dict(arrowstyle="-|>", color=color, linewidth=1.5,
+                            mutation_scale=8),
         )
-        ax.text(*(end + 0.08), name, color=color, fontsize=10)
-    ax.axhline(0, color="0.85", linewidth=0.8)
-    ax.axvline(0, color="0.85", linewidth=0.8)
+        ax.text(*(end + 0.08), name, color=color, fontsize=6, fontweight="bold")
+    ax.axhline(0, color=PALETTE["neutral_light"], linewidth=0.6)
+    ax.axvline(0, color=PALETTE["neutral_light"], linewidth=0.6)
     ax.set_aspect("equal", adjustable="box")
-    ax.set_title(title)
-    ax.grid(True, alpha=0.2)
+    ax.set_title(title, fontsize=7.5, fontweight="bold", color=PALETTE["neutral_black"])
+    ax.grid(True, alpha=0.15, linewidth=0.5)
 
-axes[0].legend(loc="lower right", frameon=True)
-fig.tight_layout()
-fig.savefig(Path(__file__).with_suffix(".pdf"))
+axes[0].legend(loc="lower right", fontsize=5.5, frameon=True, framealpha=0.9,
+               edgecolor=PALETTE["neutral_mid"], fancybox=False)
+fig.tight_layout(pad=1.5)
+fig.savefig(Path(__file__).with_suffix(".pdf"), bbox_inches="tight")
+plt.close(fig)
