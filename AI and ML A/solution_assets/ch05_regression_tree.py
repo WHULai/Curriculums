@@ -77,10 +77,9 @@ edges = [
     ("rr", "h", "no"),
 ]
 
-fig, (ax_fit, ax_tree) = plt.subplots(
-    2, 1, figsize=(3.5, 6.0), gridspec_kw={"height_ratios": [1.0, 1.2]}
-)
+stem = Path(__file__).with_suffix("")
 
+fig1, ax_fit = plt.subplots(figsize=(3.5, 2.8))
 ax_fit.scatter(x, y, color=PALETTE["blue_main"], s=20, zorder=3, label="samples",
                edgecolors="white", linewidths=0.4)
 for left, right, value in leaf_intervals:
@@ -93,10 +92,14 @@ ax_fit.set_ylabel(r"$y$", fontsize=7)
 ax_fit.set_xlim(0.7, 10.3)
 ax_fit.set_ylim(4.2, 9.8)
 ax_fit.set_title("Piecewise constant prediction", fontsize=8, fontweight="bold",
-                  color=PALETTE["neutral_black"])
+                 color=PALETTE["neutral_black"])
 ax_fit.legend(fontsize=6)
 ax_fit.grid(True, alpha=0.15, linewidth=0.5)
+fig1.tight_layout(pad=1.0)
+fig1.savefig(stem.with_name(stem.name + "_fit.pdf"), bbox_inches="tight")
+plt.close(fig1)
 
+fig2, ax_tree = plt.subplots(figsize=(3.5, 3.2))
 ax_tree.axis("off")
 for parent, child, label in edges:
     x0, y0, _ = nodes[parent]
@@ -117,7 +120,6 @@ for name, (nx, ny, text) in nodes.items():
     ax_tree.text(nx, ny, text, ha="center", va="center", fontsize=6, bbox=bbox)
 ax_tree.set_title("Regression tree (max depth = 3)", fontsize=8,
                    fontweight="bold", color=PALETTE["neutral_black"])
-
-fig.tight_layout(pad=1.5)
-fig.savefig(Path(__file__).with_suffix(".pdf"), bbox_inches="tight")
-plt.close(fig)
+fig2.tight_layout(pad=1.0)
+fig2.savefig(stem.with_name(stem.name + "_tree.pdf"), bbox_inches="tight")
+plt.close(fig2)
