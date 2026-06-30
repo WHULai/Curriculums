@@ -379,7 +379,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Estilo de comentarios para el docente
 \ifthenelse{\boolean{comentarios}}{
-    \newtcolorbox{comentarios}{
+    \newtcolorbox{comentarios}[1][教学建议：]{
         breakable,
         enhanced,
         outer arc=0pt, arc=0pt,
@@ -396,7 +396,7 @@
         borderline south = {1.5pt}{0pt}{colordef!50},
         left=1mm,
         fontlower=\small,
-        title=\textbf{\small \textcolor{black}{教学建议：}}
+        title=\textbf{\small \textcolor{black}{#1}}
         }
     }
     {\excludecomment{comentarios}}
