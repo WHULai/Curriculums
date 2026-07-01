@@ -1030,8 +1030,11 @@ $3$ & $h_3$ & $1,2,9$ & $3/22$ & $\frac12\ln\frac{19}{3}=0.9229$\\
 \qtitle{四、正交投影矩阵}
 
 \begin{ejer}[正交投影矩阵]
-降维分析中涉及投影的变换矩阵通常要求正交。说明正交投影矩阵相对于非正交投影矩阵的优点，
-并解释为什么 PCA 中变换矩阵一定可以取为正交矩阵。
+降维分析中涉及投影的变换矩阵通常要求是正交的。请问：
+
+（1）正交投影矩阵相对于非正交投影矩阵用于降维的优点是什么？
+
+（2）为什么在 PCA 中变换矩阵一定是正交的？
 \end{ejer}
 
 \begin{enumerate}[label=（\arabic*）]
@@ -1047,8 +1050,7 @@ $3$ & $h_3$ & $1,2,9$ & $3/22$ & $\frac12\ln\frac{19}{3}=0.9229$\\
 \qtitle{五、PCA 与 LDA 投影方向}
 
 \begin{ejer}[PCA 与 LDA 投影方向]
-参照题图，绘制一个二维数据集示例，使 PCA 和 LDA 找到相同的好方向；
-再绘制一个数据集，使 PCA 和 LDA 都找不到好的投影方向。
+如图给出了一组数据，使用 LDA 投影比 PCA 投影有更好的投影方向。参照这个图，绘制一个二维数据集示例，让 PCA 和 LDA 找到相同的好方向。另绘制一个数据集，让 PCA 和 LDA 都找不到一个好的投影方向。
 \begin{center}
     \includegraphics[width=0.55\linewidth]{ai_ml_practice/images/ch07_q05_pca_lda_figure.png}
 \end{center}
@@ -1068,55 +1070,129 @@ $3$ & $h_3$ & $1,2,9$ & $3/22$ & $\frac12\ln\frac{19}{3}=0.9229$\\
 \qtitle{六、PCA 主分量与方差贡献率}
 
 \begin{ejer}[PCA 主分量与方差贡献率]
-用 PCA 方法计算 6 个二维样本
-\[
+计算题：用 PCA 方法计算这 6 个二维样本数据的一维 PCA 主分量，并计算该主分量的方差贡献率：
+$$
 \begin{pmatrix}
-2&3&3&4&5&7\\
-2&4&5&5&6&8
+2 & 3 & 3 & 4 & 5 & 7\\
+2 & 4 & 5 & 5 & 6 & 8
 \end{pmatrix}
-\]
-的一维 PCA 主分量，并计算该主分量的方差贡献率。注意：样本未中心化。
+$$
+注意：该样本未中心化！
 \end{ejer}
 
-题目给出的样本未中心化，先求均值
+\textbf{计算样本均值。}
+
+6 个样本的均值向量为
 \[
-    \mu=\left(4,5\right)^T.
+    \mu=\frac{1}{6}\sum_{i=1}^{6}x_i
+    =\left(\frac{2+3+3+4+5+7}{6},\ \frac{2+4+5+5+6+8}{6}\right)^T
+    =\left(4,\ 5\right)^T.
 \]
-中心化后的样本为
+
+\textbf{中心化样本数据。}
+
+将每个样本减去均值，得到中心化后的样本矩阵
 \[
-X_c=
+X_c=X-\mu\mathbf{1}^T=
 \begin{pmatrix}
 -2&-1&-1&0&1&3\\
 -3&-1&0&0&1&3
 \end{pmatrix}.
 \]
-协方差矩阵可取
+
+\textbf{计算协方差矩阵。}
+
+协方差矩阵定义为 $\Sigma=\dfrac{1}{n}X_cX_c^T$。先计算 $X_cX_c^T$：
 \[
-    \Sigma=\frac1{6}X_cX_c^T
-    =
-    \begin{pmatrix}
-    2.6667 & 2.8333\\
-    2.8333 & 3.3333
-    \end{pmatrix}.
+X_cX_c^T=
+\begin{pmatrix}
+16 & 17\\
+17 & 20
+\end{pmatrix}.
 \]
-其特征值为
+因此协方差矩阵为
 \[
-    \lambda_1=5.8529,\qquad \lambda_2=0.1471.
+\Sigma=\frac{1}{6}
+\begin{pmatrix}
+16 & 17\\
+17 & 20
+\end{pmatrix}
+=
+\begin{pmatrix}
+\dfrac{8}{3} & \dfrac{17}{6}\\[6pt]
+\dfrac{17}{6} & \dfrac{10}{3}
+\end{pmatrix}
+\approx
+\begin{pmatrix}
+2.6667 & 2.8333\\
+2.8333 & 3.3333
+\end{pmatrix}.
 \]
-最大特征值对应的单位特征向量可取
+
+\textbf{求解特征值。}
+
+特征方程为 $\det(\Sigma-\lambda I)=0$，即
 \[
-    u_1=(0.6645,0.7473)^T.
+\left(\frac{8}{3}-\lambda\right)\left(\frac{10}{3}-\lambda\right)-\left(\frac{17}{6}\right)^2=0.
 \]
-因此一维 PCA 主分量方向为 $u_1$，对应的一维投影坐标为
+解得
 \[
-    X_c^Tu_1=(-3.5709,-1.4118,-0.6645,0,1.4118,4.2354)^T.
+\lambda=\frac{18\pm\sqrt{293}}{6}.
 \]
-方差贡献率为
+数值结果为
 \[
-    \frac{\lambda_1}{\lambda_1+\lambda_2}
-    =0.9755,
+\lambda_1=\frac{18+\sqrt{293}}{6}\approx5.8529,\qquad
+\lambda_2=\frac{18-\sqrt{293}}{6}\approx0.1471.
 \]
-约为 $97.55\%$。
+
+\textbf{求解主分量方向（最大特征值对应的特征向量）。}
+
+将 $\lambda_1\approx5.8529$ 代入 $(\Sigma-\lambda_1 I)u=0$，取第一个方程
+\[
+\left(\frac{8}{3}-\lambda_1\right)u_1+\frac{17}{6}u_2=0
+\quad\Rightarrow\quad
+u_1=\frac{17/6}{\lambda_1-8/3}u_2\approx0.8893\,u_2.
+\]
+归一化条件 $u_1^2+u_2^2=1$ 给出
+\[
+(0.8893^2+1)u_2^2=1\quad\Rightarrow\quad
+u_2=\frac{1}{\sqrt{1+0.8893^2}}\approx0.7473,\quad
+u_1\approx0.6645.
+\]
+因此一维 PCA 主分量方向为
+\[
+u_1=\begin{pmatrix}0.6645\\0.7473\end{pmatrix}.
+\]
+
+\textbf{计算投影坐标。}
+
+将中心化样本投影到主分量方向上，得到一维坐标
+\[
+z=X_c^Tu_1=
+\begin{pmatrix}
+-2\times0.6645+(-3)\times0.7473\\
+-1\times0.6645+(-1)\times0.7473\\
+-1\times0.6645+0\times0.7473\\
+0\times0.6645+0\times0.7473\\
+1\times0.6645+1\times0.7473\\
+3\times0.6645+3\times0.7473
+\end{pmatrix}
+=
+\begin{pmatrix}
+-3.5709\\-1.4118\\-0.6645\\0\\1.4118\\4.2354
+\end{pmatrix}.
+\]
+
+\textbf{计算方差贡献率。}
+
+方差贡献率表示主分量解释的方差占总方差的比例：
+\[
+\text{方差贡献率}=\frac{\lambda_1}{\lambda_1+\lambda_2}
+=\frac{5.8529}{5.8529+0.1471}
+=\frac{5.8529}{6}
+\approx0.9755.
+\]
+即第一主分量解释了约 $97.55\%$ 的总方差，说明用一维主分量就能很好地表示原始二维数据。
 
 \section{第 8 章：聚类}
 
