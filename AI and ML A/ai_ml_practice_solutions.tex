@@ -1202,6 +1202,10 @@ z=X_c^Tu_1=
 解释以下概念：Jaccard 系数、密度可达。
 \end{ejer}
 
+\begin{comentarios}[DBSCAN]
+    Density-Based Spatial Clustering of Applications with Noise, 基于密度的带噪声应用空间聚类
+\end{comentarios}
+
 \begin{description}[leftmargin=6em,style=nextline]
     \item[Jaccard 系数]
     用于衡量两个集合相似度：
@@ -1218,7 +1222,7 @@ z=X_c^Tu_1=
 \qtitle{二、k-means 与 kNN}
 
 \begin{ejer}[k-means 与 kNN]
-k-means 算法与 kNN 方法中的 $k$ 分别指什么？这两个方法的主要区别是什么？
+k-means 算法与 kNN 方法的 $k$ 分别指什么？这两个方法的主要区别是什么？
 \end{ejer}
 
 k-means 中的 $k$ 表示要划分出的簇数；kNN 中的 $k$ 表示预测时参与投票或平均的最近邻样本个数。
@@ -1229,44 +1233,120 @@ k-means 是无监督聚类算法，没有训练标签，目标是最小化簇内
 \qtitle{四、k-means 聚类}
 
 \begin{ejer}[k-means 聚类]
-给定样本集合
-\[
-X=\begin{pmatrix}
-0&0&1&5&5\\
-2&0&0&0&2
-\end{pmatrix},
-\]
-用 k-means 将样本聚为两类，初始质心为 $(0,0)^T$、$(5,2)^T$。
+给定含有 5 个样本的集合：
+$$
+X=\begin{bmatrix}
+0 & 0 & 1 & 5 & 5\\
+2 & 0 & 0 & 0 & 2
+\end{bmatrix}
+$$
+试用 k-means 聚类算法将样本聚到两个类中（$k=2$），选 $(0,0)^T$、$(5,2)^T$ 为初始质心。
 \end{ejer}
 
-5 个样本为
+\textbf{样本与初始质心。}
+
+从矩阵 $X$ 中读出 5 个样本（按列）：
 \[
-    (0,2)^T,\ (0,0)^T,\ (1,0)^T,\ (5,0)^T,\ (5,2)^T.
+    x_1=(0,2)^T,\quad x_2=(0,0)^T,\quad x_3=(1,0)^T,\quad x_4=(5,0)^T,\quad x_5=(5,2)^T.
 \]
-初始质心
+初始质心为
 \[
     \mu_1^{(0)}=(0,0)^T,\qquad \mu_2^{(0)}=(5,2)^T.
 \]
-第一次分配时，前三个样本距离 $\mu_1$ 更近，后两个样本距离 $\mu_2$ 更近，因此
+
+\textbf{第一轮：分配样本到最近质心。}
+
+计算每个样本到两个质心的欧氏距离：
+
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+样本 & 坐标 & $d(x_i,\mu_1^{(0)})$ & $d(x_i,\mu_2^{(0)})$ & 分配结果\\
+\midrule
+$x_1$ & $(0,2)^T$ & $\sqrt{0^2+2^2}=2$ & $\sqrt{5^2+0^2}=5$ & $C_1$\\[4pt]
+$x_2$ & $(0,0)^T$ & $\sqrt{0^2+0^2}=0$ & $\sqrt{5^2+2^2}=\sqrt{29}$ & $C_1$\\[4pt]
+$x_3$ & $(1,0)^T$ & $\sqrt{1^2+0^2}=1$ & $\sqrt{4^2+2^2}=2\sqrt{5}$ & $C_1$\\[4pt]
+$x_4$ & $(5,0)^T$ & $\sqrt{5^2+0^2}=5$ & $\sqrt{0^2+2^2}=2$ & $C_2$\\[4pt]
+$x_5$ & $(5,2)^T$ & $\sqrt{5^2+2^2}=\sqrt{29}$ & $\sqrt{0^2+0^2}=0$ & $C_2$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+分配结果：
 \[
-    C_1=\{(0,2)^T,(0,0)^T,(1,0)^T\},\qquad
-    C_2=\{(5,0)^T,(5,2)^T\}.
+    C_1=\{x_1,x_2,x_3\}=\{(0,2)^T,(0,0)^T,(1,0)^T\},\qquad
+    C_2=\{x_4,x_5\}=\{(5,0)^T,(5,2)^T\}.
 \]
-更新质心：
+
+\textbf{第一轮：更新质心。}
+
+新质心为各簇样本的均值：
 \[
-    \mu_1^{(1)}=\left(\frac13,\frac23\right)^T,\qquad
-    \mu_2^{(1)}=(5,1)^T.
+    \mu_1^{(1)}=\frac{1}{3}\left[(0,2)^T+(0,0)^T+(1,0)^T\right]
+    =\left(\frac{0+0+1}{3},\frac{2+0+0}{3}\right)^T
+    =\left(\frac{1}{3},\frac{2}{3}\right)^T,
 \]
-用新质心重新分配，样本归属不变，因此算法收敛。最终聚类结果即上面的 $C_1,C_2$。
+\[
+    \mu_2^{(1)}=\frac{1}{2}\left[(5,0)^T+(5,2)^T\right]
+    =\left(\frac{5+5}{2},\frac{0+2}{2}\right)^T
+    =\left(5,1\right)^T.
+\]
+
+\textbf{第二轮：用新质心重新分配。}
+
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+样本 & 坐标 & $d(x_i,\mu_1^{(1)})$ & $d(x_i,\mu_2^{(1)})$ & 分配结果\\
+\midrule
+$x_1$ & $(0,2)^T$ & $\sqrt{(0-\frac{1}{3})^2+(2-\frac{2}{3})^2}=\frac{\sqrt{17}}{3}$ & $\sqrt{(0-5)^2+(2-1)^2}=\sqrt{26}$ & $C_1$\\[4pt]
+$x_2$ & $(0,0)^T$ & $\sqrt{(0-\frac{1}{3})^2+(0-\frac{2}{3})^2}=\frac{\sqrt{5}}{3}$ & $\sqrt{(0-5)^2+(0-1)^2}=\sqrt{26}$ & $C_1$\\[4pt]
+$x_3$ & $(1,0)^T$ & $\sqrt{(1-\frac{1}{3})^2+(0-\frac{2}{3})^2}=\frac{2\sqrt{2}}{3}$ & $\sqrt{(1-5)^2+(0-1)^2}=\sqrt{17}$ & $C_1$\\[4pt]
+$x_4$ & $(5,0)^T$ & $\sqrt{(5-\frac{1}{3})^2+(0-\frac{2}{3})^2}=\frac{10\sqrt{2}}{3}$ & $\sqrt{(5-5)^2+(0-1)^2}=1$ & $C_2$\\[4pt]
+$x_5$ & $(5,2)^T$ & $\sqrt{(5-\frac{1}{3})^2+(2-\frac{2}{3})^2}=\frac{\sqrt{212}}{3}$ & $\sqrt{(5-5)^2+(2-1)^2}=1$ & $C_2$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+分配结果与第一轮完全相同，质心不再变化，算法收敛。
+
+\textbf{最终聚类结果。}
+
+\[
+    C_1=\{(0,2)^T,(0,0)^T,(1,0)^T\},\quad \mu_1=\left(\frac{1}{3},\frac{2}{3}\right)^T,
+\]
+\[
+    C_2=\{(5,0)^T,(5,2)^T\},\quad \mu_2=(5,1)^T.
+\]
 
 \qtitle{五、聚类算法选择}
 
 \begin{ejer}[聚类算法选择]
-对于下图所示的数据分布，判断宜采用哪类聚类算法，说明其基本原理、两个重要参数及参数取值对结果的影响。
+对于下图的数据分类，宜采用什么类聚类算法？其基本原理是什么？该算法中有哪两个重要参数？这两个参数的取值对聚类的结果有什么影响？
 \begin{center}
     \includegraphics[width=0.55\linewidth]{ai_ml_practice/images/ch08_q05_clustering_figure.png}
 \end{center}
 \end{ejer}
+
+\begin{comentarios}[DBSCAN的几个概念]
+\begin{enumerate}
+    \item \textbf{核心点}。如果一个点的 $\varepsilon$-邻域内点数不少于 $\text{MinPts}$，它就是核心点。
+
+    \item \textbf{边界点}。如果一个点本身不是核心点，但落在某个核心点的 $\varepsilon$-邻域内，它就是边界点。
+
+    \item \textbf{噪声点}。如果一个点既不是核心点，也不属于任何核心点的邻域，它就是噪声点。
+
+    \item \textbf{密度直达}。如果点 $q$ 在核心点 $p$ 的 $\varepsilon$-邻域内，则称 $q$ 由 $p$ 密度直达。
+    注意，密度直达通常不是对称的，因为 $p$ 必须是核心点，而 $q$ 不一定是核心点。
+
+    \item \textbf{密度可达}。如果存在一个点序列
+    \[
+        p_1, p_2, \cdots, p_n
+    \]
+    其中 $p_1 = p$，$p_n = q$，并且 $p_{i+1}$ 由 $p_i$ 密度直达，
+    那么称 $q$ 从 $p$ 密度可达。
+\end{enumerate}
+\end{comentarios}
 
 图中簇呈非凸、弯曲形状，并含有离群噪声点，不适合用 k-means 这类偏向球形簇的算法。
 宜采用\textbf{密度聚类}，典型算法为 DBSCAN。
