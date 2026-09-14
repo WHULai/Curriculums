@@ -1,0 +1,493 @@
+% !TeX program = xelatex
+\documentclass[a4paper,10pt,fontset=none]{ctexart}
+\newcommand{\bookname}{紧凑公式记忆册}
+\usepackage{review-common}
+\hypersetup{pdftitle={材料力学：紧凑公式记忆册},pdfauthor={根据魏崃课程笔记整理}}
+\begin{document}
+\fontsize{9.5}{13}\selectfont
+\pagelead{公式记忆册\quad 01 / 基础与截面}{4 页 A4 · 先识别模型，再取内力，最后检查适用条件与单位}
+\begin{leftcol}
+\block{01\quad 符号、单位与总路线}
+外力 $\to$ 内力 $(N,V,M,T)$ $\to$ 应力/位移 $\to$ 强度、刚度、稳定。这里 $N=F_N$，$V=F_S$。
+\[
+1\unit{MPa}=1\unit{N/mm^2},\quad 1\unit{GPa}=10^3\unit{MPa}
+\]
+\[
+1\unit{kN\cdot m}=10^6\unit{N\cdot mm},\quad 1\unit{cm^4}=10^4\unit{mm^4}
+\]
+推荐统一用 N、mm、MPa；$I$ 用 $\mathrm{mm^4}$，$W$ 用 $\mathrm{mm^3}$。角度积分结果是 rad。
+
+基本假设：连续、均匀、各向同性、小变形。下列弹性公式通常要求线弹性、小变形；应力集中的局部另论。
+\block{02\quad 轴向拉压}
+\[
+\boxed{\sigma=\frac{N}{A}},\qquad \varepsilon=\frac{\Delta l}{l},\qquad \sigma=E\varepsilon
+\]
+\[
+\Delta l=\int_0^l\frac{N(x)}{E(x)A(x)}\dd x
+=\sum_i\frac{N_i l_i}{E_iA_i}
+\]
+拉力、伸长为正；压缩为负。变截面按各段 $|N_i|/A_i$ 比较危险程度。
+\[
+\max_i\frac{|N_i|}{A_i}\le[\sigma],\qquad
+A\ge\frac{|N|}{[\sigma]}
+\]
+若 $N_i=c_i F$，则 $[F]=\min_i A_i[\sigma]_i/|c_i|$。
+\[
+\nu=-\frac{\varepsilon_{\text{横}}}{\varepsilon_{\text{纵}}},\qquad E=2G(1+\nu)
+\]
+塑性指标（$l',A'$ 为断后测量值）：
+\[
+\delta=\frac{l'-l}{l}\times100\%,\qquad
+\psi=\frac{A-A'}{A}\times100\%
+\]
+低碳钢曲线：比例 $\to$ 屈服 $\to$ 强化 $\to$ 颈缩；记住 $\sigma_p,\sigma_e,\sigma_s,\sigma_b$ 的含义。
+\block{03\quad 圆轴扭转}
+\[
+M_e=9.55\frac{P}{n}\unit{kN\cdot m}
+\quad(P:\mathrm{kW},\ n:\mathrm{r/min})
+\]
+\[
+\boxed{\tau_\rho=\frac{T\rho}{I_p}},\qquad
+\tau_{\max}=\frac{|T|}{W_p},\qquad W_p=\frac{I_p}{R}
+\]
+\[
+\gamma=\frac{\tau}{G},\quad
+\varphi'=\frac{T}{GI_p},\quad
+\varphi=\int\frac{T}{GI_p}\dd x=\sum_i\frac{T_il_i}{G_iI_{p,i}}
+\]
+\[
+\frac{|T|}{W_p}\le[\tau],\qquad
+\frac{|T|}{GI_p}\le[\varphi']_{\text{rad/长度}}
+\]
+用 ${}^\circ/\mathrm m$ 校核时，先使长度单位为 m，再乘 $180/\pi$。
+\pitfall{先画扭矩图，再逐段算 $|T_i|/W_{p,i}$；扭矩最大的段未必最危险。圆轴公式不能直接套到非圆截面。}
+\end{leftcol}
+\begin{rightcol}
+\block{04\quad 截面几何量：先形心，再惯性矩}
+\[
+A=\sum A_i,\quad
+\bar y=\frac{\sum A_i y_i}{A},\quad
+\bar z=\frac{\sum A_i z_i}{A}
+\]
+\[
+S_z=\int_A y\dd A,\quad S_y=\int_A z\dd A
+\]
+\[
+I_z=\int_A y^2\dd A,\quad I_y=\int_A z^2\dd A,\quad
+I_{yz}=\int_A yz\dd A
+\]
+\[
+I_p=I_y+I_z,\qquad i_y=\sqrt{I_y/A},\quad i_z=\sqrt{I_z/A}
+\]
+挖孔的面积、面积矩、惯性矩均作代数减项。
+
+\textbf{平行移轴（用坐标名避免混淆）：}
+\[
+\boxed{I_y=I_{y_c}+A(\Delta z)^2},\quad
+I_z=I_{z_c}+A(\Delta y)^2
+\]
+\[
+I_{yz}=I_{y_cz_c}+A\Delta y\Delta z
+\]
+$\Delta y,\Delta z$ 为形心相对新原点的坐标，惯性积中须带符号。到哪条轴，就取垂直于该轴的距离。
+\block{05\quad 常用截面速查}
+\textbf{矩形}：宽 $b$ 沿 $z$，高 $h$ 沿 $y$。
+\[
+A=bh,\quad I_z=\frac{bh^3}{12},\quad I_y=\frac{hb^3}{12}
+\]
+\[
+W_z=\frac{bh^2}{6},\quad W_y=\frac{hb^2}{6},\quad
+i_z=\frac{h}{\sqrt{12}},\ i_y=\frac{b}{\sqrt{12}}
+\]
+\textbf{实心圆}：直径 $d$。
+\[
+A=\frac{\pi d^2}{4},\quad I=\frac{\pi d^4}{64},\quad I_p=\frac{\pi d^4}{32}
+\]
+\[
+W=\frac{\pi d^3}{32},\quad W_p=\frac{\pi d^3}{16}=2W,\quad i=\frac d4
+\]
+\textbf{空心圆}：外径 $D$、内径 $d$，$\eta=d/D$。
+\[
+A=\frac{\pi D^2}{4}(1-\eta^2),\quad
+I=\frac{\pi D^4}{64}(1-\eta^4),\quad I_p=2I
+\]
+\[
+W=\frac{\pi D^3}{32}(1-\eta^4),\quad W_p=2W,\quad
+i=\frac{\sqrt{D^2+d^2}}4
+\]
+\block{06\quad 转轴与主惯性矩}
+令新坐标 $y_1=y\cos\alpha+z\sin\alpha$，
+$z_1=-y\sin\alpha+z\cos\alpha$，则
+\[
+\begin{aligned}
+I_{y_1}&=\frac{I_y+I_z}{2}+\frac{I_y-I_z}{2}\cos2\alpha-I_{yz}\sin2\alpha,\\
+I_{z_1}&=\frac{I_y+I_z}{2}-\frac{I_y-I_z}{2}\cos2\alpha+I_{yz}\sin2\alpha,\\
+I_{y_1z_1}&=\frac{I_y-I_z}{2}\sin2\alpha+I_{yz}\cos2\alpha.
+\end{aligned}
+\]
+\[
+\tan2\alpha_0=-\frac{2I_{yz}}{I_y-I_z}
+\]
+\[
+I_{\max,\min}=\frac{I_y+I_z}{2}\pm\sqrt{\left(\frac{I_y-I_z}{2}\right)^2+I_{yz}^2}
+\]
+以上在形心处计算即为形心主轴、主惯性矩。对称轴是主轴；代回 $I_{y_1z_1}=0$ 核对方向。
+\end{rightcol}
+
+\clearpage
+\pagelead{公式记忆册\quad 02 / 梁与位移}{正弯矩取下缘受拉；梁的挠度 $w$ 取向下为正，$x$ 沿梁向右}
+\begin{leftcol}
+\block{07\quad 剪力、弯矩与荷载图}
+本页用向上为正的分布荷载 $q_s(x)$。题图若给向下荷载大小 $q>0$，代入 $q_s=-q$。
+\[
+\boxed{V'=q_s,\qquad M'=V,\qquad M''=q_s}
+\]
+\[
+V(b)-V(a)=\int_a^bq_s\dd x,\quad
+M(b)-M(a)=\int_a^bV\dd x
+\]
+\par\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+荷载情形 & 图形特征\\\midrule
+无分布荷载 & $V$ 常量，$M$ 直线\\
+均布荷载 & $V$ 斜直线，$M$ 抛物线\\
+集中力 $P$ & $V$ 跳变 $P$（向上为正），$M$ 连续\\
+集中力偶 $C$ & $V$ 不变，$\Delta M=-C$（逆时针为正）\\
+\bottomrule
+\end{tabularx}\par
+连续区段内 $V=0$ 是 $M$ 极值候选；还要检查端点、集中荷载点、截面突变处。
+\block{08\quad 弯曲正应力}
+若截面 $y$ 向下、$z$ 为中性轴，正弯矩使下缘受拉：
+\[
+\boxed{\sigma=\frac{My}{I_z}},\qquad
+W_z=\frac{I_z}{|y|_{\max}},\qquad \frac{|M|}{W_z}\le[\sigma]
+\]
+适用于关于形心主轴的平面弯曲；$I_z$ 是整个截面对中性轴的惯性矩。
+
+\textbf{非对称截面 / 脆性材料：}
+\[
+\sigma_{t,\max}=\frac{|M|y_t}{I_z}\le[\sigma_t],\qquad
+|\sigma_{c,\max}|=\frac{|M|y_c}{I_z}\le[\sigma_c]
+\]
+$y_t,y_c$ 为该弯矩方向下受拉、受压最远点的距离；弯矩换号，两侧角色交换。
+\pitfall{正负弯矩极值截面都查。不能只看 $|M|_{\max}$，也不能把两侧的 $y$ 用成同一个数。}
+\block{09\quad 弯曲切应力}
+\[
+\boxed{\tau(y)=\frac{V S_z^*(y)}{I_z b(y)}},\qquad
+\max_{x,y}\left|\frac{V(x)S_z^*(y)}{I_zb(y)}\right|\le[\tau]
+\]
+$S_z^*$：所考察水平线一侧面积对中性轴的面积矩；$b(y)$：该高度的有效宽度。对称箱梁的两腹板共同受剪时 $b=2t$。
+\[
+\begin{array}{ll}
+\text{矩形：}&\tau_{\max}=3|V|/(2A),\\
+\text{实心圆：}&\tau_{\max}=4|V|/(3A),\\
+\text{薄壁圆环：}&\tau_{\max}\approx2|V|/A,\\
+\text{工字形薄腹板：}&\tau_{\max}\approx |V|/A_w.
+\end{array}
+\]
+矩形：$\tau(y)=\dfrac{3V}{2A}(1-4y^2/h^2)$，中性轴最大，顶底边为零。短梁、薄腹板、支座附近要查切应力。
+\end{leftcol}
+\begin{rightcol}
+\block{10\quad 积分法求挠度和转角}
+\[
+\boxed{\theta=w',\qquad EI\,w''=-M(x)}
+\]
+等 $EI$ 时，可直接把任意积分常数写在右侧：
+\[
+EI\,w'=-\int M\dd x+C
+\]
+\[
+EI\,w=-\iint M\dd x\dd x+Cx+D
+\]
+\par\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+位置 & 条件\\\midrule
+固定端 & $w=0,\ \theta=0$\\
+无沉降支座 & $w=0$；端部铰支通常 $M=0$\\
+自由端 & 无端力、端偶时 $V=0,\ M=0$\\
+普通分段连接 & $w_-=w_+,\ \theta_-=\theta_+$\\
+内部铰 & $w$ 连续；转角可不连续，$M=0$\\
+对称变形中点 & $\theta=0$\\
+\bottomrule
+\end{tabularx}\par
+\pitfall{中间支座处的 $M$ 未必为零。连续条件适用于没有内铰的连接；分段积分常数分别设。}
+\block{11\quad 超静定、温度和装配}
+\begin{answerbox}
+平衡方程 + 几何协调 + 物理关系。
+\end{answerbox}
+轴向杆：$\Delta_i=N_i l_i/(E_iA_i)$；刚梁小转动：$v(x)=v_0+\theta x$。
+
+杆伸长 = 端点相对位移在杆轴方向的投影；若杆与竖直夹角 $\alpha$，且端点只有竖直位移 $v$，则 $\Delta l=v\cos\alpha$。
+\[
+\Delta=\sum_i\frac{N_i l_i}{E_iA_i}
++\sum_i\alpha_{T,i}\Delta T_i l_i
+\]
+均匀杆两端完全固定且均匀变温：
+\[
+\boxed{\sigma_T=-E\alpha_T\Delta T}
+\]
+升温受压；降温受拉。装配误差也写入总位移协调式，先定义误差方向，再决定正负号。
+
+力法（单个多余力 $X$）：$\delta_{11}X+\Delta_{1P}=\Delta_{\text{规定}}$。
+\block{12\quad 能量法 / 卡氏第二定理}
+\textbf{为笔记例 8 补齐的通式：}忽略剪切能时
+\[
+U=\sum\int\left(\frac{N^2}{2EA}+\frac{M^2}{2EI}+\frac{T^2}{2GI_p}\right)\dd s
+\]
+\[
+\boxed{\Delta_{P_k}=\frac{\partial U}{\partial P_k}},\qquad
+\theta_{C_k}=\frac{\partial U}{\partial C_k}
+\]
+只计弯曲时，
+\[
+\Delta_{P_k}=\sum\int\frac{M}{EI}\frac{\partial M}{\partial P_k}\dd s
+\]
+单位荷载法：$\Delta=\sum\int M\bar M/(EI)\dd s$，$\bar M$ 为沿目标位移方向施加单位力产生的弯矩。
+\pitfall{两个荷载即使数值都叫 $F$，求某点位移也要先把该点荷载独立记为 $F_A$；偏导完才令 $F_A=F$。}
+\end{rightcol}
+
+\clearpage
+\pagelead{公式记忆册\quad 03 / 应力状态与强度}{本页斜截面公式沿用讲义约定：正应力拉为正，$x$ 面切应力顺时针为正}
+\begin{leftcol}
+\block{13\quad 斜截面应力与应力圆}
+$\alpha$ 从 $+x$ 逆时针量到截面\textbf{外法线}。令
+\[
+C=\frac{\sigma_x+\sigma_y}{2},\quad D=\frac{\sigma_x-\sigma_y}{2},\quad
+R=\sqrt{D^2+\tau_x^2}
+\]
+\[
+\boxed{\sigma_\alpha=C+D\cos2\alpha-\tau_x\sin2\alpha}
+\]
+\[
+\boxed{\tau_\alpha=D\sin2\alpha+\tau_x\cos2\alpha}
+\]
+应力圆：$(\sigma_\alpha-C)^2+\tau_\alpha^2=R^2$。
+\[
+\sigma_{\pm}=C\pm R,\quad
+\tan2\alpha_0=-\frac{2\tau_x}{\sigma_x-\sigma_y}
+\]
+稳妥的最大主应力方向（模 $180^\circ$）：
+\[
+\alpha_+=\frac12\operatorname{atan2}(-2\tau_x,\sigma_x-\sigma_y),\quad
+\alpha_-=\alpha_++90^\circ
+\]
+若 $R=0$，面内各方向均为主方向。只用 $\tan$ 时要代回 $\sigma_\alpha$ 判断对应哪一个主应力。
+\begin{answerbox}
+平面应力的三个主应力：\textbf{把 $\sigma_+,\sigma_-,0$ 一起排序}，得到 $\sigma_1\ge\sigma_2\ge\sigma_3$。
+\[
+\tau_{\max,\text{面内}}=R,\qquad
+\tau_{\max,\text{空间}}=\frac{\sigma_1-\sigma_3}{2}
+\]
+\end{answerbox}
+\textbf{特例：}单向拉伸 $\sigma>0$，
+\[
+\sigma_\alpha=\sigma\cos^2\alpha,\quad
+\tau_\alpha=\frac\sigma2\sin2\alpha,\quad \tau_{\max}=\frac\sigma2
+\]
+纯剪切：\par
+$\sigma_\alpha=-\tau_x\sin2\alpha$，$\tau_\alpha=\tau_x\cos2\alpha$。\par
+主应力为 $|\tau_x|,0,-|\tau_x|$。
+\block{14\quad 广义胡克定律}
+\[
+\begin{aligned}
+\varepsilon_x&=\frac{\sigma_x-\nu(\sigma_y+\sigma_z)}{E},\\
+\varepsilon_y&=\frac{\sigma_y-\nu(\sigma_z+\sigma_x)}{E},\\
+\varepsilon_z&=\frac{\sigma_z-\nu(\sigma_x+\sigma_y)}{E}.
+\end{aligned}
+\]
+\[
+\gamma_{xy}=\frac{\tau_{xy}}G,\quad
+\gamma_{yz}=\frac{\tau_{yz}}G,\quad
+\gamma_{zx}=\frac{\tau_{zx}}G,\quad E=2G(1+\nu)
+\]
+这里 $\tau_{xy},\gamma_{xy}$ 使用相互一致的张量/工程剪应变符号；$\tau_x$ 是上方讲义的面切应力符号，不能未经换向直接混用。
+
+平面应力：$\sigma_z=\tau_{yz}=\tau_{zx}=0$，但
+\[
+\varepsilon_z=-\frac{\nu(\sigma_x+\sigma_y)}E\ \text{一般不为零}.
+\]
+\block{15\quad 连接件：剪切、挤压、净截面}
+\[
+\tau=\frac{F_s}{A_s}\le[\tau],\quad
+\sigma_{bs}=\frac{F_{bs}}{A_{bs}}\le[\sigma_{bs}],\quad
+\sigma=\frac{F}{A_{\text{net}}}\le[\sigma]
+\]
+单销 $m$ 个剪切面：$A_s=m\pi d^2/4$；挤压投影面积 $A_{bs}=dt$；单孔板净面积 $(b-d)t$。不同板件的挤压力与板厚逐个匹配。
+\end{leftcol}
+\begin{rightcol}
+\block{16\quad 四个强度理论}
+先排序 $\sigma_1\ge\sigma_2\ge\sigma_3$，再用 $\sigma_r\le[\sigma]$。
+
+\textbf{第一：最大拉应力（脆性拉断）}
+\[
+\sigma_{r1}=\sigma_1
+\]
+拉压许用应力不同且题目采用最大正应力准则时，分别查 $\sigma_1\le[\sigma_t]$、$-\sigma_3\le[\sigma_c]$。
+
+\textbf{第二：最大伸长线应变}
+\[
+\sigma_{r2}=\sigma_1-\nu(\sigma_2+\sigma_3)
+\]
+\textbf{第三：最大切应力（Tresca，塑性屈服）}
+\[
+\sigma_{r3}=\sigma_1-\sigma_3
+\]
+\textbf{第四：形状改变比能（von Mises）}
+\[
+\sigma_{r4}=\sqrt{\frac{(\sigma_1-\sigma_2)^2+(\sigma_2-\sigma_3)^2+(\sigma_3-\sigma_1)^2}{2}}
+\]
+平面应力直接式：
+\[
+\sigma_{r4}=\sqrt{\sigma_x^2+\sigma_y^2-\sigma_x\sigma_y+3\tau_x^2}
+\]
+\block{17\quad 组合变形：同一点叠加}
+形心主轴弯曲与轴向拉压组合：
+\[
+\sigma(y,z)=\frac NA\ \pm\frac{M_z y}{I_z}\ \pm\frac{M_y z}{I_y}
+\]
+弯曲项符号由该点受拉/受压确定；有多种剪应力时也按方向在同一点叠加。
+
+仅有一个正应力 $\sigma$ 和一个剪应力 $\tau$ 时：
+\[
+\sigma_\pm=\frac\sigma2\pm\sqrt{\left(\frac\sigma2\right)^2+\tau^2}
+\]
+\[
+\boxed{\sigma_{r3}=\sqrt{\sigma^2+4\tau^2}},\qquad
+\boxed{\sigma_{r4}=\sqrt{\sigma^2+3\tau^2}}
+\]
+圆轴弯扭：$M=\sqrt{M_y^2+M_z^2}$，外缘
+\[
+\sigma=\frac MW,\quad \tau=\frac{T}{2W}
+\]
+\[
+\sigma_{r3}=\frac{\sqrt{M^2+T^2}}W,\quad
+\sigma_{r4}=\frac{\sqrt{M^2+0.75T^2}}W
+\]
+实心圆按第三理论设计：
+\[
+d\ge\left[\frac{32\sqrt{M^2+T^2}}{\pi[\sigma]}\right]^{1/3}
+\]
+\pitfall{内力 $M,T$ 必须取同一截面；不能把不同位置的最大应力拼成一个不存在的危险点。}
+\end{rightcol}
+
+\clearpage
+\pagelead{公式记忆册\quad 04 / 稳定与考前速检}{主线覆盖原笔记九章；能量通式、常用挠度和检查式为配合例题补充}
+\begin{leftcol}
+\block{18\quad 压杆稳定：先柔度，再选公式}
+\[
+l_0=\mu l,\quad i=\sqrt{I/A},\quad
+\boxed{\lambda=\frac{\mu l}{i}}
+\]
+\par\begin{tabularx}{\linewidth}{@{}Xcccc@{}}
+\toprule
+端部 & 铰--铰 & 固--自由 & 固--铰 & 固--固\\\midrule
+$\mu$ & $1$ & $2$ & $\approx0.7$ & $0.5$\\\bottomrule
+\end{tabularx}\par
+\[
+\boxed{F_{cr}=\frac{\pi^2EI}{(\mu l)^2}},\qquad
+\sigma_{cr}=\frac{\pi^2E}{\lambda^2}
+\]
+欧拉式适用：理想轴心细长杆、弹性屈曲，要求
+\[
+\lambda\ge\lambda_p,\qquad
+\boxed{\lambda_p=\pi\sqrt{E/\sigma_p}}
+\]
+\par\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+柔度范围 & 处理方式\\\midrule
+$\lambda\le\lambda_0$ & 短粗杆，以压缩强度控制\\
+$\lambda_0<\lambda<\lambda_p$ & 中长杆，用材料经验临界应力关系\\
+$\lambda\ge\lambda_p$ & 细长杆，用欧拉公式\\\bottomrule
+\end{tabularx}\par
+若题目给直线式 $\sigma_{cr}=a-b\lambda$，仅在给定适用区间使用；$a,b,\lambda_0$ 不能自行套成通用常数。
+\block{19\quad 稳定校核与多方向失稳}
+\[
+[F]_{st}=\frac{F_{cr}}{n_{st}},\quad
+[\sigma]_{st}=\frac{\sigma_{cr}}{n_{st}},\quad
+\boxed{F\le[F]_{st}}
+\]
+或使用课程给定稳定系数表：
+\[
+\frac FA\le\varphi[\sigma]
+\]
+两种方法按题给数据选用，不重复乘除安全因数。
+
+\textbf{若两个方向端部约束不同：}
+\[
+\lambda_y=\frac{\mu_y l}{i_y},\qquad
+\lambda_z=\frac{\mu_z l}{i_z}
+\]
+分别判断并比较 $F_{cr,y},F_{cr,z}$，较小值控制。只有相当长度相同，才能直接说 $I_{\min}$ 的方向先失稳。
+
+\textbf{实心圆轴的速算式：}
+\[
+i=\frac d4,\quad \lambda=\frac{4\mu l}{d},\quad
+F_{cr}=\frac{\pi^3Ed^4}{64(\mu l)^2}
+\]
+\[
+d\ge\left[\frac{64n_{st}F(\mu l)^2}{\pi^3E}\right]^{1/4}
+\]
+用最后一式试算后，必须重新检查 $\lambda\ge\lambda_p$。尺寸改变会改变杆的类别。
+\block{20\quad 强度、刚度、稳定一起取最严}
+若各项内力/位移与外荷载 $F$ 线性对应：
+\[
+[F]=\min\{[F]_{\text{强度}},[F]_{\text{刚度}},[F]_{\text{稳定}}\}
+\]
+许用应力、许用位移和临界荷载各有含义；临界荷载不能直接当作许可荷载。
+\end{leftcol}
+\begin{rightcol}
+\block{21\quad 常用挠度：可用于验算的补充式}
+均为等截面、线弹性、忽略剪切变形的梁，以下给\textbf{位移大小}，荷载向下则挠度向下。
+
+\textbf{悬臂梁，自由端集中力 $F$：}
+\[
+|w_{\text{端}}|=\frac{Fl^3}{3EI},\qquad
+|\theta_{\text{端}}|=\frac{Fl^2}{2EI}
+\]
+\textbf{悬臂梁，全跨均布荷载 $q$：}
+\[
+|w_{\text{端}}|=\frac{ql^4}{8EI},\qquad
+|\theta_{\text{端}}|=\frac{ql^3}{6EI}
+\]
+\textbf{悬臂梁，自由端力偶 $M_0$：}
+\[
+|w_{\text{端}}|=\frac{|M_0|l^2}{2EI},\qquad
+|\theta_{\text{端}}|=\frac{|M_0|l}{EI}
+\]
+\textbf{简支梁，跨中集中力 $F$：}
+\[
+|w_{\text{中}}|=\frac{Fl^3}{48EI},\qquad
+|\theta_{\text{支座}}|=\frac{Fl^2}{16EI}
+\]
+\textbf{简支梁，全跨均布荷载 $q$：}
+\[
+|w_{\text{中}}|=\frac{5ql^4}{384EI},\qquad
+|\theta_{\text{支座}}|=\frac{ql^3}{24EI}
+\]
+刚度条件：$|w|_{\max}\le[w]$，$|\theta|_{\max}\le[\theta]$。叠加时先统一方向，不把位移的绝对值直接相加。
+\block{22\quad 见题就写的第一行}
+\par\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+关键词 & 第一步\\\midrule
+阶梯轴 & 分段截面法，列 $T_i,d_i$\\
+槽形/铸铁梁 & 画 $M$ 图，标出各处拉压边\\
+求挠度 & 定 $w$ 正向，写 $EIw''=-M$\\
+刚性梁 + 杆 & 列平衡，再画刚梁转动后的位移\\
+斜截面应力 & 找外法线角 $\alpha$，核对切应力号\\
+强度理论 & 同点求应力，三个主应力排序\\
+轴心压杆 & 算 $\mu,i,\lambda,\lambda_p$\\
+卡氏定理 & 给目标点荷载独立命名后求偏导\\\bottomrule
+\end{tabularx}\par
+\block{23\quad 交卷前的六项自检}
+\begin{enumerate}
+\item 平衡：反力之和、力矩之和是否为零？
+\item 图形：$M'=V$，跳变与端部值是否合理？
+\item 变形：支座 $w=0$，固定端 $w=\theta=0$？
+\item 符号：拉压、外法线角、扭矩方向是否一致？
+\item 量纲：应力 N/mm$^2$，位移 mm，角度 rad？
+\item 判据：比较的是\textbf{危险点值 / 许用值}，还是误用了临界值？
+\end{enumerate}
+\vspace{2mm}
+{\footnotesize\color{muted}依据：本目录 \texttt{00Notas.tex} / \texttt{00Notas.pdf}（24 页），并核对 \texttt{ref/} 内《材料力学26 期末复习》《材料力学习题课》。原笔记的平移轴坐标对应在本册用 $\Delta y,\Delta z$ 明确；补充平面应力的零主应力与空间最大切应力。例题完整过程见配套《例题复习册》。}
+\end{rightcol}
+\end{document}

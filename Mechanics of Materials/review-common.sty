@@ -1,0 +1,41 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{review-common}[2026/09/14 Mechanics review]
+\usepackage[a4paper,left=14mm,right=14mm,top=15mm,bottom=15mm,headheight=14pt,headsep=4mm,footskip=7mm]{geometry}
+\usepackage{amsmath,amssymb,mathtools,booktabs,array,tabularx,graphicx,xcolor}
+\usepackage{fontspec}
+\IfFontExistsTF{Source Han Serif SC}{
+  \setCJKmainfont[BoldFont=Source Han Serif SC Bold]{Source Han Serif SC}
+  \setCJKsansfont[BoldFont=Source Han Sans SC Bold]{Source Han Sans SC}\setCJKmonofont{Source Han Sans SC}
+}{\setCJKmainfont[BoldFont=FandolSong-Bold.otf]{FandolSong-Regular.otf}\setCJKsansfont{FandolHei-Regular.otf}\setCJKmonofont{FandolHei-Regular.otf}}
+\setmainfont[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf]{lmroman10-regular.otf}
+\usepackage{enumitem,fancyhdr,lastpage,tikz}
+\usetikzlibrary{arrows.meta,calc,patterns}
+\usepackage[most]{tcolorbox}
+\usepackage[colorlinks=true,linkcolor=ink,urlcolor=ink,bookmarksnumbered=true]{hyperref}
+\definecolor{ink}{HTML}{175447}
+\definecolor{pale}{HTML}{F1F6F3}
+\definecolor{muted}{HTML}{525A57}
+\definecolor{warn}{HTML}{913E22}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{ink}材料力学\quad 考前复习}
+\fancyhead[R]{\small\sffamily\bookname}
+\fancyfoot[L]{\scriptsize\color{muted}根据本目录课程笔记整理}
+\fancyfoot[R]{\small\thepage\,/\,\pageref*{LastPage}}
+\renewcommand{\headrulewidth}{.35pt}
+\linespread{1}\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}\setlength{\belowdisplayshortskip}{3pt}
+\setlist{nosep,leftmargin=1.6em,topsep=3pt}
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\unit}[1]{\,\mathrm{#1}}
+\newcommand{\pagelead}[2]{\par{\sffamily\bfseries\color{ink}\fontsize{18}{23}\selectfont #1}\par{\small\color{muted}#2\par}\vspace{3mm}}
+\newcommand{\block}[1]{\par\vspace{2mm}{\sffamily\bfseries\color{ink}\large #1}\par\vspace{.6mm}\hrule height .3pt\vspace{1.3mm}}
+\newcommand{\step}[1]{\par\vspace{1.5mm}{\bfseries\color{ink}#1}\par}
+\newcommand{\pitfall}[1]{\par\vspace{1mm}{\small\color{warn}\textbf{易错点}\quad #1}\par}
+\newtcolorbox{answerbox}{enhanced,colback=pale,colframe=ink,boxrule=.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,before skip=4pt,after skip=4pt}
+\newcommand{\src}[1]{{\small\color{muted}来源：#1}\par}
+\newcommand{\qfig}[2]{\begin{center}\includegraphics[width=#1\linewidth,height=58mm,keepaspectratio]{figures/crops/#2}\end{center}}
+\newcommand{\exercise}[3]{\clearpage\phantomsection\label{ex:#1}\pdfbookmark[1]{例#1：#2}{example#1}\pagelead{例 #1\quad #2}{#3}}
+\newenvironment{leftcol}{\begin{minipage}[t]{.482\textwidth}\vspace{0pt}}{\end{minipage}\hfill}
+\newenvironment{rightcol}{\begin{minipage}[t]{.482\textwidth}\vspace{0pt}}{\end{minipage}}
+\endinput

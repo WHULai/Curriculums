@@ -1,0 +1,484 @@
+% !TeX program = xelatex
+\documentclass[a4paper,10pt,fontset=none]{ctexart}
+\newcommand{\bookname}{例题复习册}
+\usepackage{review-common}
+\hypersetup{pdftitle={材料力学：例题复习册},pdfauthor={根据魏崃课程笔记整理}}
+\begin{document}
+\fontsize{10.5}{15}\selectfont
+\pagelead{材料力学\quad 例题复习册}{A4 · 主笔记全部 8 题 + 参考资料补充 1 题 · 每题附完整计算过程}
+\begin{answerbox}
+\textbf{使用方法}\quad 先遮住解答独立列出“平衡、协调、物理关系或强度判据”，再核对过程。数字结果用于检查，重点记住每题第一步与易错点。
+\end{answerbox}
+\block{题目索引与来源}
+按主笔记出现顺序保留例 1--8。例 9 是参考资料中有、主笔记未收录的习题课例 3。本册中的题干将原图尺寸补写为文字，解答经重新核算并补齐中间步骤。
+\vspace{2mm}
+\par\begin{tabularx}{\linewidth}{@{}cXlc@{}}
+\toprule
+题号 & 题型 & 原始位置（起始页） & 本册页码\\\midrule
+1 & 阶梯圆轴的扭转强度 & 主笔记 p.6 & \pageref{ex:1}\\
+2 & 外伸梁的积分法位移 & 主笔记 p.12 & \pageref{ex:2}\\
+3 & 刚性梁与两根斜/直拉杆 & 主笔记 p.14 & \pageref{ex:3}\\
+4 & 刚性梁与三根拉杆的许可荷载 & 主笔记 p.15 & \pageref{ex:4}\\
+5 & 斜截面应力、主应力与主方向 & 主笔记 p.18 & \pageref{ex:5}\\
+6 & T 形铸铁梁强度与压杆稳定 & 主笔记 p.21 & \pageref{ex:6}\\
+7 & 铸铁圆杆的拉扭组合 & 主笔记 p.23 & \pageref{ex:7}\\
+8 & 刚架位移与卡氏第二定理 & 主笔记 p.24 & \pageref{ex:8}\\
+9 & 槽形铸铁梁的许可荷载（补充） & 习题课 p.6--10 & \pageref{ex:9}\\\bottomrule
+\end{tabularx}\par
+\block{答案速览：做完再核对}
+\par\begin{tabularx}{\linewidth}{@{}cX@{}}
+\toprule
+1 & $\tau_{AB}=64.8\unit{MPa}$，$\tau_{BC}=71.3\unit{MPa}<80\unit{MPa}$，满足。\\
+2 & 向下为正：$w_A=\dfrac{19Fa^3}{24EI}$，$w_C=-\dfrac{3Fa^3}{8EI}$，$w_E=\dfrac{7Fa^3}{6EI}$。\\[3pt]
+3 & $N_1=\dfrac{3F}{1+4\cos^3\alpha}$，$N_2=\dfrac{6F\cos^2\alpha}{1+4\cos^3\alpha}$，均受拉。\\[3pt]
+4 & $N_{AD}=N_{BF}=2F/5$，$N_{CE}=F/5$；$[F]=2.5A[\sigma]$。\\
+5 & $\sigma_{ef}=-58.3$，$\tau_{ef}=18.3\unit{MPa}$；主应力 $80.7,0,-60.7\unit{MPa}$。\\
+6 & 梁最大拉/压应力大小 $25.4/42.3\unit{MPa}$；压杆 $39<44.1\unit{kN}$，均满足。\\
+7 & 主应力 $32.61,0,-19.88\unit{MPa}$；按第一强度理论及拉压校核满足。\\
+8 & $\Delta_{Ay}=35Fl^3/(24EI)$，方向向下。\\
+9 & $[F]=19.16\unit{kN}\approx19.2\unit{kN}$，由 D 截面上缘拉应力控制。\\\bottomrule
+\end{tabularx}\par
+\block{符号与核对说明}
+$N=F_N$，$V=F_S$。梁的正弯矩表示下缘受拉，位移取向下为正；应力状态题沿用讲义“切应力顺时针为正”的约定。各题另行定义的局部坐标以本题为准。
+
+本册补全了例 2 的积分常数、例 4 的一般协调式、例 5 的零主应力与两个主方向，并在例 7 补查受压侧。例 6 用完整 $\pi$ 计算，$F_{cr}=110.24\unit{kN}$，与原笔记的 $110\unit{kN}$ 是舍入差异。
+
+{\small\color{muted}来源文件：\texttt{00Notas.tex}、\texttt{00Notas.pdf}（24 页）；\texttt{ref/材料力学习题课.pdf}（17 页）。另核查 \texttt{ref/材料力学26 期末复习.pdf}，该文件为知识点汇总，无另列的数值例题。所有页码均指 PDF 实际页序。}
+
+\exercise{1}{阶梯圆轴的扭转强度}{知识点：分段扭矩图 · 抗扭截面系数 · 危险段比较}
+\src{主笔记“扭转”，p.6；习题课例 1，p.2--3。}
+\step{题目}
+图示阶梯状圆轴，AB 段直径 $d_1=120\unit{mm}$，BC 段直径 $d_2=100\unit{mm}$。
+扭转力偶矩 $M_{eA}=22\unit{kN\cdot m}$、$M_{eB}=36\unit{kN\cdot m}$、$M_{eC}=14\unit{kN\cdot m}$，A、C 处力偶同向、B 处反向。
+材料许用剪应力 $[\tau]=80\unit{MPa}$。试校核该轴的强度。
+\qfig{.55}{习题课题图1.png}
+\step{1. 用截面法求各段扭矩}
+外力偶满足 $22-36+14=0$。取扭矩图 AB 段为正，得到
+\[
+T_{AB}=+22\unit{kN\cdot m},\qquad T_{BC}=22-36=-14\unit{kN\cdot m}.
+\]
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=.055cm,>=Latex]
+\draw[->] (0,0)--(8.4,0) node[right] {$x$};
+\fill[ink!12] (0,0) rectangle (4,22);\fill[ink!12] (4,0) rectangle (8,-14);
+\draw[ink,thick] (0,0)--(0,22)--(4,22)--(4,-14)--(8,-14)--(8,0);
+\node[above] at (2,22) {$+22$};\node[below] at (6,-14) {$-14$};
+\node[below left] at (0,0) {A};\node[above right] at (4,0) {B};\node[above] at (8,0) {C};
+\node[above] at (4,38) {$T\ (\mathrm{kN\cdot m})$};
+\end{tikzpicture}
+\end{center}
+\step{2. 分别计算最大剪应力}
+实心圆截面 $W_p=\pi d^3/16$。统一使用 N、mm：
+\[
+\tau_{AB,\max}=\frac{16|T_{AB}|}{\pi d_1^3}
+=\frac{16\times22\times10^6}{\pi\times120^3}=64.84\unit{MPa},
+\]
+\[
+\tau_{BC,\max}=\frac{16|T_{BC}|}{\pi d_2^3}
+=\frac{16\times14\times10^6}{\pi\times100^3}=71.30\unit{MPa}.
+\]
+\step{3. 校核并给出结论}
+\begin{answerbox}
+危险段为 BC，$\tau_{\max}=71.30\unit{MPa}<[\tau]=80\unit{MPa}$，故满足扭转强度条件。最大名义应力位于 BC 段外缘。
+\end{answerbox}
+\pitfall{不要用 $22\unit{kN\cdot m}$ 和 $100\unit{mm}$ 拼成不存在的截面。本题按课程名义应力计算，未计台阶过渡处的应力集中。}
+
+\exercise{2}{外伸梁的积分法位移}{知识点：支反力 · 分段积分 · 边界与连续条件}
+\src{主笔记“梁弯曲时的位移”，p.12；作业题 5-4。}
+\step{题目}
+图示外伸梁，B、D 为支座，$AB=BC=CD=DE=a$。AB 段受向下均布荷载 $q=F/a$，E 点受向下集中力 $F$，全梁抗弯刚度为常量 $EI$。用积分法求 $w_A,w_C,w_E$。
+\qfig{.52}{作业题图5-4.png}
+\step{1. 求反力并列曲率方程}
+取 $x$ 自 A 向右，$w$ 向下为正。由 $R_B+R_D=2F$、$2aR_D+Fa/2-3Fa=0$，
+得 $R_B=3F/4$、$R_D=5F/4$，均向上。于是
+\[
+EIw''=-M(x)=\begin{cases}
+Fx^2/(2a),&0\le x\le a,\\
+F(x+a)/4,&a\le x\le3a,\\
+F(4a-x),&3a\le x\le4a.
+\end{cases}
+\]
+\step{2. 两次积分，利用六个条件求常数}
+\[
+\begin{array}{ll}
+EIw_1'=Fx^3/(6a)+C_1,&EIw_1=Fx^4/(24a)+C_1x+C_2,\\
+EIw_2'=Fx^2/8+Fax/4+D_1,&EIw_2=Fx^3/24+Fax^2/8+D_1x+D_2,\\
+EIw_3'=4Fax-Fx^2/2+H_1,&EIw_3=2Fax^2-Fx^3/6+H_1x+H_2.
+\end{array}
+\]
+六个独立条件为
+\[
+w_1(a)=w_2(a)=0,\quad w_2(3a)=w_3(3a)=0,\quad
+w_1'(a)=w_2'(a),\quad w_2'(3a)=w_3'(3a).
+\]
+解得
+\[
+\begin{array}{lll}
+C_1=-5Fa^2/6,&D_1=-25Fa^2/24,&H_1=-20Fa^2/3,\\
+C_2=19Fa^3/24,&D_2=7Fa^3/8,&H_2=13Fa^3/2.
+\end{array}
+\]
+\step{3. 写出挠曲线，代入目标点}
+令 $\xi=x/a$，用无量纲形式避免冗长系数：
+\[
+\frac{EIw}{Fa^3}=\begin{cases}
+\xi^4/24-5\xi/6+19/24,&0\le\xi\le1,\\
+\xi^3/24+\xi^2/8-25\xi/24+7/8,&1\le\xi\le3,\\
+-\xi^3/6+2\xi^2-20\xi/3+13/2,&3\le\xi\le4.
+\end{cases}
+\]
+\begin{answerbox}
+\[
+\boxed{w_A=\frac{19Fa^3}{24EI}\ (\downarrow)},\quad
+\boxed{w_C=-\frac{3Fa^3}{8EI}\ (\uparrow)},\quad
+\boxed{w_E=\frac{7Fa^3}{6EI}\ (\downarrow)}.
+\]
+\end{answerbox}
+\pitfall{坐标原点统一在 A；两支座处挠度为零，但弯矩不为零。代回应有 $w(a)=w(3a)=0$，且两处分段转角连续。}
+
+\exercise{3}{刚性梁与两根拉杆}{知识点：一次超静定 · 刚梁转动 · 斜杆位移投影}
+\src{主笔记“简单的超静定问题”，p.14；习题课例 2，p.4--5。}
+\step{题目}
+AB 为刚性梁，A 铰支；$AC=CD=DB=a$，B 端受向下荷载 $F$。C 点由竖直杆 1 悬挂，杆长 $l$；D 点由与竖直夹角 $\alpha$ 的杆 2 悬挂，杆长 $l/\cos\alpha$。两杆的面积 $A$、弹性模量 $E$ 相同。求两杆内力。
+\qfig{.48}{习题课题图2.png}
+\step{1. 静力平衡}
+设 $N_1,N_2$ 拉为正，杆 2 对梁的竖直分力为 $N_2\cos\alpha$。对 A 取矩：
+\[
+N_1a+N_2\cos\alpha\cdot2a-F\cdot3a=0,
+\qquad N_1+2N_2\cos\alpha=3F. \tag{1}
+\]
+\step{2. 几何协调}
+刚性梁绕 A 小转角转动，故 $v_D/v_C=AD/AC=2$。杆 1 的伸长为 $\Delta l_1=v_C$；杆 2 的伸长等于 D 点位移沿杆轴的投影：
+\[
+\Delta l_2=v_D\cos\alpha=2\Delta l_1\cos\alpha. \tag{2}
+\]
+\step{3. 物理关系}
+\[
+\Delta l_1=\frac{N_1l}{EA},\qquad
+\Delta l_2=\frac{N_2(l/\cos\alpha)}{EA}.
+\]
+代入式 (2)：
+\[
+\frac{N_2l}{EA\cos\alpha}=2\frac{N_1l}{EA}\cos\alpha
+\quad\Longrightarrow\quad N_2=2N_1\cos^2\alpha. \tag{3}
+\]
+\step{4. 联立求解}
+将式 (3) 代入式 (1)，有 $N_1(1+4\cos^3\alpha)=3F$，因此
+\begin{answerbox}
+\[
+\boxed{N_1=\frac{3F}{1+4\cos^3\alpha}},\qquad
+\boxed{N_2=\frac{6F\cos^2\alpha}{1+4\cos^3\alpha}}.
+\]
+对图示 $0\le\alpha<90^\circ$、$F>0$，两杆均受拉。
+\end{answerbox}
+\pitfall{斜杆的长度是 $l/\cos\alpha$，伸长是 $v_D\cos\alpha$；这两个投影因素共同给出 $N_2=2N_1\cos^2\alpha$。}
+
+\exercise{4}{三根拉杆的许可荷载}{知识点：一般协调关系 · 刚梁平移 · 取最小许可荷载}
+\src{主笔记“简单的超静定问题”，p.15；作业题 6-6。}
+\step{题目}
+图示结构，杆 AD、CE、BF 的横截面面积均为 $A$，材料弹性模量为 $E$，许用应力为 $[\sigma]$。梁 AB 为刚体，$AC=CB=a$，AD、BF 长 $l$，CE 长 $2l$；集中力 $F$ 作用在 C 点且向下。求结构许可荷载 $[F]$。
+\qfig{.53}{作业题图6-6.png}
+\step{1. 建立平衡方程}
+将 AD、BF、CE 分别编号为 1、2、3，轴力以拉为正：
+\[
+N_1+N_2+N_3=F,\qquad \sum M_C=0\ \Longrightarrow\ N_1=N_2. \tag{1}
+\]
+\step{2. 从一般协调式推出等伸长}
+刚性梁位移沿梁长线性变化，C 是 AB 的中点，先写
+\[
+v_C=\frac{v_A+v_B}{2}
+\quad\Longrightarrow\quad 2\Delta l_3=\Delta l_1+\Delta l_2. \tag{2}
+\]
+由 $N_1=N_2$ 且杆 1、2 的 $l,EA$ 相同，得 $\Delta l_1=\Delta l_2$。再由式 (2) 得
+$\Delta l_1=\Delta l_2=\Delta l_3$，此时刚梁只发生竖直平移。
+\step{3. 代入胡克定律并求轴力}
+\[
+\Delta l_1=\frac{N_1l}{EA},\quad
+\Delta l_2=\frac{N_2l}{EA},\quad
+\Delta l_3=\frac{2N_3l}{EA}
+\quad\Longrightarrow\quad N_1=N_2=2N_3.
+\]
+结合式 (1)，得
+\[
+\boxed{N_{AD}=N_{BF}=\frac25F},\qquad
+\boxed{N_{CE}=\frac15F}.
+\]
+\step{4. 按各杆强度取最小许可荷载}
+\[
+\begin{array}{ll}
+\text{AD、BF：}&\dfrac{2F}{5A}\le[\sigma]\quad\Longrightarrow\quad F\le\dfrac52A[\sigma],\\[5pt]
+\text{CE：}&\dfrac{F}{5A}\le[\sigma]\quad\Longrightarrow\quad F\le5A[\sigma].
+\end{array}
+\]
+\begin{answerbox}
+\[
+\boxed{[F]=\min\left\{\frac52A[\sigma],5A[\sigma]\right\}=2.5A[\sigma]}.
+\]
+AD、BF 同时控制；较长的 CE 杆刚度较小，因此分担的力也较小。
+\end{answerbox}
+\pitfall{“刚性梁”只保证位移呈直线，不自动保证三点等位移。本题需结合对称受力及两边杆刚度相同，才推出等伸长。}
+
+\exercise{5}{斜截面应力与主方向}{知识点：外法线角 · 切应力符号 · 三个主应力排序}
+\src{主笔记“应力状态和强度理论”，p.18；讲义 17 例题 1。}
+\step{题目}
+图示单元体，$\sigma_x=-40\unit{MPa}$、$\sigma_y=60\unit{MPa}$、$\tau_x=-50\unit{MPa}$。
+试求 $ef$ 截面的应力及主应力、主平面方位。图中 $ef$ 外法线与 $+x$ 轴夹角为 $\alpha=-30^\circ$。
+\qfig{.34}{讲义17例题图1.jpg}
+\step{1. 计算 $ef$ 截面的正应力和切应力}
+沿用讲义符号：正应力拉为正，$x$ 面切应力顺时针为正。令
+$C=(\sigma_x+\sigma_y)/2=10\unit{MPa}$，$D=(\sigma_x-\sigma_y)/2=-50\unit{MPa}$，则
+\[
+\begin{aligned}
+\sigma_{ef}&=C+D\cos2\alpha-\tau_x\sin2\alpha\\
+&=10-50\cos(-60^\circ)+50\sin(-60^\circ)=-58.30\unit{MPa},\\
+\tau_{ef}&=D\sin2\alpha+\tau_x\cos2\alpha\\
+&=-50\sin(-60^\circ)-50\cos(-60^\circ)=18.30\unit{MPa}.
+\end{aligned}
+\]
+正应力为压应力；切应力为正，方向按本题约定取顺时针转动趋势。
+\step{2. 求平面内主应力，并加入第三个主应力}
+\[
+R=\sqrt{D^2+\tau_x^2}=50\sqrt2=70.71\unit{MPa},\qquad
+\sigma_\pm=C\pm R=80.71,\ -60.71\unit{MPa}.
+\]
+平面应力中垂直纸面的正应力为零，故排序后
+\begin{answerbox}
+\[
+\boxed{\sigma_1=80.71\unit{MPa},\quad \sigma_2=0,\quad \sigma_3=-60.71\unit{MPa}}.
+\]
+\end{answerbox}
+\step{3. 求两个主平面的方位}
+\[
+\tan2\alpha_0=-\frac{2\tau_x}{\sigma_x-\sigma_y}=-1
+\quad\Longrightarrow\quad\alpha_0=-22.5^\circ,\ 67.5^\circ.
+\]
+代回应力变换式：$\sigma_{-22.5^\circ}=-60.71\unit{MPa}$，
+$\sigma_{67.5^\circ}=80.71\unit{MPa}$，相应切应力均为零。
+\begin{answerbox}
+最大主应力 $\sigma_1$ 对应的\textbf{外法线}方向为 $67.5^\circ$；最小主应力 $\sigma_3$ 对应的外法线方向为 $-22.5^\circ$，角度均可加 $180^\circ$。$\sigma_2$ 方向垂直纸面。
+\end{answerbox}
+\pitfall{题目给的是法线角，不是截面线与 $x$ 轴的夹角。只解出 $\tan2\alpha_0$ 还不够，必须代回确认对应哪一个主应力。}
+
+\exercise{6}{T 形梁强度与压杆稳定}{知识点：拉压分别校核 · 欧拉公式适用性 · 稳定安全因数}
+\src{主笔记“压杆稳定”，p.21；习题课例 4，p.11--13。}
+\step{题目}
+梁 AB 为 T 形铸铁梁，$I_z=5315\unit{cm^4}$，$[\sigma_t]=50\unit{MPa}$、$[\sigma_c]=200\unit{MPa}$。
+杆 CD 为两端铰支圆截面压杆，$d=40\unit{mm}$，Q235 钢，$E=200\unit{GPa}$、$\sigma_p=200\unit{MPa}$，$n_{st}=2.5$。
+图中 $AC=2000\unit{mm}$、$CB=600\unit{mm}$、$CD=1500\unit{mm}$；B 端向下荷载 $30\unit{kN}$，截面形心至上、下缘分别为 $75,125\unit{mm}$。校核梁强度和杆稳定性。
+\qfig{.57}{习题课题图4-1.png}
+\step{1. 求 CD 杆轴力与危险弯矩}
+设 CD 对梁的竖向支承力为 $R_C$，对 A 取矩：
+\[
+R_C\times2000-30\times2600=0\quad\Longrightarrow\quad R_C=39\unit{kN}.
+\]
+因此 CD 受压，压力大小 $N_{CD}=39\unit{kN}$。A 处反力 $R_A=30-39=-9\unit{kN}$，方向向下。
+梁的弯矩从 $M_A=0$ 线性降至 $M_C=-18\unit{kN\cdot m}$，再线性升至 $M_B=0$。
+\step{2. 分别校核铸铁梁拉应力、压应力}
+C 截面上缘受拉、下缘受压。$I_z=5315\times10^4=5.315\times10^7\unit{mm^4}$，故
+\[
+\sigma_{t,\max}=\frac{18\times10^6\times75}{5.315\times10^7}=25.40\unit{MPa}<50\unit{MPa},
+\]
+\[
+|\sigma_{c,\max}|=\frac{18\times10^6\times125}{5.315\times10^7}=42.33\unit{MPa}<200\unit{MPa}.
+\]
+\step{3. 判定压杆类型，求临界力与许可压力}
+\[
+i=\frac d4=10\unit{mm},\quad \lambda=\frac{1\times1500}{10}=150,\quad
+\lambda_p=\pi\sqrt{\frac{200000}{200}}=99.35.
+\]
+$\lambda>\lambda_p$，可以使用欧拉公式。$I=\pi d^4/64=1.25664\times10^5\unit{mm^4}$，
+\[
+F_{cr}=\frac{\pi^2 EI}{(\mu l)^2}
+=\frac{\pi^2\times200000\times1.25664\times10^5}{1500^2}
+=110.24\unit{kN}.
+\]
+\begin{answerbox}
+梁的拉、压强度均满足。压杆许可压力为
+$[F]_{st}=110.24/2.5=44.10\unit{kN}$；由于 $39<44.10\unit{kN}$，CD 也满足稳定性条件。
+\end{answerbox}
+\pitfall{必须比较 $N_{CD}$ 与 $F_{cr}/n_{st}$，不能直接与 $F_{cr}$ 比。圆截面的弯曲惯性矩为 $\pi d^4/64$，不是扭转用的极惯性矩。}
+
+\exercise{7}{铸铁圆杆的拉扭组合}{知识点：识别扭矩 · 主应力 · 脆性材料强度准则}
+\src{主笔记“压杆稳定”末尾的组合变形例题，p.23；习题课例 5，p.14--15。}
+\step{题目}
+直径 $d=0.1\unit{m}$ 的铸铁圆杆受力如图，力偶矩 $M=5\unit{kN\cdot m}$，轴向拉力 $F=100\unit{kN}$，
+$[\sigma_t]=40\unit{MPa}$、$[\sigma_c]=150\unit{MPa}$。用强度理论校核杆的强度。
+\qfig{.55}{习题课题图5-1.png}
+\step{1. 识别内力并求危险点应力}
+图中力偶绕杆轴作用，所以它是\textbf{扭矩} $T=M=5\unit{kN\cdot m}$，不是弯矩。
+轴向正应力在截面上均匀，扭转切应力在外缘最大，外缘 A 点为危险点。
+\[
+\sigma=\frac{F}{A}=\frac{4F}{\pi d^2}
+=\frac{4\times100000}{\pi\times100^2}=12.732\unit{MPa},
+\]
+\[
+\tau=\frac{T}{W_p}=\frac{16T}{\pi d^3}
+=\frac{16\times5\times10^6}{\pi\times100^3}=25.465\unit{MPa}.
+\]
+\step{2. 求三个主应力}
+A 点只有一个正应力和一个切应力。平面内两个主应力为
+\[
+\sigma_\pm=\frac\sigma2\pm\sqrt{\left(\frac\sigma2\right)^2+\tau^2}
+=6.366\pm\sqrt{6.366^2+25.465^2}
+=32.61,\ -19.88\unit{MPa}.
+\]
+加入零主应力并排序：
+\[
+\sigma_1=32.61\unit{MPa},\qquad \sigma_2=0,\qquad \sigma_3=-19.88\unit{MPa}.
+\]
+\step{3. 用题目采用的第一强度理论校核}
+铸铁为脆性材料，按课程本例采用的最大拉应力理论，
+\[
+\sigma_{r1}=\sigma_1=32.61\unit{MPa}<[\sigma_t]=40\unit{MPa}.
+\]
+同时用题给的许用压应力核查受压侧：
+\[
+-\sigma_3=19.88\unit{MPa}<[\sigma_c]=150\unit{MPa}.
+\]
+\begin{answerbox}
+杆满足本题所用强度准则；拉应力控制。拉、压应力与对应许用值的比值分别为 $0.815$ 和 $0.133$。
+\end{answerbox}
+\pitfall{不要看到力偶字母 $M$ 就套 $My/I$；先看其转轴。本题的材料与原解指定了所用准则，不能默认按塑性材料的第三/第四理论替换。}
+
+\exercise{8}{刚架位移与卡氏第二定理}{知识点：弯曲应变能 · 对目标荷载求偏导 · 等值荷载分开记}
+\src{主笔记最后一题，p.24；习题课例 6，p.16--17。}
+\step{题目}
+图示刚架各杆的弯曲刚度均为 $EI$，D 固定，$AB=l$、$BC=CD=l/2$。
+A 点有向下荷载 $F$，C 点有向右荷载 $F$。不计剪力和轴力对位移的影响，用卡氏第二定理求 A 截面的铅垂位移 $\Delta_{Ay}$。
+\qfig{.87}{习题课题图6-1.png}
+\step{1. 给目标荷载独立命名}
+将 A 点向下荷载记为独立变量 $F_A$，C 点的水平荷载仍记为 $F$。弯曲应变能及目标位移为
+\[
+U=\sum\int\frac{M^2}{2EI}\dd s,\qquad
+\Delta_{Ay}=\left.\frac{\partial U}{\partial F_A}\right|_{F_A=F}
+=\left.\sum\int\frac{M}{EI}\frac{\partial M}{\partial F_A}\dd s\right|_{F_A=F}.
+\]
+\step{2. 列各杆弯矩及偏导数}
+坐标如右侧原图：$x$ 自 A 指向 B，$y_1$ 自 B 向 C，$y_2$ 自 C 向 D。
+\[
+\begin{array}{ccll}
+\text{杆段}&\text{区间}&M&\partial M/\partial F_A\\\hline
+AB&0\le x\le l&-F_Ax&-x\\
+BC&0\le y_1\le l/2&-F_Al&-l\\
+CD&0\le y_2\le l/2&-F_Al-Fy_2&-l
+\end{array}
+\]
+CD 的水平荷载与 A 点荷载对该段的弯曲作用同向，故弯矩项相加。
+\step{3. 求偏导后令 $F_A=F$，分段积分}
+\[
+\begin{aligned}
+\Delta_{Ay}
+&=\frac1{EI}\left[\int_0^l Fx^2\dd x
++\int_0^{l/2}Fl^2\dd y_1
++\int_0^{l/2}(Fl^2+Fly_2)\dd y_2\right]\\
+&=\frac1{EI}\left[\frac{Fl^3}{3}+\frac{Fl^3}{2}
++\frac{Fl^3}{2}+\frac{Fl^3}{8}\right]
+=\frac{35Fl^3}{24EI}.
+\end{aligned}
+\]
+\begin{answerbox}
+\[
+\boxed{\Delta_{Ay}=\frac{35Fl^3}{24EI}\quad(\downarrow)}.
+\]
+结果为正，表示与 $F_A$ 的假定方向相同，即 A 点向下移动。
+\end{answerbox}
+\pitfall{若一开始把两处荷载都视为同一个变量 $F$ 再求 $\mathrm dU/\mathrm dF$，得到的是两处荷载方向位移之和，不能单独代表 A 点位移。}
+
+\exercise{9}{槽形铸铁梁的许可荷载（补充）}{知识点：剪力/弯矩图 · 正负弯矩 · 拉压不对称的强度控制}
+\src{参考资料《材料力学习题课》例 3，p.6--10；主笔记未收录。}
+\step{题目}
+图示槽形截面铸铁梁，$AB=BD=DE=b=2\unit{m}$，A、D 为支座，B 点受向下集中力 $F$，DE 段受向下均布荷载 $q=F/b$。
+许用拉应力 $[\sigma_t]=30\unit{MPa}$，许用压应力 $[\sigma_c]=90\unit{MPa}$，
+$I_z=5493\times10^4\unit{mm^4}$。形心至上缘为 $86\unit{mm}$，至下缘为 $134\unit{mm}$。
+画剪力图和弯矩图，求梁的许可荷载 $[F]$。
+\begin{center}
+\includegraphics[page=6,trim=0 40 0 200,clip,width=.84\linewidth]{ref/材料力学习题课.pdf}
+\end{center}
+\step{1. 求支座反力}
+均布荷载合力为 $qb=F$，作用在距离 A 为 $5b/2$ 的位置。
+\[
+R_A+R_D=2F,\quad R_D(2b)-Fb-F\frac{5b}{2}=0
+\quad\Longrightarrow\quad R_A=\frac F4,\quad R_D=\frac{7F}4.
+\]
+\step{2. 列剪力、弯矩方程}
+取 $x$ 自 A 向右，正弯矩下缘受拉。令 $\xi=x/b$，则
+\[
+\frac VF=\begin{cases}
+1/4,&0<\xi<1,\\
+-3/4,&1<\xi<2,\\
+3-\xi,&2<\xi<3,
+\end{cases}
+\qquad
+\frac M{Fb}=\begin{cases}
+\xi/4,&0\le\xi\le1,\\
+1-3\xi/4,&1\le\xi\le2,\\
+-(3-\xi)^2/2,&2\le\xi\le3.
+\end{cases}
+\]
+\begin{center}
+\begin{tikzpicture}[x=2.8cm,y=1.15cm,>=Latex,font=\small]
+\draw[->] (0,0)--(3.3,0) node[right] {$x/b$};
+\draw[ink,thick] (0,0)--(0,.25)--(1,.25)--(1,-.75)--(2,-.75)--(2,1)--(3,0);
+\node[left] at (0,.45) {$V/F$};\node[above] at (.5,.25) {$1/4$};\node[below] at (1.5,-.75) {$-3/4$};\node[above] at (2,1) {$1$};
+\foreach \x/\n in {0/A,1/B,2/D,3/E}{\node[above right] at (\x,0) {\n};}
+\begin{scope}[yshift=-3cm]
+\draw[->] (0,0)--(3.3,0) node[right] {$x/b$};
+\draw[ink,thick] (0,0)--(1,.25)--(2,-.5);
+\draw[ink,thick,domain=2:3,samples=40] plot (\x,{-(3-\x)^2/2});
+\node[left] at (0,.15) {$M/(Fb)$};\node[above] at (1,.25) {$1/4$};\node[below] at (2,-.5) {$-1/2$};
+\node[below] at (1.333,0) {$4/3$};
+\foreach \x/\n in {0/A,1/B,2/D,3/E}{\node[above right] at (\x,0) {\n};}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\pitfall{本页两图均以图纸向上表示代数正值。$M_B=+Fb/4$，$M_D=-Fb/2$，两处拉压边相反；强度计算续下页。}
+
+\clearpage
+\pagelead{例 9\quad 强度校核与许可荷载}{续：正弯矩查下缘受拉，负弯矩查上缘受拉}
+\step{3. 确定需要校核的截面与边缘}
+B 截面为最大正弯矩截面：$M_B=Fb/4$，上缘受压、下缘受拉。
+D 截面为最大负弯矩截面：$M_D=-Fb/2$，上缘受拉、下缘受压。
+虽然 $|M_D|>|M_B|$，但 B 点受拉侧距离更大，因此两个截面的拉应力都要列条件。
+\vspace{2mm}
+\par\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+校核点 & 应力大小 & 对 $F$ 的限制（用 N、mm）\\\midrule
+B 下缘受拉 & $\dfrac{Fb}{4}\dfrac{134}{I_z}$ & $F\le\dfrac{4I_z[\sigma_t]}{134b}$\\[7pt]
+B 上缘受压 & $\dfrac{Fb}{4}\dfrac{86}{I_z}$ & $F\le\dfrac{4I_z[\sigma_c]}{86b}$\\[7pt]
+D 上缘受拉 & $\dfrac{Fb}{2}\dfrac{86}{I_z}$ & $F\le\dfrac{2I_z[\sigma_t]}{86b}$\\[7pt]
+D 下缘受压 & $\dfrac{Fb}{2}\dfrac{134}{I_z}$ & $F\le\dfrac{2I_z[\sigma_c]}{134b}$\\[5pt]\bottomrule
+\end{tabularx}\par
+\step{4. 分别求许可荷载，取最小值}
+代入 $I_z=5.493\times10^7\unit{mm^4}$、$b=2000\unit{mm}$：
+\[
+\begin{aligned}
+F_{B,t}&\le\frac{4\times5.493\times10^7\times30}{134\times2000}
+=24.60\unit{kN},\\[4pt]
+F_{B,c}&\le\frac{4\times5.493\times10^7\times90}{86\times2000}
+=114.97\unit{kN},\\[4pt]
+F_{D,t}&\le\frac{2\times5.493\times10^7\times30}{86\times2000}
+=19.16\unit{kN},\\[4pt]
+F_{D,c}&\le\frac{2\times5.493\times10^7\times90}{134\times2000}
+=36.89\unit{kN}.
+\end{aligned}
+\]
+\begin{answerbox}
+\[
+\boxed{[F]=\min(24.60,114.97,19.16,36.89)=19.16\unit{kN}\approx19.2\unit{kN}}.
+\]
+\textbf{控制位置：D 截面上缘的最大拉应力。}给出工程取值时保留 $19.16\unit{kN}$ 或按要求向下取整，$19.2$ 是与原讲义一致的近似显示值。
+\end{answerbox}
+\step{5. 用控制荷载反查其他位置}
+以未舍入的控制值 $F=19.1616\unit{kN}$ 代回，得到
+\[
+\begin{array}{c|cc}
+&\text{拉应力大小 / MPa}&\text{压应力大小 / MPa}\\\hline
+B&23.37&15.00\\
+D&30.00&46.74
+\end{array}
+\]
+其余应力均小于各自许用值，且 D 截面拉应力恰达 $30\unit{MPa}$。
+\pitfall{槽形截面并不关于水平中性轴对称。必须把弯矩正负号、受拉/受压边、形心距离和对应许用应力四者配对。}
+\block{来源核对记录}
+主笔记共检出 8 个 \texttt{ejer} 环境，本册例 1--8 与其逐一对应；原题图全部保留。参考习题课共 6 个例题，其中 5 题已包含在主笔记，唯一新增题即本册例 9。因此按题去重后共 9 题，无遗漏的独立例题。
+\end{document}
