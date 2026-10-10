@@ -1,0 +1,54 @@
+\clearpage
+\section{复习速查与自测}
+\label{sec:review}
+
+\begin{focusbox}{核心公式速查}
+\begin{align*}
+x_0\sin\omega t:\quad &\mu_{|x|}=2|x_0|/\pi,\qquad x_{\mathrm{rms}}=|x_0|/\sqrt{2};\\
+Ae^{-at}u(t):\quad &X(f)=\frac{A}{a+\iu2\pi f};\\
+\sgn(t):\quad &S(f)=\PV\frac{1}{\iu\pi f};\\
+u(t):\quad &U(f)=\frac12\delta(f)+\PV\frac{1}{\iu2\pi f};\\
+w_{2T}(t)\cos(2\pi f_0t):\quad
+&Y(f)=T\!\left[\Sa\bigl(2\pi T(f-f_0)\bigr)+\Sa\bigl(2\pi T(f+f_0)\bigr)\right];\\
+e^{-at}\sin\omega t\,u(t):\quad &X(f)=\frac{\omega}{(a+\iu2\pi f)^2+\omega^2};\\
+m(t)\cos(2\pi f_ct):\quad &S(f)=\frac12\left[M(f-f_c)+M(f+f_c)\right].
+\end{align*}
+其中 $a>0$，正弦角频率取 $\omega>0$，$w_{2T}$ 为全宽 $2T$ 的矩形窗；$\Sa(z)=\sin z/z$，$\Sa(0)=1$。
+\end{focusbox}
+
+\subsection*{遇到频谱题的通用步骤}
+\begin{enumerate}
+\item \textbf{补齐定义：}写清 $t<0$ 是否为零、窗的总宽度、频率变量是 $f$ 还是 $\omega$。
+\item \textbf{识别基本信号：}指数、矩形窗、冲激、符号、阶跃、正余弦；不绝对可积时判断是否需要广义变换。
+\item \textbf{先求复频谱：}优先使用线性、欧拉公式与频移；时域相乘转为频域卷积。
+\item \textbf{再求幅相：}先合并复数表达式，再取模和相角；零点相位无定义。
+\item \textbf{检查结果：}实信号共轭对称，$X(0)=\int x(t)\diff t$（适用时），量纲与高频衰减正确。
+\end{enumerate}
+
+\subsection*{易错点清单}
+\begin{itemize}
+\item 普通均值、绝对均值、均方值和方均根值是四个不同量。
+\item 三角级数常数项采用 $a_0$；双边谱 $|C_n|=A_n/2$，直流不加倍。
+\item $f$ 与 $\omega$ 相差 $2\pi$；相应逆变换和冲激系数也要一致。
+\item 时域右移对应负的线性相位；乘正频率指数对应 $X(f-f_c)$。
+\item 时域相乘的频谱为卷积，不能直接把两个频谱相乘。
+\item 阶跃的 $\tfrac12\delta(f)$ 不能漏；主值奇点不能当普通有限数值处理。
+\item $[-T,T]$ 的总宽度为 $2T$。单个移位窗谱的零点未必是合成频谱的零点。
+\item 幅度谱没有负值；带符号的实频谱可以为负，相位随之变化 $\pi$。
+\item 衰减振荡的两份复频谱先相减，再取模；双峰位置通常略偏离载频。
+\item 频谱重叠须按支持区间判断，尾谱无限延伸时只能谈近似带宽。
+\end{itemize}
+
+\subsection*{知识自测}
+先独立回答，再对照本章公式。
+\begin{enumerate}
+\item 零均值正弦的绝对均值和有效值为什么仍为正？
+\item 为什么周期余弦是两条冲激谱线，截断余弦却是两份连续窗谱？
+\item 已知 $u'(t)=\delta(t)$，为什么不能仅凭除以 $\iu2\pi f$ 得出完整阶跃频谱？
+\item 截断余弦的窗区间为 $[-T,T]$，将 $T$ 加倍后，每个窗谱主瓣宽度如何变化？\textit{答：减半。}
+\item $e^{-at}\sin\omega t\,u(t)$ 在何时有两峰？\textit{答：$\omega>a$；峰位为 $\pm\sqrt{\omega^2-a^2}/(2\pi)$。}
+\item 调制信号频带限于 $[-f_m,f_m]$ 时，余弦载频满足什么条件可使左右搬移谱分离？\textit{答：$f_c>f_m$。}
+\item 理想采样的频谱为何周期复制？与余弦调制的两份搬移谱有什么区别？
+\end{enumerate}
+
+\nt{建议先独立完成典型例题，再用速查页检查结果。复习的核心是能从“基本变换对 + 性质”重建公式，并能解释图中的峰、零点、相位和频带边界。}

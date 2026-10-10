@@ -1,0 +1,24 @@
+% Course additions; preamble.tex follows the Robotics template.
+\usepackage{tabularx}
+\usepackage{needspace}
+\IfFontExistsTF{Source Han Sans}
+  {\setCJKsansfont{Source Han Sans}}
+  {\setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf]}
+\pgfplotsset{compat=1.18}
+\hypersetup{
+  pdftitle={机器人传感技术：第2章信号分析与描述复习册},
+  pdfauthor={魏崃},
+  pdfsubject={信号分类、傅里叶分析、典型例题与复习自测}
+}
+\newcommand{\iu}{\mathrm{j}}
+\newcommand{\diff}{\mathrm{d}}
+\DeclareMathOperator{\Sa}{Sa}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\PV}{PV}
+\newcommand{\keypoint}[1]{\textcolor{myr}{\textbf{#1}}}
+% The examples and theorems in this chapter are short enough to keep intact.
+\renewcommand{\ex}[2]{\begin{Example}[breakable=false]{#1}{}#2\end{Example}}
+\renewcommand{\thm}[2]{\begin{Theorem}[breakable=false]{#1}{}#2\end{Theorem}}
+\newtcolorbox{focusbox}[1]{enhanced,breakable,colback=whusakura!10,
+  colframe=whusakura!85!black,boxrule=.6pt,sharp corners,
+  title={#1},fonttitle=\bfseries,coltitle=black,colbacktitle=whusakura!45}
