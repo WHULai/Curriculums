@@ -1,0 +1,84 @@
+\clearpage
+\section{复习速查与自测}
+\label{sec:ch3-review}
+
+\begin{focusbox}{核心公式速查：模型与稳态响应}
+\begin{align*}
+\omega&=2\pi f,\qquad r=\frac{\omega}{\omega_n}=\frac{f}{f_n};\\
+H_1(s)&=\frac{K}{1+\tau s},\qquad
+\frac{A_1}{K}=\frac{1}{\sqrt{1+(\omega\tau)^2}},\quad
+\phi_1=-\arctan(\omega\tau);\\
+H_2(s)&=\frac{K\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2};\\
+\frac{A_2}{K}&=\frac{1}{\sqrt{(1-r^2)^2+4\zeta^2r^2}},\quad
+\phi_2=-\operatorname{atan2}(2\zeta r,1-r^2);\\
+x(t)&=\sum_iX_i\cos(\omega_it+\theta_i)\\
+&\Longrightarrow\quad
+y_{\mathrm{ss}}(t)=\sum_iX_iA(\omega_i)
+\cos[\omega_it+\theta_i+\phi(\omega_i)];\\
+y(t)&=(h*x)(t),\quad H(s)=\mathcal L\{h(t)\},\quad
+Y(f)=H(\iu2\pi f)X(f).
+\end{align*}
+幅相公式取 $K>0$、$\tau>0$、$\omega_n>0$、$\zeta>0$。传递函数与卷积式描述零状态响应；多频余弦公式描述稳定系统的稳态响应。
+\end{focusbox}
+
+\begin{focusbox}{核心公式速查：误差、参数与不失真条件}
+\begin{align*}
+e_A&=\left|\frac{A}{K}-1\right|;\\
+\text{一阶：}\quad\tau_{\max}
+&=\frac{\sqrt{(1-\varepsilon)^{-2}-1}}{2\pi f_m},\qquad
+f_c=\frac{1}{2\pi\tau};\\
+\text{二阶机械模型：}\quad
+\omega_n&=\sqrt{k/m},\quad\zeta=\frac{c}{2\sqrt{mk}},\quad K=1/k;\\
+\text{二阶峰位：}\quad\omega_r
+&=\omega_n\sqrt{1-2\zeta^2},\quad
+\frac{A_{\max}}{K}=\frac{1}{2\zeta\sqrt{1-\zeta^2}}
+\quad(0<\zeta<1/\sqrt2);\\
+\text{不失真：}\quad y(t)&=A_0x(t-t_0)
+\quad\Longleftrightarrow\quad
+H(\iu\omega)=A_0e^{-\iu\omega t_0}.
+\end{align*}
+不失真条件须在信号所占频带内成立；幅相条件分别是 $A(\omega)=A_0$ 和 $\phi(\omega)=-\omega t_0$。
+\end{focusbox}
+
+\subsection*{遇到动态测量题的通用步骤}
+\begin{enumerate}
+\item \textbf{统一量与单位：}分清 $f$、$\omega$、$f_n$、$\omega_n$；明确实际输出还是静态标定后的输出。
+\item \textbf{识别模型：}一阶取 $K,\tau$，二阶取 $K,\omega_n,\zeta$，注明稳态还是全过程。
+\item \textbf{构造频响：}令 $s=\iu\omega$，先保留复数表达式，再求模与相位。
+\item \textbf{分频求输出：}输入幅值乘 $A$，输入相位加 $\phi$，频率保持不变，最后叠加。
+\item \textbf{反求参数：}把误差限写成不等式，求参数的范围；若后续需要数值，明确采用哪一个设计值。
+\item \textbf{解释结果：}检查幅值是否衰减或放大、相位是否滞后、量纲是否正确，以及是否满足测量目标。
+\end{enumerate}
+
+\Needspace{7cm}
+\subsection*{易错点清单}
+\begin{itemize}
+\item 静态误差百分数通常除以满量程跨度；动态振幅误差则按静态标定后的理想幅值计算。
+\item 灵敏度、分辨力、重复性与准确度不能互相替代。
+\item 频率保持性适用于LTI系统的正弦稳态响应；启动暂态仍可能存在。
+\item $Y(s)=H(s)X(s)$ 默认零初始条件；稳定性由极点判断，不能只看阶数。
+\item $\omega t$ 中的系数是角频率；题目给Hz时需乘 $2\pi$。
+\item 输出总相位等于输入原相位加系统相角差；滞后用负相角表示。
+\item 一阶误差约束给出 $\tau$ 上限，转折频率不是小误差测量频率上限。
+\item 二阶 $r>1$ 时必须保留象限；$r=1$ 且 $\zeta>0$ 时相位为 $-90^\circ$。
+\item 欠阻尼条件 $\zeta<1$ 与有共振峰条件 $\zeta<1/\sqrt2$ 不同。
+\item 幅值误差小不保证波形不失真；相位近似线性也不表示相位差为零。
+\item 适度阻尼可改善幅值与过载问题，但不保证每一频率处的相位滞后更小。
+\end{itemize}
+
+\subsection*{知识自测}
+先独立回答，再对照正文与下列提示。
+\begin{enumerate}
+\item 回程误差与重复性的比较对象有何不同？\textit{答：正反行程与同方向重复行程。}
+\item 一阶装置在 $\omega\tau=1$ 时的幅值比和相位差是多少？\textit{答：归一化幅值 $1/\sqrt2$，相位 $-45^\circ$。}
+\item 为什么一阶 $\tau$ 越小，同一幅值误差下可测频率越高？\textit{答：误差由 $\omega\tau$ 决定。}
+\item 要求100 Hz处振幅误差不超过5\%，$\tau$ 的范围是什么？\textit{答：$0<\tau\leq0.523117\,\mathrm{ms}$。}
+\item 二阶 $\zeta=0.8$ 是否欠阻尼？是否有非零频率幅频峰？\textit{答：欠阻尼，无该共振峰。}
+\item 二阶 $r=1$ 时，增大阻尼会怎样改变幅值与相位？\textit{答：幅值比 $1/(2\zeta)$ 减小，相位保持 $-90^\circ$。}
+\item 为什么 $f_n=800$ Hz、$f=400$ Hz可以直接得 $r=0.5$？\textit{答：角频率比中的 $2\pi$ 抵消。}
+\item $\zeta$ 从0.14改为0.7后，例题4的幅值与相位如何变化？\textit{答：幅值更接近1，相位滞后增大。}
+\item 各分量相位差都相等，是否必然是共同时间延迟？\textit{答：否。共同延迟要求 $\phi_i=-\omega_it_0$，而不是相位差相等。}
+\item 为何输出的单个正弦频率不变，叠加波形仍会改变？\textit{答：各成分幅值比例或等效延迟不同。}
+\end{enumerate}
+
+\nt{建议先独立推导典型例题，再用公式速查核对结果。复习时应能解释每个数值对应什么测量误差，并根据测量目标决定应检查幅值、相位，还是完整波形。}
