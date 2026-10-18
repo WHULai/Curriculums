@@ -1,0 +1,91 @@
+\clearpage
+\section{复习速查与自测}
+\label{sec:ch5-review}
+
+\begin{focusbox}{核心公式速查：本章桥臂约定下的桥路与调幅}
+\begin{align*}
+U_y&=U_0\left(\frac{R_1}{R_1+R_2}-\frac{R_4}{R_3+R_4}\right),
+&\text{平衡： }R_1R_3&=R_2R_4;\\
+\delta&=\frac{\Delta R}{R}=S_g\varepsilon,
+&\frac{U_y}{U_0}&\approx\frac{\delta_1-\delta_2+\delta_3-\delta_4}{4};\\
+U_{y,1}&=\frac{U_0\delta}{4+2\delta}\approx\frac{U_0\delta}{4},
+&U_{y,2}&=\frac{U_0\delta}{2},\quad U_{y,4}=U_0\delta.
+\end{align*}
+双臂与全桥公式要求相邻臂等量反向、对臂同向变化，且输出负载可忽略。
+\begin{align*}
+x_a(t)&=k_ax(t)\cos2\pi f_ct,\\
+X_a(f)&=\frac{k_a}{2}[X(f-f_c)+X(f+f_c)],\\
+M\cos2\pi f_mt\cos2\pi f_ct
+&=\frac M2\cos2\pi(f_c-f_m)t+\frac M2\cos2\pi(f_c+f_m)t.
+\end{align*}
+基带上限 $f_m$ 对应载频附近 $[f_c-f_m,f_c+f_m]$，双边带宽度 $2f_m$。信息信号无直流时，理想抑制载波调幅无独立载波线。
+\end{focusbox}
+
+\begin{focusbox}{核心公式速查：解调与滤波}
+\begin{align*}
+\text{正弦参考同步乘法：}\quad
+\operatorname{LP}\{k_ax\cos\omega_ct\cdot B\cos(\omega_ct+\theta)\}
+&=\frac{k_aB}{2}x\cos\theta;\\
+\text{理想开关相敏检波：}\quad
+\operatorname{LP}\{k_ax\cos\omega_ct\cdot\sgn(\cos\omega_ct)\}
+&\approx\frac{2k_a}{\pi}x.
+\end{align*}
+包络检波须使 $D+k_ax(t)\geq0$，否则得到绝对值而丢失极性。
+\begin{align*}
+H_{\mathrm{LP}}(\iu\omega)&=\frac1{1+\iu\omega\tau},&
+A_{\mathrm{LP}}&=\frac1{\sqrt{1+(\omega\tau)^2}},&
+\phi_{\mathrm{LP}}&=-\arctan\omega\tau;\\
+H_{\mathrm{HP}}(\iu\omega)&=\frac{\iu\omega\tau}{1+\iu\omega\tau},&
+A_{\mathrm{HP}}&=\frac{\omega\tau}{\sqrt{1+(\omega\tau)^2}},&
+\phi_{\mathrm{HP}}&=\frac\pi2-\arctan\omega\tau;\\
+f_c&=\frac1{2\pi\tau},& B&=f_{c2}-f_{c1},& Q&=\frac{f_0}{B};\\
+f_0&=\sqrt{f_{c1}f_{c2}},&\frac{f_{c2}}{f_{c1}}&=2^n,&
+\frac B{f_0}&=2^{n/2}-2^{-n/2}.
+\end{align*}
+相位公式取 $\omega>0$，低通滞后、高通超前。$n=1$ 为一倍频程，$n=1/3$ 为三分之一倍频程；几何中心公式使用对数对称频带约定。
+\end{focusbox}
+
+\subsection*{遇到本章题目的计算顺序}
+\begin{enumerate}
+\setlength{\itemsep}{0pt}
+\item \textbf{桥路：}画出编号、供桥端和输出极性；将微应变乘 $10^{-6}$，再由 $\Delta R/R=S_g\varepsilon$ 求桥臂变化。
+\item \textbf{接法：}确认哪些臂有源、各自变化方向；先代入精确分压式，再决定能否线性化。
+\item \textbf{调幅：}区分零均值信息信号与含偏置的幅值控制量；列载波和上下边带，检查是否存在独立载波线。
+\item \textbf{谱图：}注明Hz还是 $\mathrm{rad/s}$、单边峰值还是双边系数；正弦项还要记录相位。
+\item \textbf{滤波：}先读出 $f$ 或 $\omega$ 与参数 $\tau$，每个分量单独乘幅值比、加系统相位差，最后叠加。
+\item \textbf{频带：}先写截止点的幅值参考与中心频率定义；倍频程先写比值 $2^n$，再求几何中心、带宽与 $Q$。
+\end{enumerate}
+
+\subsection*{易错点清单}
+\begin{itemize}
+\item 四片应变片组成桥路，不意味着自动得到全桥最大灵敏度；相邻臂同向等量变化可能使输出抵消。
+\item 单臂桥的 $U_y\approx U_0S_g\varepsilon/4$ 是线性近似，精确分母随应变变化；双臂等量反向才能消除这项桥路非线性。
+\item $S_g$ 是应变片灵敏系数，电桥电压灵敏度还与供桥电压和接法有关；局部导数与非线性曲线的 $U_y/\varepsilon$ 不同。
+\item $\cos10000t$ 的 $10000$ 是角频率；若题目写 $f_c=10\,\mathrm{kHz}$，则角频率是 $20000\pi\,\mathrm{rad/s}$。
+\item 一个峰值为 $M$ 的余弦，双边复系数各为 $M/2$；经单位余弦调幅后的每个边带峰值为 $M/2$，对应复系数则为 $M/4$。
+\item 普通整流输出与幅值绝对值有关；相敏检波用独立参考控制换向，因此能保留原信号的正负方向。
+\item 解调后滤除的是高频副本和纹波，留下的是原基带；载波频率高不等于测量工作频带同样高。
+\item $-3\,\mathrm{dB}$ 截止点是相对参考幅值约 $0.7071$，幅值已衰减约29.3\%，并非小误差通带边缘。
+\item 一阶RC高通在正频率处的相位为正；相位求解不能只看分母而漏掉分子中的 $\iu\omega\tau$。
+\item 一倍频程上下限之比是2，中心与下限之比才是 $\sqrt2$；$1/3$ 倍频程上下限比是 $\sqrt[3]2$。
+\item 串联滤波器总体截止频率要按总频响重算；幅值相乘、相位相加的前提是级间负载影响可忽略。
+\end{itemize}
+
+\subsection*{知识自测}
+先独立作答，再核对括号中的提示。
+\begin{enumerate}
+\item 单臂正电阻增量在本章输出约定下为何给正电压？\textit{答：$R_1/(R_1+R_2)$ 增大，分压差变正。}
+\item 相邻两臂同时等量增大，能否获得双臂2倍灵敏度？\textit{答：不能；其分压比不变，理想输出抵消。}
+\item $S_g=2$、$\varepsilon=2000\,\mu\varepsilon$ 时 $\Delta R/R$ 是多少？\textit{答：0.004，亦即0.4\%。}
+\item 单臂与等量反向双臂的小信号灵敏度比是多少？\textit{答：$1:2$。}
+\item 100 Hz零均值余弦调制10 kHz余弦，正频率有哪些谱线？\textit{答：9.9、10.1 kHz，理想情况下无10 kHz独立载波线。}
+\item 为何正弦激励的双边谱不能只写两条正实数线？\textit{答：模可正，但复系数为纯虚数，正负频率相位相反。}
+\item 同步解调参考相差 $90^\circ$ 会怎样？\textit{答：理想基带输出为零。}
+\item 为什么抑制载波的普通包络检波不能测应变正负？\textit{答：外包络反映绝对值，载波反相携带的方向信息被丢失。}
+\item 10 kHz载频、0--1500 Hz基带需要覆盖哪段正频率？\textit{答：8.5--11.5 kHz。}
+\item 一阶低通 $\omega\tau=5$ 的幅值比和相位差是多少？\textit{答：$1/\sqrt{26}\approx0.196116$，$-78.6901^\circ$。}
+\item 一倍频程上、下限为100 Hz与200 Hz，中心是多少？\textit{答：$100\sqrt2\approx141.421$ Hz。}
+\item 相同下限的一倍频程与 $1/3$ 倍频程中心之比是多少？\textit{答：$2^{1/3}\approx1.25992$。}
+\end{enumerate}
+
+\nt{掌握本章的标志，是能把“桥臂如何变化”“信息搬到哪里”“怎样保留符号”“滤波后幅相如何变化”连成一条可计算的链。复习时先重做完整例题，再用速查式检查系数、单位和频带边界。}

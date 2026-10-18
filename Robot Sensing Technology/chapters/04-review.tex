@@ -1,0 +1,97 @@
+\clearpage
+\section{复习速查与自测}
+\label{sec:ch4-review}
+
+\begin{focusbox}{核心公式速查：电参数与能量转换}
+\begin{align*}
+R&=\rho l/A,\qquad \varepsilon=\Delta l/l,\qquad
+\Delta R/R=S_g\varepsilon;\\
+\text{单臂应变桥：}\quad |U_o|&\approx(U_e/4)|\Delta R|/R;\\
+C&=\varepsilon_0\varepsilon_r A/\delta,\qquad
+\frac{C_1-C_2}{C_1+C_2}=\frac{x}{\delta_0}
+\quad\text{（对称理想差动结构）};\\
+L&\approx N^2/\mathcal R_m,\qquad
+f_0=\frac{1}{2\pi\sqrt{LC}},\qquad
+\frac{\Delta f_0}{f_0}\approx-\frac12\left(\frac{\Delta L}{L}+\frac{\Delta C}{C}\right);\\
+e&=-N\frac{\diff\Phi}{\diff t},\qquad Q=d_FF,\qquad
+U_o\approx-Q/C_f\quad\text{（电荷放大器适用频带内）};\\
+U_H&=K_HI_bB_\perp,\qquad
+\lambda_B=2n_{\mathrm{eff}}\Lambda.
+\end{align*}
+电参数相对变化公式多采用小变化线性近似；电桥输出极性由桥臂和接线决定。霍尔电压依赖磁场分量，压电电荷长期保持则受实际漏电限制。
+\end{focusbox}
+
+\begin{focusbox}{核心公式速查：运动、测距与读出能力}
+\begin{align*}
+\text{往返ToF：}\quad d&=v\Delta t/2;\\
+\text{调制相位测距：}\quad d&=c\Delta\phi/(4\pi f_m),\qquad
+d_{\mathrm{amb}}=c/(2f_m);\\
+\text{绝对编码器：}\quad\Delta\theta&=360^\circ/2^{n_b};\\
+\text{增量编码器：}\quad\Delta\theta&=360^\circ/(qN),\qquad
+n=60f_c/(qN)\quad(\mathrm{r/min});\\
+\text{恒压应变电流：}\quad\frac{\Delta I}{I_0}
+&=-\frac{S_g\varepsilon}{1+S_g\varepsilon};\\
+\text{输入分辨力估计：}\quad\Delta x_{\min}
+&\approx\Delta y_{\min}/|S|.
+\end{align*}
+$f_m$ 是调制频率，$\Delta\phi$ 用弧度；增量编码器中 $N$ 是每相每周周期数，$q$ 是倍频计数因子，$f_c$ 必须按同一规则计数。分辨力估计要求局部灵敏度已知，并考虑噪声和漂移。
+\end{focusbox}
+
+\subsection*{原理辨析速查}
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\linewidth}{@{}p{2.7cm} X@{}}
+\toprule
+容易混淆的概念 & 判断依据 \\
+\midrule
+应变式与压阻式 & 都表现为电阻改变；金属片几何变化重要，半导体片以电阻率变化为主。 \\
+电感式与磁电式 & 前者检测外激励下的电感或阻抗变化；后者利用磁通变化产生电动势。 \\
+磁电与霍尔 & 磁电依赖磁通变化率；霍尔依赖偏置电流与磁场分量，可测静态磁场。 \\
+压电与电容 & 压电由受力产生极化电荷；电容式由几何或介质改变电容量，需要相应激励读出。 \\
+光导与光生伏特 & 前者读光照造成的电导变化；后者利用光生载流子分离产生电流或电压。 \\
+光纤与光电 & 光纤负责传光或调制，光电元件完成光到电的读出；两者常在同一系统中合作。 \\
+测压力与测位移 & 两者可共用光学调制；压力方案通常增加弹性机械变换。 \\
+分辨力与准确度 & 前者说明能否区分小变化，后者还受标定、系统偏差、迟滞和漂移影响。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{遇到传感原理题的通用步骤}
+\begin{enumerate}
+\item \textbf{确定被测量与条件：}量程、频率、材料、接触方式和环境是否明确？
+\item \textbf{写转换链：}被测量先改变结构、材料性质还是传播过程？最后测什么电信号？
+\item \textbf{列关系与假设：}区分精确式和小量近似，标出激励、符号、单位与适用范围。
+\item \textbf{检查可读性：}输出变化是否大于分辨力、噪声和漂移；后级是否产生负载或寄生影响？
+\item \textbf{说明适用边界：}如涡流需导电，超声需合适声束与耦合，压电不宜直接长期测恒力。
+\end{enumerate}
+
+\subsection*{易错点清单}
+\begin{itemize}
+\item 将 $\mu\varepsilon$ 正确换为 $10^{-6}$，并保留拉、压符号；百分数与无量纲相对量相差100倍。
+\item 电阻相对变化与恒压下电流相对变化只在小量近似下互为相反数。
+\item 未给表计量程、分辨力和噪声时，不武断判定某个微小变化“能读出”。
+\item 电容、电感可测静态位移；交流激励频率与被测量的变化频率不同。
+\item 差动电容的差值并非严格线性；理想对称结构的差和比才有上述线性式。
+\item 涡流检测需导电，磁粉或漏磁检测还需适用的磁性材料；两者条件不能互换。
+\item 光电二极管、光电池、光敏电阻不能只因都属半导体就混为同一读出方式。
+\item 光纤不是都非接触；FBG测应变必须处理温度交叉敏感。
+\item 往返距离公式要除以2；超声探伤用材料声速，相位测距用调制频率。
+\item 编码器周期数、倍频计数数和脉冲事件率须保持同一约定；分辨力不等于准确度。
+\end{itemize}
+
+\subsection*{知识自测}
+先独立回答，再核对提示。
+\begin{enumerate}
+\item $R=120\,\Omega,S_g=2,\varepsilon=1000\,\mu\varepsilon$ 时 $\Delta R$ 为多少？\textit{答：拉伸假设下为 $+0.24\,\Omega$。}
+\item 恒压串联理想表时电流相对变化为何不是精确的 $-0.2\%$？\textit{答：电流与电阻成反比，精确分母含 $1+S_g\varepsilon$。}
+\item 为何电桥适合读微小电阻变化？\textit{答：以近零平衡输出读差分变化，便于放大与补偿。}
+\item 把极距缩小一半，理想平行板电容怎样变化？\textit{答：面积和介质不变时增为两倍。}
+\item LC回路只增大电容1\%，频率约怎样变？\textit{答：小变化下约降低0.5\%。}
+\item 涡流能否用于所有金属？能否直接用于绝缘陶瓷？\textit{答：金属还需满足探测深度、几何与信噪比条件；常规方法不能直接用于绝缘陶瓷。}
+\item 压电超声探头发射和接收分别用什么效应？\textit{答：逆压电发射，正压电接收。}
+\item 霍尔元件能否测恒定磁场，为什么？\textit{答：能，稳定偏置下静态磁场仍使载流子横向偏转。}
+\item 用光纤测压力与位移，是否必然分别调相位和光强？\textit{答：否，调制方式由结构决定，压力通常多一次机械变换。}
+\item FBG波长漂移可否直接唯一确定应变？\textit{答：一般还需知道或补偿温度等交叉影响。}
+\item 增量编码器每相1000周期/周，四倍计数的角分辨力是多少？\textit{答：$360^\circ/4000=0.09^\circ$。}
+\item 长期夹持力与冲击能否只按“灵敏度最高”选择元件？\textit{答：不能，还需覆盖静态稳定性、动态频带、过载及环境要求。}
+\end{enumerate}

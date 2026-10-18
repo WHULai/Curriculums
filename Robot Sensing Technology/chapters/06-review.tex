@@ -1,0 +1,94 @@
+\clearpage
+\section{复习速查与自测}
+\label{sec:ch6-review}
+
+\begin{focusbox}{核心公式速查：数字记录与频谱}
+\begin{align*}
+T_s&=1/f_s,\qquad T=N/f_s,\qquad\Delta f=f_s/N=1/T;\\
+f_s&>2f_m\quad\text{（理想低通无混叠条件）};\\
+\Delta_q&=\frac{x_{\max}-x_{\min}}{2^b},\qquad
+|e_q|\leq\Delta_q/2\quad\text{（理想舍入、未过载）};\\
+X_N[k]&=\sum_{n=0}^{N-1}x[n]e^{-\iu2\pi kn/N},\qquad f_k=kf_s/N;\\
+f_0T&\in\mathbb Z\quad\text{（相干采样）};\\
+A_{\mathrm{single}}&\approx\frac{2|X_w[k]|}{\sum_nw[n]},\qquad
+\widehat S_x(f_k)=\frac{|X_w[k]|^2}{f_s\sum_nw^2[n]}.
+\end{align*}
+幅值公式用于孤立、落点准确且远离直流及奈奎斯特频率的单频成分；PSD为双边、每Hz归一化。两种归一化的分母不同。补零只改变频点间距 $f_s/M$，有效记录长度与窗的主瓣宽度不变。
+\end{focusbox}
+
+\begin{focusbox}{核心公式速查：相关与功率}
+对实值联合广义平稳过程，采用“第二个信号加时移”的约定：
+\begin{align*}
+R_{xy}(\tau)&=\mathrm E[x(t)y(t+\tau)],\qquad
+R_x(\tau)=\mathrm E[x(t)x(t+\tau)];\\
+\rho_{xy}(\tau)&=\frac{R_{xy}(\tau)-\mu_x\mu_y}{\sigma_x\sigma_y};\\
+R_x(0)&=\sigma_x^2+\mu_x^2=x_{\mathrm{rms}}^2,\quad
+R_x(-\tau)=R_x(\tau),\quad R_{xy}(\tau)=R_{yx}(-\tau);\\
+y(t)&=a\,x(t-\tau_d)\quad\Longrightarrow\quad
+R_{xy}(\tau)=aR_x(\tau-\tau_d);\\
+S_x(f)&=\mathcal F\{R_x(\tau)\},\qquad
+\int_{-\infty}^{\infty}S_x(f)\diff f=x_{\mathrm{rms}}^2;\\
+S_y&=|H|^2S_x,\qquad S_{xy}=HS_x
+\quad\text{（无附加噪声的稳定LTI响应）};\\
+\gamma_{xy}^2(f)&=\frac{|S_{xy}(f)|^2}{S_x(f)S_y(f)}\in[0,1].
+\end{align*}
+相关系数要求方差非零，相干函数要求相应自谱乘积非零。对 $a>0$ 的延迟副本，正的互相关峰位表示 $y$ 晚到；交换信号顺序，峰位反号。
+\end{focusbox}
+
+\subsection*{从测量目标到分析参数}
+\begin{enumerate}
+\item \textbf{明确目标：}需要波形、谐波幅值、周期、时延，还是某频带内的均方值？不同目标对应不同读数方法。
+\item \textbf{先定频带：}估计目标最高频率与带外干扰，选择模拟抗混叠滤波器和采样率。
+\item \textbf{再定时长：}依据频点间距和窗主瓣宽度选择 $T$，由 $N=f_sT$ 决定实际采样点数。
+\item \textbf{选择预处理：}确认是否去均值、是否加窗、采用何种窗；不要误删需要保留的直流或瞬变。
+\item \textbf{写清归一化：}幅值用窗系数之和校正，PSD用窗平方和及 $f_s$ 校正；单双边转换保留端点例外。
+\item \textbf{解释相关峰：}先写延迟模型，再判断正负号；明确单程、往返或路径差的几何关系。
+\item \textbf{核对结果：}谱面积应与相应均方值一致；检查单位、噪声、有限记录影响与统计稳定性。
+\end{enumerate}
+
+\Needspace{7cm}
+\subsection*{常见现象的判断与处理}
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\linewidth}{@{}p{2.5cm} X X@{}}
+\toprule
+现象 & 首先检查什么 & 有效调整 \\
+\midrule
+高频变成低频 & 采样前是否有带外成分，$f_s$ 是否足够。 & 提高采样率并改善模拟抗混叠滤波。 \\
+强谱线周围有裙带 & 是否非整周期截断，窗旁瓣是否过高。 & 采用合适窗，延长记录或安排相干采样。 \\
+峰值幅度偏低 & 是否偏离频点，是否漏做窗增益校正。 & 加零辅助定位、插值或拟合，正确校正幅值。 \\
+相邻谱峰合并 & 有效段长是否过短，窗主瓣是否过宽。 & 延长有效段长，按动态范围选择窗。 \\
+随机PSD抖动大 & 平均次数是否不足，过程是否平稳。 & 在段长合格的前提下增加记录和平均。 \\
+时延符号反向 & 信号顺序、相关公式和软件约定。 & 代入已知延迟模型，统一定义。 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection*{易错点清单}
+\begin{itemize}
+\item 采样使时间离散，量化使幅值离散；ADC位数不能补救混叠或过载。
+\item $N$ 固定时增大 $f_s$ 会缩短记录、增大DFT间距；更高采样率不自动带来更好的频率分辨能力。
+\item 相干采样减少的是理想矩形窗下DFT频点间的泄漏；有限窗连续谱仍有展宽。
+\item 加窗抑制旁瓣通常会展宽主瓣；补零能加密频点，不能增加实际信息。
+\item 零相关不等于独立；平稳不等于遍历；随机过程的相关也不必随时移衰减到零。
+\item 大时移的有效样本对较少；“无偏”相关估计不表示它在所有时移上都更稳定。
+\item 单边内部点加倍，直流与奈奎斯特点不加倍；谱线权重、PSD高度和幅值不能混为一谈。
+\item 相干函数应先平均谱再计算；高相干不证明因果，低相干也不能单独证明系统非线性。
+\end{itemize}
+
+\subsection*{知识自测}
+先独立作答，再用提示核对定义与单位。
+\begin{enumerate}
+\item $f_s=200\,\mathrm{Hz}$ 时，$130\,\mathrm{Hz}$ 余弦折叠到何处？\textit{答：70 Hz；相位应结合具体表达式核对。}
+\item 12位、$\pm5\,\mathrm V$ ADC的理想LSB是多少？\textit{答：$10/4096\approx2.4414\,\mathrm{mV}$。}
+\item $f_s=2\,\mathrm{kHz}$、$N=4000$，$T$ 与 $\Delta f$ 是多少？\textit{答：2 s与0.5 Hz。}
+\item 把上述数据补零到16000点，频点间距与有效时长如何变化？\textit{答：间距变为0.125 Hz，有效时长仍为2 s。}
+\item 换Hann窗为何可能看清远处弱峰，却合并两个近峰？\textit{答：旁瓣降低，但主瓣展宽。}
+\item $x(t)=4\cos(2\pi10t)$ 的 $R_x(0)$、有效值和双边线谱权重各是多少？\textit{答：16/2=8、$2\sqrt2$、$\pm10$ Hz各为4。}
+\item $y(t)=x(t-0.01)$，本章 $R_{xy}$ 的主峰在正侧还是负侧？\textit{答：对具有唯一主相关峰的正增益延迟副本，在 $+0.01$ s。}
+\item 自相关连续重复峰间距为 $1/6$ s，提取出的周期成分频率是多少？\textit{答：6 Hz。}
+\item 能否用单次长记录的时间平均表示任意平稳过程的总体平均？\textit{答：还需相应遍历条件。}
+\item 去掉非零均值后，PSD面积由什么变为什么？\textit{答：由总均方值 $\sigma_x^2+\mu_x^2$ 变为方差 $\sigma_x^2$。}
+\item 近似独立的16次周期图平均，标准差约缩小多少？\textit{答：缩小为原来的 $1/4$，不是 $1/16$。}
+\item 某频率处 $S_x=2$、$S_y=20$、$|S_{xy}|=6$，相干函数是多少？\textit{答：$36/(2\times20)=0.9$；只有在适当输入输出噪声模型下，才能解释为90\%的输出功率来自该输入的线性响应。}
+\end{enumerate}
