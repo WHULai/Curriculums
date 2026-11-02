@@ -1,0 +1,98 @@
+\documentclass[a4paper]{report}
+% Load before the template's arydshln so its longtable hooks are initialized.
+\usepackage{longtable}
+
+% Reuse exactly the course-note template and its font fallbacks.
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\input{note-config}
+\graphicspath{{img/}}
+\hypersetup{
+  pdftitle={机器人传感技术：课后习题复习册},
+  pdfauthor={魏崃},
+  pdfsubject={四份课后作业23题：答案、完整知识讲解、公式推导与首次出现索引}
+}
+\newtcolorbox{hwquestion}{enhanced,breakable=false,
+  colback=white,colframe=myb!80!black,boxrule=.6pt,
+  sharp corners,title={原题},fonttitle=\bfseries,
+  colbacktitle=myb!80!black,coltitle=white}
+\setlength{\emergencystretch}{2em}
+\setstretch{1.18}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\setlist{itemsep=2pt,topsep=4pt,parsep=0pt}
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{6pt plus 2pt minus 1pt}%
+  \setlength{\belowdisplayskip}{6pt plus 2pt minus 1pt}%
+  \setlength{\abovedisplayshortskip}{3pt plus 1pt}%
+  \setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}%
+}
+\raggedbottom
+\title{\includegraphics[width=7cm]{whu-logo.png}\\
+  \Huge{《机器人传感技术》}\\[.5em]
+  \LARGE{课后习题复习册}\\[.5em]
+  \large{原题 · 答案与解析 · 知识延伸}}
+\author{魏崃\thanks{\href{mailto:lai-wei@whu.edu.cn}{lai-wei@whu.edu.cn}}}
+\date{2026年11月1日\\\includegraphics[width=1.5in]{qrcode.png}}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\maketitle
+\clearpage
+\hypersetup{pageanchor=true}
+\pdfbookmark[section]{\contentsname}{hw-toc}
+\setcounter{tocdepth}{1}
+\begingroup
+\setstretch{1.05}
+\tableofcontents
+\endgroup
+\clearpage
+
+\chapter*{使用说明与符号约定}
+\pdfbookmark[chapter]{使用说明与符号约定}{hw-guide}
+本册以四份课程课后作业为主线，逐题保留题意与已知条件，给出可复核的答案和推导，并在题后完整讲解解题涉及的知识、公式与适用条件。题号与原作业一一对应；不另设练习题。原题中的排版疏漏、符号歧义和必要的物理假设在相应题内说明。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}Xcc@{}}
+\toprule
+原始作业文件 & 原题数量 & 本册对应章 \\
+\midrule
+课后作业-CH2.pdf（2026年9月8日，2页） & 6 & 第2章 \\
+课后作业-CH3.pdf（2026年9月19日，1页） & 4 & 第3章 \\
+课后作业-CH4.pdf（2026年9月27日，1页） & 7 & 第4章 \\
+课后作业-信号调理与滤波.pdf（2026年9月27日，1页） & 6 & 第5章 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+原始文件位于提供的 REF 文件夹。解题同时参照同目录现有笔记的第2至5章；本册的题目陈述、公式与必要图示均置于正文，可独立阅读。
+
+\begin{focusbox}{先统一约定，再代入计算}
+\begin{itemize}[leftmargin=1.6em]
+  \item 傅里叶变换采用
+  \[X(f)=\int_{-\infty}^{\infty}x(t)e^{-\iu2\pi ft}\diff t,
+  \qquad x(t)=\int_{-\infty}^{\infty}X(f)e^{\iu2\pi ft}\diff f.\]
+  频率 $f$ 的单位是 Hz，角频率 $\omega=2\pi f$ 的单位是 $\mathrm{rad/s}$。
+  \item $\Sa z=\sin z/z$，$\Sa0=1$。$\PV$ 表示柯西主值分布；冲激箭头旁的数值是权重。
+  \item 余弦 $C\cos(2\pi f_0t+\theta)$（$f_0>0$）的单边幅值为 $|C|$；当 $C>0$ 时，双边复频谱在 $\pm f_0$ 的权重分别为 $Ce^{\pm\iu\theta}/2$。角频率线谱采用各题单独注明的约定。
+  \item 系统相位差定义为输出相位减输入相位。稳态响应不含衰减暂态；归一化幅值比以静态增益为基准。
+  \item 应变无量纲，$1\,\mu\varepsilon=10^{-6}$。电桥输出符号由所选节点极性决定，比较输出大小或灵敏度前先明确接法。
+\end{itemize}
+\end{focusbox}
+\subsection*{以本册作为主要复习材料时怎样阅读}
+每题的“答案与解析”解决这道原题；随后“本题知识点与公式”承担系统复习的作用，依次解释概念、物理或数学模型、关键推导、符号单位及成立条件。易错提示只作最后核查，不能替代知识讲解。
+
+知识按\textbf{在本册中的首次使用顺序}组织：前题没有完整讲过的内容，在本题后展开；前题已经讲过的内容，通过“已学前置”和交叉引用回指。因而从中间一道题开始复习时，应先补读它列出的前置知识。少量关键公式会为当前计算再次写出，但整段基础理论不反复复制。这里的完整性以这23题实际涉及的知识为范围，包括必要的复数、变换、电路和物理基础。
+
+册末提供\hyperref[hw:knowledge-index]{知识点首次出现索引}，可按考点查到题号和页码。复习一个考点时，应同时掌握“量的定义是什么、公式为何成立、哪些条件下能使用、如何回到原题”，而不是只记住该题的数值答案。
+
+\setcounter{chapter}{1}
+\input{homework/02-signals}
+\input{homework/03-systems}
+\input{homework/04-sensors}
+\input{homework/05-conditioning}
+\input{homework/knowledge-index}
+
+\end{document}

@@ -18,6 +18,25 @@
 
 正文在 `chapters/02-*.tex` 至 `chapters/06-*.tex`，各章共用入口、连续页码、目录和PDF书签，统一编译到现有 `main.pdf`。
 
+## 以课后习题为中心的复习册
+
+新增 `homework-review.pdf`，入口为 `homework-review.tex`，正文为 `homework/02-signals.tex`、`03-systems.tex`、`04-sensors.tex` 和 `05-conditioning.tex`。它与 `main.pdf` 分别编译，共用现有封面、樱花粉目录、中文字体和题目/知识提示框模板。
+
+内容对应 `C:\Users\weila\Downloads\REF` 中的四份课后作业：CH2（6题）、CH3（4题）、CH4（7题）和信号调理与滤波（6题），共23题。按原题顺序逐题给出题意、答案、推导、相关知识延伸和易错提示，包含原题要求的频谱图，不额外编题。负时间信号定义、电桥接法、应变正负及仪表可读性等必要条件在题内明确说明。
+
+已按主要考试复习材料的用途扩充：每题后设置“本题知识点与公式”，完整讲解首次用到的概念、模型来源、关键推导、符号单位与适用条件；前题已讲的内容用题号和交叉链接回指。册末 `homework/knowledge-index.tex` 提供知识点首次出现的题号及页码索引。知识范围由这23道原题及其必要基础决定，不以易错提示代替知识讲解。
+
+在本目录用 PowerShell 编译并更新成品：
+
+```powershell
+latexmk -xelatex -interaction=nonstopmode -halt-on-error -outdir=tmp/homework-review/build homework-review.tex
+Copy-Item -LiteralPath tmp/homework-review/build/homework-review.pdf -Destination homework-review.pdf -Force
+```
+
+复用的矢量图已在 `img/` 中，编译时不需要访问原始 REF 路径，也不需要重新绘图。题号和章节号保留作业的 CH2 至 CH5 对应关系。
+
+补充的截断余弦总频谱图由 `python scripts/homework_figures.py` 生成，图中选用的 `f0*T=5/2` 仅用于展示一般公式的叠加关系，不是新增习题条件。
+
 ## 编译
 
 在本目录运行（需要 XeLaTeX 与 latexmk）：
