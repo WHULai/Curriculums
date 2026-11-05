@@ -37,6 +37,8 @@ Copy-Item -LiteralPath tmp/homework-review/build/homework-review.pdf -Destinatio
 
 补充的截断余弦总频谱图由 `python scripts/homework_figures.py` 生成，图中选用的 `f0*T=5/2` 仅用于展示一般公式的叠加关系，不是新增习题条件。
 
+第5章第1题补充单臂与相邻双臂电桥的图解：从桥臂阻值变化、中点电位和支路电流推到精确输出，解释灵敏度与线性条件，并区分拉压半桥、同向接法、泊松半桥和温度补偿片。原理图源码为 `homework/bridge-principle-diagrams.tex`，采用 TikZ 矢量绘制，与正文桥臂编号和输出极性一致，编译时直接嵌入。
+
 ## 编译
 
 在本目录运行（需要 XeLaTeX 与 latexmk）：

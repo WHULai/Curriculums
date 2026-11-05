@@ -96,7 +96,7 @@ e_{\mathrm{nl}}=\frac{U_{y,1}-U_{y,1}^{\mathrm{lin}}}{U_{y,1}^{\mathrm{lin}}}
 \noindent\textbf{已学前置：}应变 $\varepsilon=\Delta l/l$、应变片灵敏系数 $S_g$ 及 $\Delta R/R=S_g\varepsilon$ 见\hyperref[kn:4-1]{第4章第1题知识讲解}。\textbf{本题新增：}完整学习电桥怎样把电阻变化转为电压，包括桥臂位置、接法与输出灵敏度。
 
 \paragraph{1. 电桥来自两个分压器，平衡就是两个中点等电势}
-在答案约定的接法中，电源跨接上、下端，两条支路分别为 $R_2$ 与 $R_1$ 串联、$R_3$ 与 $R_4$ 串联。输出端开路时，每条支路电流只由本支路总电阻决定。由欧姆定律，
+在答案约定的接法中，上端节点为 $a$、下端为 $c$，电源满足 $V_a-V_c=U_0$；取 $V_c=0$。左支路为上臂 $R_2$ 与下臂 $R_1$ 串联，中点为 $d$；右支路为上臂 $R_3$ 与下臂 $R_4$ 串联，中点为 $b$。输出取 $d$ 为正、$b$ 为负，即 $U_y=V_d-V_b$。输出端开路时，每条支路电流只由本支路总电阻决定。由欧姆定律，
 \[
 I_L=\frac{U_0}{R_1+R_2},\quad V_d=I_LR_1,\qquad
 I_R=\frac{U_0}{R_3+R_4},\quad V_b=I_RR_4.
@@ -107,6 +107,9 @@ I_R=\frac{U_0}{R_3+R_4},\quad V_b=I_RR_4.
 =\frac{R_1R_3-R_2R_4}{(R_1+R_2)(R_3+R_4)}}.
 \]
 所以电桥平衡条件是 $R_1R_3=R_2R_4$，不要求四个阻值全部相等。等臂桥 $R_i=R$ 是最常见的平衡特例。电阻以 $\Omega$ 计，电压以V计，$U_y/U_0$ 为无量纲比值，常以 $\mathrm{mV/V}$ 报告。上述分压式假设电源电压已知、输出无电流；有负载时不能把两条支路仍看作互不影响的分压器。
+
+\input{homework/bridge-principle-diagrams}
+图\ref{fig:hw-bridge-principles}固定使用上述节点和极性。两图的四臂初值均为 $R$，差别在于哪些桥臂随被测应变改变；中点 $d,b$ 之间只测电压，不在两点间接入短路线。
 
 \paragraph{2. 小信号线性化怎样确定四臂的正负号}
 令 $R_i=R(1+\delta_i)$、$|\delta_i|\ll1$。利用
@@ -122,19 +125,79 @@ $(1+z)^{-1}=1-z+O(z^2)$，左中点的归一化电势为
 \]
 $\delta_i=\Delta R_i/R$ 无量纲；$O(\delta^2)$ 表示二次及更高阶小量。这里的“相邻臂异号、对臂同号”指\textbf{同一个电阻增量对所选输出的贡献符号}。交换输出端会使全部符号反转，但不改变输出大小。本题单臂增大 $R_1$ 得正输出；相邻的 $R_2$ 若减小，其负号与负增量相乘，贡献便与 $R_1$ 相加。
 
-\paragraph{3. 单臂、双臂和全桥的倍数有接法条件}
-\begin{center}\small
-\begin{tabularx}{\linewidth}{@{}p{1.4cm}Xp{3cm}@{}}
+\paragraph{3. 单臂：一个有源片改变左侧分压比}
+\textbf{单臂桥仍由四个电阻组成，只有一个桥臂对所测应变有响应。}图\ref{fig:hw-bridge-principles}左图取 $R_1$ 为有源应变片，$R_2,R_3,R_4$ 为固定电阻。初始四臂均为 $R$ 时，两条支路电流均为 $U_0/(2R)$，两中点均为 $U_0/2$，输出为零。应变使 $R_1=R+\Delta R$ 后，
+\[
+I_L=\frac{U_0}{2R+\Delta R},\qquad
+V_d=I_L(R+\Delta R)=U_0\frac{R+\Delta R}{2R+\Delta R},
+\qquad V_b=\frac{U_0}{2}.
+\]
+因此输出来自左中点相对固定右中点的偏移：
+\[
+U_{y,1}=V_d-V_b
+=\boxed{\frac{U_0\Delta R}{4R+2\Delta R}
+=\frac{U_0\delta}{4+2\delta}},\qquad
+\delta=\frac{\Delta R}{R}=S_g\varepsilon.
+\]
+取 $U_0>0$、电阻始终为正。若 $\Delta R>0$，左中点高于 $U_0/2$，故所选极性下 $U_y>0$；若 $\Delta R<0$，左中点降低，输出为负。对通常 $S_g>0$ 的金属应变片，拉伸和压缩分别对应这两种情形；交换测量端会使输出反号。
+
+小量近似的依据是 $|\delta|\ll1$，此时分母 $4+2\delta$ 可用4替代，得到 $U_{y,1}\approx U_0\delta/4$。保留精确分母可以看出\textbf{单臂桥并不是恒流读出}：$R_1$ 增大时，左支路总电阻也增大，$I_L$ 随之减小，所以 $V_d$ 不是某个固定电流乘上 $R+\Delta R$。电流随阻值变化，使输出对 $\Delta R$ 含有非线性；即使应变片自身严格满足 $\Delta R/R=S_g\varepsilon$，桥路也只在小量范围内近似线性。
+
+\paragraph{4. 相邻拉压双臂：变化相加而支路总阻不变}
+图\ref{fig:hw-bridge-principles}右图在相邻的 $R_1,R_2$ 中各接一片有源应变片：一片受拉、另一片受等量压缩，且灵敏系数相同，使
+\[
+R_1=R+\Delta R,\qquad R_2=R-\Delta R,\qquad
+R_3=R_4=R.
+\]
+左支路总电阻精确保持 $2R$，于是左支路电流保持初值，分压计算成为
+\[
+I_L=\frac{U_0}{(R+\Delta R)+(R-\Delta R)}
+=\frac{U_0}{2R},\qquad
+V_d=\frac{U_0}{2R}(R+\Delta R)
+=\frac{U_0}{2}+\frac{U_0\Delta R}{2R}.
+\]
+右中点仍为 $V_b=U_0/2$，因此
+\[
+\boxed{U_{y,2}=\frac{U_0\Delta R}{2R}
+=\frac{U_0S_g}{2}\varepsilon},\qquad
+K_{\varepsilon,2}=\frac{\diff U_{y,2}}{\diff\varepsilon}
+=\frac{U_0S_g}{2}=2K_{\varepsilon,1}(0).
+\]
+这里没有舍去 $\Delta R$ 的高阶项；精确线性来源于分母不变。也可用前面的小信号符号核对：$\delta_1-\delta_2=\delta-(-\delta)=2\delta$，两片对信号的贡献相加。\textbf{灵敏度加倍比较的是相同供桥电压、相同初值和灵敏系数下的零点灵敏度}，并要求两片等量反向变化、输出近似开路，以及片的电阻--应变关系保持线性；一般有限应变处的局部灵敏度比较见本题答案。
+
+等量拉压可以来自弯曲梁：在纯弯曲、小变形条件下，同一截面上下表面距中性层相等，沿梁轴向粘贴的两片分别受等量拉伸和压缩。把受拉片接 $R_1$、受压片接 $R_2$，就得到图示模型。若两片距中性层不同，或同时存在显著轴向拉力，就不能自动假定应变等量反向，应先依据受力和贴片位置求各片应变。
+
+\paragraph{5. 两片的数量不能代替位置与受力条件}
+\textbf{相邻同向等量。}若 $R_1=R_2=R+\Delta R$，而 $R_3=R_4=R$，则左支路虽有 $I_L=U_0/[2(R+\Delta R)]$，但上下电阻之比始终为1，故 $V_d=V_b=U_0/2$，输出精确为零。同向的两片接入相邻臂，会把所测应变信号抵消。
+
+\textbf{对臂同向等量。}若改成 $R_1=R_3=R+\Delta R$、$R_2=R_4=R$，则两条支路电流均为 $U_0/(2R+\Delta R)$，但左下臂增大使 $V_d$ 上升，右上臂增大使 $V_b$ 下降，信号作用相加：
+\[
+U_y=U_0\left(\frac{R+\Delta R}{2R+\Delta R}
+-\frac{R}{2R+\Delta R}\right)
+=\boxed{\frac{U_0\delta}{2+\delta}}
+\approx\frac{U_0\delta}{2}.
+\]
+这个接法的零点灵敏度也为单臂的2倍，但分母随应变变化，所以不具备相邻等量拉压双臂的精确线性。\textbf{增敏与消除桥路非线性是两项不同性质。}
+
+\textbf{一片工作、一片补偿。}若只有 $R_1$ 承受被测应变，$R_2$ 只是同温而不承受被测应变的补偿片，则在只考察应变效应时 $\delta_2=0$，输出仍是单臂式。匹配的第二片可消除共同温漂的一阶零点项，却不会仅因数量增加就使应变灵敏度加倍；温补条件和残差在后文继续说明。
+
+\paragraph{6. 先列每片的变化，再判断桥路性能}
+下表仍取 $\delta=\Delta R/R$，电流栏仅列左支路 $I_L$；暂不计温度变化，所有输出均为空载值。固定电阻对被测应变不响应，“补偿片”也特指不承受被测应变的匹配片。
+\begin{center}\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.35cm}>{\raggedright\arraybackslash}p{1.55cm}>{\raggedright\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{2.35cm}>{\centering\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}X@{}}
 \toprule
-接法 & 电阻相对变化与受力条件 & $U_y/U_0$\\
+接法 & 有源片 & 固定或补偿臂 & $I_L$ & $U_y/U_0$ & 增敏与线性条件\\
 \midrule
-单臂 & $\delta_1=\delta$，其余为0 & $\delta/(4+2\delta)\approx\delta/4$\\
-拉压双臂 & $\delta_1=\delta,\ \delta_2=-\delta$，其余为0 & $\delta/2$\\
-交替全桥 & $\delta_1=\delta_3=\delta,\ \delta_2=\delta_4=-\delta$ & $\delta$\\
+单臂 & $R_1$ & $R_2,R_3,R_4$ 固定 & $U_0/(2R+\Delta R)$ & $\delta/(4+2\delta)$ & 单臂基准；小量近似线性\\
+相邻拉压 & $R_1,R_2$ & $R_3,R_4$ 固定 & $U_0/(2R)$ & $\delta/2$ & 等量反向时零点2倍；精确线性\\
+相邻同向 & $R_1,R_2$ & $R_3,R_4$ 固定 & $U_0/[2(R+\Delta R)]$ & $0$ & 等量同向时信号抵消\\
+对臂同向 & $R_1,R_3$ & $R_2,R_4$ 固定 & $U_0/(2R+\Delta R)$ & $\delta/(2+\delta)$ & 零点2倍；小量近似线性\\
+工作片加补偿片 & $R_1$ & $R_2$ 补偿；$R_3,R_4$ 固定 & $U_0/(2R+\Delta R)$ & $\delta/(4+2\delta)$ & 补偿片不受应变时，不自动加倍\\
 \bottomrule
 \end{tabularx}
 \end{center}
-三者的零点应变灵敏度为 $U_0S_g/4,\ U_0S_g/2,\ U_0S_g$，所以有常用的 $1:2:4$ 倍数。双臂和全桥的表中结果在各支路总电阻不变、应变--电阻关系线性的条件下是精确的。若两个相邻臂同向等量变化，二者分压比保持 $1/2$，输出抵消；同向变化的两片若接在对臂，其小信号贡献则可相加，不能只凭“有两片”就指定倍数。
+作为与第2题的衔接，交替全桥若满足 $\delta_1=\delta_3=\delta$、$\delta_2=\delta_4=-\delta$，两支路总电阻也均保持 $2R$，精确有 $U_y/U_0=\delta$。这才得到常用的单臂、相邻拉压双臂、交替全桥零点灵敏度 $1:2:4$，即 $U_0S_g/4,\ U_0S_g/2,\ U_0S_g$。对臂位置和受力符号写清以后，倍数才有确定含义。
 
 \textbf{泊松半桥不是等量拉压半桥。}若同一试件表面一片沿轴向、一片沿横向，处于单轴应力且横向可自由收缩，横向应变为 $-\nu_p\varepsilon$。$\nu_p$ 为无量纲泊松比，两片同 $S_g$ 并接相邻臂时，
 \[
@@ -145,10 +208,10 @@ $\delta_i=\Delta R_i/R$ 无量纲；$O(\delta^2)$ 表示二次及更高阶小量
 \]
 它一般不等于 $S_g\varepsilon/2$；受约束、多轴应力或横向灵敏度明显时，还须修正模型。本题答案采用的是弯曲等场景中的等量拉压布置。
 
-\paragraph{4. 温度补偿补偿的是共同变化}
-若相邻两片的温度增量均为 $\delta_T$，而有效应变只作用于工作片，则 $\delta_1=\delta_\varepsilon+\delta_T$、$\delta_2=\delta_T$，小信号输出中的 $\delta_T$ 相消。补偿片须与工作片温度接近、温度特性匹配且不承受所测应变；若两片还同时承受同向有效应变，有效信号也会被抵消。引线电阻不等、温度梯度与片间不一致会留下残差，不能把“半桥”本身视为无条件温度补偿。
+\paragraph{7. 温度补偿补偿的是共同变化}
+若温度引起的相对阻值变化均为 $\delta_T$，而有效应变只作用于工作片，则 $\delta_1=\delta_\varepsilon+\delta_T$、$\delta_2=\delta_T$，小信号输出中的共同温度项相消。补偿片须与工作片温度接近、温度特性及安装材料匹配，且不承受所测应变；若两片还同时承受同向有效应变，有效信号也会被抵消。这里讨论的是零点补偿，应变片灵敏系数随温度变化造成的增益漂移还须另行校准。引线电阻不等、温度梯度与片间不一致也会留下残差，不能把“半桥”本身视为无条件温度补偿。
 
-\paragraph{5. 有限输入阻抗要用戴维南等效}
+\paragraph{8. 有限输入阻抗要用戴维南等效}
 把桥的输出等效为开路电压 $U_{\mathrm{oc}}$ 与串联电阻 $R_{\mathrm{th}}$。求 $R_{\mathrm{th}}$ 时将理想电压源短路，两个中点各自看到一组并联电阻，因此
 \[
 R_{\mathrm{th}}=(R_1\parallel R_2)+(R_3\parallel R_4),
@@ -160,7 +223,7 @@ R_{\mathrm{th}}=(R_1\parallel R_2)+(R_3\parallel R_4),
 \]
 等臂初始桥有 $R_{\mathrm{th}}=R$；$R_L\gg R_{\mathrm{th}}$ 时才接近开路值。加载衰减随桥臂变化还可能引入附加非线性。本题 $R_L\to\infty$ 正是允许直接使用分压结果的条件。交流桥需把电阻换成复阻抗，并同时满足幅值、相位平衡，见\hyperref[kn:4-2]{第4章第2题知识讲解}。
 
-\paragraph{6. 灵敏度、非线性与供桥电压应分开评价}
+\paragraph{9. 灵敏度、非线性与供桥电压应分开评价}
 局部灵敏度 $K_\varepsilon=\diff U_y/\diff\varepsilon$ 描述某工作点附近的增量；割线灵敏度 $[U_y(\varepsilon)-U_y(0)]/\varepsilon$ 描述从零到该点的平均变化。它们的单位为V/单位应变，也可用 $\mu\mathrm V/\mu\varepsilon$；电阻式应变片的 $S_g$ 则无量纲。单臂精确式可展开为
 \[
 \frac{U_y}{U_0}
@@ -652,7 +715,7 @@ f_{c2}=f_0\,2^{n/2},\qquad
 
 \nt{四项判断依次为：错、对、按常用半功率约定对、对。$-3\,\mathrm{dB}$ 使用幅值的 $20\log_{10}$；功率比使用 $10\log_{10}$；同阻抗时，电压幅值比的 $20\log_{10}$ 与功率比的 $10\log_{10}$ 一致。}
 
-\needspace{11\baselineskip}
+\Needspace{11\baselineskip}
 \section{第6题：双频输入通过一阶低通}
 \label{hw:5-6}
 \keypoint{复习重点：先计算两个 $\omega\tau$，系统相位差再加到原输入相位上。}

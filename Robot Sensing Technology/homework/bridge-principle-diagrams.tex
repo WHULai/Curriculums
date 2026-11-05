@@ -1,0 +1,114 @@
+% Vector bridge circuits. Arm numbering and output polarity follow HW 5.1.
+% No scaling is applied: all circuit labels are typeset at 9 pt.
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[t]{.48\linewidth}
+\centering
+\textbf{（a）单臂电桥}\par\smallskip
+\begin{tikzpicture}[x=1cm,y=1cm,line width=.65pt,
+  font=\fontsize{9}{11}\selectfont,
+  fixed/.style={draw=black,fill=white},
+  active/.style={draw=myr,fill=myr!8,line width=.9pt}]
+  % Common supply rails, connected to an ideal voltage source at the left.
+  \draw (-2.8,3.21)--(-2.8,5.7)--(1.7,5.7);
+  \draw (-2.8,2.49)--(-2.8,0)--(1.7,0);
+  \draw (-2.8,2.85) circle[radius=.36cm];
+  \node at (-2.8,2.99) {$+$};
+  \node at (-2.8,2.70) {$-$};
+  \node[anchor=east] at (-3.25,2.85) {$U_0$};
+  \fill (.4,5.7) circle[radius=1.4pt];
+  \node[anchor=south] at (.4,5.83) {$a\,(+U_0)$};
+  \fill (.4,0) circle[radius=1.4pt];
+  \node[anchor=north] at (.4,-.13) {$c\,(0)$};
+  % Left leg: upper R2 is fixed; lower R1 is the active strain gauge.
+  \draw (-.9,5.7)--(-.9,4.70);
+  \draw[fixed] (-1.08,3.85) rectangle (-.72,4.70);
+  \draw (-.9,3.85)--(-.9,1.85);
+  \draw[active] (-1.08,1.00) rectangle (-.72,1.85);
+  \draw (-.9,1.00)--(-.9,0);
+  \node[anchor=west] at (-.48,4.275) {$R_2=R$};
+  \node[anchor=west,align=left,text=myr] at (-.48,1.425)
+    {$R_1=R+\Delta R$\\$+\varepsilon$};
+  % Right leg: both bridge-completion resistors are fixed.
+  \draw (1.7,5.7)--(1.7,4.70);
+  \draw[fixed] (1.52,3.85) rectangle (1.88,4.70);
+  \draw (1.7,3.85)--(1.7,1.85);
+  \draw[fixed] (1.52,1.00) rectangle (1.88,1.85);
+  \draw (1.7,1.00)--(1.7,0);
+  \node[anchor=west] at (2.08,4.275) {$R_3=R$};
+  \node[anchor=west] at (2.08,1.425) {$R_4=R$};
+  % Separate leads terminate at an ideal voltmeter, not a short circuit.
+  \draw (-.9,2.85)--(.06,2.85);
+  \draw (.74,2.85)--(1.7,2.85);
+  \draw (.4,2.85) circle[radius=.34cm];
+  \node at (.4,2.85) {$V$};
+  \fill (-.9,2.85) circle[radius=1.4pt];
+  \fill (1.7,2.85) circle[radius=1.4pt];
+  \node[anchor=south east] at (-1.00,2.98) {$d\,(+)$};
+  \node[anchor=south west] at (1.80,2.98) {$b\,(-)$};
+  \node at (.4,2.35) {$R_L\to\infty$};
+  \node at (.4,2.03) {$U_y=V_d-V_b$};
+  \draw[->,>=stealth] (-.9,5.35)--(-.9,4.94)
+    node[midway,left=2pt] {$I_L$};
+  \draw[->,>=stealth] (1.7,5.35)--(1.7,4.94)
+    node[midway,right=2pt] {$I_R$};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{.48\linewidth}
+\centering
+\textbf{（b）相邻拉压双臂电桥}\par\smallskip
+\begin{tikzpicture}[x=1cm,y=1cm,line width=.65pt,
+  font=\fontsize{9}{11}\selectfont,
+  fixed/.style={draw=black,fill=white},
+  active/.style={draw=myr,fill=myr!8,line width=.9pt}]
+  \draw (-2.8,3.21)--(-2.8,5.7)--(1.7,5.7);
+  \draw (-2.8,2.49)--(-2.8,0)--(1.7,0);
+  \draw (-2.8,2.85) circle[radius=.36cm];
+  \node at (-2.8,2.99) {$+$};
+  \node at (-2.8,2.70) {$-$};
+  \node[anchor=east] at (-3.25,2.85) {$U_0$};
+  \fill (.4,5.7) circle[radius=1.4pt];
+  \node[anchor=south] at (.4,5.83) {$a\,(+U_0)$};
+  \fill (.4,0) circle[radius=1.4pt];
+  \node[anchor=north] at (.4,-.13) {$c\,(0)$};
+  % Equal and opposite active arms share the left branch.
+  \draw (-.9,5.7)--(-.9,4.70);
+  \draw[active] (-1.08,3.85) rectangle (-.72,4.70);
+  \draw (-.9,3.85)--(-.9,1.85);
+  \draw[active] (-1.08,1.00) rectangle (-.72,1.85);
+  \draw (-.9,1.00)--(-.9,0);
+  \node[anchor=west,align=left,text=myr] at (-.48,4.275)
+    {$R_2=R-\Delta R$\\$-\varepsilon$};
+  \node[anchor=west,align=left,text=myr] at (-.48,1.425)
+    {$R_1=R+\Delta R$\\$+\varepsilon$};
+  \draw (1.7,5.7)--(1.7,4.70);
+  \draw[fixed] (1.52,3.85) rectangle (1.88,4.70);
+  \draw (1.7,3.85)--(1.7,1.85);
+  \draw[fixed] (1.52,1.00) rectangle (1.88,1.85);
+  \draw (1.7,1.00)--(1.7,0);
+  \node[anchor=west] at (2.08,4.275) {$R_3=R$};
+  \node[anchor=west] at (2.08,1.425) {$R_4=R$};
+  \draw (-.9,2.85)--(.06,2.85);
+  \draw (.74,2.85)--(1.7,2.85);
+  \draw (.4,2.85) circle[radius=.34cm];
+  \node at (.4,2.85) {$V$};
+  \fill (-.9,2.85) circle[radius=1.4pt];
+  \fill (1.7,2.85) circle[radius=1.4pt];
+  \node[anchor=south east] at (-1.00,2.98) {$d\,(+)$};
+  \node[anchor=south west] at (1.80,2.98) {$b\,(-)$};
+  \node at (.4,2.35) {$R_L\to\infty$};
+  \node at (.4,2.03) {$U_y=V_d-V_b$};
+  \draw[->,>=stealth] (-.9,5.35)--(-.9,4.94)
+    node[midway,left=2pt] {$I_L$};
+  \draw[->,>=stealth] (1.7,5.35)--(1.7,4.94)
+    node[midway,right=2pt] {$I_R$};
+\end{tikzpicture}
+\end{minipage}
+\caption{单臂与相邻拉压双臂电桥的原理及本题极性约定。
+红色矩形为受应变的有源应变片，黑色矩形为固定电阻；
+$\Delta R=S_gR\varepsilon$。
+电压表 $V$ 跨接 $d$、$b$，示意理想高输入阻抗 $R_L\to\infty$，不是将中点短接。
+双臂图采用相邻两片等量拉、压应变 $+\varepsilon$、$-\varepsilon$，
+不同于横向应变为 $-\nu_p\varepsilon$ 的泊松半桥。}
+\label{fig:hw-bridge-principles}
+\end{figure}
