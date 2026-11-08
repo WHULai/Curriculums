@@ -1,0 +1,221 @@
+\chapter{计算机图形学基础}
+\label{ch:graphics}
+
+\section{从几何模型到屏幕图像}
+计算机图形学研究利用计算机生成、处理和显示图形的原理与方法。\textbf{几何信息}描述位置、大小与形状，\textbf{拓扑信息}描述点、边、面之间的连接关系。改变顶点坐标可能改变外形而保留连接关系；增删一条边则可能改变拓扑。
+
+图形学通常由模型生成图像；图像处理以已有图像为对象，进行增强、去噪和分割等处理；计算机视觉或模式识别则从图像提取特征、识别对象或恢复模型。图形库提供图元、变换及显示等接口，通过设备驱动实现具体功能，统一接口有利于减小应用程序对硬件的依赖。讲义列举了GKS、PHIGS、OpenGL与DirectX等接口。
+\sourcepage{第2章}{4--11}
+
+\subsection{坐标系与显示链}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+坐标系 & 含义 \\
+\midrule
+模型/局部坐标系 & 固定于单个对象，表达其自身几何；对象在场景中的位姿由模型变换确定。 \\
+世界坐标系 & 场景的公共全局参考，统一表达各对象与观察者的位置和方向。 \\
+观察/相机坐标系 & 相对于观察者描述对象，方便投影和可见性计算。 \\
+规格化设备坐标NDC & 与具体设备无关的规范坐标；本讲义采用二维范围$[0,1]\times[0,1]$。 \\
+设备坐标系 & 对应实际显示器、绘图机等设备，单位、原点、轴向与分辨率依设备而定。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\reviewfig[.7]{ch02-coordinates.pdf}{模型、世界与观察坐标系的关系（摘自第2章讲义，PDF第14页）。}{fig:coordinates}
+
+典型流程为：模型坐标$\to$世界坐标$\to$观察坐标$\to$投影与裁剪$\to$规格化坐标$\to$视口/设备坐标。\keypoint{观察坐标系和设备坐标系处于不同环节，不能混为一谈。}
+
+若世界窗口为$[x_{\min},x_{\max}]\times[y_{\min},y_{\max}]$，映射到$[0,1]^2$，有
+\[
+u=\frac{x-x_{\min}}{x_{\max}-x_{\min}},\qquad
+v=\frac{y-y_{\min}}{y_{\max}-y_{\min}}.
+\]
+再映射到设备视口$[U_0,U_1]\times[V_0,V_1]$：
+\[
+U=U_0+(U_1-U_0)u,\qquad V=V_0+(V_1-V_0)v.
+\]
+若屏幕竖轴向下而世界$y$轴向上，则应改为$V=V_1-(V_1-V_0)v$。窗口与视口宽高比不同，且分别独立缩放时，会产生外形失真。
+\sourcepage{第2章}{14--18}
+
+\section{齐次坐标与二维变换}
+\label{sec:homogeneous}
+\dfn{本册的计算约定}{点采用\textbf{列向量}，变换左乘：$\widetilde{\boldsymbol p}'=T\widetilde{\boldsymbol p}$。二维齐次点为$(x,y,1)^{\mathsf T}$；三维为$(x,y,z,1)^{\mathsf T}$。若改用行向量，须将整个等式转置为$\widetilde{\boldsymbol p}'^{\mathsf T}=\widetilde{\boldsymbol p}^{\mathsf T}T^{\mathsf T}$，矩阵形式和复合顺序都相应改变。本约定与讲义第20--37页主要矩阵一致。}
+
+一般二维齐次坐标$(X,Y,H)^{\mathsf T}$在$H\ne0$时表示笛卡尔点$(X/H,Y/H)$。齐次坐标把平移纳入矩阵乘法；透视变换后最后一项可能不再为1，必须进行齐次除法。
+
+\subsection{平移、比例、旋转、对称与错切}
+绕原点逆时针为二维正旋转。令$c=\cos\theta,s=\sin\theta$，则
+\[
+T(a,b)=\begin{bmatrix}1&0&a\\0&1&b\\0&0&1\end{bmatrix},\quad
+S(s_x,s_y)=\begin{bmatrix}s_x&0&0\\0&s_y&0\\0&0&1\end{bmatrix},\quad
+R(\theta)=\begin{bmatrix}c&-s&0\\s&c&0\\0&0&1\end{bmatrix}.
+\]
+平移给出$x'=x+a,y'=y+b$；比例变换给出$x'=s_xx,y'=s_yy$。正比例系数相同时为等比例缩放，系数不同则会改变一般角度及长度比例；负系数还包含反射。
+
+关于$x$轴、$y$轴、原点、直线$y=x$的对称矩阵依次为
+\[
+\operatorname{diag}(1,-1,1),\quad
+\operatorname{diag}(-1,1,1),\quad
+\operatorname{diag}(-1,-1,1),\quad
+\begin{bmatrix}0&1&0\\1&0&0\\0&0&1\end{bmatrix}.
+\]
+沿$x$方向错切使$x'=x+ky,y'=y$，沿$y$方向错切使$x'=x,y'=y+kx$，对应矩阵为
+\[
+H_x(k)=\begin{bmatrix}1&k&0\\0&1&0\\0&0&1\end{bmatrix},\qquad
+H_y(k)=\begin{bmatrix}1&0&0\\k&1&0\\0&0&1\end{bmatrix}.
+\]
+\sourcepage{第2章}{19--29}
+
+\subsection{复合变换：先发生的写在右侧}
+若先做$T_1$，再做$T_2$，有
+\[
+\widetilde{\boldsymbol p}'=T_2T_1\widetilde{\boldsymbol p}.
+\]
+矩阵乘法通常不满足交换律，不能按读题的先后顺序直接从左往右排列。绕非原点$\boldsymbol q=(q_x,q_y)$旋转，要先把旋转中心移到原点，再旋转，最后移回：
+\begin{align*}
+T_q(\theta)&=T(q_x,q_y)R(\theta)T(-q_x,-q_y)\\
+&=\begin{bmatrix}
+c&-s&q_x(1-c)+q_ys\\
+s&c&-q_xs+q_y(1-c)\\
+0&0&1
+\end{bmatrix}.
+\end{align*}
+绕$\boldsymbol q$缩放同理为$T(\boldsymbol q)S T(-\boldsymbol q)$。这类表达式的检验方法是代入$\boldsymbol q$，中心点应保持不变。
+
+\ex{先平移还是先旋转？}{点$(1,0)$先向$x$方向平移1，再逆时针旋转$90^\circ$，得到$(0,2)$；先旋转再平移，则得到$(1,1)$。平移量相同、角度相同，但旋转作用于不同的位置，因而结果不同。}
+\nt{同中心的二维旋转彼此可交换；沿同一组坐标轴的比例变换彼此可交换；任意两次平移也可交换。这些特殊结论不表示所有几何变换都可交换。详细证明见附录作业。讲义第31页展开矩阵的$(2,1)$项应为$+\sin\alpha$。}
+\sourcepage{第2章}{30--33}
+
+\section{三维变换与投影}
+\subsection{基本仿射变换}
+三维平移、比例与旋转可统一写成
+\[
+T=\begin{bmatrix}A&\boldsymbol t\\\boldsymbol0^{\mathsf T}&1\end{bmatrix},\qquad
+\boldsymbol p'=A\boldsymbol p+\boldsymbol t.
+\]
+平移时$A=I$；比例时$A=\operatorname{diag}(s_x,s_y,s_z)$；关于某坐标平面对称，只需使该平面法向分量变号。三维错切在$A$的非对角项加入系数，例如$x'=x+ky+lz$而$y,z$不变时，$A$第一行为$(1,k,l)$。
+
+右手系中绕固定坐标轴的正旋转矩阵为
+\[
+R_x(\alpha)=\begin{bmatrix}1&0&0\\0&\cos\alpha&-\sin\alpha\\0&\sin\alpha&\cos\alpha\end{bmatrix},
+\]
+\[
+R_y(\beta)=\begin{bmatrix}\cos\beta&0&\sin\beta\\0&1&0\\-\sin\beta&0&\cos\beta\end{bmatrix},\qquad
+R_z(\gamma)=\begin{bmatrix}\cos\gamma&-\sin\gamma&0\\\sin\gamma&\cos\gamma&0\\0&0&1\end{bmatrix}.
+\]
+在齐次坐标下，将上述$3\times3$旋转块补为$4\times4$即可。\keypoint{三维不同轴的旋转一般不可交换。}例如对$(0,1,0)$先$R_x(90^\circ)$再$R_y(90^\circ)$得到$(1,0,0)$；反序则得到$(0,0,1)$。
+\sourcepage{第2章}{34--38}
+
+\subsection{正投影、视图展开和轴测投影}
+正投影将某一方向压缩为零，会丢失深度。例如投影到$xy$平面：
+\[
+P_{xy}=\operatorname{diag}(1,1,0,1),\qquad (x,y,z)\mapsto(x,y,0).
+\]
+按讲义把三视图最终展开到$xz$绘图平面，主视图取$(x,0,z)$；俯视图先投影到$xy$面，再绕$x$轴$-90^\circ$并向$z$负向平移$d_1$；左视图先投影到$yz$面，再绕$z$轴$90^\circ$并向$x$负向平移$d_2$。于是
+\[
+T_V=\begin{bmatrix}1&0&0&0\\0&0&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix},\quad
+T_H=\begin{bmatrix}1&0&0&0\\0&0&0&0\\0&-1&0&-d_1\\0&0&0&1\end{bmatrix},\quad
+T_W=\begin{bmatrix}0&-1&0&-d_2\\0&0&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix}.
+\]
+$d_1,d_2$控制视图排布，不改变各视图内部的投影尺寸。轴测投影则先调整物体与投影面的相对朝向，再作平行投影；正等轴测中三个轴的投影缩短率相等。若取$\alpha=45^\circ,\ \beta=\arctan(1/\sqrt2)$，一种与上述旋转约定一致的轴测矩阵是
+\[
+P_{xz}R_x(\beta)R_z(\alpha)=
+\begin{bmatrix}
+\cos\alpha&-\sin\alpha&0&0\\
+0&0&0&0\\
+\sin\alpha\sin\beta&\cos\alpha\sin\beta&\cos\beta&0\\
+0&0&0&1
+\end{bmatrix}.
+\]
+轴测图的左右朝向可随旋转方向改变，实际计算应由基本矩阵相乘确定符号；本式的第三行第二项由乘法得到正号。
+\sourcepage{第2章}{39--42}
+
+\subsection{透视投影}
+平行投影的投射线互相平行；透视投影的投射线交于有限的投影中心，呈现近大远小。沿讲义第16页的距离定义，视点距投影面为$S$，目标点到视点的轴向距离为$L-Z_V$，相似三角形给出
+\[
+X_S=\frac{S}{L-Z_V}X_V,\qquad
+Y_S=\frac{S}{L-Z_V}Y_V.
+\]
+分母取决于深度，因而不能用普通的二维线性缩放代替。必须保持坐标定义一致，并剔除位于投影中心平面等不满足投影条件的点。
+\sourcepage{第2章}{15--16}
+
+\section{图形裁剪}
+\dfn{裁剪}{用给定窗口或可视体确定图形的保留部分，舍去边界外部分的过程。按对象可分为点、直线段、多边形、曲线及曲面等裁剪。裁剪解决\textbf{是否位于指定区域内}，消隐则解决\textbf{是否被其他表面遮挡}。}
+
+矩形窗口内点的判据为
+\[
+x_{\min}\leq x\leq x_{\max},\qquad y_{\min}\leq y\leq y_{\max}.
+\]
+直线段可全部保留、全部舍弃，或保留两个交点之间/内部端点与交点之间的部分。\keypoint{两个端点都在窗口外，仍可能穿过窗口。}
+\sourcepage{第2章}{44--47}
+
+\subsection{Cohen--Sutherland线段裁剪}
+延长矩形四条边界得到九个区域。按讲义，编码位从高到低为\textbf{上、下、右、左}：
+\[
+\begin{array}{c|c|c}
+1001&1000&1010\\\hline
+0001&0000&0010\\\hline
+0101&0100&0110
+\end{array}
+\]
+当$x<x_{\min}$置最低位1；$x>x_{\max}$置右位1；$y<y_{\min}$置下位1；$y>y_{\max}$置上位1。边界上的点按内部处理。设端点编码为$c_1,c_2$：
+\begin{enumerate}
+\item 若$c_1\mathbin{|}c_2=0$，两端点都在内部，\textbf{直接接受}。
+\item 若$c_1\mathbin{\&}c_2\ne0$，两端点位于同一条边界外侧，\textbf{直接舍弃}。
+\item 其余情况取一个外部端点，按非零编码位选择边界求交，用交点替换该端点，重新编码并重复。
+\end{enumerate}
+第三种情况只表示\textbf{尚不能判定}，并不保证一定相交。例如窗口$[0,1]^2$外的线段$(-2,0.5)$至$(0.5,2)$初次位与为零，但仍可完全在窗口外。
+
+用参数式$\boldsymbol p(t)=\boldsymbol p_1+t(\boldsymbol p_2-\boldsymbol p_1)$、$0\leq t\leq1$计算交点。与竖边$x=x_b$相交时
+\[
+t=\frac{x_b-x_1}{x_2-x_1},\quad y=y_1+t(y_2-y_1);
+\]
+与横边$y=y_b$相交时
+\[
+t=\frac{y_b-y_1}{y_2-y_1},\quad x=x_1+t(x_2-x_1).
+\]
+分母为零说明线段与该边界平行，不能直接相除。计算过程中保留浮点交点，最后显示时才转换为像素坐标，避免提前取整引入错误。
+\sourcepage{第2章}{48、50--56}
+
+\reviewfig[.85]{ch02-clipping.pdf}{同一组线段裁剪前后的显示效果（摘自第2章讲义，PDF第56页）。}{fig:clipping}
+
+\subsection{多边形逐边裁剪}
+Sutherland--Hodgman算法依次使用窗口的各边界，裁剪上一次输出的顶点序列。每次考察有向边$S\to P$，按相对于\textbf{当前半平面}的内外关系输出：
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+$S$ & $P$ & 输出 \\
+\midrule
+内 & 内 & $P$ \\
+内 & 外 & 交点$I$ \\
+外 & 内 & $I$，随后$P$ \\
+外 & 外 & 无 \\
+\bottomrule
+\end{tabular}
+\end{center}
+多边形最后一顶点到第一顶点的边也要处理，结果应保留顶点顺序。讲义还列举Weiler--Atherton算法，复习时应先掌握逐边输出的四种情况。
+\sourcepage{第2章}{49}
+
+\section{消隐与深度缓存}
+消隐是消除不可见线和面的过程。投影后失去深度，可能使前后关系不明确；必须利用原有空间关系判断遮挡。重叠测试先判断投影区域有无公共部分，包含性测试判断区域包含，深度测试确定前后，可见性测试还要考虑物体自身的遮挡。
+
+\dfn{Z-buffer算法}{为每个像素保存当前可见表面的深度和颜色。对新表面在该像素处的采样点计算深度，若更靠近观察者，则\textbf{同时更新深度缓存与颜色缓存}；否则保持原值。}
+
+深度比较方向由坐标定义决定。若用正数$d$表示离观察者的距离，则越小越近：初始化$D=+\infty$，当$d<D$时更新。若用沿朝向观察者的轴坐标$z$，也可以越大越近，此时应初始化$Z=-\infty$并使用$z>Z$。
+
+\nt{讲义第60页按“$z$越大越近”叙述，第61--63页程序却采用$+\infty$初始化和较小值更新。二者属于不同深度约定，不能混用；程序中的“$z$小表示更远”注释也与更新规则矛盾。本册以明确的比较规则为准。}
+
+区间扫描线法按扫描线把可见区域划分为子区间，在每个区间内比较覆盖该处的表面深度，选择可见面并计算颜色。Z-buffer便于逐像素处理，不要求先对所有面建立全局前后排序，但仍需对表面进行采样和深度计算。
+\sourcepage{第2章}{58--63}
+
+\subsection*{复习自测}
+\begin{enumerate}
+\item 列向量先旋转后平移的矩阵是什么？\textit{答：$T_{\rm trans}R$。}
+\item 点与方向向量的齐次最后一项有何不同？\textit{答：有限点通常取1，方向取0，平移不改变方向。}
+\item 非均匀缩放与旋转是否可交换？\textit{答：一般不可；等比例缩放与绕同一原点的旋转可交换。}
+\item 线段编码位与为零是否即可保留？\textit{答：否，还要检验位或或继续求交。}
+\item 裁剪与消隐的差别是什么？\textit{答：前者按区域保留，后者按遮挡保留可见部分。}
+\item 采用深度越小越近时，Z-buffer初始值及更新条件是什么？\textit{答：$+\infty$，新深度小于当前深度时更新。}
+\end{enumerate}

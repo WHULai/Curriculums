@@ -1,0 +1,250 @@
+\chapter{课程作业详解}
+\label{app:homework}
+
+本附录对应两份原始题单：第2章讲义PDF第64页，以及下载目录中的作业图片。两份题单第1--3题相同，但第4--5题不同，因此先讲共同题，再分别保留各自第4--5题，共七组解答。全章使用列向量、左乘矩阵和右手正旋转；行向量答案须将矩阵整体转置。
+
+\section{共同第1题：世界、设备与规格化坐标}
+\qs{题意}{世界坐标系、设备坐标系以及规格化坐标系三者的区别和联系是什么？}
+\sol 世界坐标系是统一描述场景中各物体位置、方向及大小的全局参考，通常按工程尺度取单位；设备坐标系服务于实际显示或绘图设备，其单位、范围、原点与轴向依硬件而定；规格化设备坐标是二者之间与设备无关的中间表达，本课程取二维坐标范围$[0,1]^2$。
+
+三者的联系是\textbf{由世界窗口到规格化坐标，再由规格化坐标映射到设备视口}。例如世界窗口$x\in[10,30]$、$y\in[20,60]$中的点$(15,30)$，规格化后为
+\[
+u=\frac{15-10}{30-10}=\frac14,\qquad
+v=\frac{30-20}{60-20}=\frac14.
+\]
+若设备视口为$U\in[100,900]$、$V\in[50,650]$，且两个坐标系竖轴同向，则$(U,V)=(300,200)$；若设备竖轴向下而世界竖轴向上，则$V=650-600v=500$。
+\nt{观察/相机坐标用于相对于观察者表达几何，设备坐标用于输出设备，不能把二者当成同一坐标系。窗口和视口宽高比不同且独立缩放时，图形可能发生非均匀变形。}
+\sourcepage{第2章}{14--18、64}
+
+\section{共同第2题：三角形比例变换}
+\qs{题意}{已知$A(20,15)$、$B(20,40)$、$C(40,30)$。分别求：（1）$x$方向缩小一半，$y$方向增加一倍；（2）整个三角形放大为原来的1.5倍。}
+\sol 按基本比例变换约定，以\textbf{坐标原点为缩放中心}；“增加一倍”表示变为原来的2倍，“放大为1.5倍”指各线性尺寸乘1.5。
+
+（1）$s_x=1/2$、$s_y=2$，所以
+\[
+S_1=\begin{bmatrix}1/2&0&0\\0&2&0\\0&0&1\end{bmatrix},\qquad
+\begin{bmatrix}x'\\y'\\1\end{bmatrix}=S_1\begin{bmatrix}x\\y\\1\end{bmatrix}.
+\]
+直接得到
+\[
+\boxed{A'(10,30),\quad B'(10,80),\quad C'(20,60).}
+\]
+
+（2）$s_x=s_y=1.5$，所以
+\[
+S_2=\begin{bmatrix}1.5&0&0\\0&1.5&0\\0&0&1\end{bmatrix},
+\]
+\[
+\boxed{A''(30,22.5),\quad B''(30,60),\quad C''(60,45).}
+\]
+可用面积变化检验：二维比例变换的面积倍率是$|s_xs_y|$。原三角形面积为250，第一种仍为250，第二种为$250\times1.5^2=562.5$。第一种面积不变，但形状一般改变；第二种相似形状不变，面积不是只乘1.5。
+
+\nt{若指定以某点$\boldsymbol q$为缩放中心，应改用$\boldsymbol p'=\boldsymbol q+S(\boldsymbol p-\boldsymbol q)$；不能把原点缩放结果直接用于其他中心。}
+\sourcepage{第2章}{23、64}
+
+\section{共同第3题：变换能否交换}
+\qs{题意}{证明：（1）两个连续旋转；（2）两个连续平移；（3）两个连续比例变换；（4）比例系数相等时的旋转与比例变换，是否具有互换性。}
+\sol 以下按本题的二维基本变换理解，旋转与比例均关于同一坐标原点，比例轴为同一组$x,y$轴。
+
+\subsection*{（1）同中心二维旋转可以交换}
+由三角函数和角公式，
+\[
+R(\beta)R(\alpha)=
+\begin{bmatrix}
+\cos(\alpha+\beta)&-\sin(\alpha+\beta)&0\\
+\sin(\alpha+\beta)&\cos(\alpha+\beta)&0\\
+0&0&1
+\end{bmatrix}
+=R(\alpha)R(\beta).
+\]
+故复合角为$\alpha+\beta$，顺序无关。\textbf{若旋转中心不同，或为三维不同轴旋转，一般不能交换。}
+
+\subsection*{（2）两次平移可以交换}
+\[
+T(a_2,b_2)T(a_1,b_1)=
+\begin{bmatrix}1&0&a_1+a_2\\0&1&b_1+b_2\\0&0&1\end{bmatrix}
+=T(a_1,b_1)T(a_2,b_2).
+\]
+向量相加满足交换律，因此总平移量与先后次序无关。
+
+\subsection*{（3）沿同一坐标轴的比例变换可以交换}
+\[
+S(c_2,d_2)S(c_1,d_1)=
+\operatorname{diag}(c_2c_1,d_2d_1,1)
+=S(c_1,d_1)S(c_2,d_2).
+\]
+这是对角矩阵乘法的结果。若缩放中心或主轴不同，不能直接使用该结论。
+
+\subsection*{（4）等比例缩放与同原点旋转可以交换}
+取$S(k,k)=\operatorname{diag}(k,k,1)$，令$c=\cos\theta,s=\sin\theta$，则
+\[
+S(k,k)R(\theta)=
+\begin{bmatrix}kc&-ks&0\\ks&kc&0\\0&0&1\end{bmatrix}
+=R(\theta)S(k,k).
+\]
+一般非均匀比例变换不成立。例如对$(1,0)$，取$S(2,1)$与$R(90^\circ)$，先缩放后旋转得$(0,2)$，反序得$(0,1)$。
+\nt{证明“可交换”需说明对象、中心和轴的条件。不能把二维同中心旋转的结论推广为“三维任意旋转都可交换”。}
+\sourcepage{第2章}{30--33、64}
+
+\section{讲义第4题：裁剪的概念与分类}
+\qs{题意}{论述图形裁剪的概念，并按被裁剪对象分类。}
+\sol 图形裁剪是按照给定的显示窗口或可视区域，确定并保留图形内部部分、舍弃外部部分的处理过程。二维通常相对窗口裁剪，三维则相对可视体裁剪。
+
+按被裁剪对象，可分为\textbf{点裁剪、直线段裁剪、多边形裁剪、曲线裁剪、曲面裁剪}等。点只需进行区域判定；线段可能需要计算与边界的交点；多边形除求交外，还要组织有序的输出顶点，维持边界结构。图形在窗口内但被另一物体遮挡，是消隐处理的问题，不能只靠裁剪解决。
+\sourcepage{第2章}{44--49、64}
+
+\section{讲义第5题：Cohen--Sutherland编码与求交}
+\qs{题意}{（1）给出九个区域的四位编码；（2）窗口左下角$(0,0)$、右上角$(5,5)$，判断$A_1(3,6)$至$B_1(-1,-1)$，以及$A_2(-1,7)$至$B_2(6,6)$两条线段与窗口的关系，并给出过程。}
+\sol 编码从高位到低位为上、下、右、左。边界点视为窗口内，因此九区为
+\[
+\begin{array}{c|c|c}
+1001&1000&1010\\\hline
+0001&0000&0010\\\hline
+0101&0100&0110
+\end{array}
+\qquad
+\begin{array}{l}
+\text{列分界：}x=0,\ x=5,\\
+\text{行分界：}y=5,\ y=0.
+\end{array}
+\]
+
+\subsection*{线段$A_1B_1$：部分可见}
+$A_1$在上方，编码$1000$；$B_1$在左下方，编码$0101$。按位与为$0000$，按位或非零，需继续求交。
+
+先取上边界$y=5$。原线段参数式为
+\[
+\boldsymbol p(t)=(3,6)+t(-4,-7),\qquad0\leq t\leq1.
+\]
+由$6-7t=5$，得$t=1/7$，交点
+\[
+I_{\rm top}=\left(\frac{17}{7},5\right),
+\]
+编码为$0000$。用该点替换$A_1$。
+
+再处理$B_1$的左侧编码，与$x=0$求交：$3-4t=0$，得$t=3/4$，
+\[
+I_{\rm left}=\left(0,\frac34\right),
+\]
+编码也为$0000$。此时两个新端点均在窗口内，接受线段
+\[
+\boxed{\left(\frac{17}{7},5\right)\longleftrightarrow\left(0,\frac34\right).}
+\]
+也可由各边界不等式得到$1/7\leq t\leq3/4$进行核对。
+
+\subsection*{线段$A_2B_2$：全部不可见}
+$A_2$编码$1001$，$B_2$编码$1010$，所以
+\[
+1001\mathbin{\&}1010=1000\ne0000.
+\]
+两端点都位于上边界外侧，整条线段的$y$坐标在6至7之间，故不可能进入$y\leq5$的窗口，直接舍弃。
+\sourcepage{第2章}{48、64}
+
+\section{图片第4题：绕任意轴旋转后再绕$z$轴旋转}
+\qs{题意}{三角形顶点为$P_1=(0,1,0)$、$P_2=(2,1,0)$、$P_3=(2,3,0)$，先绕$P_1P_3$旋转$90^\circ$，再绕$z$轴旋转$45^\circ$。写出基本变换矩阵和最终复合变换矩阵，计算各点最终坐标。}
+\sol 原题未指定有向轴与正旋转方向。这里约定第一步沿$\overrightarrow{P_1P_3}$为轴正向，第二步沿固定世界$+z$轴，两个角度均取\textbf{右手正向}。若取反向轴，第一步相当于改为$-90^\circ$，结果将不同。
+
+\subsection*{1. 平移并把任意轴对准$z$轴}
+轴上点与单位方向为
+\[
+\boldsymbol q=P_1=(0,1,0)^{\mathsf T},\qquad
+\boldsymbol u=\frac{P_3-P_1}{\|P_3-P_1\|}
+=\frac{1}{\sqrt2}(1,1,0)^{\mathsf T}.
+\]
+先用$T(0,-1,0)$把轴移过原点，再绕$z$轴$-45^\circ$使$\boldsymbol u$对准$x$轴，最后绕$y$轴$-90^\circ$使其对准$+z$轴。记
+\[
+Q=R_y(-90^\circ)R_z(-45^\circ),\qquad Q\boldsymbol u=(0,0,1)^{\mathsf T}.
+\]
+本题用到的基本齐次矩阵是平移$T(0,\pm1,0)$与$\widehat R_z(\pm45^\circ)$、$\widehat R_y(\pm90^\circ)$、$\widehat R_z(90^\circ)$；其中帽号表示给$3\times3$旋转矩阵补齐次末行末列。
+
+令$a=1/\sqrt2$，具体的旋转块为
+\[
+R_z(\pm45^\circ)=\begin{bmatrix}a&\mp a&0\\\pm a&a&0\\0&0&1\end{bmatrix},\quad
+R_y(\pm90^\circ)=\begin{bmatrix}0&0&\pm1\\0&1&0\\\mp1&0&0\end{bmatrix},
+\]
+\[
+R_z(90^\circ)=\begin{bmatrix}0&-1&0\\1&0&0\\0&0&1\end{bmatrix},\qquad
+T(0,\pm1,0)=\begin{bmatrix}1&0&0&0\\0&1&0&\pm1\\0&0&1&0\\0&0&0&1\end{bmatrix}.
+\]
+
+\subsection*{2. 绕轴旋转，再撤销对准和平移}
+列向量依次经历的基本变换给出
+\begin{align*}
+H_{\rm axis}={}&T(0,1,0)\widehat R_z(45^\circ)\widehat R_y(90^\circ)
+\widehat R_z(90^\circ)\\[-1mm]
+&\qquad\cdot\widehat R_y(-90^\circ)\widehat R_z(-45^\circ)T(0,-1,0).
+\end{align*}
+其旋转块也可由Rodrigues公式检验：
+\[
+R=\boldsymbol u\boldsymbol u^{\mathsf T}+[\boldsymbol u]_\times
+=\begin{bmatrix}1/2&1/2&a\\1/2&1/2&-a\\-a&a&0\end{bmatrix}.
+\]
+因此
+\[
+H_{\rm axis}=\begin{bmatrix}R&\boldsymbol q-R\boldsymbol q\\\boldsymbol0^{\mathsf T}&1\end{bmatrix}
+=\begin{bmatrix}
+1/2&1/2&a&-1/2\\
+1/2&1/2&-a&1/2\\
+-a&a&0&-a\\
+0&0&0&1
+\end{bmatrix}.
+\]
+第一步结果为
+\[
+P_1'=(0,1,0),\qquad P_2'=(1,2,-\sqrt2),\qquad P_3'=(2,3,0).
+\]
+$P_1,P_3$位于轴上，应保持不动，这是检查任意轴旋转的直接方法。
+
+\subsection*{3. 绕固定$z$轴旋转$45^\circ$}
+第二步左乘$\widehat R_z(45^\circ)$，得到总矩阵
+\[
+\boxed{H=\widehat R_z(45^\circ)H_{\rm axis}
+=\begin{bmatrix}
+0&0&1&-a\\
+a&a&0&0\\
+-a&a&0&-a\\
+0&0&0&1
+\end{bmatrix}.}
+\]
+所以对任意点，
+\[
+x''=z-a,\qquad y''=a(x+y),\qquad z''=a(-x+y-1).
+\]
+代入三点：
+\[
+\boxed{P_1''=\left(-\frac1{\sqrt2},\frac1{\sqrt2},0\right),\quad
+P_2''=\left(-\frac1{\sqrt2},\frac3{\sqrt2},-\sqrt2\right),}
+\]
+\[
+\boxed{P_3''=\left(-\frac1{\sqrt2},\frac5{\sqrt2},0\right).}
+\]
+检验三边长度：$\|P_2''-P_1''\|=2$、$\|P_3''-P_2''\|=2$、$\|P_3''-P_1''\|=2\sqrt2$，与原三角形一致。第二步后轴上两点也随世界$z$轴旋转，因此不能要求它们最终仍停在原坐标。
+
+\nt{若第一步按$\overrightarrow{P_3P_1}$正向，$P_2'$的$z$分量变为$+\sqrt2$，而第二步后$P_2''$的$z$也为$+\sqrt2$。写清轴向后，才有唯一的有符号答案。}
+{\footnotesize\color{mygr}题目来源：CADCAM目录中的作业图片，第4题。}
+
+\section{图片第5题：旋转矩阵的逆与性质}
+\qs{题意}{旋转矩阵$R$的逆矩阵是什么？旋转矩阵还有哪些性质？}
+\sol 对右手系中的纯旋转，$R\in\mathbb R^{3\times3}$满足
+\[
+\boxed{R^{-1}=R^{\mathsf T},\qquad R^{\mathsf T}R=RR^{\mathsf T}=I,\qquad\det R=+1.}
+\]
+原因是旋转把一组正交单位基变为另一组同手性的正交单位基。矩阵各列（各行）互相正交且为单位向量，故$R^{\mathsf T}R=I$；保持右手性排除了$\det R=-1$的反射。
+
+因此旋转具有下列性质：
+\begin{enumerate}
+\item \textbf{保内积、长度、距离与夹角：}
+$(R\boldsymbol a)^{\mathsf T}(R\boldsymbol b)=\boldsymbol a^{\mathsf T}\boldsymbol b$，因而$\|R\boldsymbol a\|=\|\boldsymbol a\|$。
+\item \textbf{保方向性与体积：}$\det R=1$，不改变有向体积与坐标系手性；且$R(\boldsymbol a\times\boldsymbol b)=(R\boldsymbol a)\times(R\boldsymbol b)$。
+\item \textbf{同轴逆旋转：}$R(\boldsymbol u,\theta)^{-1}=R(\boldsymbol u,-\theta)$。
+\item \textbf{复合仍是旋转：}若$R_1,R_2$为旋转矩阵，$R_2R_1$仍正交且行列式为1，但通常$R_2R_1\ne R_1R_2$。
+\item \textbf{旋转轴不变：}三维纯旋转存在单位轴向$\boldsymbol u$满足$R\boldsymbol u=\boldsymbol u$；旋转角可由$\operatorname{tr}R=1+2\cos\theta$检验。
+\end{enumerate}
+
+若讨论的是带平移的齐次刚体变换，不能把整个矩阵的逆误写为转置：
+\[
+\boxed{\begin{bmatrix}R&\boldsymbol t\\\boldsymbol0^{\mathsf T}&1\end{bmatrix}^{-1}
+=\begin{bmatrix}R^{\mathsf T}&-R^{\mathsf T}\boldsymbol t\\\boldsymbol0^{\mathsf T}&1\end{bmatrix}.}
+\]
+逆变换先撤销平移，再反向旋转，所以平移块是$-R^{\mathsf T}\boldsymbol t$，并非一般意义上的$-\boldsymbol t$。
+{\footnotesize\color{mygr}题目来源：CADCAM目录中的作业图片，第5题；基本旋转矩阵见第2章讲义PDF第26、37页。}

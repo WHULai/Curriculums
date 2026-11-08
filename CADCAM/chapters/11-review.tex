@@ -1,0 +1,110 @@
+\chapter{综合速查与复习自测}
+\label{app:review}
+
+\section{把整门课串成一条数据链}
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{.19\linewidth}XX@{}}
+\toprule
+阶段 & 输入、核心处理与输出 & 回看位置\\
+\midrule
+产品定义 & 需求与约束，经设计和分析得到产品模型 & 第\ref{ch:introduction}章，第\pageref{ch:introduction}页\\
+图形显示 & 模型经坐标变换、投影、裁剪、消隐成为图像 & 第\ref{ch:graphics}章，第\pageref{ch:graphics}页\\
+CAD建模 & 几何、拓扑和特征共同表达形状及设计意图 & 第\ref{ch:modeling}章，第\pageref{ch:modeling}页\\
+曲线与曲面 & 控制点、参数、节点与权重确定几何形状 & 第\ref{ch:curves}、\ref{ch:surfaces}章\\
+逆向工程 & 实物经测量、预处理、重建和拟合得到CAD & 第\ref{ch:reverse}章，第\pageref{ch:reverse}页\\
+增材制造 & 模型经网格检查、定向、支撑、分层和路径规划成型 & 第\ref{ch:additive}章，第\pageref{ch:additive}页\\
+工艺设计 & 产品要求和资源经工艺决策得到规程 & 第\ref{ch:capp}章，第\pageref{ch:capp}页\\
+数控制造 & 模型和工艺经刀位计算、后置、插补与伺服执行成型 & 第\ref{ch:nc}章，第\pageref{ch:nc}页\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{计算前应先写出的约定}
+\begin{enumerate}
+\item \textbf{变换题：}列向量左乘，右手正向；点的齐次分量为1，自由向量为0。先做$T_1$、再做$T_2$，总矩阵是$T_2T_1$。
+\item \textbf{绕轴题：}先确定轴上一点$\boldsymbol a$和单位方向$\boldsymbol u$。轴若不经过原点，必须同时处理平移；轴正方向改变会使同一正角转动反向。
+\item \textbf{曲线题：}写明次数$p$、阶次$p+1$、控制点数量、节点向量与有效参数域。基函数的下标约定应与公式配套。
+\item \textbf{连续性题：}说明比较的是参数导数还是几何切向；不同参数区间长度时，应把局部参数导数换算到共同参数后再比较。
+\item \textbf{拟合与配准题：}说明未知量是控制点还是刚体变换，哪些参数和对应关系已知，用何种误差度量，以及是否有端点、法向或制造约束。
+\end{enumerate}
+
+\subsection*{齐次变换与任意轴旋转}
+\[
+\widetilde{\boldsymbol p}=\begin{bmatrix}\boldsymbol p\\1\end{bmatrix},\qquad
+T=\begin{bmatrix}R&\boldsymbol t\\\boldsymbol0^{\mathsf T}&1\end{bmatrix},\qquad
+T^{-1}=\begin{bmatrix}R^{\mathsf T}&-R^{\mathsf T}\boldsymbol t\\\boldsymbol0^{\mathsf T}&1\end{bmatrix}.
+\]
+逆式适用于$R$为旋转矩阵的刚体变换；一般仿射变换的线性部分不一定满足$R^{-1}=R^{\mathsf T}$。
+
+若旋转轴经过$\boldsymbol a$，单位方向为$\boldsymbol u$，按右手正向旋转$\theta$：
+\begin{align*}
+R&=\cos\theta\,I+(1-\cos\theta)\boldsymbol u\boldsymbol u^{\mathsf T}
+ +\sin\theta\,[\boldsymbol u]_\times,\\
+\boldsymbol p'&=\boldsymbol a+R(\boldsymbol p-\boldsymbol a),\qquad
+T_{\mathrm{axis}}=\begin{bmatrix}R&\boldsymbol a-R\boldsymbol a\\\boldsymbol0^{\mathsf T}&1\end{bmatrix}.
+\end{align*}
+检查方法：轴上点不动；$R^{\mathsf T}R=I$、$\det R=1$；点到轴的距离不变。附录\ref{app:homework}有原作业的完整演算。
+
+\subsection*{曲线核心关系}
+\begin{align*}
+B_i^n(u)&=\binom ni u^i(1-u)^{n-i},\qquad
+\boldsymbol C(u)=\sum_{i=0}^nB_i^n(u)\boldsymbol P_i,\\
+\boldsymbol C'(0)&=n(\boldsymbol P_1-\boldsymbol P_0),\quad
+\boldsymbol C'(1)=n(\boldsymbol P_n-\boldsymbol P_{n-1}),\\
+\boldsymbol C_{\mathrm{NURBS}}(u)&=
+\frac{\sum_{i=0}^nN_{i,p}(u)w_i\boldsymbol P_i}
+ {\sum_{i=0}^nN_{i,p}(u)w_i}.
+\end{align*}
+Bezier公式的标准参数为$u\in[0,1]$；NURBS分母在所用参数域内应非零。正权重便于保持常见的凸包性质；全部权重同时乘同一非零常数，曲线不变。B样条内节点重数为$r$时，通常保证$C^{p-r}$连续（$1\leq r\leq p$）；特殊控制点布局还可能使实际连续性更高。
+
+\subsection*{曲面、拟合与制造误差}
+\begin{align*}
+\boldsymbol S(u,v)&=\sum_i\sum_jN_{i,p}(u)M_{j,q}(v)\boldsymbol P_{ij},\\
+\boldsymbol n&=\frac{\boldsymbol S_u\times\boldsymbol S_v}
+ {\|\boldsymbol S_u\times\boldsymbol S_v\|},
+\qquad \boldsymbol S_u\times\boldsymbol S_v\ne\boldsymbol0,\\
+E_{\mathrm{fit}}&=\sum_j\|\boldsymbol C(u_j)-\boldsymbol Q_j\|^2,\\
+E_{\mathrm{reg}}&=\sum_j\|R\boldsymbol p_j+\boldsymbol t-\boldsymbol q_j\|^2,
+\quad R^{\mathsf T}R=I,\quad\det R=1,\\
+\varepsilon_{\mathrm{chord}}&=R-\sqrt{R^2-(\ell/2)^2}.
+\end{align*}
+拟合式假定参数$u_j$已给定；配准式假定当前对应点已确定。控制点拟合通常是线性问题，而未知参数、未知对应或刚体旋转约束会改变求解方式。弓高误差只覆盖轨迹离散带来的几何偏差。
+
+\section{容易混淆的概念对照}
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{.25\linewidth}X@{}}
+\toprule
+概念 & 判断依据\\
+\midrule
+几何与拓扑 & 坐标、曲率属于几何；邻接、连通和边界组织属于拓扑。\\
+线框、曲面与实体 & 是否仅有边线、是否有面、是否定义有效内外及体积，不能仅凭屏幕显示判断。\\
+CSG与B-Rep & 前者按基本体及布尔运算组织；后者按有向边界及其拓扑组织，可在系统中并用。\\
+插值与逼近 & 插值通过给定数据点；逼近在误差准则下折中。控制点通常不等于测量点。\\
+$C^1$与$G^1$ & 前者要求共同参数下导数相等；后者允许适当重参数化，几何切向一致。\\
+去噪与缩减 & 前者控制噪声影响；后者减少数据量。二者均应保护实际特征。\\
+配准与重建 & 前者统一多组数据坐标；后者建立曲面或网格及其连接关系。\\
+水密与可制造 & 水密只说明边界封闭，还需检查自交、法向、厚度、材料与工艺约束。\\
+CAPP与CAM & 前者主要规划怎么加工；后者按工艺条件计算路径并辅助形成加工程序。\\
+刀位、NC与插补 & 中间刀具几何数据、设备加工程序、周期轴运动指令是不同层次。\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\clearpage
+\section{综合自测与解题提示}
+\qs{设计变更怎样传到制造？}{一个带安装孔的支架将孔径增大，并把孔轴位置公差收紧。分别说明CAD、CAE、CAPP、CAM及检测环节应关注什么。}
+\sol CAD应更新特征尺寸、约束和相关模型；CAE按实际需求重新评估变更影响；CAPP检查加工方法、基准、设备能力和检验要求；CAM核对刀具、路径、余量、补偿和后置输出；检测环节使用对应版本与基准验证尺寸和位置公差。几何变更与技术要求变更可能分别影响不同工序，不能只更新模型外形。
+
+\qs{把扫描件送去打印是否一定要拟合NURBS？}{已获得一个模型的三角网格，目标是复制其外观；另一个目标是修改其安装孔尺寸并做精确加工。两种任务怎样选择后续处理？}
+\sol 若打印软件接受该网格且其质量满足要求，可先做水密性、法向、自交、细节和尺寸检查，再定向、支撑、切片；不必为了流程形式一律拟合NURBS。若需有约束的设计修改及精确制造，则应识别工程特征、拟合适当曲面或建立参数模型，并控制尺寸、基准和拟合误差。选择由用途决定。
+
+\qs{增加控制点与增加测量点一样吗？}{一条B样条在局部有明显噪声。能否通过增加控制点并严格插值所有数据点解决？}
+\sol 控制点是模型自由度，测量点是观测数据。增加自由度再强制插值可能把噪声也拟合进去，产生不合理振荡。应先判断异常和噪声，合理选择参数化、节点、次数与误差准则，在保护特征的条件下逼近。合法的节点插入可以增加控制点而保持原曲线不变，不能与添加新测量约束混为一谈。
+
+\qs{打印层厚越小，总误差是否必定越小？}{解释层厚、三角网格误差与成型工艺误差的关系。}
+\sol 层厚主要影响分层离散及阶梯效应；STL网格对CAD表面的逼近误差在切片前已存在；材料收缩、支撑、热变形等又来自实际成型。减小层厚通常增加层数和时间，不能自动消除其余误差。应分别设定并验证各阶段的误差要求。
+
+\qs{同一组刀位换了机床还能直接用吗？}{说明可复用的数据和必须重新检查的内容。}
+\sol 在工艺和刀具定义兼容时，中间刀位数据可能复用；仍需匹配目标机床的后置处理，检查坐标、轴配置、行程、速度、干涉、刀具装夹与工艺条件，再验证目标NC程序及制造结果。
+
+\nt{完成复习的标准不是记住术语，而是能独立写出变换和曲线计算，说明每一步的输入输出，指出条件变化会怎样影响模型、工艺或误差，并用几何不变量、边界条件和单位检查结果。}
