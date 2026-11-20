@@ -1,0 +1,244 @@
+\chapter{线性系统状态空间表达式的解}
+\label{chap:state-space-solutions}
+
+\section{知识点}
+
+\subsection{线性定常系统的自由解}
+
+\dfn{状态转移矩阵（State transition matrix）}{对于齐次状态方程 $\dot x=Ax$，若从 $x(t_0)$ 出发，则 $x(t)=\Phi(t-t_0)x(t_0)$。线性定常系统的状态转移矩阵为
+\[
+\Phi(t)=\mathrm e^{At}=I+At+\frac{A^2t^2}{2!}+\cdots .
+\]}
+
+常用性质为
+\[
+\Phi(0)=I,\qquad \dot\Phi(t)=A\Phi(t)=\Phi(t)A,\qquad
+\Phi(t+s)=\Phi(t)\Phi(s),\qquad \Phi(t)^{-1}=\Phi(-t).
+\]
+由 $\dot \Phi(0)=A$ 可从状态转移矩阵反求系统矩阵。求得 $\Phi(t)$ 后，检查 $\Phi(0)=I$ 与 $\dot\Phi(t)=A\Phi(t)$ 即可验证整个结果。若 $A_1A_2=A_2A_1$，有 $\mathrm e^{A_1+A_2}=\mathrm e^{A_1}\mathrm e^{A_2}$。
+
+\subsection{非齐次状态方程与输出响应}
+
+设 $\dot x=Ax+Bu$，定义 $z(t)=\mathrm e^{-A(t-t_0)}x(t)$。代入状态方程，含 $Ax$ 的两项抵消，得到 $\dot z(t)=\mathrm e^{-A(t-t_0)}Bu(t)$。从 $t_0$ 积分至 $t$，两端左乘 $\mathrm e^{A(t-t_0)}$，得
+\[
+x(t)=
+\underbrace{\mathrm e^{A(t-t_0)}x(t_0)}_{\text{零输入响应}}+
+\underbrace{\int_{t_0}^{t}\mathrm e^{A(t-\tau)}Bu(\tau)\,\mathrm d\tau}_{\text{零状态响应}},
+\qquad y(t)=Cx(t)+Du(t).
+\]
+零初值单位阶跃下可把积分写成 $\int_0^t\mathrm e^{A\sigma}B\,\mathrm d\sigma$。若 $A$ 可逆，则该式为 $A^{-1}(\mathrm e^{At}-I)B$。$A$ 奇异时，仍可使用积分式。因果系统的脉冲响应为 $h(t)=C\mathrm e^{At}B\,1(t)+D\delta(t)$。
+
+\subsection{计算状态转移矩阵}
+
+\begin{enumerate}
+    \item \textbf{级数法。} 若 $A^k=0$，指数级数在 $A^{k-1}$ 项截断。若各次幂在少数矩阵间循环，可按幂次归类求和。
+    \item \textbf{拉普拉斯反变换法。} 对 $t\ge 0$，$\mathcal L\{\Phi(t)\}=(sI-A)^{-1}$。先求逆，再逐元素作部分分式展开及反变换。
+    \item \textbf{约旦规范形法。} 若 $A=PJP^{-1}$，则 $A^k=PJ^kP^{-1}$，代入指数级数得到 $\mathrm e^{At}=P\mathrm e^{Jt}P^{-1}$。对单个 $q$ 阶约旦块 $J_q=\lambda I+N$，
+    \[
+    \mathrm e^{J_qt}=\mathrm e^{\lambda t}
+    \sum_{k=0}^{q-1}\frac{t^kN^k}{k!}.
+    \]
+    \item \textbf{凯莱--哈密顿定理与内插法。} 由 $p_A(A)=0$ 可将矩阵指数写成 $q_t(A)$，其中 $q_t$ 的次数低于 $A$ 的维数。按特征值 $\lambda_i$ 及其代数重数 $m_i$，令
+    \[
+    q_t^{(k)}(\lambda_i)=t^k\mathrm e^{\lambda_i t},
+    \qquad k=0,\ldots,m_i-1 .
+    \]
+    这里求导的变量是内插自变量 $\lambda$，$t$ 视为参数。若已知最小多项式，可以用其各根重数代替 $m_i$，进一步减少待定系数。对互异特征值，相似对角化将 $q_t(A)=\mathrm e^{At}$ 逐项化为 $q_t(\lambda_i)=\mathrm e^{\lambda_i t}$。对重根，约旦块的幂给出上述导数匹配条件。
+\end{enumerate}
+
+\subsection{线性时变系统}
+
+对 $\dot x=A(t)x+B(t)u$，状态转移矩阵满足
+\[
+\frac{\partial}{\partial t}\Phi(t,t_0)=A(t)\Phi(t,t_0),
+\qquad \Phi(t_0,t_0)=I .
+\]
+若 $F(t)$ 的列是线性无关的齐次解，则 $\Phi(t,t_0)=F(t)F(t_0)^{-1}$。有 $\Phi(t,t_1)\Phi(t_1,t_0)=\Phi(t,t_0)$，以及 $\Phi(t,t_0)^{-1}=\Phi(t_0,t)$。时变系统的通解为
+\[
+x(t)=\Phi(t,t_0)x(t_0)+\int_{t_0}^{t}\Phi(t,\tau)B(\tau)u(\tau)\,\mathrm d\tau .
+\]
+若 $A(t)$ 与 $\int_{t_0}^{t}A(\tau)\,\mathrm d\tau$ 对所有所考察的 $t$ 都可交换，则
+\[
+\Phi(t,t_0)=\exp\left(\int_{t_0}^t A(\tau)\,\mathrm d\tau\right).
+\]
+一个便于计算的充分条件是任意两时刻的 $A(t_1)$ 与 $A(t_2)$ 可交换。一般情况下可按列求解矩阵初值问题，或在积分方程 $\Phi=I+\int_{t_0}^{t}A(\tau)\Phi(\tau,t_0)\,\mathrm d\tau$ 中逐次代入得到级数。
+
+数值计算矩阵指数用 MATLAB 的 \texttt{expm(A*t)}。对状态空间模型，\texttt{step}、\texttt{impulse}、\texttt{initial} 分别用于阶跃、脉冲和零输入响应，给定任意输入与初始状态可用 \texttt{lsim}。
+
+\section{作业}
+
+\subsection{习题课}
+
+\ex{习题1\quad 由两组自由响应反求系统矩阵}{
+未知常矩阵 $A$ 的大小为 $2\times2$，已知 $\dot x=Ax$ 的两组响应为
+\[
+x(0)=\begin{bmatrix}1\\-1\end{bmatrix}
+\ \Longrightarrow\ 
+x(t)=\mathrm e^{-2t}\begin{bmatrix}1\\-1\end{bmatrix},\qquad
+x(0)=\begin{bmatrix}2\\-1\end{bmatrix}
+\ \Longrightarrow\ 
+x(t)=\mathrm e^{-t}\begin{bmatrix}2\\-1\end{bmatrix}.
+\]
+求状态转移矩阵 $\Phi(t)$ 和系统矩阵 $A$。}
+
+\nt{\textbf{知识点} 基向量的响应决定线性映射、状态转移矩阵的列表示、用 $\dot\Phi(0)$ 反求 $A$。}
+
+\sol 将两个初始向量并排组成 $P$，将两组响应并排组成 $X(t)$。由于 $X(t)=\Phi(t)P$ 且 $\det P=1$，所以
+\[
+P=\begin{bmatrix}1&2\\-1&-1\end{bmatrix},\qquad
+\Phi(t)=
+\begin{bmatrix}\mathrm e^{-2t}&2\mathrm e^{-t}\\-\mathrm e^{-2t}&-\mathrm e^{-t}\end{bmatrix}
+\begin{bmatrix}-1&-2\\1&1\end{bmatrix}.
+\]
+乘开得
+\[
+\Phi(t)=\begin{bmatrix}
+2\mathrm e^{-t}-\mathrm e^{-2t} & 2\mathrm e^{-t}-2\mathrm e^{-2t}\\
+\mathrm e^{-2t}-\mathrm e^{-t} & 2\mathrm e^{-2t}-\mathrm e^{-t}
+\end{bmatrix}.
+\]
+对各项求导并令 $t=0$，得
+$A=\dot\Phi(0)=\begin{bmatrix}0&2\\-1&-3\end{bmatrix}$。
+也可从两组响应分别读出 $Av_1=-2v_1$ 与 $Av_2=-v_2$，再用 $A=P\operatorname{diag}(-2,-1)P^{-1}$。两组初值线性无关，这使 $A$ 可以唯一确定。
+
+\ex{习题2\quad 单位阶跃响应}{
+已知
+\[
+\dot x(t)=\begin{bmatrix}0&1\\-3&4\end{bmatrix}x(t)+
+\begin{bmatrix}1\\1\end{bmatrix}u(t),\qquad
+y(t)=\begin{bmatrix}1&1\end{bmatrix}x(t).
+\]
+在零初始状态下，求单位阶跃响应。}
+
+\nt{\textbf{知识点} 零状态响应积分、特征向量方向的输入只激发对应模态、由状态求输出。}
+
+\sol 令 $u(t)=1$（$t\ge0$），由 $x(0)=0$，
+\[
+x(t)=\int_0^t \mathrm e^{A(t-\tau)}B\,\mathrm d\tau .
+\]
+直接算 $AB=[1,1]^{\mathsf T}=B$，故 $A^kB=B$，代入指数级数即 $\mathrm e^{A\sigma}B=\mathrm e^\sigma B$。因此
+\[
+x(t)=(\mathrm e^t-1)\begin{bmatrix}1\\1\end{bmatrix},\qquad
+\boxed{y(t)=2(\mathrm e^t-1)},\quad t\ge0.
+\]
+$A$ 的两个特征值为 $1,3$，但本题输入沿特征值 $1$ 的方向，零初值的轨迹始终在这条直线上。也可先算 $G(s)=2/(s-1)$，再对 $G(s)/s$ 作反变换。初始斜率 $\dot y(0^+)=CB=2$，与结果一致。
+
+\ex{习题3\quad 四种结构的矩阵指数}{
+分别计算下列矩阵的 $\mathrm e^{At}$。
+\[
+\begin{aligned}
+(1)\quad A&=\begin{bmatrix}-2&0&0\\0&-2&0\\0&0&-2\end{bmatrix},
+&
+(2)\quad A&=\begin{bmatrix}-2&0&0\\0&-3&1\\0&0&-3\end{bmatrix},\\
+(3)\quad A&=\begin{bmatrix}0&0\\1&0\end{bmatrix},
+&
+(4)\quad A&=\begin{bmatrix}0&-1\\4&0\end{bmatrix}.
+\end{aligned}
+\]}
+
+\nt{\textbf{知识点} 对角与块对角矩阵的指数、幂零矩阵、约旦块、实矩阵平方为负数乘单位阵时的正弦余弦展开。}
+
+\sol \textbf{(1)} $A=-2I_3$，对角元素各自取自然指数，故 $\mathrm e^{At}=\mathrm e^{-2t}I_3$。
+
+\textbf{(2)} 第一坐标独立，右下角为 $-3I_2+N$，其中 $N=\begin{bmatrix}0&1\\0&0\end{bmatrix}$ 且 $N^2=0$。由 $\mathrm e^{(-3I_2+N)t}=\mathrm e^{-3t}(I_2+tN)$，
+\[
+\mathrm e^{At}=\begin{bmatrix}
+\mathrm e^{-2t}&0&0\\
+0&\mathrm e^{-3t}&t\mathrm e^{-3t}\\
+0&0&\mathrm e^{-3t}
+\end{bmatrix}.
+\]
+
+\textbf{(3)} 此时 $A^2=0$，只保留指数级数的前两项，得 $\mathrm e^{At}=I+tA=\begin{bmatrix}1&0\\ t&1\end{bmatrix}$。也可用下三角解析式 $(sI-A)^{-1}=\begin{bmatrix}1/s&0\\1/s^2&1/s\end{bmatrix}$ 作反变换。
+
+\textbf{(4)} 直接乘得 $A^2=-4I$。指数级数偶数项合成 $\cos(2t)I$，奇数项合成 $\tfrac12\sin(2t)A$。所以
+\[
+\mathrm e^{At}=\begin{bmatrix}
+\cos(2t)&-\tfrac12\sin(2t)\\2\sin(2t)&\cos(2t)
+\end{bmatrix}.
+\]
+对右上角和左下角分别在 $t=0$ 求导，得 $-1$ 和 $4$，可检查正弦项的系数及符号。
+
+\ex{习题4\quad 分块求状态转移矩阵和齐次解}{
+已知
+\[
+\dot x(t)=\begin{bmatrix}1&0&0\\0&1&0\\0&1&2\end{bmatrix}x(t),
+\qquad
+x(0)=\begin{bmatrix}1\\0\\1\end{bmatrix}.
+\]
+(1) 求状态转移矩阵。(2) 根据给定初值求齐次状态方程的解。}
+
+\nt{\textbf{知识点} 分块矩阵指数、下三角矩阵的拉普拉斯反变换、矩阵乘初始状态。}
+
+\sol \textbf{(1)} 按第一坐标和后两坐标分块，$A=\operatorname{diag}(1,A_2)$，其中 $A_2=\begin{bmatrix}1&0\\1&2\end{bmatrix}$。第一块的指数是 $\mathrm e^t$，第二块由
+\[
+(sI-A_2)^{-1}
+=\begin{bmatrix}
+\frac{1}{s-1}&0\\[2pt]
+\frac{1}{(s-1)(s-2)}&\frac{1}{s-2}
+\end{bmatrix}
+\]
+作拉普拉斯反变换。由于 $(s-1)^{-1}(s-2)^{-1}=(s-2)^{-1}-(s-1)^{-1}$，
+\[
+\Phi(t)=\begin{bmatrix}
+\mathrm e^t&0&0\\
+0&\mathrm e^t&0\\
+0&\mathrm e^{2t}-\mathrm e^t&\mathrm e^{2t}
+\end{bmatrix}.
+\]
+非对角项 $\Phi_{32}(t)$ 体现 $x_2$ 对 $x_3$ 的作用。若从微分方程求同一项，可先解 $x_2(t)=\mathrm e^t x_2(0)$，再将其代入 $\dot x_3-2x_3=x_2(t)$ 并使用积分因子 $\mathrm e^{-2t}$。
+
+\textbf{(2)} 用 $\Phi(t)$ 右乘给定初值，得
+\[
+x(t)=\begin{bmatrix}\mathrm e^t\\0\\\mathrm e^{2t}\end{bmatrix}.
+\]
+本题中 $x_2(0)=0$，故 $x_2(t)$ 始终为零，$x_3$ 只保留由自身初值产生的模态。
+
+\ex{习题5\quad 用凯莱--哈密顿定理复算习题4}{
+对习题4 的状态矩阵 $A=\begin{bmatrix}1&0&0\\0&1&0\\0&1&2\end{bmatrix}$，用凯莱--哈密顿定理求状态转移矩阵。}
+
+\nt{\textbf{知识点} 以特征多项式降幂，重根处匹配导数，利用最小多项式缩短计算。}
+
+\sol $p_A(\lambda)=(\lambda-1)^2(\lambda-2)$。设 $q_t(\lambda)=\alpha_0+\alpha_1\lambda+\alpha_2\lambda^2$。在 $\lambda=1$ 匹配函数值和一阶导数，在 $\lambda=2$ 匹配函数值，得
+\[
+\begin{cases}
+\alpha_0+\alpha_1+\alpha_2=\mathrm e^t,\\
+\alpha_1+2\alpha_2=t\mathrm e^t,\\
+\alpha_0+2\alpha_1+4\alpha_2=\mathrm e^{2t}.
+\end{cases}
+\]
+消元得
+\[
+\alpha_2=\mathrm e^{2t}-(1+t)\mathrm e^t,\quad
+\alpha_1=(2+3t)\mathrm e^t-2\mathrm e^{2t},\quad
+\alpha_0=\mathrm e^{2t}-2t\mathrm e^t.
+\]
+这里 $A^2=\begin{bmatrix}1&0&0\\0&1&0\\0&3&4\end{bmatrix}$。将它与 $A,I$ 组合，主对角项按 $q_t(1),q_t(1),q_t(2)$ 读取，第 $(3,2)$ 项是 $\alpha_1+3\alpha_2=\mathrm e^{2t}-\mathrm e^t$，故
+\[
+\mathrm e^{At}=q_t(A)=\begin{bmatrix}
+\mathrm e^t&0&0\\0&\mathrm e^t&0\\0&\mathrm e^{2t}-\mathrm e^t&\mathrm e^{2t}
+\end{bmatrix}.
+\]
+本题还有 $(A-I)(A-2I)=0$，故最小多项式为 $(\lambda-1)(\lambda-2)$。也可用一次插值直接写成 $\mathrm e^{At}=\mathrm e^t(2I-A)+\mathrm e^{2t}(A-I)$。
+
+\ex{习题6\quad 线性时变齐次状态方程}{
+已知
+\[
+\dot x(t)=\begin{bmatrix}0&t^2\\0&0\end{bmatrix}x(t),
+\qquad t_0=1,\qquad x(1)=\begin{bmatrix}1\\1\end{bmatrix}.
+\]
+求状态方程的解。}
+
+\nt{\textbf{知识点} 检查不同时刻系统矩阵是否可交换、幂零矩阵指数、从指定初始时刻积分。}
+
+\sol 写成 $A(t)=t^2N$，其中 $N=\begin{bmatrix}0&1\\0&0\end{bmatrix}$。对任意 $t_1,t_2$，两个乘积 $A(t_1)A(t_2)$ 和 $A(t_2)A(t_1)$ 均为零。因此可在积分后取矩阵指数。由 $N^2=0$，
+\[
+\Phi(t,1)=\exp\left(\int_1^t\tau^2N\,\mathrm d\tau\right)
+=I+\frac{t^3-1}{3}N
+=\begin{bmatrix}1&(t^3-1)/3\\0&1\end{bmatrix}.
+\]
+所以
+\[
+\boxed{x(t)=\begin{bmatrix}(t^3+2)/3\\1\end{bmatrix}} .
+\]
+也可从第二行直接得 $x_2(t)=1$，于是 $\dot x_1(t)=t^2$，用 $x_1(1)=1$ 积分核对。

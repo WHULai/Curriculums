@@ -1,0 +1,303 @@
+\chapter{控制系统的状态空间模型}
+\label{chap:state-space-model}
+
+\section{知识点}
+
+\subsection{状态变量与状态空间模型}
+
+\dfn{状态（State）}{给定时刻的状态 $x(t_0)$ 和此后的输入 $u(t)$，即可确定系统此后的状态和输出。用来描述内部动态的独立变量组成状态向量，这些变量张成的空间称为状态空间。}
+
+连续时间线性定常系统写为
+\[
+\dot x=Ax+Bu,\qquad y=Cx+Du.
+\]
+若 $x\in\mathbb R^n$、$u\in\mathbb R^r$、$y\in\mathbb R^m$，则 $A,B,C,D$ 分别为 $n\times n$、$n\times r$、$m\times n$ 和 $m\times r$ 矩阵。$D$ 表示输入到输出的直接传递。单输入单输出情形有 $r=m=1$，因此 $B$ 是列向量，$C$ 是行向量，$D$ 是标量。时变系统的矩阵允许显含 $t$。一般非线性系统写为 $\dot x=f(x,u,t)$、$y=g(x,u,t)$。
+
+\nt{\textbf{讲义思考（第5页）} 平面匀速运动取 $x=(p_x,p_y,v_x,v_y)^{\mathsf T}$，有 $\dot p_x=v_x$、$\dot p_y=v_y$、$\dot v_x=\dot v_y=0$。当速度由题意预先给定，且所有可能轨迹共享该速度时，只需记录两个位置分量。}
+
+\subsection{从机理与结构图建模}
+
+电路常选独立的电容电压和电感电流，写出 $i_C=C\dot u_C$、$u_L=L\dot i_L$，再用基尔霍夫电流及电压定律消去其余变量。机械系统常把广义位移和广义速度配对，利用力或力矩平衡解出加速度。平衡点 $(x_e,u_e)$ 满足 $f(x_e,u_e)=0$，在其附近以偏差量为变量时，一阶近似的 $A,B,C,D$ 分别是 $f,g$ 对 $x,u$ 的雅可比矩阵在平衡点处的取值。
+
+读模拟结构图时，先为各积分器的输出编号，再沿每个积分器的输入端往回读各条支路的增益与符号。第 $i$ 个积分器的输入是 $\dot x_i$，相应系数组成 $A,B$ 的第 $i$ 行。最后沿输出端读取 $C,D$。
+
+\nt{\textbf{讲义思考（第11页）} 串联 $RLC$ 电路取电容电压为输出。由 $u_i=Ri_L+L\dot i_L+u_C$ 和 $i_L=C\dot u_C$，得 $LC\ddot u_C+RC\dot u_C+u_C=u_i$。零初始条件下
+$U_C(s)/U_i(s)=1/(LCs^2+RCs+1)$。当 $L,C>0$ 时分母二次且无对消，传递函数为二阶。}
+
+\subsection{从微分方程与传递函数建模}
+
+给定 $a(s)=s^n+a_{n-1}s^{n-1}+\cdots+a_0$。引入中间量 $v$，使 $a(\mathrm d/\mathrm dt)v=u$，再取 $x=(v,\dot v,\ldots,v^{(n-1)})^{\mathsf T}$。状态矩阵的超对角线为 1，末行为 $[-a_0,\ldots,-a_{n-1}]$，而 $B=e_n$。设传递函数 $G(s)=N(s)/a(s)$，先写 $G(s)=d+\widetilde N(s)/a(s)$，其中 $\deg\widetilde N<n$。将 $\widetilde N(s)=\sum_{i=0}^{n-1}b_is^i$ 的系数按次数从低到高排成 $C=[b_0,\ldots,b_{n-1}]$，得 $y=Cx+du$。
+
+\nt{若原微分方程的右端只有 $bu$，可直接取 $x_1=y$、$x_2=\dot y$ 等，此时 $B=be_n$。右端含输入导数时，可按上述传递函数法实现，也可重定义各阶状态以吸收输入导数，见习题3。}
+
+从部分分式出发，单极点项 $c/(s-\lambda)$ 对应 $\dot x=\lambda x+u$、$y=cx$。对 $q$ 重极点，设 $J_q=\lambda I+N$，$N$ 的超对角线为 1。取该支路的 $B=e_q$，有
+\[
+(sI-J_q)^{-1}e_q=
+\begin{bmatrix}
+(s-\lambda)^{-q}\\ (s-\lambda)^{-(q-1)}\\ \vdots\\ (s-\lambda)^{-1}
+\end{bmatrix}.
+\]
+因此 $C$ 按分母幂次从高到低取相应的部分分式系数。各支路的输出相加，另加直联项 $Du$。
+
+\subsection{状态坐标变换与约旦规范形}
+
+\dfn{相似变换}{选定 $x=Pz$，其中 $P$ 可逆且为常矩阵。在 $z$ 坐标下，
+\[
+\bar A=P^{-1}AP,\quad \bar B=P^{-1}B,\quad
+\bar C=CP,\quad \bar D=D.
+\]
+相似变换保持特征多项式，也保持输入到输出的传递函数矩阵。}
+
+若 $A$ 有 $n$ 个独立特征向量，取它们作 $P$ 的列，$\bar A$ 为对角矩阵。重特征值的几何重数由 $\dim\ker(A-\lambda I)$ 给出。对不足以对角化的特征值，构造特征向量链
+\[
+(A-\lambda I)p_1=0,\qquad
+(A-\lambda I)p_{j+1}=p_j.
+\]
+按 $[p_1,p_2,\ldots]$ 排列各链，所得约旦块的 1 位于主对角线上方。可用 $AP=PJ$ 直接核对，不必先算 $P^{-1}$。
+
+\subsection{传递函数矩阵}
+
+零初始状态下对状态方程取拉普拉斯变换，得 $(sI-A)X(s)=BU(s)$。代入输出方程可得
+\[
+G(s)=C(sI-A)^{-1}B+D,\qquad Y(s)=G(s)U(s).
+\]
+$G(s)$ 的第 $(i,j)$ 元素描述第 $j$ 路输入单独作用于第 $i$ 路输出的零状态响应。数值复核可用 MATLAB 的 \texttt{ss}、\texttt{tf}，符号约旦变换可用 \texttt{jordan}。
+
+\nt{\textbf{讲义思考（第150页）} 对单输入单输出系统，$G(s)$ 写成公分母形式时，分母可取 $\det(sI-A)$。约分后仍为极点的根一定是 $A$ 的特征值。若实现同时能控、能观，约分后的极点与 $A$ 的特征值按重数对应。对于闭环传递函数，应代入闭环的状态矩阵。}
+
+\Needspace{8\baselineskip}
+\section{作业}
+
+\subsection{习题课}
+
+\ex{习题1\quad RLC 电路建模}{
+图中电压源 $u_1(t)$ 和电流源 $u_2(t)$ 为输入，电感电压 $u_L(t)$ 为输出。求状态空间模型。
+\par\smallskip
+\begin{center}
+    \includegraphics[width=0.79\linewidth]{ch02-rlc-circuit.png}
+\end{center}
+}
+
+\nt{\textbf{知识点} 独立储能元件的状态选取、节点电流定律、回路电压定律、电感电压的被动符号约定。}
+
+\sol 令 $x_1=u_{C_1}$（上正下负）、$x_2=u_{C_2}$（左正右负）、$x_3=i_3$，$u=[u_1,u_2]^{\mathsf T}$。电流源箭头朝上，所以在电路上方的公共节点有 $i_1+u_2=i_2+i_3$。左支路给出 $i_1=(u_1-x_1)/R_1$，而 $i_2=C_1\dot x_1$，因此
+\[
+C_1\dot x_1=\frac{u_1-x_1}{R_1}+u_2-x_3.
+\]
+从右支路可读出 $C_2\dot x_2=x_3$。沿 $C_2$、$L$、$R_2$ 所在回路列电压方程，得
+\[
+x_1=x_2+u_L+R_2x_3,\qquad u_L=L\dot x_3.
+\]
+整理得
+\[
+\dot x=
+\begin{bmatrix}
+-\frac1{R_1C_1}&0&-\frac1{C_1}\\
+0&0&\frac1{C_2}\\
+\frac1L&-\frac1L&-\frac{R_2}L
+\end{bmatrix}x+
+\begin{bmatrix}
+\frac1{R_1C_1}&\frac1{C_1}\\
+0&0\\
+0&0
+\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&-1&-R_2\end{bmatrix}x.
+\]
+输出由三个状态量直接求得，故 $D=[0\quad 0]$。
+
+\ex{习题2\quad 右端无输入导数的微分方程}{
+已知 $y^{(3)}+5\ddot y+8\dot y+6y=3u$，求状态空间表达式。}
+
+\nt{\textbf{知识点} 降阶、以输出及其各阶导数为状态、伴随矩阵。}
+
+\sol 令 $x_1=y$、$x_2=\dot y$、$x_3=\ddot y$，则 $\dot x_1=x_2$、$\dot x_2=x_3$，原方程解出 $\dot x_3=-6x_1-8x_2-5x_3+3u$。所以
+\[
+\dot x=
+\begin{bmatrix}0&1&0\\0&0&1\\-6&-8&-5\end{bmatrix}x
++\begin{bmatrix}0\\0\\3\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0&0\end{bmatrix}x.
+\]
+矩阵最后一行的系数按 $y,\dot y,\ddot y$ 排列。初值对应为 $x(0)=[y(0),\dot y(0),\ddot y(0)]^{\mathsf T}$。
+
+\ex{习题3\quad 右端含输入导数的微分方程}{
+已知 $y^{(3)}+4\ddot y+2\dot y+y=\ddot u+\dot u+3u$，求状态空间表达式。}
+
+\nt{\textbf{知识点} 逐级吸收输入导数、输入矩阵系数递推、利用传递函数反查实现在零初值下是否等价。}
+
+\sol 令 $x_1=y$、$\dot x_1=x_2+\beta_2 u$、$\dot x_2=x_3+\beta_1u$。这相当于取
+\[
+x_2=\dot y-\beta_2 u,\qquad
+x_3=\ddot y-\beta_2\dot u-\beta_1 u.
+\]
+预设 $\dot x_3=-x_1-2x_2-4x_3+\beta_0u$。代回 $y$ 的高阶微分方程，右端依次为
+\[
+\beta_2\ddot u+(\beta_1+4\beta_2)\dot u+
+(\beta_0+4\beta_1+2\beta_2)u.
+\]
+逐阶对齐系数得到 $\beta_2=1$、$\beta_1=1-4=-3$、$\beta_0=3-4(-3)-2=13$，因此
+\[
+\dot x=
+\begin{bmatrix}0&1&0\\0&0&1\\-1&-2&-4\end{bmatrix}x+
+\begin{bmatrix}1\\-3\\13\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0&0\end{bmatrix}x .
+\]
+零初值下，该模型的传递函数分子为 $s^2+s+3$、分母为 $s^3+4s^2+2s+1$。按知识点中的中间量方法也可取相同的 $A$，另取 $B=[0,0,1]^{\mathsf T}$、$C=[3,1,1]$、$D=0$。
+
+\ex{习题4\quad 由单极点求对角规范形}{
+给定 $G(s)=(s^2+6s+8)/(s^2+4s+3)$，求对角规范形状态空间表达式。}
+
+\nt{\textbf{知识点} 多项式除法求 $D$、单极点留数、多个一阶环节并联。}
+
+\sol 分子与分母同阶且首项系数相同，长除得 $D=1$。因式分解后
+\[
+G(s)-1=\frac{2s+5}{(s+1)(s+3)}
+=\frac{3/2}{s+1}+\frac{1/2}{s+3}.
+\]
+两个留数分别将 $(s+1)(G-1)$ 和 $(s+3)(G-1)$ 在相应极点处取极限。令 $X_1/U=1/(s+1)$、$X_2/U=1/(s+3)$，可取
+\[
+\dot x=\begin{bmatrix}-1&0\\0&-3\end{bmatrix}x+
+\begin{bmatrix}1\\1\end{bmatrix}u,\qquad
+y=\begin{bmatrix}3/2&1/2\end{bmatrix}x+u.
+\]
+将两态置零时输出仍可随 $u$ 立即变化，这一项由 $D=1$ 给出。
+
+\ex{习题5\quad 由重极点求约旦规范形}{
+给定 $G(s)=(4s^2+10s+5)/(s^3+5s^2+8s+4)$，求约旦规范形状态空间表达式。}
+
+\nt{\textbf{知识点} 重极点的部分分式系数、二阶约旦块的输入位置与输出系数。}
+
+\sol 分母为 $(s+2)^2(s+1)$，故
+\[
+G(s)=\frac{\alpha}{(s+2)^2}+\frac{\beta}{s+2}+\frac{\gamma}{s+1}.
+\]
+记 $h(s)=(s+2)^2G(s)=(4s^2+10s+5)/(s+1)$。代入 $s=-2$，得 $\alpha=h(-2)=-1$。由于第三项乘 $(s+2)^2$ 后在 $s=-2$ 有二阶零点，求导可得 $\beta=h'(-2)=5$。最后由 $\gamma=\lim_{s\to-1}(s+1)G(s)=-1$ 确定单极点项。
+
+令 $\dot x_2=-2x_2+u$，$\dot x_1=-2x_1+x_2$，则 $X_2/U=(s+2)^{-1}$、$X_1/U=(s+2)^{-2}$。再令 $\dot x_3=-x_3+u$。结合三个分式系数得到
+\[
+\dot x=\begin{bmatrix}-2&1&0\\0&-2&0\\0&0&-1\end{bmatrix}x+
+\begin{bmatrix}0\\1\\1\end{bmatrix}u,\qquad
+y=\begin{bmatrix}-1&5&-1\end{bmatrix}x .
+\]
+
+\ex{习题6\quad 相似变换到对角规范形}{
+将下列状态空间表达式化为对角规范形。
+\[
+\dot x=
+\begin{bmatrix}0&1&0\\0&0&1\\-6&-11&-6\end{bmatrix}x+
+\begin{bmatrix}0\\0\\6\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0&0\end{bmatrix}x.
+\]}
+
+\nt{\textbf{知识点} 伴随矩阵的特征向量、范德蒙矩阵、同步变换输入和输出矩阵。}
+
+\sol $\det(\lambda I-A)=\lambda^3+6\lambda^2+11\lambda+6=(\lambda+1)(\lambda+2)(\lambda+3)$。对于特征值 $\lambda$，$Ap=\lambda p$ 的前两行给出 $p_2=\lambda p_1$、$p_3=\lambda^2p_1$，末行由特征方程满足。取 $p_1=1$，按 $\lambda=-1,-2,-3$ 排列列向量，得到
+\[
+P=\begin{bmatrix}1&1&1\\-1&-2&-3\\1&4&9\end{bmatrix},\qquad
+P^{-1}=\begin{bmatrix}3&5/2&1/2\\-3&-4&-1\\1&3/2&1/2\end{bmatrix}.
+\]
+令 $z=P^{-1}x$，于是
+\[
+\dot z=\operatorname{diag}(-1,-2,-3)z+
+\begin{bmatrix}3\\-6\\3\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&1&1\end{bmatrix}z.
+\]
+$\bar C=CP$ 取 $P$ 的首行，$\bar B=P^{-1}B$ 等于 $P^{-1}$ 的末列乘 6。
+
+\ex{习题7\quad 相似变换到约旦规范形}{
+将下列状态方程化为约旦规范形。
+\[
+\dot x=\begin{bmatrix}4&1&-2\\1&0&2\\1&-1&3\end{bmatrix}x+
+\begin{bmatrix}3&1\\2&7\\5&3\end{bmatrix}
+\begin{bmatrix}u_1\\u_2\end{bmatrix}.
+\]}
+
+\nt{\textbf{知识点} 代数重数与几何重数、广义特征向量链、双输入矩阵的坐标变换。}
+
+\sol 特征多项式为 $(\lambda-1)(\lambda-3)^2$。对 $\lambda=1$，解 $(A-I)p=0$，取 $p=[0,2,1]^{\mathsf T}$。对 $\lambda=3$，$\rank(A-3I)=2$，只有一个独立特征向量。取 $q=[1,1,1]^{\mathsf T}$，再解 $(A-3I)r=q$，可取 $r=[2,1,1]^{\mathsf T}$。
+
+将普通特征向量放在广义特征向量前，取
+\[
+P=\begin{bmatrix}0&1&2\\2&1&1\\1&1&1\end{bmatrix},\qquad
+P^{-1}=\begin{bmatrix}0&1&-1\\-1&-2&4\\1&1&-2\end{bmatrix}.
+\]
+由 $Ap=p$、$Aq=3q$、$Ar=q+3r$ 可直接读取 $\bar A$ 的各列。将 $B$ 的两列分别左乘 $P^{-1}$，得
+\[
+\dot z=\begin{bmatrix}1&0&0\\0&3&1\\0&0&3\end{bmatrix}z+
+\begin{bmatrix}-3&4\\13&-3\\-5&2\end{bmatrix}
+\begin{bmatrix}u_1\\u_2\end{bmatrix},\qquad z=P^{-1}x.
+\]
+
+\ex{习题8\quad 从状态空间求传递函数}{
+已知
+\[
+\dot x=\begin{bmatrix}-5&-1\\3&-1\end{bmatrix}x+
+\begin{bmatrix}2\\5\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&2\end{bmatrix}x+4u .
+\]
+求系统的传递函数。}
+
+\nt{\textbf{知识点} 零初值拉普拉斯变换、二阶矩阵求逆、直联项 $D$。}
+
+\sol 先算
+\[
+sI-A=\begin{bmatrix}s+5&1\\-3&s+1\end{bmatrix},\qquad
+(sI-A)^{-1}=\frac{1}{(s+2)(s+4)}
+\begin{bmatrix}s+1&-1\\3&s+5\end{bmatrix}.
+\]
+将分子矩阵右乘 $B$，得到 $[2s-3,5s+31]^{\mathsf T}$。左乘 $C$ 后再加 $D=4$，所以
+\[
+G(s)=\frac{12s+59}{(s+2)(s+4)}+4
+=\boxed{\frac{4s^2+36s+91}{s^2+6s+8}} .
+\]
+代入 $s=-2,-4$ 时，分子均非零，故两极点都保留。高频极限为 4，也可检查直联项是否漏写。
+
+\subsection{讲义指定练习}
+
+\ex{教材第17页图1.7(b)\quad 从模拟结构图列方程}{
+教材图1.7(b) 将前向通道 $K_1/(T_1s+1)$、$K_2/(T_2s+1)$ 和 $K_3/(T_3s)$ 依次串联，输出 $y$ 经增益 $K_4$ 反馈至输入的负端。按图自左向右取三个积分器的输出为 $x_3,x_2,x_1$，求状态空间模型。}
+
+\nt{\textbf{知识点} 将一阶环节改写为积分器结构，沿负反馈支路读取系数，保持题设状态编号。}
+
+\sol 输入到第一个环节的误差信号为 $e=u-K_4x_1$。前两个一阶惯性环节分别满足 $T_1\dot x_3+x_3=K_1 e$ 和 $T_2\dot x_2+x_2=K_2x_3$。最后的积分环节满足 $T_3\dot x_1=K_3x_2$。由于输出就是 $x_1$，所以
+\[
+\dot x=\begin{bmatrix}
+0&K_3/T_3&0\\
+0&-1/T_2&K_2/T_2\\
+-K_1K_4/T_1&0&-1/T_1
+\end{bmatrix}x+
+\begin{bmatrix}0\\0\\K_1/T_1\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0&0\end{bmatrix}x.
+\]
+讲义第26页用符号增益 $a,b,c,d,e,f$ 表示图中各支路，对应 $\dot x_1=ax_2$、$\dot x_2=bx_2+cx_3$、$\dot x_3=dx_1+ex_3+fu$。反馈方向已经包含在 $b,d,e$ 的取值中。
+
+\ex{教材第39页例1-11\quad 构造约旦链并验证}{
+将
+\[
+\dot x=\begin{bmatrix}0&1&0\\0&0&1\\2&3&0\end{bmatrix}x+
+\begin{bmatrix}0\\0\\1\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0&0\end{bmatrix}x
+\]
+化为约旦规范形，并按讲义要求复核变换结果。}
+
+\nt{\textbf{知识点} 重根的几何重数、有效广义特征向量、向量链归一化、MATLAB 符号验证。}
+
+\sol $\det(\lambda I-A)=\lambda^3-3\lambda-2=(\lambda+1)^2(\lambda-2)$。在 $\lambda=-1$ 处，$\rank(A+I)=2$，所以选取一条长度为 2 的链。取 $w=[1,0,-1]^{\mathsf T}$，有
+\[
+v=(A+I)w=\begin{bmatrix}1\\-1\\1\end{bmatrix},\qquad
+(A+I)v=0 .
+\]
+若误取 $w=v$，则 $(A+I)w=0$，构造出的链无法包含第二个独立向量。对 $\lambda=2$，取 $q=[1,2,4]^{\mathsf T}$。按 $[v,w,q]$ 排列，得到
+\[
+P=\begin{bmatrix}1&1&1\\-1&0&2\\1&-1&4\end{bmatrix},\qquad
+P^{-1}=\frac19\begin{bmatrix}2&-5&2\\6&3&-3\\1&2&1\end{bmatrix}.
+\]
+$\det P=9$，并且 $Av=-v$、$Aw=v-w$、$Aq=2q$。因此，取 $x=Pz$ 后有
+\[
+\dot z=\begin{bmatrix}-1&1&0\\0&-1&0\\0&0&2\end{bmatrix}z+
+\begin{bmatrix}2/9\\-1/3\\1/9\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&1&1\end{bmatrix}z.
+\]
+在 MATLAB 中用 \texttt{sym} 将 $A,P$ 定义为符号矩阵，可用 \verb|P\(A*P)| 直接核对 $J$，再用 \verb|P\B| 和 \verb|C*P| 核对输入、输出矩阵。也可用 \verb|[S,J]=jordan(A)|，其向量链尺度和块顺序可以不同，检查 $AS=SJ$ 即可。
+
+\smallskip
+\noindent 教材出处为刘豹、唐万生主编《现代控制理论》（第3版），第17页图1.7(b)与第39页例1-11。可参看\href{https://www.cmpedu.com/books/pdf.htm?CHAPTERMODEL=57417}{机械工业出版社样章试读}。

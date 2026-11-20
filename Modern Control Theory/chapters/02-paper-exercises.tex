@@ -1,0 +1,41 @@
+\Needspace{22\baselineskip}
+\subsection{纸质练习}
+
+\ex{纸质练习一\quad 由反馈结构图建立状态空间模型}{
+按图中的 $x_1,x_2$ 选取状态，求输入 $u$ 到输出 $y$ 的状态空间表达式。
+\begin{center}
+\begin{tikzpicture}[>=Stealth,
+    block/.style={draw, minimum width=1.65cm, minimum height=0.95cm},
+    sum/.style={draw,circle,inner sep=0pt,minimum size=6mm}]
+    \node[sum] (sum) at (0,0) {$\scriptstyle\sum$};
+    \node[block] (plant) at (2.35,0) {$\dfrac{k}{s+2}$};
+    \node[block] (sensor) at (2.35,-1.4) {$\dfrac{1}{s+1}$};
+    \draw[->] (-1.4,0) node[above] {$u$} -- node[above,pos=.82] {$+$} (sum);
+    \draw[->] (sum) -- (plant);
+    \draw[->] (plant) -- (4.9,0) node[right] {$y$};
+    \fill (3.9,0) circle[radius=1.2pt] node[above] {$x_1$};
+    \draw[->] (3.9,0) |- (sensor.east);
+    \draw[->] (sensor.west) -| node[pos=.3,above] {$x_2$}
+        node[pos=.86,right] {$-$} (sum.south);
+\end{tikzpicture}
+\end{center}
+}
+
+\nt{\textbf{知识点}\quad 一阶环节的微分方程、负反馈求和、状态方程与输出方程。}
+
+\sol 先读求和点。前向环节的输入为 $u-x_2$，其输出为 $x_1$。反馈环节的输入为 $x_1$，输出为 $x_2$，因此在时域中有
+\[
+    \dot x_1+2x_1=k(u-x_2),\qquad \dot x_2+x_2=x_1.
+\]
+输出从前向环节末端引出，故 $y=x_1$。整理得
+\[
+    \boxed{
+    \dot x=\begin{bmatrix}-2&-k\\1&-1\end{bmatrix}x
+           +\begin{bmatrix}k\\0\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}1&0\end{bmatrix}x,\quad D=0.}
+\]
+检验时可在零初始条件下消去 $X_2=X_1/(s+1)$，得到
+\[
+    \frac{Y(s)}{U(s)}=\frac{k(s+1)}{(s+2)(s+1)+k}.
+\]
+这与把两个一阶环节直接按负反馈连接所得的闭环传递函数一致。

@@ -1,0 +1,102 @@
+\subsection{纸质练习}
+
+\ex{纸质练习二\quad 对角化与齐次状态方程}{
+已知
+\[
+    \dot x=Ax,\qquad A=\begin{bmatrix}1&-1&0\\-1&1&0\\0&0&1\end{bmatrix}.
+\]
+通过线性变换化为对角规范型，并求初始条件 $x(0)=[1\ \ 1\ \ 1]^T$ 下的状态响应。
+}
+
+\nt{\textbf{知识点}\quad 特征向量组成相似变换阵、状态转移矩阵、初始状态的模态分解。}
+
+\sol 先把左上二阶块的行列式展开，
+\[
+    \det(sI-A)=(s-1)\bigl((s-1)^2-1\bigr)
+              =s(s-1)(s-2).
+\]
+对 $\lambda=0,1,2$ 分别取特征向量 $[1\ \ 1\ \ 0]^T$、$[0\ \ 0\ \ 1]^T$、$[1\ \ {-1}\ \ 0]^T$，按此顺序组成
+\[
+    P=\begin{bmatrix}1&0&1\\1&0&-1\\0&1&0\end{bmatrix},\qquad
+    P^{-1}=\begin{bmatrix}1/2&1/2&0\\0&0&1\\1/2&-1/2&0\end{bmatrix}.
+\]
+取 $x=Pz$，则 $\dot z=\operatorname{diag}(0,1,2)z$，且
+$z(0)=P^{-1}x(0)=[1\ \ 1\ \ 0]^T$。各分量分别乘以相应的指数，得
+\[
+    z(t)=\begin{bmatrix}1\\e^t\\0\end{bmatrix},\qquad
+    \boxed{x(t)=Pz(t)=\begin{bmatrix}1\\1\\e^t\end{bmatrix}.}
+\]
+一般初值下，原坐标的状态转移矩阵为
+\[
+    e^{At}=P\operatorname{diag}(1,e^t,e^{2t})P^{-1}
+    =\begin{bmatrix}
+    (1+e^{2t})/2&(1-e^{2t})/2&0\\
+    (1-e^{2t})/2&(1+e^{2t})/2&0\\
+    0&0&e^t
+    \end{bmatrix}.
+\]
+本题初值在 $\lambda=2$ 的方向上投影为零，所以响应中没有 $e^{2t}$ 项。
+
+\ex{纸质练习三\quad 对角实现与零状态阶跃响应}{
+已知 $a,b,c$ 为实数，输入 $u$ 与输出 $y$ 满足
+\[
+    \ddot y+(a+b)\dot y+aby=\dot u+cu.
+\]
+\begin{enumerate}
+    \item 求系统的对角规范型状态空间表达式。
+    \item 求单位阶跃输入 $u(t)=1(t)$ 作用下的零初值状态响应。
+\end{enumerate}
+}
+
+\nt{\textbf{知识点}\quad 严格真分式、部分分式并联实现、状态转移积分、重极点与约当块。}
+
+\sol 在零初始条件下，
+\[
+    G(s)=\frac{Y(s)}{U(s)}=\frac{s+c}{(s+a)(s+b)}.
+\]
+当 $a\ne b$ 时，在 $s=-a,-b$ 分别取留数，得
+\[
+    G(s)=\frac{\alpha}{s+a}+\frac{\beta}{s+b},\qquad
+    \alpha=\frac{c-a}{b-a},\qquad \beta=\frac{c-b}{a-b}.
+\]
+让每个一阶支路由同一输入驱动，再按留数作加权，即
+\[
+    \boxed{
+    A=\begin{bmatrix}-a&0\\0&-b\end{bmatrix},\quad
+    B=\begin{bmatrix}1\\1\end{bmatrix},\quad
+    C=\begin{bmatrix}\alpha&\beta\end{bmatrix},\quad D=0.}
+\]
+由 $e^{At}=\operatorname{diag}(e^{-at},e^{-bt})$，对阶跃输入直接积分。定义
+\[
+    F_d(t)=\int_0^t e^{-d\tau}\,d\tau
+    =\begin{cases}
+        (1-e^{-dt})/d,& d\ne 0,\\
+        t,& d=0.
+    \end{cases}
+\]
+于是
+\[
+    \boxed{x(t)=\begin{bmatrix}F_a(t)\\F_b(t)\end{bmatrix}},\qquad
+    y(t)=\alpha F_a(t)+\beta F_b(t),\qquad t\geq0.
+\]
+逐支路检查可得 $F_d(0)=0$、$\dot F_d=-dF_d+1$，满足初值和状态方程。
+
+\textbf{重根情形。} 若 $a=b$，先写成
+\[
+    G(s)=\frac{1}{s+a}+\frac{c-a}{(s+a)^2}.
+\]
+若 $c=a$，约去公因子后，$A=-a$、$B=C=1$、$D=0$ 是一阶对角实现，阶跃下 $x(t)=F_a(t)$。若 $c\ne a$，传递函数含二阶极点。对角矩阵的预解式只有一阶极点，因此此时应采用二阶约当块，
+\[
+    A=\begin{bmatrix}-a&1\\0&-a\end{bmatrix},\quad
+    B=\begin{bmatrix}0\\1\end{bmatrix},\quad
+    C=\begin{bmatrix}c-a&1\end{bmatrix},\quad D=0.
+\]
+由 $e^{A\tau}B=e^{-a\tau}[\tau\ \ 1]^T$，此实现的阶跃状态为
+\[
+    x(t)=\begin{bmatrix}H_a(t)\\F_a(t)\end{bmatrix},\qquad
+    H_a(t)=\int_0^t \tau e^{-a\tau}\,d\tau
+    =\begin{cases}
+        \bigl[1-(1+at)e^{-at}\bigr]/a^2,&a\ne0,\\
+        t^2/2,&a=0.
+    \end{cases}
+\]

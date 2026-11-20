@@ -1,0 +1,41 @@
+\documentclass[a4paper]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{needspace}
+\graphicspath{{img/}}
+
+\hypersetup{pdftitle={《现代控制理论》复习资料},pdfauthor={魏崃}}
+\title{\includegraphics[width=7cm]{whu-logo.png} \\ \Huge{《现代控制理论》复习资料}}
+\author{魏崃\thanks{\href{mailto:lai-wei@whu.edu.cn}{lai-wei@whu.edu.cn}}}
+\date{\today \\ \includegraphics[width=1.5in]{qrcode.png}}
+
+\renewcommand{\ex}[2]{%
+    \begin{Example*}[breakable=false]{#1}#2\end{Example*}%
+}
+\renewcommand{\sol}{%
+    \par\Needspace{3\baselineskip}%
+    \noindent\textbf{解析}\enspace\ignorespaces
+}
+\allowdisplaybreaks[1]
+
+\begin{document}
+
+\maketitle
+\newpage
+\pdfbookmark[section]{\contentsname}{toc}
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\input{chapters/01-introduction}
+\input{chapters/02-state-space-model}
+\input{chapters/02-paper-exercises}
+\input{chapters/03-state-space-solutions}
+\input{chapters/03-paper-exercises}
+\input{chapters/04-controllability-observability}
+\input{chapters/05-lyapunov-stability}
+\input{chapters/06-linear-system-synthesis}
+\input{chapters/06-paper-exercises}
+
+\end{document}

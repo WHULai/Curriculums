@@ -1,0 +1,29 @@
+\Needspace{22\baselineskip}
+\subsection{纸质练习}
+
+\ex{纸质练习六\quad 由传递函数设计状态反馈}{
+给定 $G(s)=1/[s(s+4)(s+8)]$，求线性状态反馈控制律，使闭环极点为 $-2,-4,-7$。
+}
+
+\nt{\textbf{知识点}\quad 能控伴随实现、负状态反馈、特征多项式系数比较。}
+
+\sol 原分母为 $s^3+12s^2+32s$。取 $x=[y\ \ \dot y\ \ \ddot y]^T$，则 $C=[1\ \ 0\ \ 0]$、$D=0$，其余系统矩阵及能控矩阵为
+\[
+    A=\begin{bmatrix}0&1&0\\0&0&1\\0&-32&-12\end{bmatrix},\qquad
+    B=\begin{bmatrix}0\\0\\1\end{bmatrix},\qquad
+    [B\ AB\ A^2B]=\begin{bmatrix}
+    0&0&1\\0&1&-12\\1&-12&112
+    \end{bmatrix}.
+\]
+能控矩阵的行列式为 $-1$，故系统完全能控。取 $u=-Kx$、$K=[k_1\ \ k_2\ \ k_3]$，则 $A-BK$ 的最后一行为 $[-k_1,\,-32-k_2,\,-12-k_3]$。比较实际与期望的特征多项式，
+\[
+    \begin{aligned}
+    \det(sI-A+BK)&=s^3+(12+k_3)s^2+(32+k_2)s+k_1,\\
+    (s+2)(s+4)(s+7)&=s^3+13s^2+50s+56 .
+    \end{aligned}
+\]
+逐项比较得 $k_3=1$、$k_2=18$、$k_1=56$，故在上述状态坐标中，
+\[
+    \boxed{u=-\begin{bmatrix}56&18&1\end{bmatrix}x.}
+\]
+将所得增益代入即恢复期望多项式。若改用另一组状态坐标 $x=Tz$，同一控制律写为 $u=-KTz$。

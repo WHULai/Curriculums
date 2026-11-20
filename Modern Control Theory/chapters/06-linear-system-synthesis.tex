@@ -1,0 +1,218 @@
+\chapter{线性系统综合}
+\label{chap:linear-system-synthesis}
+
+\section{知识点}
+
+\subsection{状态反馈与输出反馈}
+
+设连续线性定常系统为 $\dot x=Ax+Bu$、$y=Cx$，外部参考输入为 $v$。取负反馈时，闭环状态方程可直接由控制律代入得到。
+\[
+\begin{array}{c|c|c}
+    \text{反馈方式} & \text{控制律} & \text{闭环状态矩阵}\\
+    \hline
+    \text{状态反馈} & u=v-Kx & A-BK\\
+    \text{静态输出反馈} & u=v-Hy & A-BHC
+\end{array}
+\]
+两种反馈下的输入矩阵均为 $B$，输出矩阵均为 $C$。当 $K=HC$ 时，状态反馈可以用测得的输出 $y$ 实现。
+
+\begin{itemize}
+    \item \textbf{能控性。}状态反馈保持能控性。$(A-BK)^jB$ 可写成 $A^jB$ 与较低阶分块 $A^iB$ 的组合，且 $A^jB$ 的系数为单位阵。两个能控性矩阵的列空间相同。静态输出反馈取 $K=HC$，因此也保持能控性。
+    \item \textbf{能观性。}静态输出反馈保持能观性，因为对偶状态矩阵可写为 $(A-BHC)^{\mathsf T}=A^{\mathsf T}-C^{\mathsf T}(H^{\mathsf T}B^{\mathsf T})$，可用对偶系统的能控性结论。一般的状态反馈可能改变能观性，检查时应用闭环矩阵重新计算能观性矩阵。
+\end{itemize}
+
+\subsection{反馈控制与极点配置}
+
+给定 $n$ 个期望极点 $\lambda_1^\ast,\ldots,\lambda_n^\ast$，按重数计。实增益设计要求非实极点成共轭对。状态反馈任意配置闭环极点的充要条件是 $(A,B)$ 完全能控。求解的基本方程为
+\[
+  \det\bigl(sI-(A-BK)\bigr)
+  =\prod_{i=1}^{n}(s-\lambda_i^\ast).
+\]
+
+\begin{enumerate}
+    \item \textbf{直接比较系数}。设出 $K$，展开闭环特征多项式，再与期望多项式逐项比较。低阶系统或矩阵结构简单时，直接展开最清楚。
+    \item \textbf{利用能控规范 II 型}。若系统已化为超对角线为 $1$、末行为 $[-a_0,\ldots,-a_{n-1}]$ 的伴随矩阵，且输入矩阵为 $B=\beta e_n$、$\beta\ne0$，则反馈只改变 $A$ 的最后一行。设目标系数为 $a_i^\ast$，有
+    \[
+        K=\frac{1}{\beta}
+        \begin{bmatrix}a_0^\ast-a_0 & \cdots & a_{n-1}^\ast-a_{n-1}\end{bmatrix}.
+    \]
+    若先作变换 $x=Tz$，在 $z$ 坐标下算得 $\widetilde K$，则原坐标的增益为 $K=\widetilde K T^{-1}$。
+    \item \textbf{静态输出反馈}。$H$ 只能通过 $HC$ 改变状态反馈增益。即使系统完全能控、完全能观，也未必能任意配置极点。例如双积分系统 $\dot x_1=x_2$、$\dot x_2=u$、$y=x_1$，取 $u=v-hy$ 后，特征多项式为 $s^2+h$，无法调节 $s$ 项系数。
+\end{enumerate}
+
+对于典型欠阻尼二阶系统，可用超调量比例 $M_p=e^{-\pi\zeta/\sqrt{1-\zeta^2}}$ 和 $2\%$ 误差带的近似调节时间 $t_s\approx 4/(\zeta\omega_n)$ 选取 $\zeta$、$\omega_n$，对应目标多项式为 $s^2+2\zeta\omega_n s+\omega_n^2$。若题目还给定阶跃稳态值，需要另用闭环直流增益校核参考输入的比例。
+
+\subsection{系统解耦}
+
+对等输入、输出维数的系统，解耦要求从新输入 $v$ 到输出 $y$ 的传递矩阵为对角阵。这样 $v_i$ 只作用于相应的 $y_i$。
+\begin{itemize}
+    \item \textbf{前馈补偿解耦}。将 $G_c(s)$ 串联在对象 $G_0(s)$ 之前，得到 $G_0(s)G_c(s)$。若方阵 $G_0(s)$ 可逆，给定目标对角传递矩阵 $G_d(s)$，可令 $G_c(s)=G_0^{-1}(s)G_d(s)$。实现时要检查补偿器各元素的分子次数是否至多等于分母次数，以及串联系统的内部稳定性。
+    \item \textbf{状态反馈解耦}。对 $y=Cx$，取 $u=Fv-Kx$。令 $c_i$ 为 $C$ 的第 $i$ 行，$d_i$ 为使 $c_iA^{d_i}B\ne 0$ 的最小非负整数。第 $i$ 个输出在 $d_i+1$ 阶导数中首次显含 $u$，因此
+    \[
+        y_i^{(d_i+1)}=c_iA^{d_i+1}x+c_iA^{d_i}Bu.
+    \]
+    将 $c_iA^{d_i}B$ 按行叠成矩阵 $E$，将 $c_iA^{d_i+1}$ 按行叠成 $L$。代入 $u=Fv-Kx$ 后，$y_i^{(d_i+1)}$ 中 $v$ 的直接系数为 $EF$ 的第 $i$ 行。若 $F$ 可逆，该行非零，解耦要求它仅在第 $i$ 列非零。因此 $EF$ 为可逆的对角阵，$E$ 必须可逆。反过来，取 $K=E^{-1}L$、$F=E^{-1}$，各通道就满足 $y_i^{(d_i+1)}=v_i$。零初始条件下，对角元素为 $1/s^{d_i+1}$。如果还要求闭环稳定，需要检查各通道的极点和传递矩阵中未显现的内部模态。
+\end{itemize}
+
+\subsection{全维状态观测器}
+
+开环观测器复制对象的状态方程 $\dot{\hat x}=A\hat x+Bu$。令 $e=x-\hat x$，则 $\dot e=Ae$。若 $A$ 有实部非负的特征值，初始估计误差可能持续存在或增大。
+
+渐近观测器用输出残差 $y-\hat y$ 修正状态估计。设 $x\in\mathbb R^n$、$y\in\mathbb R^p$，则 $G\in\mathbb R^{n\times p}$，且
+\[
+\begin{aligned}
+    \dot{\hat x}
+    &=A\hat x+Bu+G(y-C\hat x)
+      =(A-GC)\hat x+Bu+Gy,\\
+    \dot e&=(A-GC)e .
+\end{aligned}
+\]
+只要 $A-GC$ 的全部特征值实部为负，$e(t)$ 就收敛到零。观测器极点任意配置的充要条件是 $(A,C)$ 完全能观。可以直接比较 $\det(sI-A+GC)$ 的系数，也可对 $(A^{\mathsf T},C^{\mathsf T})$ 作状态反馈极点配置，再将求得的反馈增益转置为 $G$。
+
+\section{作业}
+
+\subsection{习题课}
+
+\ex{习题1\quad 三阶系统的状态反馈}{%
+    已知系统为
+    \[
+    \begin{cases}
+        \dot x_1=x_2,\\
+        \dot x_2=x_3,\\
+        \dot x_3=-x_1-x_2-x_3+3u.
+    \end{cases}
+    \]
+    试确定状态反馈控制律，使闭环极点均为 $-3$，并画出闭环系统结构图。
+    \par\smallskip\hfill{\footnotesize 《第六章 习题》第 1 页}
+}
+
+\nt{\textbf{知识点}\quad 状态反馈极点配置，能控性判据，伴随矩阵的特征多项式，积分器结构图。$B$ 的非零元素为 $3$，系数差应除以 $3$。}
+
+\sol\textbf{1. 写出开环矩阵并判断能控性。}
+\[
+    A=\begin{bmatrix}0&1&0\\0&0&1\\-1&-1&-1\end{bmatrix},
+    \qquad B=\begin{bmatrix}0\\0\\3\end{bmatrix}.
+\]
+计算 $AB=[0,3,-3]^{\mathsf T}$、$A^2B=[3,-3,0]^{\mathsf T}$，得
+\[
+    \mathcal C=\begin{bmatrix}B&AB&A^2B\end{bmatrix}
+    =\begin{bmatrix}0&0&3\\0&3&-3\\3&-3&0\end{bmatrix},
+    \qquad \det\mathcal C=-27 .
+\]
+所以系统完全能控，可以任意配置闭环极点。
+
+\textbf{2. 代入反馈律并比较多项式系数。}设 $u=v-Kx$，$K=[k_1,k_2,k_3]$。因 $B$ 只有第三行非零，反馈只改变 $A$ 的最后一行，
+\[
+    A-BK=\begin{bmatrix}
+        0&1&0\\0&0&1\\
+        -1-3k_1&-1-3k_2&-1-3k_3
+    \end{bmatrix}.
+\]
+沿 $sI-(A-BK)$ 的第一行展开行列式，
+\[
+    p_K(s)=s^3+(1+3k_3)s^2+(1+3k_2)s+(1+3k_1).
+\]
+三重极点 $-3$ 给出 $p^\ast(s)=(s+3)^3=s^3+9s^2+27s+27$。按常数项、一次项、二次项的顺序，得到
+\[
+    1+3k_1=27,\qquad 1+3k_2=27,\qquad 1+3k_3=9.
+\]
+因此
+\[
+    \boxed{K=\begin{bmatrix}26/3&26/3&8/3\end{bmatrix}},
+    \qquad
+    u=v-\frac{26}{3}x_1-\frac{26}{3}x_2-\frac{8}{3}x_3 .
+\]
+取 $v=0$ 即为原点镇定控制律。回代后第三行是 $[-27,-27,-9]$，所对应的特征多项式为 $(s+3)^3$。
+
+\textbf{3. 画出闭环结构图。}三个积分器依次给出 $x_3$、$x_2$、$x_1$。对象原有的 $-x_1-x_2-x_3$ 在第二个求和点接入。新增的 $-Kx$ 在第一个求和点接入，再经过输入增益 $3$。
+
+\begin{center}
+\begin{tikzpicture}[
+    >=Latex,
+    block/.style={draw, rectangle, minimum height=0.66cm, minimum width=0.86cm},
+    sum/.style={draw, circle, minimum size=0.43cm, inner sep=0pt}
+]
+    \node (ref) at (0,0) {$v$};
+    \node[sum] (controlsum) at (1.35,0) {$\scriptstyle\Sigma$};
+    \node[block] (gain) at (2.65,0) {$3$};
+    \node[sum] (plantsum) at (3.88,0) {$\scriptstyle\Sigma$};
+    \node[block] (int3) at (5.45,0) {$\int$};
+    \node[block] (int2) at (7.6,0) {$\int$};
+    \node[block] (int1) at (9.75,0) {$\int$};
+    \coordinate (state3) at (6.53,0);
+    \coordinate (state2) at (8.68,0);
+    \coordinate (state1) at (10.83,0);
+    \coordinate (rightend) at (11.38,0);
+    \node[block, minimum width=5.34cm] (stack) at (8.68,-1.15)
+        {$x=[x_1\;\; x_2\;\; x_3]^{\mathsf T}$};
+    \node[block] (plantfeed) at (5.6,-2.2) {$[1\;\;1\;\;1]$};
+    \node[block] (controlfeed) at (4.6,-3.38)
+        {$K=[26/3\;\;26/3\;\;8/3]$};
+
+    \draw[->] (ref) -- (controlsum) node[pos=0.68,above] {$+$};
+    \draw[->] (controlsum) -- (gain) node[midway,above] {$u$};
+    \draw[->] (gain) -- (plantsum) node[midway,above] {$+$};
+    \draw[->] (plantsum) -- (int3) node[midway,above] {$\dot x_3$};
+    \draw[->] (int3) -- (int2);
+    \draw[->] (int2) -- (int1);
+    \draw[->] (int1) -- (rightend);
+    \foreach \state/\index in {state3/3,state2/2,state1/1} {
+        \draw[->] (\state) -- (\state |- stack.north);
+        \fill (\state) circle[radius=1.2pt] node[above] {$x_\index$};
+    }
+    \coordinate (branch) at (stack.south |- plantfeed.east);
+    \draw[->] (stack.south) |- (plantfeed.east);
+    \draw[->] (branch) |- (controlfeed.east);
+    \fill (branch) circle[radius=1.2pt];
+    \draw[->] (plantfeed.west) -| (plantsum.south)
+        node[pos=0.94,right] {$-$};
+    \draw[->] (controlfeed.west) -| (controlsum.south)
+        node[pos=0.96,left] {$-$};
+\end{tikzpicture}
+\end{center}
+
+\ex{习题2\quad 渐近状态观测器}{%
+    已知系统为
+    \[
+        \dot x=\begin{bmatrix}1&2\\0&-1\end{bmatrix}x
+        +\begin{bmatrix}0\\1\end{bmatrix}u,\qquad y=\begin{bmatrix}1&0\end{bmatrix}x.
+    \]
+    设计渐近状态观测器，要求观测器的极点为 $-5$、$-6$，求观测器增益矩阵 $G$。
+    \par\smallskip\hfill{\footnotesize 《第六章 习题》第 3 页}
+}
+
+\nt{\textbf{知识点}\quad 全维状态观测器与误差方程，能观性判据，$\det(sI-A+GC)$ 的系数匹配。两个状态、一个输出对应 $2\times 1$ 的观测器增益。}
+
+\sol\textbf{1. 判断系统的能观性。}输出 $y=x_1$。由第一行状态方程得 $\dot y=x_1+2x_2$，因此 $x_2$ 也能由输出及其导数确定。按矩阵判据计算，
+\[
+    \mathcal O=\begin{bmatrix}C\\CA\end{bmatrix}
+    =\begin{bmatrix}1&0\\1&2\end{bmatrix},
+    \qquad \det\mathcal O=2 .
+\]
+系统完全能观，可以任意配置观测器极点。
+
+\textbf{2. 建立误差方程并求增益。}
+取 $G=[g_1,g_2]^{\mathsf T}$，观测器采用 $\dot{\hat x}=A\hat x+Bu+G(y-C\hat x)$。从对象方程中减去观测器方程，公共输入项 $Bu$ 抵消，有
+\[
+    \dot e=(A-GC)e,\qquad
+    A-GC=\begin{bmatrix}1-g_1&2\\-g_2&-1\end{bmatrix}.
+\]
+误差系统的特征多项式为
+\[
+\begin{aligned}
+    \det(sI-A+GC)&=(s-1+g_1)(s+1)+2g_2\\
+                 &=s^2+g_1 s+g_1+2g_2-1.
+\end{aligned}
+\]
+期望多项式为 $(s+5)(s+6)=s^2+11s+30$。比较系数得 $g_1=11$、$g_1+2g_2-1=30$，所以
+\[
+    \boxed{G=\begin{bmatrix}11\\10\end{bmatrix}} .
+\]
+
+\textbf{3. 写出观测器并校验。}
+\[
+    \dot{\hat x}=\begin{bmatrix}-10&2\\-10&-1\end{bmatrix}\hat x
+       +\begin{bmatrix}0\\1\end{bmatrix}u
+       +\begin{bmatrix}11\\10\end{bmatrix}y .
+\]
+回代得迹为 $-11$、行列式为 $30$，特征值确为 $-5$ 和 $-6$。两个特征值均在左半平面，因此任意初始估计误差均趋于零。
