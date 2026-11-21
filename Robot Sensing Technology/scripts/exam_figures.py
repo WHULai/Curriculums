@@ -1,7 +1,8 @@
 """Generate symbolic exam sketches for the chapter's Fourier examples.
 
 Coordinates used for drawing are dimensionless geometry, not assigned physical
-parameters. Exact tick labels retain the problem's symbols. The damped and
+parameters, except for the explicitly labelled windowed-cosine example.
+Exact tick labels retain the problem's symbols. The damped and
 modulated signal outlines are explicitly schematic because their free ratios
 or their underlying waveform have not been specified.
 """
@@ -153,9 +154,10 @@ def generalized():
 def windowed():
     # q=2T(f-centre), so sinc(q) is a universal individual window component.
     q = np.linspace(-2.35, 2.35, 1801)
-    fig, axs = plt.subplots(1, 2, figsize=(7.2, 2.4))
-    fig.subplots_adjust(left=0.04, right=0.97, top=0.80, bottom=0.10, wspace=0.3)
-    for ax, sign in zip(axs, [1, -1]):
+    fig, axs = plt.subplots(2, 2, figsize=(7.2, 4.4))
+    fig.subplots_adjust(left=0.04, right=0.97, top=0.90, bottom=0.10,
+                        wspace=0.3, hspace=0.70)
+    for ax, sign in zip(axs[0], [1, -1]):
         name = r"Y_-(f)" if sign < 0 else r"Y_+(f)"
         centre = r"-f_0" if sign < 0 else r"f_0"
         _axes(ax, (-2.55, 2.55), (-0.80, 1.36), "$"+name+"$")
@@ -167,8 +169,36 @@ def windowed():
         title = (r"(b) $Y_-=T\,\mathrm{Sa}[2\pi T(f+f_0)]$" if sign < 0
                  else r"(a) $Y_+=T\,\mathrm{Sa}[2\pi T(f-f_0)]$")
         ax.set_title(title, pad=9)
-    fig.text(0.5, 0.017, r"Individual components in local coordinates; $Y(f)=Y_-(f)+Y_+(f)$.",
-             ha="center", fontsize=9)
+    # The total shape depends on f0*T. Draw an exact, labelled example in
+    # the common coordinate p=T*f; np.sinc(x)=sin(pi*x)/(pi*x).
+    p = np.linspace(-3.0, 3.0, 3601)
+    carrier = 5 / 4  # f0*T, used only for the two lower panels
+    plus = np.sinc(2 * (p - carrier))
+    minus = np.sinc(2 * (p + carrier))
+    total = plus + minus
+    for ax, magnitude in zip(axs[1], [False, True]):
+        ylabel = r"$|Y(f)|$" if magnitude else r"$Y(f)$"
+        _axes(ax, (-3.15, 3.15), (-0.48, 1.38), ylabel)
+        if not magnitude:
+            ax.plot(p, plus, color=RED, ls="--", lw=0.8, label=r"$Y_+$")
+            ax.plot(p, minus, color=GREEN, ls="--", lw=0.8, label=r"$Y_-$")
+        ax.plot(p, np.abs(total) if magnitude else total,
+                color=BLUE, lw=1.7, label=r"$Y$" if not magnitude else None)
+        for sign in [-1, 1]:
+            ax.plot([sign * carrier, sign * carrier], [0, 1],
+                    color="#aaaaaa", ls=":", lw=0.65, zorder=0)
+            _xtick(ax, sign * carrier, "$-f_0$" if sign < 0 else "$f_0$",
+                   offset=-0.18)
+        _xtick(ax, 0, "$0$", offset=-0.18)
+        _ytick(ax, 1, "$T$")
+        ax.set_title(r"(d) Magnitude $|Y(f)|$" if magnitude
+                     else r"(c) Total $Y(f)=Y_+(f)+Y_-(f)$", pad=8)
+        if not magnitude:
+            ax.legend(loc="upper left", frameon=False, fontsize=7,
+                      handlelength=1.6, borderaxespad=0, labelspacing=0.15)
+    fig.text(0.5, 0.018,
+             r"Top: individual components in local coordinates. Bottom: example $f_0T=5/4$.",
+             ha="center", fontsize=8)
     _save(fig, "hw04-windowed.pdf")
 
 
