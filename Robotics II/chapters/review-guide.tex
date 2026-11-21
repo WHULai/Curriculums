@@ -1,0 +1,28 @@
+\chapter*{复习路线}
+\addcontentsline{toc}{chapter}{复习路线}
+
+优先独立完成控制作业，再按讲义中的计算例题和基本原理补齐驱动、传感、视觉与强化学习。现有材料未附正式考试大纲，下面的优先级依据作业考查内容、讲义中的推导和例题安排。各章自编例题用于检验同类方法。
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{@{}p{2.55cm}X@{}}
+\toprule
+复习单元 & 合上复习册后，应能独立完成的任务 \\
+\midrule
+\hyperref[ch:robot-control]{控制}与\hyperref[hw:robot-control]{课后作业} & 写出单关节动力学和误差方程，依据极点或稳态误差整定控制器。比较独立关节控制、逆动力学及两类视觉伺服，能解释仿真响应的差异。 \\
+\hyperref[chap:rii-image-formation]{成像与视觉测量} & 根据视场、精度和工作距离反推像素数与光学参数，沿世界、相机、图像和像素四个坐标系完成投影，解释内参、外参与畸变的作用。 \\
+\hyperref[chap:rii-image-processing]{图像处理} & 手算一小块图像的灰度变换、卷积或形态学，能根据噪声和待检特征选择滤波、分割与分类方法。 \\
+\hyperref[chap:actuators]{驱动}与\hyperref[chap:robot-sensing]{传感} & 写出直流电机方程，由负载和减速比判断速度、力矩及惯量，按编码器类型、细分与计数方式计算位置或速度。解释内部反馈和外部感知各自测量什么。 \\
+\hyperref[chap:reinforcement-learning]{强化学习} & 能把机器人控制任务写成状态、动作、奖励及转移，算折扣回报和 PPO 裁剪项，区分参考动作跟踪、动作先验与模型预测。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{focusbox}{对照材料}
+驱动器是单独讲义，本册编入第1章。第2--5章、第7章沿用讲义中的章节编号。现有材料中未见第6章讲义。控制作业随第5章编排，保留作业及所附教材习题的原编号。
+
+符号按各讲义的约定在首次出现时定义。例如第1章用 $N=\omega_m/\omega_j$ 表示减速比，第5章用 $n=\omega_j/\omega_m=1/N$ 表示传动比。做题时先标清输入、输出、正方向和所用坐标系。
+
+编码器专题用于补充码盘和反馈原理，人形关节电机选型专题用于理解工程约束。世界模型专题用于联系预测与闭环，对应第7章末。全本教材用于核对基础模型和作业题。厂商器件、视频演示、项目版本、训练跑分及硬件配置留作查阅。
+\end{focusbox}

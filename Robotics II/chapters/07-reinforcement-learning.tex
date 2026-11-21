@@ -1,0 +1,148 @@
+\chapter{基于强化学习的机器人控制}
+\label{chap:reinforcement-learning}
+
+\begin{focusbox}{本章复习路线}
+先把机器人任务写成马尔可夫决策过程，再用回报和优势解释 PPO 如何更新控制策略。比较动作模仿中的参考轨迹与动作先验，最后理解世界模型如何预测动作后果。复习时可对照第7章课件第3--11张。第13--18张的全身控制项目与训练加速案例用于拓展。
+\end{focusbox}
+
+\section{从闭环控制任务到 MDP}
+
+\dfn{马尔可夫决策过程（MDP）}{离散时间下，智能体在状态 $s_t\in\mathcal S$ 按策略 $\pi(a_t\mid s_t)$ 选择动作 $a_t\in\mathcal A$。环境按转移规律 $P(s_{t+1}\mid s_t,a_t)$ 到达下一状态并给出奖励 $r_{t+1}$。折扣因子为 $\gamma$。马尔可夫性要求给定当前状态和动作后，下一步的条件分布与更早的历史无关。}
+
+以四足机器人的速度跟踪为例，可按下表写出任务。仿真中的完整状态用于描述转移，部署时还要写明策略实际能观测到哪些量。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}p{2.8cm}X@{}}
+\toprule
+要素 & 四足速度跟踪的一种设计 \\
+\midrule
+状态 $s_t$ & 机身姿态与速度、关节角与角速度、接触状态、地形及目标速度。 \\
+观测 $o_t$ & 可由编码器、惯性传感器或状态估计器得到的量，以及目标速度命令。 \\
+动作 $a_t$ & 如各关节的目标角度，由底层伺服转换为力矩。动作也可以直接定义为力矩，此时需重新说明范围和执行接口。 \\
+转移 $P$ & 动力学、地面接触与扰动共同决定姿态和速度如何变化。 \\
+奖励 $r_{t+1}$ & 惩罚速度跟踪误差与能耗，跌倒时给终止惩罚。写清每项对应的行为，权重决定训练中的取舍。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    block/.style={draw=black!50, rounded corners=2pt, fill=whusakura!15,
+      align=center, minimum height=10mm, text width=35mm},
+    path arrow/.style={-{Latex[length=2mm]}, thick, draw=black!70}
+  ]
+    \node[block] (env) {机器人与环境};
+    \node[block, right=26mm of env] (policy) {控制策略 $\pi_\theta$};
+    \draw[path arrow] ([yshift=2.3mm]env.east) --
+      node[above] {$o_t$} ([yshift=2.3mm]policy.west);
+    \draw[path arrow] ([yshift=-2.3mm]policy.west) --
+      node[below] {$a_t$} ([yshift=-2.3mm]env.east);
+    \node[block, below=13mm of policy] (update) {依据交互数据更新参数};
+    \draw[path arrow] (env.south) |- node[pos=.72,below] {$r_{t+1}$ 等} (update.west);
+    \draw[path arrow] (update.north) -- (policy.south);
+  \end{tikzpicture}
+  \caption{机器人强化学习的交互与训练，按第7章讲义第3--5张重绘}
+  \label{fig:rl-feedback}
+\end{figure}
+
+\nt{仅给关节角时，同一角度可能对应相反的转动方向，下一时刻姿态也会不同。此时要补角速度等状态量；若部署时只能得到部分观测，可以用观测历史或状态估计弥补。图 \ref{fig:rl-feedback} 中的参数更新属于训练过程，部署时可以直接用已训练策略产生动作。}
+
+\section{折扣回报、状态价值与优势}
+
+若回合在 $T$ 时刻终止，$r_{t+1}$ 表示执行第 $t$ 个动作后收到的奖励，则
+\[
+G_t=\sum_{k=0}^{T-t-1}\gamma^k r_{t+k+1}
+   =r_{t+1}+\gamma G_{t+1},\qquad G_T=0.
+\]
+有限回合常取 $0\le\gamma\le1$，无限时域通常取 $\gamma<1$ 并假设奖励有界。$G_t$ 是一条轨迹上的回报，价值函数则对未来随机结果求期望。
+\begin{align*}
+V^\pi(s)&=\mathbb E_\pi[G_t\mid s_t=s],\\
+Q^\pi(s,a)&=\mathbb E_\pi[G_t\mid s_t=s,\ a_t=a],\\
+A^\pi(s,a)&=Q^\pi(s,a)-V^\pi(s).
+\end{align*}
+计算 $Q^\pi$ 时先执行指定动作 $a$，后续按 $\pi$。$A^\pi>0$ 表示这个动作优于该状态下策略的平均表现，即使即时奖励为负也可能如此。用价值网络可以构造一步优势估计
+\[
+\delta_t=r_{t+1}+\gamma(1-d_{t+1})V_\phi(s_{t+1})-V_\phi(s_t),
+\]
+其中 $d_{t+1}=1$ 表示到达真正的终止状态。讲义提及的广义优势估计（GAE）以折扣加权方式累加后续的时序差分残差。
+
+\ex{用折扣回报比较动作}{
+若两种确定的两步路线奖励依次为 $(-1,8)$ 和 $(3,0)$，最后一步后终止。取 $\gamma=0.9$，求两条路线的回报，并求第一条路线严格优于第二条的折扣因子范围。}
+
+\sol 由回报定义，$G_{\mathrm{A}}=-1+8\gamma$，$G_{\mathrm{B}}=3$。取 $\gamma=0.9$ 时，$G_{\mathrm{A}}=6.2>3$。令 $-1+8\gamma>3$ 得 $\gamma>0.5$。第一条路线承受一步即时损失，回报比较取决于第二步奖励的权重。
+
+\section{PPO 的裁剪目标}
+
+\keypoint{复习重点} \quad 对同一个已采样的状态和动作，先算新旧策略比率，再根据优势正负取两个目标项的较小值。
+
+对旧策略 $\pi_{\theta_{\mathrm{old}}}$ 采样得到的轨迹，记
+\[
+\rho_t(\theta)=
+\frac{\pi_\theta(a_t\mid s_t)}{\pi_{\theta_{\mathrm{old}}}(a_t\mid s_t)},\qquad
+L^{\mathrm{clip}}(\theta)
+=\mathbb E_t\!\left[
+  \min\!\left\{\rho_t\widehat A_t,\,
+  \operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\widehat A_t\right\}
+\right].
+\]
+连续动作使用同一点处的概率密度。$\widehat A_t$ 是该批数据的优势估计，目标是最大化 $L^{\mathrm{clip}}$。写成单个样本的形式可直接看出裁剪方向：
+\[
+\ell_t=
+\begin{cases}
+  \min(\rho_t,1+\epsilon)\widehat A_t,&\widehat A_t\ge 0,\\[2pt]
+  \max(\rho_t,1-\epsilon)\widehat A_t,&\widehat A_t<0.
+\end{cases}
+\]
+正优势动作的概率继续增大，以及负优势动作的概率继续减小，超过相应阈值后都无法继续提高这个样本的目标。另一方面，目标仍会惩罚正优势动作概率的过度减小和负优势动作概率的过度增大。
+
+\ex{比较正优势与负优势的裁剪方向}{
+设旧策略在同一状态下对已采样动作的概率为 $0.40$，取 $\epsilon=0.20$。分别计算新概率为 $0.56$ 和 $0.24$ 时，在 $\widehat A_t=2$ 与 $\widehat A_t=-2$ 下的单样本目标。}
+
+\sol 新概率为 $0.56$ 时，$\rho_t=1.4$，裁剪成 $1.2$；新概率为 $0.24$ 时，$\rho_t=0.6$，裁剪成 $0.8$。
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+策略比率 & $\widehat A_t=2$ & $\widehat A_t=-2$ \\
+\midrule
+$1.4$ & $\min(2.8,2.4)=2.4$ & $\min(-2.8,-2.4)=-2.8$ \\
+$0.6$ & $\min(1.2,1.6)=1.2$ & $\min(-1.2,-1.6)=-1.6$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+训练时，Actor 根据观测生成动作，Critic 估计价值。用当前策略采集一批交互轨迹，计算回报和优势后，对同一批数据做数轮小批量更新。随后用更新后的策略重新采样。$1\pm\epsilon$ 约束的是目标里的裁剪项；训练后的实际比率仍可能越界。
+
+\section{动作模仿与世界模型}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}p{3.1cm}X X@{}}
+\toprule
+概念 & 使用的数据或模型 & 如何参与控制策略训练 \\
+\midrule
+DeepMimic & 给定带有时间进度的参考动作序列。 & 用姿态、速度等跟踪误差给出模仿奖励，学习在动力学环境中复现给定动作。 \\
+AMP & 真实示范和策略产生的相邻状态片段。 & 判别器学习区分示范和策略片段，提供运动风格奖励。策略同时优化任务与风格。 \\
+世界模型 & 交互数据、潜在状态转移与奖励预测。 & 给定状态和候选动作，展开预测轨迹，用于模型内策略训练或在线规划。 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+世界模型可将观测及历史编码成潜在状态 $z_t$，再用 $p_\phi(z_{t+1}\mid z_t,a_t)$ 描述潜在转移。Dreamer 的训练循环是采集交互序列、拟合模型、在模型中展开轨迹以更新策略与价值函数，再回到环境验证并采集。模型误差可随预测步数累积，尤其要留意接触工况与训练数据覆盖范围。
+
+\Needspace{22\baselineskip}
+\begin{focusbox}{拓展：世界模型与滚动优化}
+《世界模型、AGI 与具身智能》专题第7--8、13及18张把动作后果预测接到控制闭环。以预测控制为例，控制周期内用当前估计和模型预测未来若干步，按任务代价及关节、接触等约束优化动作序列。执行首个动作，重新观测，再滚动优化。这里的模型提供预测，优化器处理目标与约束，底层控制器负责跟踪执行。
+\end{focusbox}
+
+\section{自测}
+
+\qs{从观测到状态}{若只记录当前关节角，如何用一个例子说明它可能不满足马尔可夫性？}
+\sol 两次经过同一关节角时可能分别正转和反转；同样控制输入下，下一关节角一般不同。补上角速度后，状态包含了这部分动力学信息。
+
+\qs{回合终止}{到达终点的最后一次转移给出奖励 $5$，当前价值估计为 $3$，$\gamma=0.9$。一步优势估计是多少？}
+\sol 此步到达真正的终止状态，后续价值项为零，故 $\delta=5-3=2$。最后一次转移的即时奖励仍计入。
+
+\qs{模型的角色}{分别用一句话解释 AMP 的判别器与世界模型提供了什么信息。}
+\sol 判别器给出动作片段与示范风格的一致程度，作为训练奖励。世界模型根据状态与动作预测后续状态或奖励，为训练或规划提供预测轨迹。

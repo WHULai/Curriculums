@@ -1,0 +1,279 @@
+\chapter*{控制部分课后作业精解}
+\phantomsection
+\addcontentsline{toc}{chapter}{控制部分课后作业精解}
+\label{hw:robot-control}
+\markboth{控制部分课后作业精解}{控制部分课后作业精解}
+
+依据《控制部分 课后作业》，按编号讲解第1至5题，再解析嵌在文档中的五道教材题（《机器人学：建模、控制与视觉》印刷页262--263、280）。第1至4题的仿真采用本册选定的模型参数，源码为 \texttt{scripts/control\_homework.m}，用 MATLAB 自带的 \texttt{ode45} 和绘图函数即可复现。图中的反馈量、符号和数值按各题说明取用。
+
+\noindent\textbf{题目索引}　\hyperref[hw:control-1]{1. PID}　\hyperref[hw:control-2]{2. 单关节位置反馈}　\hyperref[hw:control-3]{3. 阻抗}　\hyperref[hw:control-4]{4. 力/位混合}　\hyperref[hw:control-5]{5. 视觉伺服}\\
+\phantom{\textbf{题目索引}　}\hyperref[hw:control-9-1]{9.1}　\hyperref[hw:control-9-4]{9.4}　\hyperref[hw:control-9-10]{9.10}　\hyperref[hw:control-9-15]{9.15}　\hyperref[hw:control-10-3]{10.3}
+
+\section*{第1题　用二阶对象比较 PID 参数}
+\label{hw:control-1}
+\qs{题意}{选一个二阶开环系统，在 MATLAB/Simulink 中仿真 PID 控制，讨论三个增益 $K_P,K_I,K_D$ 对响应的影响。}
+\textbf{建模与控制律}　取 $G(s)=1/(s^2+2s+4)$，即 $\ddot x+2\dot x+4x=u$。以 $e=r-x$，理想并联 PID 写成 $u=K_Pe+K_I\int e\,\mathrm dt+K_D\dot e$。在单位负反馈、零初值下，闭环为
+\[
+  \frac{X}{R}=\frac{K_Ds^2+K_Ps+K_I}{s^3+(2+K_D)s^2+(4+K_P)s+K_I}.
+\]
+为避免阶跃参考引起理想微分冲击，仿真采用测量量微分 $u=K_P(1-x)+K_I z-K_D\dot x$，$\dot z=1-x$。此时传递函数分母与上式相同，分子改为 $K_Ps+K_I$。当 $K_I>0$ 时，由三阶 Routh 判据，稳定条件为
+\[
+  2+K_D>0,\quad 4+K_P>0,\quad K_I>0,\quad (2+K_D)(4+K_P)>K_I.
+\]
+$K_I=0$ 时闭环化简为二阶，按二阶分母判稳。无积分的稳定闭环对单位阶跃有 $x_{\mathrm{ss}}=K_P/(4+K_P)$，有积分且稳定时 $x_{\mathrm{ss}}=1$。
+
+\textbf{仿真读数与解释}　零初值，参考为 $1\,\mathrm m$，按 $0.01\,\mathrm s$ 采样输出。峰值是 $0$ 至 $12\,\mathrm s$ 的最大采样值。
+\begin{center}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+控制 & $K_P$ & $K_I$ & $K_D$ & 峰值/$\mathrm m$ & $x(12\,\mathrm s)/\mathrm m$ \\
+\midrule
+P   & 4  & 0 & 0 & 0.6525 & 0.5000 \\
+P   & 12 & 0 & 0 & 1.0833 & 0.7500 \\
+PI  & 12 & 8 & 0 & 1.2858 & 0.9996 \\
+PD  & 12 & 0 & 6 & 0.7500 & 0.7500 \\
+PID & 12 & 8 & 6 & 1.0277 & 1.0000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}[nosep]
+  \item $K_P$ 增大，当下误差产生更大的驱动，二阶模型的自然频率 $\sqrt{4+K_P}$ 增大，静差减小。在本例阻尼系数固定的前两行，阻尼比随之降低，峰值增大。
+  \item $K_I$ 累积误差，闭环稳定且无持续饱和时消除常值参考的静差。积分引入额外动态，本例 PI 的峰值增大。积分增益过大可使 Routh 条件失效。
+  \item $K_D$ 对快速运动提供制动。本例 PD 的分母是 $s^2+8s+16=(s+4)^2$，临界阻尼且无超调。PD 仍有静差；PID 与 PI 比较时，$K_D$ 降低了峰值。实际微分需考虑测量噪声和滤波。
+\end{itemize}
+
+\section*{第2题　机械臂单关节位置反馈}
+\label{hw:control-2}
+\qs{题意}{推导机械臂单关节位置反馈，画控制框图、求闭环传递函数，并在 MATLAB/Simulink 中仿真验证。}
+按第\ref{ch:robot-control}章的电枢与电机轴模型，取 $L_a\approx0$、$\gamma=R_a f_{\mathrm{eff}}+k_a k_b$、$n=\theta_L/\theta_m$。用角速度负反馈 $u_a=[k_p(r-\theta_L)-k_v\dot\theta_L]/n$，其信号流如下。电机反电势内反馈已包含在 $G(s)$ 的 $\gamma$ 中。
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, font=\small, block/.style={draw, rounded corners=1pt, align=center, minimum height=7mm}, sum/.style={draw, circle, inner sep=1pt}]
+  \node (r) at (0,0) {$R$};
+  \node[sum] (e) at (1.5,0) {$\Sigma$};
+  \node[block] (p) at (2.9,0) {$k_p$};
+  \node[sum] (u) at (4.1,0) {$\Sigma$};
+  \node[block] (gear) at (5.4,0) {$1/n$};
+  \node[block] (plant) at (7.4,0) {$G(s)=\Theta_L/U_a$};
+  \node (y) at (9.5,0) {$\Theta_L$};
+  \node[block] (speed) at (4.1,-1.0) {$k_v s$};
+  \draw[->] (r) -- (e) node[pos=.74, above] {$+$};
+  \draw[->] (e) -- (p);
+  \draw[->] (p) -- (u) node[pos=.74, above] {$+$};
+  \draw[->] (u) -- (gear);
+  \draw[->] (gear) -- (plant) node[midway, above] {$U_a$};
+  \draw[->] (plant) -- (y);
+  \coordinate (branch) at (8.7,0);
+  \fill (branch) circle (1.2pt);
+  \draw[->] (branch) |- (speed);
+  \draw[->] (speed) -- (u) node[pos=.70, left] {$-$};
+  \draw[->] (branch) -- (8.7,-1.8) -| (e) node[pos=.91, left] {$-$};
+\end{tikzpicture}
+\end{center}
+
+位置与扰动共同作用时，电枢平衡给出
+\[
+R_aJ_{\mathrm{eff}}\ddot\theta_L+\gamma\dot\theta_L=n k_a u_a-nR_a d_m.
+\]
+代入控制律后分别令扰动或参考为零，得到两条通道
+\[
+\frac{\Theta_L}{R}=\frac{k_a k_p}{D(s)},\qquad
+\frac{\Theta_L}{D_m}=-\frac{nR_a}{D(s)},\qquad
+D(s)=R_aJ_{\mathrm{eff}}s^2+(\gamma+k_a k_v)s+k_a k_p.
+\]
+设置 $k_v=0$ 得纯位置反馈。若题目将速度反馈量改为 $\dot e$，参考通道的分子应改为 $k_a(k_p+k_vs)$，可对照讲义的单关节框图。
+
+\textbf{仿真验证}　沿用本章增益例题，取 $R_a=2$、$J_{\mathrm{eff}}=0.02$、$\gamma=0.11$、$k_a=0.1$、$n=1/40$、$k_p=6.4$。角度从静止跟踪 $1\,\mathrm{rad}$，在 $3\,\mathrm s$ 加入 $0.5\,\mathrm{N\,m}$ 的电机侧恒定阻力矩。
+\begin{center}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+反馈 & $k_v$ & 加扰前最大角度/$\mathrm{rad}$ & $\theta_L(8\,\mathrm s)/\mathrm{rad}$ \\
+\midrule
+位置 & 0 & 1.3166 & 0.9610 \\
+位置、速度 & 2.1 & 0.9999 & 0.9609 \\
+\bottomrule
+\end{tabular}
+\end{center}
+两组最终都趋向 $1-nR_a(0.5)/(k_ak_p)=0.9609375\,\mathrm{rad}$。速度反馈改变过渡过程，恒定扰动时速度归零，因此两组稳态误差相同。
+
+\section*{第3题　关节空间与笛卡尔空间的阻抗控制}
+\label{hw:control-3}
+\qs{题意}{分别设计关节空间和笛卡尔空间阻抗控制，推导模型与控制器，画信号流程并仿真。}
+约定 $f_{\mathrm{ext}}$ 为环境施给机器人的广义力，$\tau_{\mathrm{ext}}=J^{\mathsf T}f_{\mathrm{ext}}$。机器人模型为 $M(q)\ddot q+h(q,\dot q)=\tau+\tau_{\mathrm{ext}}$。以下用可测或可估的外力和理想逆动力学整形，先规定外力引起多少偏移，再求驱动转矩。
+
+\textbf{关节空间}　定义 $\Delta q=q-q_d$，要求 $M_{dq}\Delta\ddot q+B_{dq}\Delta\dot q+K_{dq}\Delta q=\tau_{\mathrm{ext}}$。解得目标关节加速度
+\[
+ a_q=\ddot q_d+M_{dq}^{-1}(\tau_{\mathrm{ext}}-B_{dq}\Delta\dot q-K_{dq}\Delta q).
+\]
+用 $\tau=M(q)a_q+h-\tau_{\mathrm{ext}}$，代回机器人动力学得 $\ddot q=a_q$，所以期望阻抗式成立。
+
+\textbf{笛卡尔空间}　定义 $\Delta x=x-x_d$，要求 $M_{dx}\Delta\ddot x+B_{dx}\Delta\dot x+K_{dx}\Delta x=f_{\mathrm{ext}}$，则
+\[
+ a_x=\ddot x_d+M_{dx}^{-1}(f_{\mathrm{ext}}-B_{dx}\Delta\dot x-K_{dx}\Delta x).
+\]
+由 $\ddot x=J\ddot q+\dot J\dot q$，取 $a_q=J^\#(a_x-\dot J\dot q)$。这里 $J^\#$ 为任务雅可比满行秩时的右逆，方阵可逆时就是 $J^{-1}$。以相同逆动力学给出 $\tau$ 可使 $\ddot x=a_x$；姿态分量应使用与雅可比一致的局部速度、姿态误差表示。雅可比奇异时，应缩小到可控任务方向或采用带阻尼的近似逆，后者会引入跟踪残差。
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, font=\small, block/.style={draw, rounded corners=1pt, align=center, minimum height=8mm}]
+  \node (ref) at (0,0) {参考};
+  \node[block] (target) at (2.3,0) {目标阻抗方程};
+  \node[block] (convert) at (5.25,0) {运动学变换\\或关节空间直通};
+  \node[block] (model) at (8.25,0) {逆动力学};
+  \node[block] (plant) at (10.4,0) {机器人};
+  \draw[->] (ref) -- (target);
+  \draw[->] (target) -- (convert);
+  \draw[->] (convert) -- (model) node[midway,above] {$a_q$};
+  \draw[->] (model) -- (plant) node[midway,above] {$\tau$};
+  \draw[->] (plant.south) -- ++(0,-0.7) -| (target.south) node[pos=.35, below] {运动状态及外力反馈};
+\end{tikzpicture}
+\end{center}
+
+\textbf{两自由度仿真}　取局部耦合模型 $x=Jq$、$h=H\dot q$，参考为零，施加阶跃外力 $f_{\mathrm{ext}}=(4,-2)^{\mathsf T}\,\mathrm N$。物理模型用
+\[
+ M=\begin{bmatrix}2&0.35\\0.35&1.2\end{bmatrix},\quad
+ H=\begin{bmatrix}0.4&0.05\\0.05&0.3\end{bmatrix},\quad
+ J=\begin{bmatrix}1&0.4\\-0.25&1.1\end{bmatrix}.
+\]
+按“惯量、阻尼、刚度”顺序，关节空间对角元分别取 $(1.5,1)$、$(6,4)$、$(6,4)$，笛卡尔空间取 $(2,1)$、$(8,6)$、$(8,9)$。两种设计各分量均临界阻尼。由 $J^{\mathsf T}f_{\mathrm{ext}}=(4.5,-0.6)^{\mathsf T}$，预期 $q(\infty)=(0.75,-0.15)^{\mathsf T}\,\mathrm{rad}$，而笛卡尔设计的 $x(\infty)=(0.5,-2/9)^{\mathsf T}\,\mathrm m$。仿真在 $6\,\mathrm s$ 分别得到 $(0.7499,-0.1500)^{\mathsf T}$ 和 $(0.5000,-0.2222)^{\mathsf T}$。改变虚拟刚度可直接改变稳态偏移，惯量与阻尼主要改变过渡过程。
+
+\nt{讲义第87页还给出 RPY 方向和六维笛卡尔阻抗设计提示。六维任务将平移与局部旋转误差统一表达在选定的坐标系，以同一坐标系的力和力矩构成广义力，并使用六行任务雅可比。旋转误差可由相对旋转矩阵的对数或轴角给出。若使用 RPY 坐标，通常需用速率变换矩阵将三个角的导数换算为角速度，并避开表示奇异点。}
+
+\section*{第4题　机械臂一般力/位置混合控制}
+\label{hw:control-4}
+\qs{题意}{从机械臂动力学和环境约束出发，设计一般力/位置混合控制器，画框图并进行仿真。}
+定义 $F_e$ 为机器人施于环境、在约束坐标系中表示的力/力矩，环境以反号作用在机器人上。令 $J_c$ 为该坐标系的雅可比，有
+\[
+ M\ddot q+h=\tau-J_c^{\mathsf T}F_e,\qquad
+ \ddot x_c=J_c\ddot q+\dot J_c\dot q.
+\]
+以 $S_p$、$S_f=I-S_p$ 选出位置和力控制方向。位置支路用 $a_p=\ddot x_d+K_v(\dot x_d-\dot x_c)+K_p(x_d-x_c)$。对已建立柔性接触的法向方向，令 $F_d$ 为目标作用力，取 $F_u=F_d+K_f(F_d-F_e)-B_f\dot x_c$。以期望正定惯量 $M_f$（在约束坐标系中取对角阵）定义 $a_f=M_f^{-1}(F_u-F_e)$，即在法向用虚拟质量响应主动作用力与实测接触反力之差。投影并计算力矩
+\[
+ a_c=S_p a_p+S_f a_f,\qquad
+ \tau=MJ_c^\#(a_c-\dot J_c\dot q)+h+J_c^{\mathsf T}F_e.
+\]
+当 $J_c$ 满行秩且模型精确时，代回可得 $\ddot x_c=a_c$。位置方向得到跟踪误差二阶方程；法向误差动态由所选力支路和环境模型共同决定。若约束坐标系运动，速度和加速度换算需计入其运动引起的额外项；这里的约束轴固定于环境。
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, font=\small, block/.style={draw, rounded corners=1pt, align=center, minimum height=7mm}, sum/.style={draw, circle, inner sep=1pt}]
+  \node (p) at (0,.6) {$x_d$};
+  \node (f) at (0,-.6) {$F_d$};
+  \node[block] (pc) at (1.8,.6) {位置支路};
+  \node[block] (fc) at (1.8,-.6) {力支路};
+  \node[block] (sp) at (3.65,.6) {$S_p$};
+  \node[block] (sf) at (3.65,-.6) {$S_f$};
+  \node[sum] (a) at (4.9,0) {$\Sigma$};
+  \node[block] (inv) at (7,0) {任务加速度\\至关节力矩};
+  \node[block] (robot) at (9.5,0) {机器人及环境};
+  \draw[->] (p) -- (pc);
+  \draw[->] (f) -- (fc);
+  \draw[->] (pc) -- (sp);
+  \draw[->] (fc) -- (sf);
+  \draw[->] (sp) -- (a);
+  \draw[->] (sf) -- (a);
+  \draw[->] (a) -- (inv) node[midway,above] {$a_c$};
+  \draw[->] (inv) -- (robot) node[midway,above] {$\tau$};
+  \draw[->] (robot.north) -- ++(0,0.9) -| (pc.north) node[pos=.35,above] {$x_c,\dot x_c$};
+  \draw[->] (robot.south) -- ++(0,-0.9) -| (fc.south) node[pos=.35,below] {$F_e,\dot x_c$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{仿真验证}　用第3题的局部两自由度模型，在约束系中设 $x_c=(x_t,x_n)^{\mathsf T}$。切向设 $S_p=\operatorname{diag}(1,0)$，$x_{d,t}=0.2\,\mathrm m$，$K_{p,t}=16$、$K_{v,t}=8$。法向设 $S_f=\operatorname{diag}(0,1)$，从平面接触边界出发，令 $f_e=k_e\max(x_n,0)$、$k_e=50\,\mathrm{N/m}$，取 $f_d=5\,\mathrm N$、$m_f=1\,\mathrm{kg}$、$k_f=1$、$b_f=20\,\mathrm{N\,s/m}$。进入接触后由 $f_e=k_ex_n$ 代入法向方程得到
+\[
+ \begin{gathered}
+ \ddot e_f+20\dot e_f+100e_f=0,\\
+ x_t(t)=0.2[1-(1+4t)e^{-4t}],\qquad f_e(t)=5[1-(1+10t)e^{-10t}].
+ \end{gathered}
+\]
+两方向均临界阻尼，数值输出在 $1\,\mathrm s$ 为 $x_t=0.1817\,\mathrm m$、$f_e=4.9975\,\mathrm N$，分别趋向 $0.2\,\mathrm m$ 和 $5\,\mathrm N$。若实际任务由分离状态开始，应先控制接近运动，检测接触后切入法向力控，脱离时退出力控并处理状态切换。
+
+\section*{第5题　PBVS 与 IBVS 的原理、差异和利弊}
+\label{hw:control-5}
+\qs{题意}{比较基于位置和基于图像的视觉伺服控制，说明各自如何生成控制指令，以及优点与限制。}
+\textbf{共同闭环}　按教材第15.5节，图像采集 $\to$ 特征检测或跟踪 $\to$ 形成误差 $\to$ 计算相机或末端速度 $\to$ 执行运动 $\to$ 再采图。若特征运动满足 $\dot s=L_s v_c$，对固定目标 $s_d$，常用 $v_c=-\lambda\widehat L_s^+(s-s_d)$，其中 $\lambda>0$、$v_c$ 为相机速度旋量。
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}p{0.15\linewidth}XX@{}}
+\toprule
+比较点 & PBVS（基于位置） & IBVS（基于图像） \\
+\midrule
+误差 & 当前与目标的三维相对位姿差，包括平移和旋转 & 当前与目标图像特征差，例如像点坐标之差 \\
+计算 & 由标定和特征对应估计目标位姿，再将位姿误差转成速度 & 直接计算特征误差，以图像交互矩阵将误差速度转为相机速度 \\
+优势 & 可直接设计三维运动和姿态，对空间轨迹的解释清楚 & 直接调节图像特征，通常降低对精确三维目标重建与位姿估计的依赖 \\
+限制 & 受标定、目标模型和位姿估计误差影响；合理的三维轨迹仍可能使特征出视野 & 交互矩阵需要深度或其近似；受遮挡、秩退化和大误差影响，图像收敛不保证三维路径理想 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+PBVS 可从当前与目标的相对变换 $T_{cd}$ 提取平移和旋转轴角，或用 $SE(3)$ 的对数构造局部位姿误差。速度应与误差定义使用同一坐标系，必要时通过伴随变换转换坐标。IBVS 可直接把多个点的归一化坐标堆成 $s$。令单点的相机坐标为 $P=(X,Y,Z)^{\mathsf T}$，并令 $(x,y)=(X/Z,Y/Z)$。当场景点固定、相机以 $(v,\omega)$ 运动时，$\dot P=-v-\omega\times P$；对 $X/Z,Y/Z$ 求导得
+\[
+ L_{(x,y)}=\begin{bmatrix}
+ -1/Z&0&x/Z&xy&-(1+x^2)&y\\
+ 0&-1/Z&y/Z&1+y^2&-xy&-x
+ \end{bmatrix}.
+\]
+如仅考虑 $x$ 向相机平移，$\dot x=-v_x/Z$。若 $x>x_d$，应取 $v_x>0$ 以减小像点误差，这也可用来核对伪逆速度律的符号。单个点最多提供两个独立约束，六自由度任务需多个特征并检查堆叠矩阵的秩。PBVS/IBVS 与相机装在手上或装在外部是两种独立的分类。
+
+\Needspace{10\baselineskip}
+\section*{教材题 9.1　有限结构共振频率下的增益}
+\label{hw:control-9-1}
+\qs{题意}{质量、弹簧、阻尼系统参数为 $m=1,b=4,k=5$，结构共振频率为 $\omega_r=6\,\mathrm{rad/s}$。按位置调节器选择 $k_v,k_p$，满足临界阻尼并使闭环刚度尽量高。}
+用 $f=-k_px-k_v\dot x$，闭环刚度 $k'=k+k_p$、阻尼 $b'=b+k_v$。按讲义约束 $\omega_n\le\omega_r/2$，故 $k'\le m(\omega_r/2)^2=9$，最大刚度在 $\omega_n=3$ 达到。临界阻尼要求 $b'=2\sqrt{mk'}=6$，所以
+\[
+ k_p=9-5=\boxed{4},\qquad k_v=6-4=\boxed{2}.
+\]
+闭环方程为 $\ddot x+6\dot x+9x=0$。若不计讲义给出的共振限制，临界阻尼可随刚度调节，题目中的“尽量高”便没有有限上界。
+
+\section*{教材题 9.4　非线性对象的分解控制与刚度约定}
+\label{hw:control-9-4}
+\qs{题意}{设计 $\alpha,\beta$ 分解控制器，使下面两系统实现临界阻尼，题目给定闭环刚度 $k=10\,\mathrm{N/m}$。
+\begin{align*}
+ (1)\quad \tau&=(2\sqrt{\theta}+1)\ddot\theta+3\dot\theta^2-\sin\theta,\\
+ (2)\quad \tau&=5\theta\dot\theta+2\ddot\theta-13\dot\theta^3+5.
+\end{align*}}
+令 $\tau=\alpha u+\beta$、$u=\ddot\theta_d+k_v\dot e+k_pe$、$e=\theta_d-\theta$，取
+\[
+ \begin{aligned}
+  (1)\quad \alpha&=2\sqrt\theta+1,&\beta&=3\dot\theta^2-\sin\theta,\\
+  (2)\quad \alpha&=2,&\beta&=5\theta\dot\theta-13\dot\theta^3+5.
+ \end{aligned}
+\]
+第(1)式的实数模型适用 $\theta\ge0$。代入后均有 $\ddot e+k_v\dot e+k_pe=0$。按分解法把题设 $10$ 作为单位惯量误差方程的刚度系数时，两问均为
+\[
+ k_p=10,\qquad k_v=2\sqrt{10}.
+\]
+若将 $10$ 解释为有物理量纲的静态刚度，则需在指定平衡位置 $\theta_*$ 用 $k_{\mathrm{phys}}=\alpha(\theta_*)k_p$。其原因是加小扰动力矩 $\delta\tau$ 后，平衡时 $\delta\theta=\delta\tau/[\alpha(\theta_*)k_p]$。因此第(1)问为 $k_p=10/(2\sqrt{\theta_*}+1)$、第(2)问为 $k_p=5$，均取 $k_v=2\sqrt{k_p}$。原题未给第(1)问的工作点；若 $\theta$ 是真实转角，实际刚度还应采用转动刚度单位 $\mathrm{N\,m/rad}$。
+
+\section*{教材题 9.10　先识别等效质量，再从绝对刚度配极点}
+\label{hw:control-9-10}
+\qs{题意}{对象为 $f=5x\dot x+2\ddot x-12$，求使闭环系统处于临界阻尼、闭环物理刚度为 $20\,\mathrm{N/m}$ 的控制器。}
+在目标定点 $x_d$ 附近令 $e=x_d-x$。实际等效质量是 $2$，所以闭环物理阻尼应为 $b'=2\sqrt{2\times20}=4\sqrt{10}\,\mathrm{N\,s/m}$。取
+\[
+ f=5x\dot x-12+20e+4\sqrt{10}\,\dot e.
+\]
+代回得到 $2\ddot e+4\sqrt{10}\,\dot e+20e=0$。若以 $f=2u+(5x\dot x-12)$ 写单位质量伺服律 $u=k_pe+k_v\dot e$，同一控制器对应 $k_p=10$、$k_v=2\sqrt{10}$；直接作用在力指令上的刚度增益是 $20$。
+
+\Needspace{10\baselineskip}
+\section*{教材题 9.15　模型补偿不匹配时的误差方程}
+\label{hw:control-9-15}
+\qs{题意}{开环动力学是 $\tau=m\ddot\theta+b\dot\theta^2+c\dot\theta$，给定控制律 $\tau=m(\ddot\theta_d+k_v\dot e+k_pe)+\sin\theta$，求闭环微分方程。}
+取 $e=\theta_d-\theta$，令两式右端相等，并移出 $m(\ddot\theta_d-\ddot\theta)$，得
+\[
+ m\bigl(\ddot e+k_v\dot e+k_pe\bigr)=b\dot\theta^2+c\dot\theta-\sin\theta.
+\]
+需要只含误差与给定轨迹的式子时，代入 $\theta=\theta_d-e$、$\dot\theta=\dot\theta_d-\dot e$。闭环仍含非线性残差；将右端直接置零会遗漏原对象的速度项与控制器注入的 $\sin\theta$。
+
+\section*{教材题 10.3　恒定参考力下的误差及临界阻尼}
+\label{hw:control-10-3}
+\qs{题意}{对教材式(10-7)的质量与弹性环境，采用式(10-11)的简化力伺服规则，证明 $\ddot e_f+k_{vf}\dot e_f+(k_{pf}+k_e/m)e_f=(k_e/m)f_{\mathrm{dis}}$，并选临界阻尼增益。}
+在第\ref{sec:force-control}节的符号下，被控对象与伺服规则分别可写为
+\[
+ f=m\ddot x+k_e x+f_{\mathrm{dis}},\qquad
+ f=m\bigl(k_e^{-1}k_{pf}e_f-k_{vf}\dot x\bigr)+f_d.
+\]
+令 $f_e=k_ex$、$e_f=f_d-f_e$、$f_d$ 为常值，因此 $\dot x=-\dot e_f/k_e$、$\ddot x=-\ddot e_f/k_e$。两式相等代入并移项，得到
+\[
+ \boxed{\ddot e_f+k_{vf}\dot e_f+(k_{pf}+k_e/m)e_f=(k_e/m)f_{\mathrm{dis}}}.
+\]
+取闭环自然频率 $\omega_n>0$ 时，$k_{pf}=\omega_n^2-k_e/m$、$k_{vf}=2\omega_n$；若额外要求比例增益非负，就选 $\omega_n\ge\sqrt{k_e/m}$。题目未指定响应速度，因此临界阻尼给出一组关系而非唯一增益。恒扰下引起的稳态力误差为 $\frac{k_e/m}{k_{pf}+k_e/m}f_{\mathrm{dis}}$。

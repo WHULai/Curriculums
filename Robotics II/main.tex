@@ -1,0 +1,57 @@
+\documentclass[a4paper]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{tabularx}
+\usepackage{needspace}
+\graphicspath{{img/}}
+
+\IfFontExistsTF{Source Han Sans}
+  {\setCJKsansfont{Source Han Sans}\setCJKmonofont{Source Han Sans}}
+  {\setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf]%
+   \setCJKmonofont{FandolHei-Regular.otf}}
+\pgfplotsset{compat=1.18}
+\hypersetup{
+  pdftitle={《机器人学 II》期末复习册},
+  pdfauthor={魏崃},
+  pdfsubject={机器人驱动器、传感技术、视觉、控制与强化学习},
+  linkcolor=whusakura!62!black
+}
+\title{\includegraphics[width=7cm]{whu-logo.png}\\
+  \Huge{《机器人学 II》期末复习册}}
+\author{魏崃\thanks{\href{mailto:lai-wei@whu.edu.cn}{lai-wei@whu.edu.cn}}}
+\date{2026年11月21日\\\includegraphics[width=1.5in]{qrcode.png}}
+
+\newcommand{\keypoint}[1]{\textcolor{myr}{\textbf{#1}}}
+\newtcolorbox{focusbox}[1]{enhanced,breakable,colback=whusakura!10,
+  colframe=whusakura!85!black,boxrule=.6pt,sharp corners,
+  title={#1},fonttitle=\bfseries,coltitle=black,colbacktitle=whusakura!45}
+\renewcommand{\ex}[2]{\begin{Example}[breakable=false]{#1}{}#2\end{Example}}
+\renewcommand{\sol}{%
+  \par\Needspace{3\baselineskip}%
+  \noindent\textbf{解析}\enspace\ignorespaces
+}
+\allowdisplaybreaks[1]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\maketitle
+\newpage
+\hypersetup{pageanchor=true}
+\pdfbookmark[section]{\contentsname}{toc}
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\input{chapters/review-guide}
+\input{chapters/01-actuators}
+\input{chapters/02-sensing}
+\input{chapters/03-image-formation}
+\input{chapters/04-image-processing}
+\input{chapters/05-robot-control}
+\input{chapters/05-control-homework}
+\setcounter{chapter}{6}
+\input{chapters/07-reinforcement-learning}
+
+\end{document}
