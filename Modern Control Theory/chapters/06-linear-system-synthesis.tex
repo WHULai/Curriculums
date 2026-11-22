@@ -1,9 +1,7 @@
 \chapter{线性系统综合}
 \label{chap:linear-system-synthesis}
 
-\section{知识点}
-
-\subsection{状态反馈与输出反馈}
+\section{状态反馈与输出反馈}
 
 设连续线性定常系统为 $\dot x=Ax+Bu$、$y=Cx$，外部参考输入为 $v$。取负反馈时，闭环状态方程可直接由控制律代入得到。
 \[
@@ -21,7 +19,42 @@
     \item \textbf{能观性。}静态输出反馈保持能观性，因为对偶状态矩阵可写为 $(A-BHC)^{\mathsf T}=A^{\mathsf T}-C^{\mathsf T}(H^{\mathsf T}B^{\mathsf T})$，可用对偶系统的能控性结论。一般的状态反馈可能改变能观性，检查时应用闭环矩阵重新计算能观性矩阵。
 \end{itemize}
 
-\subsection{反馈控制与极点配置}
+\ex{例6-1\quad 比较状态反馈和输出反馈的能控性、能观性}{
+    设
+    \[
+       \dot x=\begin{bmatrix}1&2\\3&1\end{bmatrix}x
+             +\begin{bmatrix}0\\1\end{bmatrix}u,\qquad
+       y=\begin{bmatrix}1&2\end{bmatrix}x .
+    \]
+    取状态反馈增益 $K=[3\ \ 1]$、输出反馈增益 $H=2$，分别分析两种闭环系统的状态能控性和能观性。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 17–20 页}
+}
+
+\nt{\textbf{知识点}\quad 先写闭环状态矩阵，再用对应的能控、能观矩阵判断。零极点抵消可用来解释闭环传递函数中模态的消失。}
+
+\sol 状态反馈和输出反馈的闭环状态矩阵分别为
+\[
+    A_K=A-BK=\begin{bmatrix}1&2\\0&0\end{bmatrix},\qquad
+    A_H=A-BHC=\begin{bmatrix}1&2\\1&-3\end{bmatrix}.
+\]
+分别用 $A$、$A_K$、$A_H$ 计算两类判据矩阵，结果如下。
+\begin{center}
+\begin{tabular}{c|c|c|c}
+    系统 & 能控矩阵 & 能观矩阵 & 结论\\
+    \hline
+    开环 & $\begin{bmatrix}0&2\\1&1\end{bmatrix}$
+         & $\begin{bmatrix}1&2\\7&4\end{bmatrix}$ & 能控、能观\\[6pt]
+    状态反馈 & $\begin{bmatrix}0&2\\1&0\end{bmatrix}$
+         & $\begin{bmatrix}1&2\\1&2\end{bmatrix}$ & 能控、不能完全能观\\[6pt]
+    输出反馈 & $\begin{bmatrix}0&2\\1&-3\end{bmatrix}$
+         & $\begin{bmatrix}1&2\\3&-4\end{bmatrix}$ & 能控、能观
+\end{tabular}
+\end{center}
+三种能控矩阵的行列式均为 $-2$。三种能观矩阵的行列式依次为 $-10,0,-10$，所以只在状态反馈下丢失一个能观模态。具体地，$A_K[-2\ \ 1]^{\mathsf T}=0$ 且 $C[-2\ \ 1]^{\mathsf T}=0$，不可观模态的特征值为 $0$。对应的闭环传递函数 $2s/[s(s-1)]=2/(s-1)$ 也给出相同的结果。
+
+\section{反馈控制与极点配置}
+
+\subsection{状态反馈的极点配置}
 
 给定 $n$ 个期望极点 $\lambda_1^\ast,\ldots,\lambda_n^\ast$，按重数计。实增益设计要求非实极点成共轭对。状态反馈任意配置闭环极点的充要条件是 $(A,B)$ 完全能控。求解的基本方程为
 \[
@@ -37,41 +70,63 @@
         \begin{bmatrix}a_0^\ast-a_0 & \cdots & a_{n-1}^\ast-a_{n-1}\end{bmatrix}.
     \]
     若先作变换 $x=Tz$，在 $z$ 坐标下算得 $\widetilde K$，则原坐标的增益为 $K=\widetilde K T^{-1}$。
-    \item \textbf{静态输出反馈}。$H$ 只能通过 $HC$ 改变状态反馈增益。即使系统完全能控、完全能观，也未必能任意配置极点。例如双积分系统 $\dot x_1=x_2$、$\dot x_2=u$、$y=x_1$，取 $u=v-hy$ 后，特征多项式为 $s^2+h$，无法调节 $s$ 项系数。
 \end{enumerate}
 
-对于典型欠阻尼二阶系统，可用超调量比例 $M_p=e^{-\pi\zeta/\sqrt{1-\zeta^2}}$ 和 $2\%$ 误差带的近似调节时间 $t_s\approx 4/(\zeta\omega_n)$ 选取 $\zeta$、$\omega_n$，对应目标多项式为 $s^2+2\zeta\omega_n s+\omega_n^2$。若题目还给定阶跃稳态值，需要另用闭环直流增益校核参考输入的比例。
-
-\subsection{系统解耦}
-
-对等输入、输出维数的系统，解耦要求从新输入 $v$ 到输出 $y$ 的传递矩阵为对角阵。这样 $v_i$ 只作用于相应的 $y_i$。
-\begin{itemize}
-    \item \textbf{前馈补偿解耦}。将 $G_c(s)$ 串联在对象 $G_0(s)$ 之前，得到 $G_0(s)G_c(s)$。若方阵 $G_0(s)$ 可逆，给定目标对角传递矩阵 $G_d(s)$，可令 $G_c(s)=G_0^{-1}(s)G_d(s)$。实现时要检查补偿器各元素的分子次数是否至多等于分母次数，以及串联系统的内部稳定性。
-    \item \textbf{状态反馈解耦}。对 $y=Cx$，取 $u=Fv-Kx$。令 $c_i$ 为 $C$ 的第 $i$ 行，$d_i$ 为使 $c_iA^{d_i}B\ne 0$ 的最小非负整数。第 $i$ 个输出在 $d_i+1$ 阶导数中首次显含 $u$，因此
+\ex{例6-2\quad 配置一对共轭复极点}{
+    已知
     \[
-        y_i^{(d_i+1)}=c_iA^{d_i+1}x+c_iA^{d_i}Bu.
+       \dot x=\begin{bmatrix}-1&-2\\-1&-3\end{bmatrix}x
+             +\begin{bmatrix}2\\1\end{bmatrix}u .
     \]
-    将 $c_iA^{d_i}B$ 按行叠成矩阵 $E$，将 $c_iA^{d_i+1}$ 按行叠成 $L$。代入 $u=Fv-Kx$ 后，$y_i^{(d_i+1)}$ 中 $v$ 的直接系数为 $EF$ 的第 $i$ 行。若 $F$ 可逆，该行非零，解耦要求它仅在第 $i$ 列非零。因此 $EF$ 为可逆的对角阵，$E$ 必须可逆。反过来，取 $K=E^{-1}L$、$F=E^{-1}$，各通道就满足 $y_i^{(d_i+1)}=v_i$。零初始条件下，对角元素为 $1/s^{d_i+1}$。如果还要求闭环稳定，需要检查各通道的极点和传递矩阵中未显现的内部模态。
-\end{itemize}
+    求状态反馈增益 $K$，使闭环极点为 $-1\pm 2\mathrm j$。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 31–35 页}
+}
 
-\subsection{全维状态观测器}
+\nt{\textbf{知识点}\quad 共轭复极点给出实系数多项式。能控规范形中的增益要换回原状态坐标。}
 
-开环观测器复制对象的状态方程 $\dot{\hat x}=A\hat x+Bu$。令 $e=x-\hat x$，则 $\dot e=Ae$。若 $A$ 有实部非负的特征值，初始估计误差可能持续存在或增大。
-
-渐近观测器用输出残差 $y-\hat y$ 修正状态估计。设 $x\in\mathbb R^n$、$y\in\mathbb R^p$，则 $G\in\mathbb R^{n\times p}$，且
+\sol 开环的能控矩阵和特征多项式为
+\[
+    Q_c=[B\ AB]=\begin{bmatrix}2&-4\\1&-5\end{bmatrix},\quad
+    \det Q_c=-6,\quad p(s)=s^2+4s+1 .
+\]
+系统完全能控，而 $p^\ast(s)=(s+1)^2+4=s^2+2s+5$。设 $K=[k_1\ k_2]$，则
 \[
 \begin{aligned}
-    \dot{\hat x}
-    &=A\hat x+Bu+G(y-C\hat x)
-      =(A-GC)\hat x+Bu+Gy,\\
-    \dot e&=(A-GC)e .
+    A-BK&=\begin{bmatrix}-1-2k_1&-2-2k_2\\-1-k_1&-3-k_2\end{bmatrix},\\
+    \det(sI-A+BK)&=s^2+(4+2k_1+k_2)s+(1+4k_1-k_2).
 \end{aligned}
 \]
-只要 $A-GC$ 的全部特征值实部为负，$e(t)$ 就收敛到零。观测器极点任意配置的充要条件是 $(A,C)$ 完全能观。可以直接比较 $\det(sI-A+GC)$ 的系数，也可对 $(A^{\mathsf T},C^{\mathsf T})$ 作状态反馈极点配置，再将求得的反馈增益转置为 $G$。
+故 $2k_1+k_2=-2$、$4k_1-k_2=4$。相加得 $6k_1=2$，再代回第一式，得到
+\[
+    \boxed{K=\begin{bmatrix}1/3&-8/3\end{bmatrix}},\qquad
+    u=v-\frac{x_1}{3}+\frac{8x_2}{3}.
+\]
+也可在能控规范 II 型中求解同一道题。由 $\ell=[0\ \ 1]Q_c^{-1}=[1\ \ {-2}]/6$，
+\[
+    z=T^{-1}x,\qquad T^{-1}=\begin{bmatrix}\ell\\ \ell A\end{bmatrix}
+          =\frac16\begin{bmatrix}1&-2\\1&4\end{bmatrix}.
+\]
+此时 $\widetilde B=[0\ \ 1]^{\mathsf T}$，$\widetilde A$ 的末行为 $[-1\ \ {-4}]$。由目标多项式得到 $\widetilde K=[4\ \ {-2}]$，乘上 $T^{-1}$ 后得到相同的 $K$。
 
-\section{作业}
+\ex{例6-3\quad 从传递函数实现到闭环极点配置}{
+    已知 $G(s)=10/[s(s+1)(s+2)]$。试选取一种状态空间实现，并求状态反馈矩阵 $K$，使闭环极点为 $-2$ 和 $-1\pm\mathrm j$。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 36–38 页}
+}
 
-\subsection{习题课}
+\nt{\textbf{知识点}\quad 能控伴随实现，分子系数与输出矩阵，闭环系数比较。}
+
+\sol 原分母为 $s^3+3s^2+2s$。选取能控规范 II 型
+\[
+    A=\begin{bmatrix}0&1&0\\0&0&1\\0&-2&-3\end{bmatrix},\quad
+    B=\begin{bmatrix}0\\0\\1\end{bmatrix},\quad
+    C=\begin{bmatrix}10&0&0\end{bmatrix},\quad D=0 .
+\]
+由积分链得 $y=10x_1$，且 $\dddot x_1+3\ddot x_1+2\dot x_1=u$，故该实现给出题设传递函数。
+目标多项式为
+\[
+    (s+2)(s^2+2s+2)=s^3+4s^2+6s+4 .
+\]
+按常数项到二次项比较，有 $K=[4-0\ \ 6-2\ \ 4-3]=[4\ \ 4\ \ 1]$。所以 $u=v-4x_1-4x_2-x_3$，闭环状态矩阵的最后一行为 $[-4\ \ {-6}\ \ {-4}]$。参考输入 $v$ 的输入矩阵仍为 $B$，故从 $v$ 到 $y$ 的闭环传递函数为 $10/[(s+2)(s^2+2s+2)]$。
 
 \ex{习题1\quad 三阶系统的状态反馈}{%
     已知系统为
@@ -171,6 +226,334 @@
 \end{tikzpicture}
 \end{center}
 
+\input{chapters/06-paper-exercises}
+
+\subsection{静态输出反馈的极点配置}
+
+静态输出反馈的增益满足 $K=HC$。完全能控且完全能观的系统，也可能无法仅靠静态输出反馈任意配置极点。
+
+\ex{例6-4\quad 双积分系统的静态输出反馈}{
+    设 $\dot x_1=x_2$、$\dot x_2=u$、$y=x_1$。考察 $u=v-hy$ 时闭环极点随实数 $h$ 的变化，并判断能否任意配置闭环极点。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 41 页}
+}
+
+\nt{\textbf{知识点}\quad 静态输出反馈只能调节其增益直接影响的系数。}
+
+\sol 原系统的能控矩阵为 $\begin{bmatrix}0&1\\1&0\end{bmatrix}$，能观矩阵为 $I_2$，均满秩。代入输出反馈得到
+\[
+    A_H=\begin{bmatrix}0&1\\-h&0\end{bmatrix},\qquad
+    p_h(s)=s^2+h.
+\]
+当 $h>0$ 时极点为 $\pm\mathrm j\sqrt{h}$。当 $h=0$ 时原点为二重极点。当 $h<0$ 时极点为 $\pm\sqrt{-h}$。一次项恒为零，两极点之和恒为零，所以无法任意配置极点，也无法用这种静态输出反馈实现渐近稳定。若能取得 $x_2$，反馈 $u=v-k_1x_1-k_2x_2$ 给出 $s^2+k_2s+k_1$，两个系数可分别调整。
+
+\subsection{用状态反馈改善动态性能}
+
+对于典型欠阻尼二阶系统，可用超调量比例 $M_p=e^{-\pi\zeta/\sqrt{1-\zeta^2}}$ 和 $2\%$ 误差带的近似调节时间 $t_s\approx 4/(\zeta\omega_n)$ 选取 $\zeta$、$\omega_n$，对应目标多项式为 $s^2+2\zeta\omega_n s+\omega_n^2$。若题目还给定阶跃稳态值，需要另用闭环直流增益校核参考输入的比例。
+
+\ex{讲义 6.2.3 例\quad 弹簧、质量块和阻尼器的控制}{
+    如图，小车质量 $m=20$，阻尼系数 $f=2$，刚度 $k=500$。输入为图示施力，输出 $y$ 为小车的位移。讲义给出的归一化模型为
+    \[
+       G(s)=\frac{1}{s^2+(f/m)s+k/m}.
+    \]
+    参考输入为单位阶跃。设计状态反馈，使超调量降至 $20\%$、调节时间为 $4\,\mathrm{s}$，并保持输出稳态值。
+    \begin{center}
+    \begin{tikzpicture}[>=Latex,thick]
+        \draw (0,1.35) -- (0,0) -- (8,0) -- (8,1.35);
+        \draw (3.1,0.35) rectangle (5.2,1.6);
+        \node at (4.15,0.96) {$m$};
+        \draw (3.64,0.175) circle (0.175) (4.66,0.175) circle (0.175);
+        \draw (0,0.97) -- (0.85,0.97) -- (0.99,1.15) -- (1.17,0.79)
+            -- (1.35,1.15) -- (1.53,0.79) -- (1.71,1.15) -- (1.89,0.79)
+            -- (2.07,1.15) -- (2.21,0.97) -- (3.1,0.97);
+        \node[below] at (1.53,0.75) {$k$};
+        \draw (5.2,0.97) -- (6.1,0.97) (6.1,0.71) -- (6.1,1.23);
+        \draw (5.89,0.66) -- (6.46,0.66) -- (6.46,1.28) -- (5.89,1.28);
+        \draw (6.46,0.97) -- (8,0.97);
+        \node[below] at (6.2,0.58) {$f$};
+        \draw[->] (2.13,1.46) -- (3.1,1.46) node[pos=0.4,above] {$F$};
+        \draw[->] (5.2,1.78) -- (6.5,1.78) node[above] {$y$};
+    \end{tikzpicture}
+    \end{center}
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 42–48 页}
+}
+
+\nt{\textbf{知识点}\quad 用二阶指标反求闭环极点，用参考输入系数保持直流增益。题给传递函数对应归一化施力 $u=F/m$。}
+
+\sol \textbf{1. 建立模型并求原系统的阶跃指标。}
+由 $m\ddot y+f\dot y+ky=F$，取 $x=[y\ \ \dot y]^{\mathsf T}$，以 $u=F/m$ 为输入，得
+\[
+    A=\begin{bmatrix}0&1\\-25&-0.1\end{bmatrix},\quad
+    B=\begin{bmatrix}0\\1\end{bmatrix},\quad C=\begin{bmatrix}1&0\end{bmatrix}.
+\]
+$[B\ AB]=\begin{bmatrix}0&1\\1&-0.1\end{bmatrix}$ 的行列式为 $-1$，系统完全能控。
+原分母 $s^2+0.1s+25$ 给出 $\omega_n=5$、$\zeta=0.01$，超调约为 $96.91\%$，按 $2\%$ 公式估计调节时间约为 $80\,\mathrm{s}$。原归一化输入的单位阶跃稳态值为 $G(0)=1/25$。
+
+\textbf{2. 由指标确定目标多项式。}
+设目标极点为 $-\sigma\pm\mathrm j\omega_d$，有
+\[
+    \sigma=\zeta\omega_n,\quad
+    \omega_d=\omega_n\sqrt{1-\zeta^2},\quad
+    M_p=e^{-\pi\sigma/\omega_d}.
+\]
+取 $t_s\approx 4/\sigma=4\,\mathrm{s}$，得 $\sigma=1$。由 $M_p=0.2$ 得 $\omega_d=\pi/\ln 5\approx1.952$、$\zeta\approx0.456$。所以目标多项式为
+\[
+    p^\ast(s)=s^2+2s+a_0^\ast,\qquad
+    a_0^\ast=1+(\pi/\ln 5)^2\approx4.810 .
+\]
+讲义中的 $4.8$ 是常数项 $\omega_n^2$ 的近似值。
+
+\textbf{3. 配极点并保持稳态值。}
+取 $u=Nv-k_1x_1-k_2x_2$，闭环分母为 $s^2+(0.1+k_2)s+(25+k_1)$，故 $k_1=a_0^\ast-25$、$k_2=1.9$。
+参考输入到位移的传递函数为 $N/p^\ast(s)$。比较单位阶跃的稳态值，要求 $N/a_0^\ast=1/25$，于是
+\[
+    \boxed{K\approx[-20.190\ \ 1.900],\qquad N\approx0.19241}.
+\]
+若参考输入 $v_F$ 按实际力的单位给定，控制律写为 $F=Nv_F-mKx$，单位力阶跃的原稳态值和闭环稳态值均为 $1/k$。
+
+\textbf{4. 校验时域响应。}
+在 Simulink 中，将 \texttt{Step} 分别接入两个 \texttt{Transfer Fcn}。原系统和闭环的分子分别填 \texttt{[1]}、\texttt{[N]}，分母分别填 \texttt{[1 0.1 25]}、\texttt{[1 2 a0]}，其中 \texttt{a0} 为 $a_0^\ast$。两路输出接到同一个 \texttt{Scope}，即可比较超调和稳态值。
+解析地，闭环归一化阶跃响应为
+\[
+    \frac{y(t)}{y_\infty}
+      =1-e^{-t}\left(\cos\omega_dt+\frac{\sin\omega_dt}{\omega_d}\right).
+\]
+第一峰值在 $t=\ln 5$，峰值为 $1.2y_\infty$。与 $2\%$ 误差带的最后交点为 $t_s\approx3.797\,\mathrm{s}$。若需精确达到 $4\,\mathrm{s}$，将 $\sigma$ 和 $\omega_d$ 同乘 $3.797/4$，保持阻尼比，再算得 $K\approx[-20.666\ \ 1.798]$、$N\approx0.17336$。
+
+\section{系统解耦}
+
+对等输入、输出维数的系统，解耦要求从新输入 $v$ 到输出 $y$ 的传递矩阵为对角阵。这样 $v_i$ 只作用于相应的 $y_i$。
+\begin{itemize}
+    \item \textbf{前馈补偿解耦}。将 $G_c(s)$ 串联在对象 $G_0(s)$ 之前，得到 $G_0(s)G_c(s)$。若方阵 $G_0(s)$ 可逆，给定目标对角传递矩阵 $G_d(s)$，可令 $G_c(s)=G_0^{-1}(s)G_d(s)$。实现时要检查补偿器各元素的分子次数是否至多等于分母次数，以及串联系统的内部稳定性。
+    \item \textbf{状态反馈解耦}。对 $y=Cx$，取 $u=Fv-Kx$。令 $c_i$ 为 $C$ 的第 $i$ 行，$d_i$ 为使 $c_iA^{d_i}B\ne 0$ 的最小非负整数。第 $i$ 个输出在 $d_i+1$ 阶导数中首次显含 $u$，因此
+    \[
+        y_i^{(d_i+1)}=c_iA^{d_i+1}x+c_iA^{d_i}Bu.
+    \]
+    将 $c_iA^{d_i}B$ 按行叠成矩阵 $E$，将 $c_iA^{d_i+1}$ 按行叠成 $L$。代入 $u=Fv-Kx$ 后，$y_i^{(d_i+1)}$ 中 $v$ 的直接系数为 $EF$ 的第 $i$ 行。若 $F$ 可逆，该行非零，解耦要求它仅在第 $i$ 列非零。因此 $EF$ 为可逆的对角阵，$E$ 必须可逆。反过来，取 $K=E^{-1}L$、$F=E^{-1}$，各通道就满足 $y_i^{(d_i+1)}=v_i$。零初始条件下，对角元素为 $1/s^{d_i+1}$。如果还要求闭环稳定，需要检查各通道的极点和传递矩阵中未显现的内部模态。
+\end{itemize}
+
+\subsection{前馈补偿解耦}
+
+\ex{例6-5\quad 双输入双输出系统的前馈解耦}{
+    双输入双输出单位负反馈系统如图。写出对象的开环与闭环传递矩阵，求前馈补偿器使参考输入 $v$ 到输出 $y$ 的传递矩阵为
+    \[
+        G_d(s)=\operatorname{diag}\left(\frac{1}{s+1},\,\frac{1}{5s+1}\right),
+    \]
+    并用 Simulink 验证解耦结果。
+    \begin{center}
+    \begin{tikzpicture}[
+        >=Latex,
+        box/.style={draw,minimum width=1.3cm,minimum height=0.73cm},
+        sum/.style={draw,circle,minimum size=0.44cm,inner sep=0pt}
+    ]
+        \node (u1) at (0,1.3) {$u_1$};
+        \node (u2) at (0,-1.3) {$u_2$};
+        \node[sum] (s1) at (1.3,1.3) {$\scriptstyle\Sigma$};
+        \node[sum] (s2) at (1.3,-1.3) {$\scriptstyle\Sigma$};
+        \node[box] (g1) at (4,1.3) {$\dfrac{1}{2s+1}$};
+        \node[box] (g2) at (4,-1.3) {$\dfrac{1}{s+1}$};
+        \node[box] (g21) at (5.6,0) {$1$};
+        \node[sum] (out2sum) at (7,-1.3) {$\scriptstyle\Sigma$};
+        \coordinate (tap1) at (2.3,1.3);
+        \coordinate (out1) at (8.1,1.3);
+        \coordinate (out2) at (8.1,-1.3);
+        \draw[->] (u1) -- (s1) node[midway,above] {$+$};
+        \draw[->] (u2) -- (s2) node[midway,above] {$+$};
+        \draw[->] (s1) -- (g1) node[pos=0.15,above] {$e_1$};
+        \draw[->] (s2) -- (g2) node[midway,above] {$e_2$};
+        \draw[->] (tap1) |- (g21);
+        \draw[->] (g21.east) -| (out2sum.north) node[pos=0.78,right] {$+$};
+        \draw[->] (g2) -- (out2sum) node[pos=0.72,above] {$+$};
+        \draw[->] (g1) -- (9,1.3) node[right] {$y_1$};
+        \draw[->] (out2sum) -- (9,-1.3) node[right] {$y_2$};
+        \draw[->] (out1) -- (8.1,2.0) -| (s1.north) node[pos=0.93,left] {$-$};
+        \draw[->] (out2) -- (8.1,-2.0) -| (s2.south) node[pos=0.93,left] {$-$};
+        \foreach \point in {tap1,out1,out2}
+          \fill (\point) circle (1.15pt);
+    \end{tikzpicture}
+    \end{center}
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 53–56 页}
+}
+
+\nt{\textbf{知识点}\quad 开环传递矩阵从反馈误差 $e$ 取输入。单位负反馈闭环矩阵乘前馈补偿器时，对象在左、补偿器在右。}
+
+\sol \textbf{1. 写出开环与闭环传递矩阵。}
+切开两条反馈线后，$Y_1=E_1/(2s+1)$、$Y_2=E_1+E_2/(s+1)$，故从误差信号 $e$ 到输出的开环传递矩阵为
+\[
+    P(s)=\begin{bmatrix}1/(2s+1)&0\\1&1/(s+1)\end{bmatrix}.
+\]
+闭合反馈后 $E_i=U_i-Y_i$，由第一路得 $Y_1=U_1/[2(s+1)]$，故 $E_1=(2s+1)U_1/[2(s+1)]$。第二路满足 $(s+2)Y_2=(s+1)E_1+U_2$。整理为
+\[
+    G_0(s)=\begin{bmatrix}
+        1/[2(s+1)]&0\\
+        (2s+1)/[2(s+2)]&1/(s+2)
+    \end{bmatrix}.
+\]
+矩阵形式的计算等价于 $Y=P(U-Y)$，即 $G_0=(I+P)^{-1}P$。
+
+\textbf{2. 求前馈补偿器。}
+令 $U=G_cV$。由第一路 $Y_1=V_1/(s+1)$ 得 $U_1=2V_1$；要求第二路 $Y_2=V_2/(5s+1)$，代入 $U_1$ 得 $U_2=-(2s+1)V_1+(s+2)V_2/(5s+1)$。因此
+\[
+    G_c(s)=\begin{bmatrix}
+        2&0\\
+        -(2s+1)&(s+2)/(5s+1)
+    \end{bmatrix}.
+\]
+回乘 $G_0G_c$，其 $(2,1)$ 元素为 $(2s+1)/(s+2)-(2s+1)/(s+2)=0$，两个对角元素恰为要求的传递函数。
+
+\textbf{3. 在 Simulink 中复现两路响应。}
+精确补偿含微分项 $-2sV_1$。取平滑测试输入 $v_1(t)=1-(1+t)e^{-t}$，用 \texttt{Clock} 接 \texttt{Fcn} 直接生成 $v_1$ 和 $\dot v_1=te^{-t}$。取 $v_2(t)=1(t)$。用 \texttt{Gain} 和 \texttt{Sum} 实现 $u_1=2v_1$ 和 $u_2=-v_1-2\dot v_1+[(s+2)/(5s+1)]v_2$。后一传递函数块的分子、分母分别填 \texttt{[1 2]}、\texttt{[5 1]}。将 $u_1,u_2$ 接到题图的输入，各动态块取零初值，仿真结果可与下表的精确响应比较。
+\[
+    y_1(t)=1-\left(1+t+\frac{t^2}{2}\right)e^{-t},\qquad
+    y_2(t)=1-e^{-t/5},\qquad t\geq0 .
+\]
+\begin{center}
+\begin{tabular}{c|ccc}
+    $t$（秒） & 1 & 5 & 10\\
+    \hline
+    $y_1(t)$ & 0.08030 & 0.87535 & 0.99723\\
+    $y_2(t)$ & 0.18127 & 0.63212 & 0.86466
+\end{tabular}
+\end{center}
+还可分别将其中一路输入置零，只激励另一路，检查与其不对应的输出是否保持为零。
+若按讲义用 $-(2s+1)/(1+\varepsilon s)$ 近似微分支路，取 $\varepsilon=0.001$，剩余交叉通道为
+\[
+    \frac{Y_2(s)}{V_1(s)}\bigg|_{V_2=0}
+     =\frac{\varepsilon s(2s+1)}{(s+2)(1+\varepsilon s)} .
+\]
+这是近似解耦。对第一路直接用阶跃测试时，精确微分会产生冲激，带滤波的近似支路则会产生很短的交叉瞬态。
+
+\subsection{状态反馈解耦}
+
+\ex{例6-6\quad 双输入双输出系统的状态反馈解耦}{
+    设 $\dot x=Ax+Bu$、$y=Cx$，其中
+    \[
+        A=\begin{bmatrix}-1/2&0\\0&-1\end{bmatrix},\qquad
+        B=\begin{bmatrix}1/2&0\\0&1\end{bmatrix},\qquad
+        C=\begin{bmatrix}1&1\\2&1\end{bmatrix}.
+    \]
+    利用状态反馈解耦此系统。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 60–61 页}
+}
+
+\nt{\textbf{知识点}\quad 由输出求导构造解耦矩阵。解耦后还可选择各通道的极点。}
+
+\sol 原传递矩阵含有非零的非对角元素，
+\[
+    G(s)=\begin{bmatrix}
+        (1/2)/(s+1/2)&1/(s+1)\\
+        1/(s+1/2)&1/(s+1)
+    \end{bmatrix}.
+\]
+计算 $c_1B=[1/2\ \ 1]$、$c_2B=[1\ \ 1]$，两行均非零，故 $d_1=d_2=0$。两路输出均在一次求导时显含 $u$，即 $\dot y=CAx+CBu$。令
+\[
+    E=CB=\begin{bmatrix}1/2&1\\1&1\end{bmatrix},\qquad
+    L=CA=\begin{bmatrix}-1/2&-1\\-1&-1\end{bmatrix}.
+\]
+$\det E=-1/2$，$E$ 可逆。于是取
+\[
+    K=E^{-1}L=-I_2,\qquad F=E^{-1}=\begin{bmatrix}-2&2\\2&-1\end{bmatrix},
+    \qquad u=Fv-Kx .
+\]
+代回得到 $\dot y=(L-EK)x+EFv=v$，零初始条件下的闭环传递矩阵为 $\operatorname{diag}(1/s,1/s)$。
+若同时要求通道稳定，可指定 $\Lambda=\operatorname{diag}(2,3)$，使 $\dot y=-\Lambda y+v$。保持上面的 $F$，改取
+\[
+    K_\Lambda=E^{-1}(L+\Lambda C)
+             =\begin{bmatrix}7&2\\-2&0\end{bmatrix}.
+\]
+由 $C$ 可逆，$y=Cx$ 给出全部闭环状态的等价坐标，闭环极点为 $-2,-3$，传递矩阵为 $\operatorname{diag}(1/(s+2),1/(s+3))$。
+
+\section{全维状态观测器}
+
+开环观测器复制对象的状态方程 $\dot{\hat x}=A\hat x+Bu$。令 $e=x-\hat x$，则 $\dot e=Ae$。若 $A$ 有实部非负的特征值，初始估计误差可能持续存在或增大。
+
+渐近观测器用输出残差 $y-\hat y$ 修正状态估计。设 $x\in\mathbb R^n$、$y\in\mathbb R^p$，则 $G\in\mathbb R^{n\times p}$，且
+\[
+\begin{aligned}
+    \dot{\hat x}
+    &=A\hat x+Bu+G(y-C\hat x)
+      =(A-GC)\hat x+Bu+Gy,\\
+    \dot e&=(A-GC)e .
+\end{aligned}
+\]
+只要 $A-GC$ 的全部特征值实部为负，$e(t)$ 就收敛到零。观测器极点任意配置的充要条件是 $(A,C)$ 完全能观。可以直接比较 $\det(sI-A+GC)$ 的系数，也可对 $(A^{\mathsf T},C^{\mathsf T})$ 作状态反馈极点配置，再将求得的反馈增益转置为 $G$。
+
+\begin{center}
+\begin{tikzpicture}[
+    >=Latex,
+    box/.style={draw,minimum width=0.75cm,minimum height=0.67cm},
+    sum/.style={draw,circle,minimum size=0.46cm,inner sep=0pt}
+]
+    \node (input) at (0,0) {$u$};
+    \node[box] (plant) at (4,0) {对象 $\dot x=Ax+Bu$，$y=Cx$};
+    \node[box] (model) at (4,-1.5) {模型 $\dot{\hat x}=A\hat x+Bu+w$};
+    \node[box] (c) at (7.1,-1.5) {$C$};
+    \node[sum] (residual) at (9.1,-1.5) {$\scriptstyle\Sigma$};
+    \node[box] (g) at (7.1,-2.8) {$G$};
+    \coordinate (tapU) at (0.95,0);
+    \coordinate (tapY) at (9.1,0);
+    \draw[->] (input) -- (plant);
+    \draw[->] (tapU) |- (model.west) node[pos=0.83,above] {$u$};
+    \draw[->] (plant) -- (10.25,0) node[right] {$y$};
+    \draw[->] (tapY) -- (residual.north) node[pos=0.74,right] {$+$};
+    \draw[->] (model) -- (c) node[midway,above] {$\hat x$};
+    \draw[->] (c) -- (residual) node[midway,above] {$\hat y$}
+          node[pos=0.87,below] {$-$};
+    \draw[->] (residual.east) -- (10.35,-1.5) |- (g.east)
+          node[pos=0.87,below] {$y-\hat y$};
+    \draw[->] (g.west) -| (model.south) node[pos=0.83,left] {$w$};
+    \fill (tapU) circle (1.2pt);
+    \fill (tapY) circle (1.2pt);
+\end{tikzpicture}
+
+全维状态观测器的输出误差校正
+\end{center}
+
+\ex{例6-7\quad 三阶渐近状态观测器}{
+    已知
+    \[
+        \dot x=\begin{bmatrix}1&0&0\\3&-1&1\\0&2&0\end{bmatrix}x
+               +\begin{bmatrix}2\\1\\1\end{bmatrix}u,\qquad
+        y=\begin{bmatrix}0&0&1\end{bmatrix}x .
+    \]
+    设计渐近状态观测器，使其极点为 $-3,-4,-5$。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 78–84 页}
+}
+
+\nt{\textbf{知识点}\quad 先检验能观性，再配置误差系统的极点。对偶法与能观规范 II 型计算的是同一个 $G$。}
+
+\sol 建立能观矩阵
+\[
+   Q_o=\begin{bmatrix}C\\CA\\CA^2\end{bmatrix}
+      =\begin{bmatrix}0&0&1\\0&2&0\\6&-2&2\end{bmatrix},
+   \qquad \det Q_o=-12 .
+\]
+原系统完全能观。令 $G=[g_1\ \ g_2\ \ g_3]^{\mathsf T}$，则
+\[
+\begin{aligned}
+    A-GC&=\begin{bmatrix}1&0&-g_1\\3&-1&1-g_2\\0&2&-g_3\end{bmatrix},\\
+    \det(sI-A+GC)&=s^3+g_3s^2+(2g_2-3)s+(6g_1-2g_2-g_3+2).
+\end{aligned}
+\]
+目标多项式 $(s+3)(s+4)(s+5)=s^3+12s^2+47s+60$。由二次项得 $g_3=12$，由一次项得 $g_2=25$，再由常数项得 $g_1=20$。于是
+\[
+\begin{aligned}
+    \dot{\hat x}
+       &=\begin{bmatrix}1&0&-20\\3&-1&-24\\0&2&-12\end{bmatrix}\hat x
+          +\begin{bmatrix}2\\1\\1\end{bmatrix}u
+          +\begin{bmatrix}20\\25\\12\end{bmatrix}y,\qquad
+     \hat y=\hat x_3 .
+\end{aligned}
+\]
+回代特征多项式得到所给的三个负实极点，因此任意初始估计误差均渐近消失。
+
+讲义的另外两种算法可用一组互为对偶的坐标变换核对。对偶系统 $(A^{\mathsf T},C^{\mathsf T})$ 的能控矩阵为 $Q_o^{\mathsf T}$。取 $\ell=e_3^{\mathsf T}(Q_o^{\mathsf T})^{-1}$，将 $\ell,\ell A^{\mathsf T},\ell(A^{\mathsf T})^2$ 依次叠成 $T_d^{-1}$。对偶系统和原系统的能观 II 型变换分别为
+\[
+    T_d^{-1}=\frac16\begin{bmatrix}1&0&0\\1&3&0\\1&0&6\end{bmatrix},
+    \qquad T_o=(T_d^{-1})^{\mathsf T}.
+\]
+由开环多项式 $s^3-3s+2$ 与目标多项式的低次到高次系数之差得 $\widetilde G=[58\ \ 50\ \ 12]^{\mathsf T}$。左乘 $T_o$ 即得 $G=[20\ \ 25\ \ 12]^{\mathsf T}$。同理先计算对偶系统的反馈增益 $\widetilde G^{\mathsf T}T_d^{-1}$ 再转置，也得到该列向量。
+
+\Needspace{30\baselineskip}
 \ex{习题2\quad 渐近状态观测器}{%
     已知系统为
     \[
@@ -216,3 +599,14 @@
        +\begin{bmatrix}11\\10\end{bmatrix}y .
 \]
 回代得迹为 $-11$、行列式为 $30$，特征值确为 $-5$ 和 $-6$。两个特征值均在左半平面，因此任意初始估计误差均趋于零。
+
+\subsection{用估计状态实现反馈}
+
+取 $u=v-K\hat x$、$e=x-\hat x$。由于 $\hat x=x-e$，联合系统为
+\[
+    \begin{bmatrix}\dot x\\\dot e\end{bmatrix}
+       =\begin{bmatrix}A-BK&BK\\0&A-GC\end{bmatrix}
+        \begin{bmatrix}x\\e\end{bmatrix}
+        +\begin{bmatrix}B\\0\end{bmatrix}v .
+\]
+矩阵为分块上三角形，闭环极点由 $A-BK$ 和 $A-GC$ 的极点组成。因此状态反馈和观测器的极点可分别设计。

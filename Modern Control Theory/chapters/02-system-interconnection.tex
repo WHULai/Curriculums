@@ -1,0 +1,75 @@
+\subsection{并联、串联与反馈连接}
+
+记子系统 $S_i$ 为
+$\dot x_i=A_ix_i+B_i u_i,\ y_i=C_ix_i+D_iu_i$，
+其传递函数矩阵为 $G_i(s)=C_i(sI-A_i)^{-1}B_i+D_i$。以下三种图对应讲义第154--169页。写复合模型时先按箭头表示各端口的关系，再消去内部输入和输出。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>=Stealth,
+    block/.style={draw=myb,fill=mytheorembg,minimum width=11mm,minimum height=6mm},
+    sum/.style={draw,circle,minimum size=5mm,inner sep=0pt}]
+    \begin{scope}
+        \node[block] (p1) at (1,.44) {$G_1$};
+        \node[block] (p2) at (1,-.44) {$G_2$};
+        \node[sum] (ps) at (2.14,0) {$\scriptscriptstyle+$};
+        \draw (-.82,0) node[left] {$u$} -- (0,0);
+        \fill (0,0) circle[radius=1.1pt];
+        \draw[->] (0,0) |- (p1);
+        \draw[->] (0,0) |- (p2);
+        \draw[->] (p1) -| (ps.north);
+        \draw[->] (p2) -| (ps.south);
+        \draw[->] (ps) -- (2.78,0) node[right] {$y$};
+        \node[below] at (1,-.83) {并联};
+    \end{scope}
+    \begin{scope}[xshift=5.44cm]
+        \node[block] (s1) at (.15,0) {$G_1$};
+        \node[block] (s2) at (1.76,0) {$G_2$};
+        \draw[->] (-.98,0) node[left] {$u$} -- (s1);
+        \draw[->] (s1) -- node[above] {$y_1$} (s2);
+        \draw[->] (s2) -- (2.82,0) node[right] {$y$};
+        \node[below] at (.95,-.83) {串联};
+    \end{scope}
+    \begin{scope}[xshift=10.98cm]
+        \node[sum] (fs) at (0,0) {$\scriptscriptstyle\sum$};
+        \node[block] (fp) at (1.32,0) {$G_1$};
+        \node[block] (fh) at (1.32,-.75) {$G_2$};
+        \draw[->] (-.9,0) node[left] {$u$} -- node[pos=.64,above] {$+$} (fs);
+        \draw[->] (fs) -- node[above] {$e$} (fp);
+        \draw[->] (fp) -- (2.66,0) node[right] {$y$};
+        \fill (2.2,0) circle[radius=1.1pt];
+        \draw[->] (2.2,0) |- (fh);
+        \draw[->] (fh) -| node[pos=.86,left] {$-$} (fs.south);
+        \node[below] at (1.06,-1.14) {负反馈};
+    \end{scope}
+\end{tikzpicture}
+\caption{三种连接的端口信号。对多输入多输出系统，箭头上的信号可以是向量。}
+\end{figure}
+
+\textbf{并联。} 两个子系统共用 $u$，输出相加。取 $x=[x_1^\top\ x_2^\top]^\top$，可得
+\[
+    A=\operatorname{diag}(A_1,A_2),\quad B=\begin{bmatrix}B_1\\B_2\end{bmatrix},
+    \qquad C=\begin{bmatrix}C_1&C_2\end{bmatrix},\quad D=D_1+D_2 .
+\]
+频域关系为 $Y=(G_1+G_2)U$。
+
+\textbf{串联。} 输入先经过 $S_1$。由 $u_2=y_1=C_1x_1+D_1u$ 直接代入第二个子系统，得到
+\[
+    A=\begin{bmatrix}A_1&0\\B_2C_1&A_2\end{bmatrix},\quad
+    B=\begin{bmatrix}B_1\\B_2D_1\end{bmatrix},\quad
+    C=\begin{bmatrix}D_2C_1&C_2\end{bmatrix},\quad D=D_2D_1 .
+\]
+传递函数矩阵为 $G_2G_1$。在矩阵乘积作用到 $U$ 时，靠右的 $G_1$ 先作用。
+
+\textbf{负反馈。} 令 $e=u-C_2x_2-D_2y$、$y=C_1x_1+D_1e$。若 $I+D_2D_1$ 可逆，瞬时信号有唯一解，记 $M=(I+D_2D_1)^{-1}$，则
+\[
+    e=M(u-D_2C_1x_1-C_2x_2).
+\]
+把它代入 $\dot x_1=A_1x_1+B_1 e$ 与
+$\dot x_2=A_2x_2+B_2(C_1x_1+D_1e)$ 即得状态方程，输出为 $C_1x_1+D_1e$。在零初值下，$Y=G_1(U-G_2Y)$，所以
+\[
+   G_{\mathrm{cl}}=(I+G_1G_2)^{-1}G_1=G_1(I+G_2G_1)^{-1}.
+\]
+后一种写法可直接从 $E=U-G_2G_1E$ 得到。将反馈改为正号时，式中的 $I+G_1G_2$ 和 $I+G_2G_1$ 分别变为 $I-G_1G_2$ 和 $I-G_2G_1$。
+
+\nt{\textbf{核对}\quad 对 $G_1=1/(s+1),\ G_2=2/(s+2)$，并联得到 $(3s+4)/[(s+1)(s+2)]$，串联得到 $2/[(s+1)(s+2)]$，图示负反馈得到 $(s+2)/[(s+1)(s+2)+2]$。这些标量例子也可逐条从图上列代数式检验。}

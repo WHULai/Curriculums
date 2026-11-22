@@ -1,0 +1,99 @@
+\ex{讲义例题\quad 电桥的状态能控性（第9--11页）}{
+下图中，电源电压 $u(t)$ 为输入，两个电容的端电压 $x_1(t),x_2(t)$ 为状态，正极性见图。设所有电阻和电容的参数为正。分析电桥平衡与不平衡时，输入对两个状态的控制能力。
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[open,o-o] (0,3)
+        to[C,l_=$C_1$] (2.55,3) -- (5,3)
+        to[R,l^=$R_2$] (5,1.5) to[R,l^=$R_4$] (5,0) -- (0,0);
+    \draw (2.55,3) to[R,l_=$R_1$] (2.55,1.5)
+        to[R,l_=$R_3$] (2.55,0);
+    \draw (2.55,1.5) to[C,l_=$C_2$] (5,1.5);
+    \foreach \P in {(2.55,3),(2.55,1.5),(5,1.5),(2.55,0)} {
+        \fill \P circle[radius=1.2pt];
+    }
+    \node[above] at (1.275,3.27) {$+\quad x_1\quad -$};
+    \node[above] at (3.775,1.77) {$+\quad x_2\quad -$};
+    \draw[->] (-.35,.2) -- node[left] {$u(t)$} (-.35,2.8);
+\end{circuitikz}
+\end{center}
+}
+
+\nt{\textbf{知识点}\quad 电桥平衡、电容电压作为状态、不能控方向的自由衰减、二阶能控矩阵。}
+
+\sol 以底边为参考地。设电桥顶端电压为 $v=u-x_1$，左右中点为 $v_a,v_b$，故 $x_2=v_a-v_b$。记 $g_i=1/R_i$、$h=g_1+g_3$、$j=g_2+g_4$、$S=h+j$。两中点的电流方程相加，$C_2$ 的电流抵消，得到
+\[
+    h v_a+j v_b=(g_1+g_2)v .
+\]
+与 $v_a-v_b=x_2$ 联立后，可求两个电容的电流。
+\[
+\begin{aligned}
+    C_1\dot x_1&=g_1(v-v_a)+g_2(v-v_b)=\alpha v-\beta x_2,\\
+    C_2\dot x_2&=g_1v-hv_a=\beta v-\gamma x_2,\\
+    \alpha&=\frac{(g_1+g_2)(g_3+g_4)}{S},\qquad
+    \beta=\frac{g_1g_4-g_2g_3}{S},\qquad \gamma=\frac{hj}{S}.
+\end{aligned}
+\]
+代入 $v=u-x_1$ 可读出 $A,B$。平衡条件为 $g_1g_4=g_2g_3$，即 $\beta=0$。此时 $\dot x_2=-(\gamma/C_2)x_2$，改变 $u$ 无法改变这一分量的运动。特别地，当 $R_1=R_2=R_3=R_4=R$ 时，
+\[
+    \dot x_1=\frac{u-x_1}{RC_1},\qquad
+    \dot x_2=-\frac{x_2}{RC_2}.
+\]
+如果 $x_2(0)\ne0$，指数衰减只能使它逐渐趋零，任何有限时刻都无法靠 $u$ 把它带到零。
+
+不平衡时 $\beta\ne0$。将 $B=[\alpha/C_1\ \ \beta/C_2]^\top$ 与 $AB$ 并列可得
+\[
+    \det[B\ AB]=-\frac{\beta(\alpha\gamma-\beta^2)}{C_1 C_2^2},\qquad
+    \alpha\gamma-\beta^2=\frac{g_1g_2g_3+g_1g_2g_4+g_1g_3g_4+g_2g_3g_4}{S}>0.
+\]
+因此不平衡时秩为 $2$，系统完全能控。
+
+\newcommand{\autonomousModeDiagram}[1]{%
+\begin{tikzpicture}[>=Stealth,
+    block/.style={draw,fill=mytheorembg,minimum width=10mm,minimum height=6mm},
+    sum/.style={draw,circle,minimum size=5mm,inner sep=0pt}]
+    \node[block] (gain1) at (0,0) {$-1$};
+    \node[block] (int1) at (1.5,0) {$1/s$};
+    \draw[->] (gain1) -- (int1);
+    \draw[->] (int1) -- (3,0) node[right] {#1};
+    \fill (2.28,0) circle[radius=1.15pt] node[above] {$x_1$};
+    \draw[->] (2.28,0) -- ++(0,.65) -| (gain1.north);
+    \node[sum] (sum2) at (3.35,-1.02) {$\scriptscriptstyle\sum$};
+    \node[block] (int2) at (4.9,-1.02) {$1/s$};
+    \node[block] (gain2) at (4.65,-1.86) {$-2$};
+    \draw[->] (2.28,0) |- (sum2);
+    \draw[->] (4.06,-.30) node[right] {$u$} -| (sum2.north);
+    \draw[->] (sum2) -- (int2);
+    \draw[->] (int2) -- (6.5,-1.02) node[right] {$x_2$};
+    \fill (5.74,-1.02) circle[radius=1.15pt];
+    \draw[->] (5.74,-1.02) |- (gain2);
+    \draw[->] (gain2) -| (sum2);
+\end{tikzpicture}%
+}
+
+\ex{讲义例题\quad 积分器结构中的自由状态（第12页）}{
+图示系统满足 $\dot x_1=-x_1$、$\dot x_2=x_1-2x_2+u$。判断输入 $u$ 能否在有限时间内把任意初态转移到原点。
+\begin{center}
+\autonomousModeDiagram{}
+\end{center}
+}
+
+\nt{\textbf{知识点}\quad 自由模态、有限时间转移以及能控子空间。}
+
+\sol 第一积分器所在分支只有 $x_1$ 的自反馈。无论如何选择 $u$，始终有 $x_1(t)=e^{-t}x_1(0)$。只要 $x_1(0)\ne0$，这一状态在有限时刻都不为零。按矩阵检验，$B=[0\ \ 1]^\top$、$AB=[0\ \ {-2}]^\top$，能控矩阵秩为 $1$。能由输入改变的是 $x_2$ 方向，整个系统不完全能控。
+
+\ex{讲义例题\quad 两个分量都受输入作用时的能控性（第13页）}{
+给定
+\[
+    \dot x_1=-2x_1+x_2+u,\qquad \dot x_2=x_1-2x_2+u.
+\]
+判断两个状态能否用同一个输入在有限时间内同时置零。
+}
+
+\nt{\textbf{知识点}\quad 和差坐标、共模输入、能控性与状态坐标的关系。}
+
+\sol 令 $z_+=x_1+x_2$、$z_-=x_1-x_2$。原方程相加与相减分别给出
+\[
+    \dot z_+=-z_++2u,\qquad \dot z_-=-3z_- .
+\]
+$u$ 只作用于和坐标。如果 $x_1(0)\ne x_2(0)$，则任意有限 $T$ 时都有 $z_-(T)=e^{-3T}z_-(0)\ne0$，故两个分量无法同时置零。检验原坐标下的矩阵，$B=[1\ \ 1]^\top$、$AB=-B$，秩仍为 $1$。

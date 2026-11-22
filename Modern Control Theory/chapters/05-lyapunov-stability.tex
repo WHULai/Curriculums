@@ -1,9 +1,7 @@
 \chapter{李雅普诺夫稳定性分析}
 \label{sec:05-lyapunov-stability}
 
-\section{知识点}
-
-\subsection{平衡态与稳定性的含义}
+\section{平衡态与稳定性的含义}
 
 对于自治系统 $\dot x=f(x)$，由 $f(x_e)=0$ 求平衡态。取误差坐标 $z=x-x_e$ 后，可将待分析的平衡态移到原点。李雅普诺夫稳定性描述\textbf{初态扰动对自由运动的影响}。
 \begin{itemize}
@@ -13,9 +11,97 @@
 \end{itemize}
 连续时间 LTI 系统的 BIBO 稳定性考查零初态下有界输入能否产生有界输出。对有限维有理真传递矩阵，严格真部分的全部实际极点须在开左半平面。内部渐近稳定可推出 BIBO 稳定。若实现最小，两者等价。
 
-\subsection{第一法与第二法}
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=.9,every node/.style={font=\small}]
+    \coordinate (O) at (0,0);
+    \fill[whusakura!8] (O) circle (1.7cm);
+    \draw[whusakura,thick] (O) circle (1.7cm);
+    \draw[whusakura,dashed] (O) circle (.83cm);
+    \draw[->,gray] (-2.05,0)--(2.25,0) node[right] {$x_1$};
+    \draw[->,gray] (0,-1.95)--(0,2.15) node[above] {$x_2$};
+    \fill (O) circle (1.6pt) node[below left] {$x_e$};
+    \fill[black] (.51,.38) circle (1.4pt) node[above left] {$x(t_0)$};
+    \draw[blue!70!black,thick,->]
+      (.51,.38)..controls (1.70,.43) and (1.81,-.81)..(.53,-.97)
+      ..controls (-.44,-1.2) and (-.85,-.31)..(-.55,.1)
+      ..controls (-.36,.37) and (.05,.21)..(.11,.06);
+    \node[anchor=west] at (.64,.66) {$\delta$ 邻域};
+    \node[anchor=west] at (1.23,1.29) {$\varepsilon$ 邻域};
+    \node at (0,-2.48) {初态从 $\delta$ 邻域出发，轨迹一直留在 $\varepsilon$ 邻域};
+\end{tikzpicture}
+\end{center}
+对时变系统 $\dot x=f(x,t)$，常向量 $x_e$ 要成为平衡态，须对所有考虑的 $t$ 满足 $f(x_e,t)=0$。稳定性定义中的 $\delta$ 可以随 $t_0$ 变化；若可选取与 $t_0$ 无关的 $\delta$，称为一致稳定。
+
+\ex{讲义例（第 15 页）\quad 多个孤立平衡态}{
+求 $\dot x_1=-x_1,\ \dot x_2=x_1+x_2-x_2^3$ 的全部平衡态。
+}
+\nt{\textbf{知识点}\quad 平衡态要求各状态导数同时为零；一个非线性系统可以有多个孤立平衡态。}
+\sol{
+$\dot x_1=0$ 先给出 $x_1=0$，再由 $\dot x_2=0$ 得 $x_2(1-x_2^2)=0$，所以平衡态为 $(0,0),(0,1),(0,-1)$。这些平衡态彼此分离。线性化时须在每个待判定的平衡态单独计算雅可比矩阵。
+}
+
+\section{李雅普诺夫第一法与第二法}
+
+\subsection{第一法（线性化）}
 
 \textbf{第一法（线性化）}先求 $x_e$，再计算雅可比矩阵 $J(x)=\partial f/\partial x$。若 $J(x_e)$ 的全部特征值实部小于零，原非线性系统在该平衡态局部渐近稳定。若有特征值实部大于零，该平衡态不稳定。若没有正实部特征值，且存在实部为零的特征值，需要结合非线性项继续判断。
+
+\ex{讲义课堂讨论（第 38 页）\quad 特征值与自由响应}{
+为什么当 $A$ 的全部特征值具有负实部时，线性系统 $\dot x=Ax$ 的原点渐近稳定？
+}
+\nt{\textbf{知识点}\quad 约旦块的响应由 $t^k e^{\lambda t}$ 组成。}
+\sol{
+对大小为 $d$ 的约旦块 $J=\lambda I+N$，有 $N^d=0$，从而
+$e^{Jt}=e^{\lambda t}\sum_{k=0}^{d-1}t^kN^k/k!$。
+当 $\Re\lambda<0$ 时，指数衰减快于任意固定次数的多项式增长，每一项都趋于零，且在 $t\ge0$ 有界。对各块施加相似变换得到有界且趋于零的 $e^{At}$。所以小初态始终给出小状态，且任意初态的状态都趋于原点。
+}
+
+\ex{讲义例 5-1\quad 含参数的平衡态线性化}{
+设 $K_1,K_2>0$，用第一法判断下列装置在原点的稳定性。
+\[
+    \dot x_1=x_2,\qquad \dot x_2=K_1(x_1^2-1)x_2-K_2x_1.
+\]
+}
+\nt{\textbf{知识点}\quad 二阶实系统的 Hurwitz 条件，线性化结论的局部适用范围。}
+\sol{
+$\dot x=0$ 要求 $x_2=0$，继而 $x_1=0$。在原点，
+\[
+    J(0)=\begin{bmatrix}0&1\\-K_2&-K_1\end{bmatrix},
+    \qquad \det(\lambda I-J(0))=\lambda^2+K_1\lambda+K_2 .
+\]
+若根为实数，根积 $K_2>0$ 且根和 $-K_1<0$，故两根均负；若为共轭复根，实部为 $-K_1/2<0$。由第一法，原点\textbf{局部渐近稳定}。
+}
+
+\ex{习题课 2\quad 用第一法判定平衡态}{
+用李雅普诺夫第一法判定下列系统的平衡态是否渐近稳定。
+\[
+    \begin{cases}
+        \dot x_1=-x_1+x_2+x_1(x_1^2+x_2^2),\\
+        \dot x_2=-x_1-x_2+x_2(x_1^2+x_2^2).
+    \end{cases}
+\]
+}
+\nt{\textbf{知识点}\quad 先求全部平衡态，在线性化点计算雅可比矩阵，按特征值实部判定。}
+\sol{
+
+记 $r^2=x_1^2+x_2^2$。平衡态满足
+\[
+    \begin{bmatrix}r^2-1&1\\-1&r^2-1\end{bmatrix}
+    \begin{bmatrix}x_1\\x_2\end{bmatrix}=0 .
+\]
+系数矩阵的行列式恒为 $(r^2-1)^2+1>0$，所以唯一平衡态为原点。三次项的一阶偏导在原点均为零，由此得
+\[
+    J(0)=\begin{bmatrix}-1&1\\-1&-1\end{bmatrix},\qquad
+    \det(\lambda I-J(0))=(\lambda+1)^2+1 .
+\]
+$\lambda_{1,2}=-1\pm\mathrm{i}$，故原系统在原点\textbf{局部渐近稳定}。
+
+\begin{note}
+    若需要判断吸引域，可直接求 $\frac{\mathrm{d}}{\mathrm{d}t}r^2=2r^2(r^2-1)$。$0<r(0)<1$ 时 $r^2$ 单调下降到零，$r(0)=1$ 时半径恒定，$r(0)>1$ 时半径增大。因此原点的吸引域为 $r<1$。
+\end{note}
+}
+
+\subsection{第二法（直接法）}
 
 \textbf{第二法（直接法）}选可微函数 $V(x)$，使 $V(0)=0$、$V(x)>0$（$x\ne 0$），再沿轨迹求导
 \[
@@ -27,7 +113,7 @@
     若 $\dot V$ 为负半定，可在紧致正不变的 $V$ 子水平集上使用 LaSalle 不变性原理。轨迹趋向 $\{\dot V=0\}$ 的最大不变集。若其中只有原点，仍可证明渐近稳定。做题时需逐一检查 $\dot V=0$ 的各个分支，判断轨迹能否一直留在其中。
 \end{note}
 
-\subsection{二次型与李雅普诺夫矩阵方程}
+\subsubsection{二次型的定号性}
 
 将二次型写为 $V=x^\top P x$，其中 $P=P^\top$，混合项 $x_ix_j$ 的系数等于 $2p_{ij}$。记 $\Delta_k$ 为 $P$ 的 $k$ 阶顺序主子式。由塞尔维斯特判据
 \[
@@ -36,35 +122,25 @@
 \]
 若用主子式判断正、负半定，应检查所有主子式。也可直接检查实对称矩阵的特征值符号。
 
-对连续时间 LTI 系统 $\dot x=Ax$，$A$ 为 Hurwitz 矩阵等价于对任意 $Q=Q^\top>0$，李雅普诺夫方程
+合同化简也能直接展示二次型的定号性。对 $P$ 作一次行变换后，再作对应列变换，可写成 $P\mapsto S^\top PS$，其中 $S$ 可逆。变量代换 $x=Sz$ 保持正、负、零平方项的个数。配方法和对称消元都属于这种变换。
+
+\ex{讲义例 5-2\quad 合同变换判定二次型}{
+用合同变换判断下列实对称矩阵的定号性。
 \[
-    A^\top P+PA=-Q
+    P=\begin{bmatrix}1&-1&-1\\-1&3&2\\-1&2&5\end{bmatrix}.
 \]
-有唯一 $P=P^\top>0$。计算时常取 $Q=I$，解出 $P$ 并检验正定，再用 $\dot V=-x^\top Qx$ 下结论。线性系统在李雅普诺夫意义下稳定，等价于所有特征值实部非正，且虚轴特征值的约旦块均为一阶。
-
-对时变系统 $\dot x=A(t)x$，取 $V=x^\top P(t)x$ 时，方程为
+}
+\nt{\textbf{知识点}\quad 行列成对操作等价于变量代换，可用配方写出对角化过程。}
+\sol{
+先将第 2、3 行各加第 1 行，再将第 2、3 列各加第 1 列，得到
+$\begin{bmatrix}1&0&0\\0&2&1\\0&1&4\end{bmatrix}$。第 3 行减去第 2 行的一半，第 3 列减去第 2 列的一半，得到 $\operatorname{diag}(1,2,7/2)$。等价的配方为
 \[
-    \dot P+A(t)^\top P+PA(t)=-Q(t).
+    x^\top Px=(x_1-x_2-x_3)^2+2(x_2+x_3/2)^2+\frac72x_3^2.
 \]
-若 $P(t)$ 一致正定且一致有界，$Q(t)$ 一致正定，则可推出全局指数稳定。对离散定常系统 $x_{k+1}=Ax_k$，同样用 $V=x^\top Px$，但考查 $\Delta V=V(x_{k+1})-V(x_k)$，方程变为 $A^\top PA-P=-Q$。对任意 $Q>0$ 存在唯一的 $P>0$，等价于 $A$ 的特征值模长全部小于 $1$。
+三个平方项的系数为正，且三个线性组合同时为零仅发生于 $x=0$，所以 $P$ 正定。
+}
 
-\subsection{非线性系统的雅可比矩阵法与变量梯度法}
-
-雅可比矩阵法（克拉索夫斯基方法）取 $V(x)=f(x)^\top f(x)$。在原点为孤立平衡态时，$V$ 在其邻域内正定，且
-\[
-    \dot V(x)=f(x)^\top\bigl[J(x)+J(x)^\top\bigr]f(x).
-\]
-若对称部分在该邻域内负定，即可证明局部渐近稳定。若原点为唯一平衡态，对称部分在全空间负定，且 $\lVert f(x)\rVert\to\infty$（当 $\lVert x\rVert\to\infty$），则可得大范围渐近稳定。
-
-变量梯度法先设 $g(x)=\nabla V(x)$ 的形式，由 $g^\top f$ 的定号性确定待定系数。再检查 $\partial g_i/\partial x_j=\partial g_j/\partial x_i$，以保证在原点的单连通邻域内可以积分得到 $V$。最后验证积分所得的 $V(x)=\int_0^x g(\xi)^\top\,\mathrm{d}\xi$ 的定号性。
-
-\section{作业}
-
-\subsection{习题课}
-
-以下题号与《第五章 习题课》一致。
-
-\ex{习题1\quad 二次型的定号性}{
+\ex{习题课 1\quad 二次型的定号性}{
 判断下列函数的定号性。
 \[
 \begin{aligned}
@@ -99,36 +175,134 @@
 此时 $-\Delta_1,\Delta_2,-\Delta_3$ 均为正，相当于 $-P_3$ 的顺序主子式均为正，故 $V_3$ \textbf{负定}。
 }
 
-\ex{习题2\quad 用第一法判定平衡态}{
-用李雅普诺夫第一法判定下列系统的平衡态是否渐近稳定。
-\[
-    \begin{cases}
-        \dot x_1=-x_1+x_2+x_1(x_1^2+x_2^2),\\
-        \dot x_2=-x_1-x_2+x_2(x_1^2+x_2^2).
-    \end{cases}
-\]
+\subsubsection{用能量函数判定稳定性}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}ll@{}}
+\toprule
+正定 $V$ 的变化 & 自治系统可得的结论\\
+\midrule
+$\dot V<0$（$x\ne0$） & 渐近稳定，若另有全局条件则为大范围渐近稳定\\
+$\dot V\le0$ & 稳定。若零导数集合无其他不变轨迹，则渐近稳定\\
+$\dot V\equiv0$ & 稳定，非零轨迹保留初始 $V$，故不能收敛到原点\\
+$\dot V>0$（$x\ne0$） & 不稳定\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\ex{讲义图例（第 60--64 页）\quad 谷底与坡顶的能量}{
+设质量为 $m$ 的小球在图示轨道上运动，$h$ 为相对参考点的高度，重力为 $mg$，$f$ 为滑动摩擦系数，$\theta$ 为局部轨道与竖直方向的夹角。比较谷底与坡顶附近，沿坡向下滑动时的能量和能量变化率。
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=.95,every node/.style={font=\small}]
+    \draw[thick,whusakura] plot[domain=-1.65:1.65,samples=40] (\x,{.52*\x*\x});
+    \draw[dashed,gray] (-1.75,0)--(1.8,0);
+    \draw[dashed,gray] (-1.3,.87)--(1.35,.87);
+    \fill[black] (0,0) circle (2pt) node[below] {谷底};
+    \fill[black] (1.27,.84) circle (3pt);
+    \draw[<->] (-1.43,0)--node[left] {$h$}(-1.43,.87);
+    \draw[->] (1.32,.81)--(1.32,.20) node[right] {$mg$};
+    \draw[->] (1.22,.82)--(.85,.37) node[below] {$v$};
+    \draw[->] (1.31,.90)--(1.68,1.37) node[right] {摩擦力};
+    \begin{scope}[xshift=6cm]
+      \draw[thick,whusakura] plot[domain=-1.65:1.65,samples=40] (\x,{1.56-.52*\x*\x});
+      \draw[dashed,gray] (-1.7,1.56)--(1.72,1.56);
+      \draw[dashed,gray] (-1.3,.73)--(1.34,.73);
+      \fill[black] (0,1.56) circle (2pt) node[above] {坡顶};
+      \fill[black] (1.25,.75) circle (3pt);
+      \draw[<->] (-1.44,.73)--node[left] {$h$}(-1.44,1.56);
+      \draw[->] (1.25,.7)--(1.25,.13) node[below] {$mg$};
+      \draw[->] (1.30,.74)--(1.69,.27) node[right] {$v$};
+      \draw[->] (1.18,.81)--(.81,1.27) node[left] {摩擦力};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
 }
-\nt{\textbf{知识点}\quad 先求全部平衡态，在线性化点计算雅可比矩阵，按特征值实部判定。}
+\nt{\textbf{知识点}\quad 平衡态附近势能的几何形状；机械能的导数等于非保守力做功率。}
 \sol{
-
-记 $r^2=x_1^2+x_2^2$。平衡态满足
+谷底以最低点为参考，沿上坡为位移 $x$ 的正方向。在单侧局部直斜坡近似中，$h=x\cos\theta$，向下滑时 $\dot x<0$，沿坡加速度为 $-g\cos\theta+fg\sin\theta$，故
 \[
-    \begin{bmatrix}r^2-1&1\\-1&r^2-1\end{bmatrix}
-    \begin{bmatrix}x_1\\x_2\end{bmatrix}=0 .
+    V=\tfrac12 m\dot x^2+mgx\cos\theta,\qquad
+    \dot V=mgf\sin\theta\,\dot x\le0 .
 \]
-系数矩阵的行列式恒为 $(r^2-1)^2+1>0$，所以唯一平衡态为原点。三次项的一阶偏导在原点均为零，由此得
+坡顶以最高点为参考，沿下坡为 $x$ 的正方向；向下滑时 $\dot x>0$，加速度为 $g\cos\theta-fg\sin\theta$，得
 \[
-    J(0)=\begin{bmatrix}-1&1\\-1&-1\end{bmatrix},\qquad
-    \det(\lambda I-J(0))=(\lambda+1)^2+1 .
+    V=\tfrac12 m\dot x^2-mgx\cos\theta,\qquad
+    \dot V=-mgf\sin\theta\,\dot x\le0 .
 \]
-$\lambda_{1,2}=-1\pm\mathrm{i}$，故原系统在原点\textbf{局部渐近稳定}。
-
-\begin{note}
-    若需要判断吸引域，可直接求 $\frac{\mathrm{d}}{\mathrm{d}t}r^2=2r^2(r^2-1)$。$0<r(0)<1$ 时 $r^2$ 单调下降到零，$r(0)=1$ 时半径恒定，$r(0)>1$ 时半径增大。因此原点的吸引域为 $r<1$。
-\end{note}
+谷底的能量具有局部极小值，可以用其子水平集限制运动。坡顶附近取 $\dot x=0$ 且 $x>0$ 就有 $V<0$，总能量在该处不正定；若单侧坡面上重力切向分量超过摩擦力，任意小的向下扰动会让小球继续远离坡顶。两图都体现摩擦耗能，渐近稳定还取决于轨道上的静止条件以及能量是否持续下降。
 }
 
-\ex{习题3\quad 负半定导数与不变集}{
+\ex{讲义例 5-3\quad 能量严格下降}{
+确定下列系统的平衡态与稳定性。
+\[
+    \dot x_1=x_2-x_1(x_1^2+x_2^2),\qquad
+    \dot x_2=-x_1-x_2(x_1^2+x_2^2).
+\]
+}
+\nt{\textbf{知识点}\quad 第一法在纯虚特征值时无结论，第二法可直接利用高阶项。}
+\sol{
+令 $V=x_1^2+x_2^2$，可得 $\dot V=-2(x_1^2+x_2^2)^2$。若 $f(x)=0$，必有 $\dot V=0$，故原点是唯一平衡态。$V$ 正定且径向无界，$\dot V$ 对所有 $x\ne0$ 为负，所以原点大范围渐近稳定。线性化矩阵的特征值为 $\pm\mathrm i$，真正使轨迹收敛的是三次项。
+}
+
+\ex{讲义例 5-4、例 5-5\quad 能量负半定时检查轨迹}{
+判断 $\dot x_1=x_2,\ \dot x_2=-x_1-x_2$ 的原点稳定性，并说明选 $V=x_1^2+x_2^2$ 时如何由稳定进一步判断渐近稳定。
+}
+\nt{\textbf{知识点}\quad $\dot V=0$ 可发生在非零点，渐近稳定要求其中没有持续停留的非零轨迹。}
+\sol{
+$V$ 正定且 $\dot V=-2x_2^2\le0$，先得原点稳定。若一条轨迹始终满足 $\dot V=0$，则 $x_2(t)\equiv0$，由 $\dot x_2=-x_1$ 得 $x_1(t)\equiv0$。故直线 $x_2=0$ 的最大不变集只有原点。每个 $V$ 的子水平集为紧致正不变圆盘，所有初态的解均趋向原点，故为大范围渐近稳定。
+}
+
+\ex{讲义例 5-6\quad 能量守恒与周期轨迹}{
+确定 $\dot x_1=kx_2,\ \dot x_2=-x_1$（$k>0$）在原点的稳定性。取 $k=2$ 画相图，并说明输出 $y=x_1+x_2$ 的自由响应。
+}
+\nt{\textbf{知识点}\quad $\dot V\equiv0$ 对应能量守恒；闭轨道说明稳定但不收敛。}
+\sol{
+$V=x_1^2+kx_2^2$ 正定，$\dot V=2kx_1x_2-2kx_1x_2=0$。每条非零轨迹都留在它的初始能量椭圆上，故原点稳定但不渐近稳定。在正 $x_1$ 轴上 $\dot x_2=-x_1<0$，相轨迹沿顺时针旋转。由 $\ddot x_1=-kx_1$ 得非零自由响应是周期为 $2\pi/\sqrt k$ 的振荡，$y$ 也保持周期振荡。
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=1.1,every node/.style={font=\small}]
+    \draw[->] (-2.7,0)--(2.7,0) node[right] {$x_1$};
+    \draw[->] (0,-1.95)--(0,1.95) node[above] {$x_2$};
+    \fill (0,0) circle (1.4pt) node[below left] {$0$};
+    \foreach \a in {.75,1.45,2.12} {
+        \draw[whusakura,thick] (0,0) ellipse [x radius=\a,y radius=.707*\a];
+        \draw[whusakura,thick,->] plot[domain=45:22,samples=12]
+            ({\a*cos(\x)},{.707*\a*sin(\x)});
+    }
+    \node[anchor=west] at (1.03,1.51) {$x_1^2+2x_2^2=\text{常数}$};
+\end{tikzpicture}
+\end{center}
+}
+
+\ex{讲义例 5-7\quad 能量增长与不稳定}{
+确定 $\dot x_1=x_2,\ \dot x_2=-x_1+x_2$ 在原点的稳定性。
+}
+\nt{\textbf{知识点}\quad 检查正半定导数的零集合，用特征值交叉验证。}
+\sol{
+仍取 $V=x_1^2+x_2^2$，但此时 $\dot V=2x_2^2\ge0$。若非零轨迹始终满足 $\dot V=0$，则 $x_2\equiv0$ 又要求 $x_1\equiv0$，产生矛盾。讲义的第二法不稳定性判据由此给出原点不稳定。直接验证有特征值 $(1\pm\mathrm i\sqrt3)/2$，实部为正。
+}
+
+\ex{讲义例 5-8\quad 时变系统的原点不稳定}{
+在第一象限 $x_1,x_2\ge0$ 内，判断下列时变系统的原点稳定性。
+\[
+    \dot x_1=x_1\sin^2 t+x_2e^t,\qquad
+    \dot x_2=x_1e^t+x_2\cos^2 t .
+\]
+}
+\nt{\textbf{知识点}\quad 时变的 $V(x,t)$ 求全导数时包含 $\partial V/\partial t$；在正向不变区域也可用增长估计。}
+\sol{
+两条坐标轴上的向量场指向第一象限内，因此第一象限正向不变。依讲义取 $V=2e^{-t}x_1x_2$，用乘积法则得
+\[
+\begin{aligned}
+   \dot V&=-2e^{-t}x_1x_2+
+     2e^{-t}(x_1\dot x_2+x_2\dot x_1)\\
+        &=2(x_1^2+x_2^2).
+\end{aligned}
+\]
+$V$ 在象限内部为正，在两条坐标轴上为零。为直接说明状态远离原点，令 $s=x_1+x_2$，有 $\dot s\ge e^t s$。任取第一象限内的非零小初态，$s(t)\ge s(t_0)\exp(e^t-e^{t_0})$，故 $\lVert x(t)\rVert\ge s(t)/\sqrt2$ 最终超过任意给定的邻域半径。因此原点不稳定。
+}
+
+\ex{习题课 3\quad 负半定导数与不变集}{
 用李雅普诺夫第二法判断下列自治系统的平衡态稳定性。
 \[
     \dot x_1=x_2,\qquad \dot x_2=-x_1-(1+x_2)^2x_2 .
@@ -150,7 +324,65 @@ $V$ 正定且径向无界，任一初态所在的 $V$ 子水平集都紧致且�
 因此最大不变集只有原点，任意初态的解均趋向原点，原点\textbf{大范围渐近稳定}。
 }
 
-\ex{习题4\quad 连续时间李雅普诺夫方程}{
+\section{线性系统的稳定性分析}
+
+\subsection{线性定常连续系统}
+
+对连续时间 LTI 系统 $\dot x=Ax$，$A$ 为 Hurwitz 矩阵等价于对任意 $Q=Q^\top>0$，李雅普诺夫方程
+\[
+    A^\top P+PA=-Q
+\]
+有唯一 $P=P^\top>0$。计算时常取 $Q=I$，解出 $P$ 并检验正定，再用 $\dot V=-x^\top Qx$ 下结论。线性系统在李雅普诺夫意义下稳定，等价于所有特征值实部非正，且虚轴特征值的约旦块均为一阶。
+
+\ex{讲义例 5-9\quad 用矩阵方程得到严格下降的二次型}{
+用李雅普诺夫矩阵方程判断 $\dot x=\begin{bmatrix}0&1\\-1&-1\end{bmatrix}x$ 的平衡态稳定性。
+}
+\nt{\textbf{知识点}\quad 同一系统可以用多个李雅普诺夫函数；取 $Q=I$ 可直接得到严格负定的导数。}
+\sol{
+$\det A=1$，故唯一平衡态为原点。设 $P=\begin{bmatrix}a&b\\b&c\end{bmatrix}$，方程 $A^\top P+PA=-I$ 等价于
+\[
+    -2b=-1,\qquad a-b-c=0,\qquad 2b-2c=-1.
+\]
+故 $P=\tfrac12\begin{bmatrix}3&1\\1&2\end{bmatrix}$。首个顺序主子式为 $3/2$，行列式为 $5/4$，所以 $P>0$。$V=x^\top Px$ 径向无界且 $\dot V=-(x_1^2+x_2^2)$，故大范围渐近稳定。例 5-4、5-5 中 $V=x_1^2+x_2^2$ 的导数在 $x_2=0$ 为零，选这个 $P$ 可直接应用严格负定判据。
+}
+
+\ex{讲义例 5-10\quad 负反馈系统的稳定增益范围}{
+已知下列负反馈系统。求使零输入闭环系统渐近稳定的全部实数增益 $k$。
+\begin{center}
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small},
+  block/.style={draw,fill=white,rounded corners=1pt,minimum width=1.55cm,minimum height=11mm}]
+    \node[draw,circle,inner sep=0pt,minimum size=5mm] (sum) at (0,0) {$\times$};
+    \node[block] (p3) at (2.02,0) {$k/(s+1)$};
+    \node[block] (p2) at (4.68,0) {$1/(s+2)$};
+    \node[block] (p1) at (7.14,0) {$1/s$};
+    \draw[->] (sum) -- (p3);
+    \draw[->] (p3) -- node[above] {$x_3$} (p2);
+    \draw[->] (p2) -- node[above] {$x_2$} (p1);
+    \draw[->] (p1) -- node[above] {$x_1$} (9,0);
+    \fill (8.25,0) circle (1.3pt);
+    \draw[->] (8.25,0) -- (8.25,-1.15) -| (sum.south);
+    \node at (.30,-.39) {$-$};
+\end{tikzpicture}
+\end{center}
+}
+\nt{\textbf{知识点}\quad 由方块图读出齐次状态方程；用半正定 $Q$ 时须检查 $\dot V=0$ 的不变集。}
+\sol{
+逐块求导得 $\dot x_1=x_2,\ \dot x_2=-2x_2+x_3,\ \dot x_3=-kx_1-x_3$，于是
+\[
+  A=\begin{bmatrix}0&1&0\\0&-2&1\\-k&0&-1\end{bmatrix},\qquad
+  \det(sI-A)=s^3+3s^2+2s+k.
+\]
+三阶 Routh 表第一列为 $1,3,(6-k)/3,k$。各项为正的充要条件是 $0<k<6$。$k=0$ 有零特征值，$k=6$ 时多项式为 $(s+3)(s^2+2)$，两端点均不满足渐近稳定。
+
+也可按讲义的方法取 $Q=\operatorname{diag}(0,0,1)$，解矩阵方程得
+\[
+  P=\frac{1}{2(6-k)}
+    \begin{bmatrix}k^2+12k&6k&0\\6k&3k&k\\0&k&6\end{bmatrix}.
+\]
+当 $0<k<6$ 时，括号中矩阵的三个顺序主子式依次为 $k^2+12k,\ 3k^3,\ k^3(6-k)$，均为正。于是 $V=x^\top Px$ 正定且径向无界，$\dot V=-x_3^2$。若 $x_3$ 恒为零，则第三式给出 $x_1=0$，第一式再给出 $x_2=0$。因此 $\dot V=0$ 的最大不变集为原点，验证了该增益区间内的大范围渐近稳定性。
+}
+
+\ex{习题课 4\quad 连续时间李雅普诺夫方程}{
 用李雅普诺夫第二法判断下列系统是否大范围渐近稳定。
 \[
     \dot x=\begin{bmatrix}-1&1\\2&-3\end{bmatrix}x .
@@ -180,7 +412,62 @@ $V$ 正定且径向无界，任一初态所在的 $V$ 子水平集都紧致且�
 $V$ 在全空间正定且径向无界，$\dot V$ 在全空间负定，故原点\textbf{大范围渐近稳定}。
 }
 
-\ex{习题5\quad 雅可比矩阵法}{
+\subsection{线性时变连续系统与离散系统}
+
+对时变系统 $\dot x=A(t)x$，取 $V=x^\top P(t)x$ 时，方程为
+\[
+    \dot P+A(t)^\top P+PA(t)=-Q(t).
+\]
+若 $P(t)$ 一致正定且一致有界，$Q(t)$ 一致正定，则可推出全局指数稳定。对离散定常系统 $x_{k+1}=Ax_k$，同样用 $V=x^\top Px$，但考查 $\Delta V=V(x_{k+1})-V(x_k)$，方程变为 $A^\top PA-P=-Q$。对任意 $Q>0$ 存在唯一的 $P>0$，等价于 $A$ 的特征值模长全部小于 $1$。
+
+对于时变离散系统 $x_{k+1}=A_kx_k$，若取 $V_k=x_k^\top P_kx_k$，则
+\[
+    \Delta V_k=x_k^\top(A_k^\top P_{k+1}A_k-P_k)x_k .
+\]
+若 $P_k$ 一致正定、有界，且 $A_k^\top P_{k+1}A_k-P_k=-Q_k$ 中 $Q_k$ 一致正定，就可得到全局指数稳定。对于时变连续系统，在有限终点 $T$ 任取 $P(T)>0$ 可向后解出 $P(t)$；无穷时间的稳定性结论还需控制 $P,Q$ 的一致界。
+
+\begin{center}
+\renewcommand{\arraystretch}{1.28}
+\begin{tabular}{@{}lll@{}}
+\toprule
+系统 & 渐近稳定的特征值条件 & 二次型的变化\\
+\midrule
+$\dot x=Ax$ & $\Re\lambda_i(A)<0$ & $A^\top P+PA=-Q$\\
+$x_{k+1}=Ax_k$ & $|\lambda_i(A)|<1$ & $A^\top PA-P=-Q$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{非线性系统的雅可比矩阵法与变量梯度法}
+
+雅可比矩阵法（克拉索夫斯基方法）取 $V(x)=f(x)^\top f(x)$。在原点为孤立平衡态时，$V$ 在其邻域内正定，且
+\[
+    \dot V(x)=f(x)^\top\bigl[J(x)+J(x)^\top\bigr]f(x).
+\]
+若对称部分在该邻域内负定，即可证明局部渐近稳定。若原点为唯一平衡态，对称部分在全空间负定，且 $\lVert f(x)\rVert\to\infty$（当 $\lVert x\rVert\to\infty$），则可得大范围渐近稳定。
+
+变量梯度法先设 $g(x)=\nabla V(x)$ 的形式，由 $g^\top f$ 的定号性确定待定系数。再检查 $\partial g_i/\partial x_j=\partial g_j/\partial x_i$，以保证在原点的单连通邻域内可以积分得到 $V$。最后验证积分所得的 $V(x)=\int_0^x g(\xi)^\top\,\mathrm{d}\xi$ 的定号性。
+
+\subsection{雅可比矩阵法}
+
+\ex{讲义例 5-11\quad 非线性向量场的对称雅可比矩阵}{
+用雅可比矩阵法判断 $\dot x_1=-3x_1+x_2,\ \dot x_2=x_1-x_2-x_2^3$ 的平衡态稳定性。
+}
+\nt{\textbf{知识点}\quad 雅可比对称部分应在区域内逐点定号；二阶对称阵用两个顺序主子式判断。}
+\sol{
+$f_1=0$ 给出 $x_1=x_2/3$，代入 $f_2=0$ 得 $-x_2(2/3+x_2^2)=0$，故原点为唯一平衡态。计算
+\[
+  J+J^\top=\begin{bmatrix}-6&2\\2&-2-6x_2^2\end{bmatrix},\qquad
+  \Delta_1=-6,\qquad \Delta_2=8+36x_2^2 .
+\]
+该矩阵处处负定，故 $V=f^\top f$ 正定且在 $x\ne0$ 时严格下降，原点渐近稳定。进一步有
+\[
+    -x^\top f=3x_1^2-2x_1x_2+x_2^2+x_2^4\ge(2-\sqrt2)\lVert x\rVert^2,
+\]
+所以 $\lVert f(x)\rVert\ge(2-\sqrt2)\lVert x\rVert$。因此 $V$ 径向无界，原点为大范围渐近稳定。
+}
+
+\ex{习题课 5\quad 雅可比矩阵法}{
 用雅可比矩阵法确定下列系统在原点的稳定性。
 \[
     \dot x_1=-3x_1+2x_2,\qquad
@@ -203,10 +490,6 @@ $V$ 在全空间正定且径向无界，$\dot V$ 在全空间负定，故原点\
 \]
 前两项构成正定二次型，故存在常数 $m>0$ 使右端至少为 $m\lVert x\rVert^2$。由 $-x^\top f\le\lVert x\rVert\lVert f\rVert$ 得 $\lVert f\rVert\ge m\lVert x\rVert$。所以 $V$ 径向无界，原点也是\textbf{大范围渐近稳定}的。
 }
-
-\subsection{纸质练习}
-
-以下题目对应《纸质练习答案》第 3 页。
 
 \ex{纸质练习五\quad 雅可比矩阵法与大范围渐近稳定}{
 试用雅可比矩阵法判断下列系统是否大范围渐近稳定。
@@ -234,4 +517,27 @@ $V$ 在全空间正定且径向无界，$\dot V$ 在全空间负定，故原点\
 \end{aligned}
 \]
 结合 $-x^\top f(x)\le\lVert x\rVert\lVert f(x)\rVert$ 可知 $\lVert f(x)\rVert\ge\lVert x\rVert$，故 $V(x)\ge\lVert x\rVert^2$，满足径向无界条件。原点\textbf{大范围渐近稳定}。
+}
+
+\subsection{变量梯度法}
+
+\ex{讲义例 5-12\quad 先构造梯度再积分}{
+用变量梯度法判断 $\dot x_1=x_2,\ \dot x_2=-x_2-x_1^3$ 的平衡态稳定性。
+}
+\nt{\textbf{知识点}\quad 用待定梯度消去导数中的混合项，检查可积性后构造 $V$。}
+\sol{
+由 $\dot x_1=\dot x_2=0$ 得唯一平衡态为原点。设 $g_1=(a+b x_1^2)x_1+c x_2,\ g_2=c x_1+d x_2$，则 $\partial g_1/\partial x_2=\partial g_2/\partial x_1=c$，可由梯度积分得到 $V$。计算
+\[
+    g^\top f=(a-c)x_1x_2+(b-d)x_1^3x_2+(c-d)x_2^2-cx_1^4 .
+\]
+为消去混合项，取 $a=c,\ b=d$，再取 $0<c<d$。例如 $c=1,d=2$，沿坐标轴分段积分
+\[
+\begin{aligned}
+    V(x)&=\int_0^{x_1}(1+2\xi^2)\xi\,\mathrm{d}\xi+
+                 \int_0^{x_2}(x_1+2\eta)\,\mathrm{d}\eta\\
+        &=\tfrac12x_1^4+\tfrac12(x_1+x_2)^2+\tfrac12x_2^2,\qquad
+    \dot V=-x_2^2-x_1^4 .
+\end{aligned}
+\]
+$V$ 正定且径向无界，$\dot V$ 负定，所以原点为大范围渐近稳定。该例线性化的特征值为 $0$ 与 $-1$，原方程中的三次项为直接判断提供了信息。
 }

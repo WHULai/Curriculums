@@ -4,6 +4,7 @@
 \input{macros}
 \input{letterfonts}
 \usepackage{needspace}
+\usepackage[europeanresistors]{circuitikz}
 \graphicspath{{img/}}
 
 \hypersetup{pdftitle={《现代控制理论》复习资料},pdfauthor={魏崃}}
@@ -26,16 +27,13 @@
 \newpage
 \pdfbookmark[section]{\contentsname}{toc}
 \setcounter{tocdepth}{1}
-\tableofcontents
+{\setstretch{1.15}\tableofcontents\clearpage}
 
 \input{chapters/01-introduction}
 \input{chapters/02-state-space-model}
-\input{chapters/02-paper-exercises}
 \input{chapters/03-state-space-solutions}
-\input{chapters/03-paper-exercises}
 \input{chapters/04-controllability-observability}
 \input{chapters/05-lyapunov-stability}
 \input{chapters/06-linear-system-synthesis}
-\input{chapters/06-paper-exercises}
 
 \end{document}

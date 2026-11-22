@@ -1,0 +1,77 @@
+\ex{讲义例题\quad 状态空间转传递函数（第173页）}{
+连续时间系统的状态矩阵和输入输出矩阵为
+\[
+A=\begin{bmatrix}
+-3&-2.25&-1.25&-0.75\\4&0&0&0\\0&2&0&0\\0&0&2&0
+\end{bmatrix},\quad
+B=\begin{bmatrix}1\\0\\0\\0\end{bmatrix},\quad
+C=\begin{bmatrix}0&0&0.5&0.75\end{bmatrix},\quad D=1 .
+\]
+求零初值传递函数，并用 MATLAB 验证。
+}
+
+\nt{\textbf{知识点}\quad 逐级消去状态、直联项、\texttt{ss2tf} 的降幂系数。}
+
+\sol 对状态方程作零初值拉普拉斯变换。第 2 至 4 行给出
+$X_2=4X_1/s$、$X_3=8X_1/s^2$、$X_4=16X_1/s^3$。代入第一行，
+\[
+    U=\Bigl(s+3+\frac9s+\frac{10}{s^2}+\frac{12}{s^3}\Bigr)X_1,\qquad
+    Y=U+\Bigl(\frac4{s^2}+\frac{12}{s^3}\Bigr)X_1 .
+\]
+因而
+\[
+    G(s)=\frac{s^4+3s^3+9s^2+14s+24}{s^4+3s^3+9s^2+10s+12}.
+\]
+分子、分母同为四次，且首项系数比为 $1$，与 $D=1$ 一致。MATLAB 验证代码如下。
+\begin{verbatim}
+A = [-3 -2.25 -1.25 -0.75; 4 0 0 0; 0 2 0 0; 0 0 2 0];
+B = [1; 0; 0; 0]; C = [0 0 0.5 0.75]; D = 1;
+[num, den] = ss2tf(A, B, C, D);
+G = tf(num, den)
+\end{verbatim}
+
+\ex{讲义例题\quad 传递函数转状态空间（第174页）}{
+用 MATLAB 将
+\[
+    G(s)=\frac{10s+10}{s^3+6s^2+5s+10}
+\]
+化为一组连续时间状态空间矩阵，并验证输入输出关系。
+}
+
+\nt{\textbf{知识点}\quad 单输入伴随形、分子和分母系数按降幂输入、实现的非唯一性。}
+
+\sol 分母为三阶，分子次数较低，故 $D=0$。按 \texttt{tf2ss} 给出的状态顺序可取
+\[
+    A=\begin{bmatrix}-6&-5&-10\\1&0&0\\0&1&0\end{bmatrix},\quad
+    B=\begin{bmatrix}1\\0\\0\end{bmatrix},\quad
+    C=\begin{bmatrix}0&10&10\end{bmatrix}.
+\]
+第二、三行给出 $X_1=s^2X_3$、$X_2=sX_3$，第一行给出
+$U=(s^3+6s^2+5s+10)X_3$，输出为 $10(s+1)X_3$，传递函数回到题设。对应命令为
+\begin{verbatim}
+[A, B, C, D] = tf2ss([0 0 10 10], [1 6 5 10]);
+model = ss(A, B, C, D);
+G = tf(model)
+\end{verbatim}
+
+\ex{讲义例题\quad 计算对角规范形（第175页）}{
+求
+\[
+    A=\begin{bmatrix}0&1&-1\\-6&-11&6\\-6&-11&5\end{bmatrix}
+\]
+的约旦规范形和相似变换矩阵。用 MATLAB 校验计算结果。
+}
+
+\nt{\textbf{知识点}\quad 互异特征值的特征向量基、$AP=PJ$、符号矩阵计算。}
+
+\sol $\det(\lambda I-A)=\lambda^3+6\lambda^2+11\lambda+6$，三个根是 $-3,-2,-1$。分别解 $(A-\lambda I)p=0$，将各向量的第三分量取成 $1$，得
+\[
+    P=\begin{bmatrix}1/9&1/4&1\\2/3&1/2&0\\1&1&1\end{bmatrix},\qquad
+    J=\operatorname{diag}(-3,-2,-1).
+\]
+例如第一列乘 $A$ 得 $[-1/3\ \ {-2}\ \ {-3}]^\top$，恰为其自身的 $-3$ 倍。其余两列同理，且 $\det P=1/18$，故 $P^{-1}AP=J$。如下代码以符号矩阵计算，列的次序或尺度可与手算不同，校验条件仍是 $AP=PJ$。
+\begin{verbatim}
+A = sym([0 1 -1; -6 -11 6; -6 -11 5]);
+[P, J] = jordan(A);
+check = simplify(A*P - P*J)
+\end{verbatim}

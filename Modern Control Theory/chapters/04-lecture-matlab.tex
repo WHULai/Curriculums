@@ -1,0 +1,104 @@
+\ex{讲义例题\quad 用 \texttt{ctrb} 判断多输入系统（第187--188页）}{
+已知三阶系统 $\dot x=Ax+Bu$，其中
+\[
+    A=\begin{bmatrix}-2&2&-1\\0&-2&0\\1&-4&0\end{bmatrix},\qquad
+    B=\begin{bmatrix}0&0\\0&1\\1&0\end{bmatrix}.
+\]
+判别系统的状态能控性。
+}
+
+\nt{\textbf{知识点}\quad 多输入能控矩阵按整块排列，列数可以大于状态维数。}
+
+\sol 将 $AB$ 和 $A^2B$ 逐块接到 $B$ 之后，得
+\[
+    Q_c=\begin{bmatrix}
+    0&0&-1&2&2&-4\\ 0&1&0&-2&0&4\\ 1&0&0&-4&-1&10
+    \end{bmatrix}.
+\]
+前三列组成的方阵行列式为 $1$，故 $\rank Q_c=3$，系统完全能控。
+\begin{verbatim}
+A = [-2 2 -1; 0 -2 0; 1 -4 0];
+B = [0 0; 0 1; 1 0];
+Qc = ctrb(A,B); rank(Qc) == size(A,1)
+\end{verbatim}
+
+\ex{讲义例题\quad 用 \texttt{obsv} 判断重特征值系统（第189--190页）}{
+已知 $\dot x=Ax$、$y=Cx$，其中
+\[
+A=\begin{bmatrix}4&1&0&0\\0&4&0&0\\0&0&4&1\\0&0&0&4\end{bmatrix},\qquad
+C=\begin{bmatrix}1&1&2&1\\1&2&2&0\end{bmatrix}.
+\]
+判别系统的状态能观性。
+}
+
+\nt{\textbf{知识点}\quad 约旦块、幂零矩阵降幂、能观矩阵零空间。}
+
+\sol 写 $A=4I+N$，其中 $N^2=0$。每一块 $CA^k$ 都是 $C$、$CN$ 的线性组合，因此只需对下面的矩阵求秩。
+\[
+    \begin{bmatrix}C\\CN\end{bmatrix}
+    =\begin{bmatrix}1&1&2&1\\1&2&2&0\\0&1&0&2\\0&1&0&2\end{bmatrix}.
+\]
+前三行线性无关，第四行等于第三行，故秩为 $3<4$。不可观子空间由 $[-2\ \ 0\ \ 1\ \ 0]^\top$ 张成。
+\begin{verbatim}
+A = [4 1 0 0; 0 4 0 0; 0 0 4 1; 0 0 0 4];
+C = [1 1 2 1; 1 2 2 0];
+Qo = obsv(A,C); rank(Qo)
+\end{verbatim}
+
+\ex{讲义例题\quad 用 \texttt{ctrbf} 分解不能控系统（第191--193页）}{
+给定 $\dot x=Ax+Bu$、$y=Cx$，其中
+\[
+    A=\begin{bmatrix}1&2&-1\\0&1&0\\1&-4&3\end{bmatrix},\quad
+    B=\begin{bmatrix}0\\0\\1\end{bmatrix},\quad
+    C=\begin{bmatrix}1&-1&1\end{bmatrix}.
+\]
+判断系统能控性。如果不完全能控，作能控性分解并写出能控子系统。
+}
+
+\nt{\textbf{知识点}\quad 能控空间由 $B,AB,\ldots$ 张成，\texttt{ctrbf} 的变换约定为 $z=Tx$。}
+
+\sol 能控矩阵为
+\[
+    Q_c=\begin{bmatrix}0&-1&-4\\0&0&0\\1&3&8\end{bmatrix}.
+\]
+前两列独立且第二行全零，故秩为 $2$。$\dot x_2=x_2$ 是无法由输入改变的状态。取 $z=[x_2\ \ {-x_1}\ \ x_3]^\top$，将不能控分量排在最前，得
+\[
+    \bar A=\begin{bmatrix}1&0&0\\-2&1&1\\-4&-1&3\end{bmatrix},\quad
+    \bar B=\begin{bmatrix}0\\0\\1\end{bmatrix},\quad
+    \bar C=\begin{bmatrix}-1&-1&1\end{bmatrix}.
+\]
+因此能控子系统的状态为 $[z_2\ \ z_3]^\top$，对应 $A_c=\begin{bmatrix}1&1\\-1&3\end{bmatrix}$、$B_c=[0\ \ 1]^\top$、$C_c=[-1\ \ 1]$。求原系统非零初值响应时仍须保留 $z_1$ 及它对其余状态和输出的影响。
+\begin{verbatim}
+A = [1 2 -1; 0 1 0; 1 -4 3]; B = [0;0;1]; C = [1 -1 1];
+[Ab, Bb, Cb, T, k] = ctrbf(A,B,C);
+r = sum(k);
+idx = size(A,1)-r+1 : size(A,1);
+Ac = Ab(idx,idx); Bc = Bb(idx,:); Cc = Cb(:,idx);
+\end{verbatim}
+
+\ex{讲义例题\quad 用 \texttt{obsvf} 分解不能观系统（第194--196页）}{
+给定 $\dot x=Ax+Bu$、$y=Cx$，其中
+\[
+    A=\begin{bmatrix}0&0&-1\\1&0&-3\\0&1&-3\end{bmatrix},\quad
+    B=\begin{bmatrix}1\\1\\0\end{bmatrix},\quad
+    C=\begin{bmatrix}0&1&-2\end{bmatrix}.
+\]
+判断系统能观性。如果不完全能观，作能观性分解并写出能观子系统。
+}
+
+\nt{\textbf{知识点}\quad 用 $C,CA$ 定义可由测量恢复的坐标，按 \texttt{obsvf} 的分块顺序提取子系统。}
+
+\sol $CA=[1\ \ {-2}\ \ 3]$，$CA^2=[-2\ \ 3\ \ {-4}]=-2CA-C$，故 $Q_o$ 秩为 $2$。取 $z=[x_3\ \ CAx\ \ Cx]^\top$，这三个线性组合给出行列式为 $1$ 的变换。由 $\dot z_2=CA^2x+CABu$、$\dot z_3=CAx+CBu$ 等式得到
+\[
+    \bar A=\begin{bmatrix}-1&0&1\\0&-2&-1\\0&1&0\end{bmatrix},\quad
+    \bar B=\begin{bmatrix}0\\-1\\1\end{bmatrix},\quad
+    \bar C=\begin{bmatrix}0&0&1\end{bmatrix}.
+\]
+能观子系统由 $(z_2,z_3)$ 构成，$A_o=\begin{bmatrix}-2&-1\\1&0\end{bmatrix}$、$B_o=[-1\ \ 1]^\top$、$C_o=[0\ \ 1]$。$z_1$ 的初值不影响输出。手算选择整数组合，MATLAB 选择正交变换时矩阵元素可以不同，两种坐标下的维数和输入输出行为一致。
+\begin{verbatim}
+A = [0 0 -1; 1 0 -3; 0 1 -3]; B = [1;1;0]; C = [0 1 -2];
+[Ab, Bb, Cb, T, k] = obsvf(A,B,C);
+r = sum(k);
+idx = size(A,1)-r+1 : size(A,1);
+Ao = Ab(idx,idx); Bo = Bb(idx,:); Co = Cb(:,idx);
+\end{verbatim}

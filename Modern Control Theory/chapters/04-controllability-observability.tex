@@ -1,87 +1,25 @@
 \chapter{线性系统的能控性和能观性}
 \label{sec:04-controllability-observability}
 
-\section{知识点}
+\section{线性连续系统的能控性}
 
-\subsection{状态能控、输出能控与状态能观}
-
-对线性定常连续系统 $\dot x=Ax+Bu,\ y=Cx+Du$，设状态维数为 $n$，输出维数为 $p$。状态能控性研究能否在有限时间内用输入将状态由任意初态送至任意终态。状态能观性研究能否由给定时间段内的输入、输出唯一确定初态。令
+给定状态方程 $\dot x=Ax+Bu$，能控性问是否能在有限时间内把任意初态送至任意终态。教材也常从控制到原点定义能控性；对连续线性系统，状态转移矩阵可逆，所以这一定义与从原点到达任意终态等价。对线性定常系统，
 \[
-\begin{aligned}
-    Q_c &= [B\ AB\ \cdots\ A^{n-1}B],\\
-    Q_o &= [C^\top\ (CA)^\top\ \cdots\ (CA^{n-1})^\top]^\top,\\
-    Q_y &= [CB\ CAB\ \cdots\ CA^{n-1}B\ D].
-\end{aligned}
+    x(t_f)=e^{A(t_f-t_0)}x(t_0)+\int_{t_0}^{t_f}e^{A(t_f-\tau)}Bu(\tau)\,\mathrm{d}\tau.
 \]
-状态完全能控、状态完全能观和输出完全能控分别等价于 $\rank Q_c=n$、$\rank Q_o=n$ 和 $\rank Q_y=p$。求 $Q_c$ 时从 $B$ 开始依次左乘 $A$，求 $Q_o$ 时从 $C$ 开始依次右乘 $A$。
-
-\begin{note}
-    能观性只取决于 $(A,C)$。利用已知的输入，可由 $y$ 减去零状态响应和直接传递项，留下 $Ce^{A(t-t_0)}x(t_0)$。$Q_o$ 的零空间是所有无法由输出区分的初态差向量。
-\end{note}
-
-\subsection{PBH 判据和对偶性}
-
-只需逐个检查 $A$ 的特征值 $\lambda$。能控性与能观性的 PBH 判据分别为
+由 Cayley--Hamilton 定理，$e^{A(t_f-\tau)}$ 可写成 $I,A,\dots,A^{n-1}$ 的线性组合。所有可由输入改变的终态方向组成 $\operatorname{im}Q_c$，其中
 \[
-    \rank [\lambda I-A\ \ B]=n,\qquad
-    \rank\begin{bmatrix}\lambda I-A\\C\end{bmatrix}=n .
+    Q_c=[B\ AB\ \cdots\ A^{n-1}B],\qquad
+    \text{完全能控}\iff\rank Q_c=n.
 \]
-若存在非零左特征向量 $w^\top$ 满足 $w^\top B=0$，则对应模态不能控。若存在非零右特征向量 $v$ 满足 $Cv=0$，则对应模态不能观。对上超对角线为 $1$ 的约旦形，把同一特征值对应的各块放在一起检查。取这些块在 $B$ 中对应的末行，要求行线性无关。取这些块在 $C$ 中对应的首列，要求列线性无关。$(A,B)$ 能控等价于 $(A^\top,B^\top)$ 能观，$(A,C)$ 能观等价于 $(A^\top,C^\top)$ 能控。
+若只要求控制输出 $y=Cx+Du$，相应的方向由
+$Q_y=[CB\ CAB\ \cdots\ CA^{n-1}B\ D]$ 张成。此时满秩要求为 $\rank Q_y=p$，其中 $p$ 为输出维数。
 
-\subsection{线性时变连续系统}
+\subsection{代数判据与模态判据}
 
-设 $\Phi(t,\tau)$ 为由时刻 $\tau$ 到时刻 $t$ 的状态转移矩阵。对给定区间 $[t_0,t_f]$，构造
-\[
-\begin{aligned}
- W_c&=\int_{t_0}^{t_f}\Phi(t_f,\tau)B(\tau)B(\tau)^\top
-                     \Phi(t_f,\tau)^\top\,\mathrm{d}\tau,\\
- W_o&=\int_{t_0}^{t_f}\Phi(\tau,t_0)^\top C(\tau)^\top C(\tau)
-                     \Phi(\tau,t_0)\,\mathrm{d}\tau .
-\end{aligned}
-\]
-该区间上完全能控、完全能观分别等价于 $W_c$、$W_o$ 非奇异。若矩阵充分光滑，也可取 $M_0=B$、$N_0=C$ 递推
-\[
-    M_{k+1}=AM_k-\dot M_k,\qquad N_{k+1}=N_kA+\dot N_k .
-\]
-若在区间内某时刻，由 $M_k$ 横向拼接的矩阵具有满行秩，可判定能控。由 $N_k$ 纵向堆叠的矩阵具有满列秩，可判定能观。这两个递推秩条件是充分条件。
+PBH 判据检查 $A$ 每个特征值 $\lambda$ 是否满足 $\rank[\lambda I-A\ \ B]=n$。若存在非零左特征向量 $w^\top A=\lambda w^\top$ 且 $w^\top B=0$，则 $z=w^\top x$ 满足 $\dot z=\lambda z$；这个模态无法通过输入改变。当 $A$ 是上超对角线为 $1$ 的约旦形时，对同一特征值取各约旦块对应的 $B$ 的末行，它们必须线性无关。比如二阶约旦链的输入需能作用到链尾，才可沿超对角线向链首传递。
 
-\subsection{结构分解与最小实现}
-
-设 $x=Pz$，则 $\tilde A=P^{-1}AP$、$\tilde B=P^{-1}B$、$\tilde C=CP$。$D$ 直接沿用。
-\begin{itemize}
-    \item 做\textbf{能控性分解}时，先从 $Q_c$ 中取一组极大线性无关列，放在 $P$ 的前几列，再补齐为可逆矩阵。$\operatorname{im}Q_c$ 对 $A$ 不变，因此 $\tilde A$ 左下块为零，$\tilde B$ 下块为零。取前一块得到能控子系统。
-    \item 做\textbf{能观性分解}时，从 $Q_o$ 中取一组极大线性无关行，放在 $P^{-1}$ 的前几行，再补齐为可逆矩阵。$\ker Q_o$ 对 $A$ 不变，因此 $\tilde A$ 右上块为零，$\tilde C$ 右块为零。取前一块得到能观子系统。
-    \item \textbf{能控能观分解}将状态分成能控能观、能控不能观、不能控能观、不能控不能观四部分。由零初态求传递函数时，只需保留能控能观部分。给定 $G(s)$ 的实现为最小实现，当且仅当该实现完全能控且完全能观。
-\end{itemize}
-
-\begin{note}
-    $G(s)=C(sI-A)^{-1}B+D$。对 SISO 系统，将 $G$ 约分后，若分母次数小于 $\dim A$，说明实现中有不能控或不能观的模态。初态引起的自由响应仍应由原系统分析。
-\end{note}
-
-\subsection{能控规范形和能观规范形}
-
-设 $A$ 的特征多项式为 $s^n+a_{n-1}s^{n-1}+\cdots+a_0$。记 $F$ 为上超对角线为 $1$、末行为 $[-a_0\ \cdots\ -a_{n-1}]$ 的友矩阵，其余元素均为 $0$。记 $e_i$ 为第 $i$ 个单位列向量。本课所用四种形式为
-\[
-\begin{array}{c|c|c}
-    & \text{I 形} & \text{II 形}\\ \hline
-    (A_c,B_c) & (F^\top,e_1)&(F,e_n)\\
-    (A_o,C_o) & (F,e_1^\top)&(F^\top,e_n^\top)
-\end{array}
-\]
-对单输入能控系统，I 形可取 $P=Q_c$。求 II 形时，取 $\ell=e_n^\top Q_c^{-1}$，用 $\ell,\ell A,\ldots,\ell A^{n-1}$ 作为 $P^{-1}$ 的各行。对单输出能观系统，I 形可取 $P^{-1}=Q_o$。求 II 形时，取 $r=Q_o^{-1}e_n$，用 $r,Ar,\ldots,A^{n-1}r$ 作为 $P$ 的各列。
-
-由传递函数建立实现时，先通过多项式除法分离 $D$。若严格真部分为 $(b_0+b_1s+\cdots+b_{n-1}s^{n-1})/a(s)$，能控 II 形取 $C=[b_0\ b_1\ \cdots\ b_{n-1}]$。能观 II 形由其对偶得到，即将 $A$ 转置并交换 $B$ 与 $C$ 的转置。对传递矩阵，先将各通道的严格真部分化为同一分母，再用各阶分子系数矩阵构造分块规范形。
-
-\subsection{MATLAB 验算}
-
-用 \texttt{rank(ctrb(A,B))}、\texttt{rank(obsv(A,C))} 得到能控矩阵和能观矩阵的秩，分别与 \texttt{size(A,1)} 比较。用 \texttt{minreal(ss(A,B,C,D))} 求消去冗余动态后的实现。数值秩和约简结果受容差影响，含参数或接近秩亏的题目可用符号运算复核。
-
-\Needspace{8\baselineskip}
-\section{作业}
-
-\subsection{讲义思考}
-
-\ex{状态变量与系统结构}{
+\ex{讲义思考\quad 状态变量与系统结构}{
 引入状态变量后，需要回答哪些问题？为什么用经典控制理论的传递函数描述时，这些问题通常不显式出现？
 }
 \nt{\textbf{知识点}\quad 内部状态与外部输入输出描述，能控性、能观性和零极点相消。}
@@ -97,11 +35,72 @@
 给出 $G(s)=1/(s+1)$，而 $x_2(t)=e^t x_2(0)$。因此只观察 $G(s)$ 看不到第二个状态方向及其内部不稳定性。
 }
 
-\subsection{习题课}
+\input{chapters/04-lecture-intuitive}
 
-以下题号与《第四章 习题课》一致。
+\ex{讲义例 4-1\quad 三阶友矩阵的能控性}{
+判断系统的状态能控性，其中 $a_1,a_2,a_3$ 为任意实数。
+\[
+   \dot x=\begin{bmatrix}0&1&0\\0&0&1\\-a_3&-a_2&-a_1\end{bmatrix}x+
+          \begin{bmatrix}0\\0\\1\end{bmatrix}u .
+\]
+}
+\nt{\textbf{知识点}\quad 按 $B,AB,A^2B$ 构造能控矩阵，利用反三角结构判秩。}
+\sol{
+由 $AB=[0\ 1\ {-a_1}]^\top$、$A^2B=[1\ {-a_1}\ a_1^2-a_2]^\top$ 得
+\[
+    Q_c=\begin{bmatrix}0&0&1\\0&1&-a_1\\1&-a_1&a_1^2-a_2\end{bmatrix}.
+\]
+交换首末列后得到主对角元全为 $1$ 的下三角阵，故 $\det Q_c=-1$，任意参数下均完全能控。
+}
 
-\ex{习题1\quad 状态能控性}{
+\ex{讲义例 4-2、例 4-6\quad 秩判据与 PBH 判据}{
+用能控矩阵和 PBH 判据分别分析下列系统的状态能控性（讲义第 23--24、36--37 页）。
+\[
+   \dot x=\begin{bmatrix}1&3&2\\0&2&0\\0&1&3\end{bmatrix}x+
+          \begin{bmatrix}2&1\\1&1\\-1&-1\end{bmatrix}u .
+\]
+}
+\nt{\textbf{知识点}\quad 代数判据给出能控子空间维数，PBH 判据给出失去控制的特征值。}
+\sol{
+计算得到
+\[
+    Q_c=\begin{bmatrix}
+       2&1&3&2&5&4\\1&1&2&2&4&4\\-1&-1&-2&-2&-4&-4
+    \end{bmatrix}.
+\]
+后二行互为相反数，前两列线性无关，故 $\rank Q_c=2$。再用 PBH 判据定位。$\det(\lambda I-A)=(\lambda-1)(\lambda-2)(\lambda-3)$，三个左特征向量可分别取
+\[
+    w_1^\top=[1\ {-2}\ {-1}],\qquad
+    w_2^\top=[0\ 1\ 0],\qquad w_3^\top=[0\ 1\ 1].
+\]
+它们左乘 $B$ 分别得到 $[1\ 0]$、$[1\ 1]$、$[0\ 0]$。因此仅 $\lambda=3$ 对应的模态不能控。原方程中也可直接求和得到 $\dot x_2+\dot x_3=3(x_2+x_3)$。
+}
+
+\ex{讲义例 4-3\quad 含重根约旦形的能控性}{
+分别判断 $\dot x=A_ix+B_iu$ 的状态能控性。
+\[
+\begin{aligned}
+ (1)\ & A_1=\operatorname{diag}(-7,-5),\quad B_1=\begin{bmatrix}2\\5\end{bmatrix},\\
+ (2)\ & A_2=\begin{bmatrix}-4&1&0\\0&-4&0\\0&0&-3\end{bmatrix},\quad
+        B_2=\begin{bmatrix}0&0\\0&0\\1&1\end{bmatrix},\\
+ (3)\ & A_3=\begin{bmatrix}-4&1&0&0\\0&-4&0&0\\0&0&-3&0\\0&0&0&-4\end{bmatrix},\quad
+        B_3=\begin{bmatrix}0&0\\0&1\\2&0\\2&1\end{bmatrix},\\
+ (4)\ & A_4=A_3,\quad B_4=\begin{bmatrix}0\\1\\2\\3\end{bmatrix}.
+\end{aligned}
+\]
+}
+\nt{\textbf{知识点}\quad 每个特征值分别收集约旦链尾的输入行，检查行向量是否独立。}
+\sol{
+（1）两个特征值各有一个一阶块，$B_1$ 的两行分别非零，完全能控。
+
+（2）$\lambda=-4$ 的二阶块对应链尾为状态 $x_2$，其输入行全零。$x_1,x_2$ 构成无输入自治块，整体不完全能控。
+
+（3）$\lambda=-4$ 有两个块，对应的链尾分别是 $x_2,x_4$，取到 $[0\ 1]$ 与 $[2\ 1]$，行列式 $-2\ne0$。$\lambda=-3$ 的链尾行 $[2\ 0]$ 非零，故完全能控。
+
+（4）$\lambda=-4$ 需要在一个输入通道上独立作用于两个链尾，两个一维行向量 $[1]$ 与 $[3]$ 线性相关。非零模态组合 $x_4-3x_2$ 的导数为 $-4(x_4-3x_2)$，故整体不完全能控。
+}
+
+\ex{习题课 1\quad 状态能控性}{
 判断以下两个系统的状态能控性。
 \[
 \begin{aligned}
@@ -134,7 +133,7 @@ $Q_c$ 满秩，系统\textbf{状态完全能控}。输入先进入 $\dot x_2$，
 第二行全为零，且 $B$ 的前两列线性无关，故 $\rank Q_c=2<3$。系统\textbf{状态不完全能控}。具体而言，$\dot x_2=-3x_2$，$x_2(t)$ 由初值唯一决定。
 }
 
-\ex{习题2\quad 输出能控性}{
+\ex{习题课 2\quad 输出能控性}{
 判断下列系统的输出能控性。
 \[
     \dot x=\begin{bmatrix}0&1&0\\0&0&1\\-6&-11&-6\end{bmatrix}x
@@ -152,7 +151,98 @@ $Q_c$ 满秩，系统\textbf{状态完全能控}。输入先进入 $\dot x_2$，
 该秩等于输出维数 $1$，系统\textbf{输出完全能控}。由 $\dot x_1=x_2$、$\dot x_2=x_3$ 也可看出，输入沿着 $x_3\to x_2\to x_1$ 传到输出。
 }
 
-\ex{习题3\quad 状态能观性}{
+\ex{讲义例 4-7\quad 输出能控与状态能控}{
+判断 $\dot x=[1\ 1]^\top u,\ y=[1\ 1]x$ 的输出能控性（讲义第 42 页），并比较其状态能控性。
+}
+\nt{\textbf{知识点}\quad $Q_y$ 的秩与输出维数比较，$Q_c$ 的秩与状态维数比较。}
+\sol{
+这里 $A=0$、$D=0$，$CB=2$，故 $Q_y=[2\ 0\ 0]$ 的秩为 $1$，等于输出维数。取常值 $u=(y_f-y_0)/(2T)$，可在 $T>0$ 内把输出送至 $y_f$。与此同时，$Q_c=[B\ 0]$ 的秩为 $1<2$，且 $\dot x_1-\dot x_2=0$，因此状态不完全能控。
+}
+
+\subsection{时变系统的能控性}
+
+设 $\Phi(t,\tau)$ 为由 $\tau$ 到 $t$ 的状态转移矩阵。定义终时刻坐标下的格拉姆矩阵
+\[
+    W_c=\int_{t_0}^{t_f}\Phi(t_f,\tau)B(\tau)B(\tau)^\top
+                       \Phi(t_f,\tau)^\top\,\mathrm{d}\tau .
+\]
+该区间完全能控当且仅当 $W_c$ 非奇异。令 $d=x_f-\Phi(t_f,t_0)x(t_0)$，
+输入 $u(\tau)=B(\tau)^\top\Phi(t_f,\tau)^\top W_c^{-1}d$ 代入状态解即得到期望终态。讲义也在初始时刻坐标下写格拉姆矩阵，两者通过可逆状态转移矩阵合同变换，有相同的秩。
+若系数矩阵充分光滑，取 $M_0=B$，递推 $M_{k+1}=AM_k-\dot M_k$。在区间内某时刻，若 $[M_0\ \cdots\ M_{n-1}]$ 满行秩，则可判定能控。
+
+\ex{讲义例 4-6\quad 时变系统在 $t_0=0$ 的能控性}{
+判断下列时变系统在初始时刻 $t_0=0$ 的状态能控性（讲义第 47--50 页）。
+\[
+    \dot x(t)=\begin{bmatrix}0&t\\0&0\end{bmatrix}x(t)
+                         +\begin{bmatrix}0\\1\end{bmatrix}u(t),\qquad t>0 .
+\]
+}
+\nt{\textbf{知识点}\quad 时变能控格拉姆矩阵、导数秩充分条件。}
+\sol{
+齐次方程中 $x_2$ 为常数，将 $\dot x_1=t x_2$ 积分得
+$\Phi(t,\tau)=\begin{bmatrix}1&(t^2-\tau^2)/2\\0&1\end{bmatrix}$。
+按讲义在起点坐标计算，$\Phi(0,\tau)B=[-\tau^2/2\ 1]^\top$，故
+\[
+    W_c(0,T)=\begin{bmatrix}T^5/20&-T^3/6\\-T^3/6&T\end{bmatrix},\qquad
+    \det W_c(0,T)=T^6/45>0\quad(T>0).
+\]
+所以每个长度为正的区间 $[0,T]$ 上完全能控。另一种验算是 $M_0=[0\ 1]^\top$、$M_1=[t\ 0]^\top$。$[M_0\ M_1]$ 在任何 $0<t<T$ 满秩，亦可判定能控。只在起始时刻 $t=0$ 检查会遗漏之后出现的耦合。
+}
+
+\section{线性连续系统的能观性}
+
+给定 $u(t)$ 与 $y(t)$，能观性问能否在有限观测区间内唯一确定初态。先从输出中扣除已知输入引起的响应，所得 $\bar y(t)=Ce^{A(t-t_0)}x(t_0)$。在 $t_0$ 求 $0$ 至 $n-1$ 阶导数，得到
+\[
+    Q_o=\begin{bmatrix}C\\CA\\\vdots\\CA^{n-1}\end{bmatrix},\qquad
+    \text{完全能观}\iff\rank Q_o=n.
+\]
+若两个初态之差属于 $\ker Q_o$，则在相同输入下它们的输出在所有时刻均相同。PBH 判据检查
+$\rank\begin{bmatrix}\lambda I-A\\C\end{bmatrix}=n$；若 $Av=\lambda v$、$Cv=0$，则 $v$ 对应的模式无法观测。约旦形中，对同一特征值取各块对应的 $C$ 的首列，要检查这些列是否线性无关。
+
+\input{chapters/04-lecture-sensing}
+
+\ex{讲义例 4-7\quad 能观矩阵的秩}{
+判断 $\dot x=\begin{bmatrix}-4&5\\1&0\end{bmatrix}x,\ y=[1\ {-1}]x$ 的状态能观性（讲义第 68 页）。
+}
+\nt{\textbf{知识点}\quad 如果 $CA$ 是 $C$ 的倍数，输出的导数不增加独立信息。}
+\sol{
+$CA=[-5\ 5]=-5C$，故 $\rank Q_o=1$，状态不完全能观。任取两组初态相差 $\alpha[1\ 1]^\top$，其中 $\alpha\ne0$，初始输出与之后的输出都相同，因为 $\dot y=-5y$。
+}
+
+\ex{讲义例 4-8\quad 约旦形的能观性}{
+判断以下三个齐次系统 $\dot x=A_ix,\ y=C_ix$ 的状态能观性。
+\[
+\begin{aligned}
+ (1)\ & A_1=\operatorname{diag}(-7,-5),\quad C_1=\begin{bmatrix}3&0\end{bmatrix},\\
+ (2)\ & A_2=\begin{bmatrix}-4&1&0\\0&-4&0\\0&0&-3\end{bmatrix},\quad
+        C_2=\begin{bmatrix}-1&2&1\end{bmatrix},\\
+ (3)\ & A_3=\begin{bmatrix}-4&1&0&0\\0&-4&0&0\\0&0&-3&0\\0&0&0&-4\end{bmatrix},\quad
+        C_3=\begin{bmatrix}1&1&0&-2\\0&2&1&0\end{bmatrix}.
+\end{aligned}
+\]
+}
+\nt{\textbf{知识点}\quad 每个特征值分别收集约旦链首的输出列。}
+\sol{
+（1）第二列为零，特征值 $-5$ 对应状态 $x_2$ 不可观。
+
+（2）$\lambda=-4$ 的首列为 $-1$，$\lambda=-3$ 的首列为 $1$，两者均非零，系统完全能观。
+
+（3）同一特征值 $\lambda=-4$ 对应的链首列为 $[1\ 0]^\top$ 与 $[-2\ 0]^\top$，线性相关。可取 $v=[2\ 0\ 0\ 1]^\top$ 检验 $A_3v=-4v$、$C_3v=0$。$\lambda=-3$ 的首列 $[0\ 1]^\top$ 非零。由于存在不可观初态方向，整体不完全能观。
+}
+
+\ex{讲义例 4-9\quad PBH 判据定位不可观模态}{
+判断下列系统的状态能观性。
+\[
+    \dot x=\begin{bmatrix}0&1&0\\0&0&1\\-6&-11&-6\end{bmatrix}x,\qquad
+    y=\begin{bmatrix}4&5&1\end{bmatrix}x .
+\]
+}
+\nt{\textbf{知识点}\quad 通过 $Cv_\lambda$ 检查各右特征向量对应的模态。}
+\sol{
+特征多项式为 $(s+1)(s+2)(s+3)$，每个特征值 $\lambda$ 的右特征向量可取 $v_\lambda=[1\ \lambda\ \lambda^2]^\top$。计算 $Cv_\lambda=\lambda^2+5\lambda+4=(\lambda+1)(\lambda+4)$。$\lambda=-1$ 时为零，另外两个特征值代入均非零，故恰有 $-1$ 对应的模态不可观。若初态为 $[1\ {-1}\ 1]^\top$，输出恒为零。
+}
+
+\ex{习题课 3\quad 状态能观性}{
 判断下列系统的状态能观性。
 \[
     \dot x=\begin{bmatrix}0&1&0\\0&0&1\\-2&-4&-3\end{bmatrix}x,\qquad
@@ -173,7 +263,117 @@ $Q_c$ 满秩，系统\textbf{状态完全能控}。输入先进入 $\dot x_2$，
 取前三行组成三阶方阵。第三行减去第二行的两倍后为 $[0\ 0\ 2]$，故该子式为 $2(0\cdot2-1\cdot1)=-2$。所以 $\rank Q_o=3$，系统\textbf{状态完全能观}。在这道题的齐次系统中，$y_1,y_2,\dot y_1$ 这三个标量关系就足以求出状态。
 }
 
-\ex{习题4\quad 能控性结构分解}{
+\subsection{时变系统的能观性}
+
+若从输出中扣除已知输入的响应，所得 $\bar y(t)=C(t)\Phi(t,t_0)x(t_0)$。因此
+\[
+    W_o=\int_{t_0}^{t_f}\Phi(\tau,t_0)^\top C(\tau)^\top C(\tau)
+                        \Phi(\tau,t_0)\,\mathrm{d}\tau .
+\]
+$W_o$ 非奇异当且仅当该区间完全能观。因为对于任一向量 $v$，$v^\top W_ov$ 等于假设初态差为 $v$ 时的输出差能量，$W_o$ 奇异即表示存在非零而不可辨认的初态差。若系数光滑，取 $N_0=C$，递推 $N_{k+1}=N_k A+\dot N_k$。区间内某时刻纵向堆叠 $N_0,\dots,N_{n-1}$ 得满列秩，也是完全能观的充分条件。
+
+\ex{讲义例 4-10\quad 时变能观性}{
+判断该系统在 $t_0=1$ 的状态能观性。
+\[
+    \dot x(t)=\begin{bmatrix}t&1&0\\0&t&0\\0&0&t^2\end{bmatrix}x(t),
+    \qquad y(t)=\begin{bmatrix}1&0&1\end{bmatrix}x(t).
+\]
+}
+\nt{\textbf{知识点}\quad 求输出的连续导数时，需同时对系数矩阵和状态求导。}
+\sol{
+$\dot y=(CA+\dot C)x$，依此递推得
+\[
+    \begin{bmatrix}N_0\\N_1\\N_2\end{bmatrix}
+    =\begin{bmatrix}1&0&1\\t&1&t^2\\t^2+1&2t&t^4+2t\end{bmatrix}.
+\]
+行列式为 $t^2(t-1)^2+2t-1$，当 $t\ge1$ 时为正。观测区间内任一时刻的 $y,\dot y,\ddot y$ 可唯一确定该时刻的状态，状态转移矩阵可逆，故也确定 $x(1)$。系统在 $t_0=1$ 完全能观。
+}
+
+\section{对偶性原理}
+
+$(A,B)$ 能控等价于 $(A^\top,B^\top)$ 能观，$(A,C)$ 能观等价于 $(A^\top,C^\top)$ 能控。其依据是
+\[
+    Q_o(A^\top,B^\top)=Q_c(A,B)^\top,\qquad
+    Q_c(A^\top,C^\top)=Q_o(A,C)^\top .
+\]
+\begin{center}
+\renewcommand{\arraystretch}{1.38}
+\begin{tabular}{@{}lll@{}}
+\toprule
+& 状态能控 & 状态能观\\
+\midrule
+矩阵增广 & 横向拼接 $B, AB,\ldots$ & 纵向堆叠 $C, CA,\ldots$\\
+代数判据 & $Q_c$ 满行秩 & $Q_o$ 满列秩\\
+模态判据 & 每个左特征向量方向能受输入作用 & 每个右特征向量方向能反映在输出中\\
+约旦形检查 & 同一特征值各块尾行线性无关 & 同一特征值各块首列线性无关\\
+\bottomrule
+\end{tabular}
+\end{center}
+对偶变换还可用来从能控规范形推导能观规范形，只需注意 $B,C$ 的角色和转置。
+
+\section{结构分解与零极点相消}
+
+设 $x=Pz$，则 $\tilde A=P^{-1}AP$、$\tilde B=P^{-1}B$、$\tilde C=CP$。$D$ 直接沿用。
+\begin{itemize}
+    \item 做\textbf{能控性分解}时，先从 $Q_c$ 中取一组极大线性无关列，放在 $P$ 的前几列，再补齐为可逆矩阵。$\operatorname{im}Q_c$ 对 $A$ 不变，因此 $\tilde A$ 左下块为零，$\tilde B$ 下块为零。取前一块得到能控子系统。
+    \item 做\textbf{能观性分解}时，从 $Q_o$ 中取一组极大线性无关行，放在 $P^{-1}$ 的前几行，再补齐为可逆矩阵。$\ker Q_o$ 对 $A$ 不变，因此 $\tilde A$ 右上块为零，$\tilde C$ 右块为零。取前一块得到能观子系统。
+    \item \textbf{能控能观分解}将状态分成能控能观、能控不能观、不能控能观、不能控不能观四部分。由零初态求传递函数时，只需保留能控能观部分。给定 $G(s)$ 的实现为最小实现，当且仅当该实现完全能控且完全能观。
+\end{itemize}
+
+\begin{note}
+    $G(s)=C(sI-A)^{-1}B+D$。对 SISO 系统，将 $G$ 约分后，若分母次数小于 $\dim A$，说明实现中有不能控或不能观的模态。初态引起的自由响应仍应由原系统分析。
+\end{note}
+
+令 $\mathcal R=\operatorname{im}Q_c$、$\mathcal N=\ker Q_o$。$\mathcal R\cap\mathcal N$ 是能控但不能观的方向，最小实现的维数为
+\[
+    n_{\min}=\dim\mathcal R-\dim(\mathcal R\cap\mathcal N).
+\]
+图中分别画出两次分解允许的耦合。能控性分解后，不能控块可以通过 $A_{12}$ 影响能控块。提取能控子系统时令不能控块的初态为零。能观性分解后，不可观块受能观块影响，但它的初态不会影响输出。
+
+\begin{center}
+\begin{tikzpicture}[>=Latex, every node/.style={font=\small},
+    block/.style={draw=whusakura,fill=whusakura!7,rounded corners=2pt,
+      minimum width=2.5cm,minimum height=8mm,align=center}]
+  \node[block] (c) at (0,0) {能控块 $z_c$};
+  \node[block] (nc) at (0,1.35) {不能控块 $z_{\bar c}$};
+  \draw[->,thick] (-2.3,0) node[left] {$u$} -- (c);
+  \draw[->,thick] (nc) -- node[right] {$A_{12}$} (c);
+  \draw[->,thick] (c.east) -- (2.3,0) node[right] {$y$};
+  \draw[->,thick] (nc.east) -| (2.3,0);
+  \node at (0,-.7) {能控性分解（示意）};
+  \begin{scope}[xshift=6.4cm]
+    \node[block] (o) at (0,0) {能观块 $z_o$};
+    \node[block] (no) at (0,1.35) {不能观块 $z_{\bar o}$};
+    \draw[->,thick] (-2.3,0) node[left] {$u$} -- (o);
+    \draw[->,thick] (-2.3,0) |- (no);
+    \draw[->,thick] (o) -- node[right] {$A_{21}$} (no);
+    \draw[->,thick] (o.east) -- (2.3,0) node[right] {$y$};
+    \node at (0,-.7) {能观性分解（示意）};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\ex{讲义例 4-11\quad 能控性分解与自主演化块}{
+求下列系统的能控子系统。
+\[
+    \dot x=\begin{bmatrix}1&2&-1\\0&1&0\\1&-4&3\end{bmatrix}x+
+           \begin{bmatrix}0\\0\\1\end{bmatrix}u,\qquad y=[1\ {-1}\ 1]x.
+\]
+}
+\nt{\textbf{知识点}\quad 先选能控列空间的基，分离自主块，区分完整变换与子系统。}
+\sol{
+$AB=[-1\ 0\ 3]^\top$，$A^2B=[-4\ 0\ 8]^\top=-4B+4AB$。按题面的 $A$ 计算，$A^2B$ 第三项为 $8$，与讲义第 103 页能控矩阵所列的 $0$ 有出入。前两列独立，故能控空间为二维。取 $P=[B\ AB\ e_2]$，则 $x=Pz$ 给出 $z_1=3x_1+x_3,\ z_2=-x_1,\ z_3=x_2$。因为 $Ae_2=[2\ 1\ {-4}]^\top$，它在新基底中的坐标为 $[2\ {-2}\ 1]^\top$。所以
+\[
+    \dot z=\begin{bmatrix}0&-4&2\\1&4&-2\\0&0&1\end{bmatrix}z+
+          \begin{bmatrix}1\\0\\0\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}1&2&-1\end{bmatrix}z.
+\]
+$z_3$ 满足 $\dot z_3=z_3$。限制到 $z_3=0$，得
+$\dot z_c=\begin{bmatrix}0&-4\\1&4\end{bmatrix}z_c+[1\ 0]^\top u$，
+$y_c=[1\ 2]z_c$，其中 $z_c=[z_1\ z_2]^\top$。
+}
+
+\ex{习题课 4\quad 能控性结构分解}{
 对下列系统进行能控性结构分解，写出能控子系统。
 \[
     \dot x=\begin{bmatrix}1&1&0\\0&1&0\\0&1&1\end{bmatrix}x
@@ -204,18 +404,39 @@ $Q_c$ 满秩，系统\textbf{状态完全能控}。输入先进入 $\dot x_2$，
 \]
 }
 
-\ex{习题5\quad 能观性结构分解}{
-对下列系统进行能观性结构分解，写出能观子系统。
+\ex{讲义例 4-12\quad 能观性分解（第二项输入系数为 $-1$）}{
+求下列系统的能观子系统。
+\[
+    \dot x=\begin{bmatrix}0&0&-1\\1&0&-3\\0&1&-3\end{bmatrix}x+
+           \begin{bmatrix}1\\-1\\0\end{bmatrix}u,\qquad
+    y=[0\ 1\ {-2}]x .
+\]
+}
+\nt{\textbf{知识点}\quad 能观坐标由 $C,CA$ 选取，能观子系统输入必须用本题的 $B$ 计算。}
+\sol{
+$CA=[1\ {-2}\ 3]$、$CA^2=-C-2CA$，故能观空间维数为 $2$。取 $z_1=Cx,\ z_2=CAx,\ z_3=x_3$，所得坐标变换可逆。按题面 $B=[1\ {-1}\ 0]^\top$ 计算，$CB=-1,\ CAB=3$。因此
+\[
+    \dot z_1=z_2-u,\qquad \dot z_2=-z_1-2z_2+3u,\qquad y=z_1 .
+\]
+不可观坐标满足 $\dot z_3=z_1-z_3$。讲义后续计算所列的 $[1\ {-1}]^\top$ 输入系数对应下一题的 $B=[1\ 1\ 0]^\top$。
+}
+
+\ex{习题课 5／讲义例 4-13\quad 能观与能控能观分解}{
+给定系统
 \[
     \dot x=\begin{bmatrix}0&0&-1\\1&0&-3\\0&1&-3\end{bmatrix}x
           +\begin{bmatrix}1\\1\\0\end{bmatrix}u,\qquad
     y=\begin{bmatrix}0&1&-2\end{bmatrix}x .
 \]
+\begin{enumerate}
+    \item 进行能观性结构分解，写出能观子系统（习题课 5）。
+    \item 按能控性与能观性进一步作联合结构分解（讲义例 4-13）。
+\end{enumerate}
 }
-\nt{\textbf{知识点}\quad 选取能观矩阵的线性无关行构造 $P^{-1}$，观察不可见坐标与能观子系统的耦合。}
+\nt{\textbf{知识点}\quad 用能观矩阵构造 $P^{-1}$，用能控矩阵构造 $P_c$，联合判断各分块的性质。}
 \sol{
 
-计算 $CA=[1\ {-2}\ 3]$、$CA^2=[-2\ 3\ {-4}]=-C-2CA$。$C$ 与 $CA$ 线性无关，所以 $\rank Q_o=2$。用 $[0\ 0\ 1]$ 补齐，令
+（1）计算 $CA=[1\ {-2}\ 3]$、$CA^2=[-2\ 3\ {-4}]=-C-2CA$。$C$ 与 $CA$ 线性无关，所以 $\rank Q_o=2$。用 $[0\ 0\ 1]$ 补齐，令
 \[
     z=P^{-1}x,\qquad
     P^{-1}=\begin{bmatrix}0&1&-2\\1&-2&3\\0&0&1\end{bmatrix}.
@@ -228,150 +449,37 @@ $Q_c$ 满秩，系统\textbf{状态完全能控}。输入先进入 $\dot x_2$，
     z_o=\begin{bmatrix}z_1\\z_2\end{bmatrix}.
 \]
 这里 $z_3$ 可受 $z_1$ 驱动，而 $z_3$ 不出现在 $\dot z_o$ 和 $y$ 中。
+
+（2）$B=[1\ 1\ 0]^\top$，$AB=[0\ 1\ 1]^\top$，$A^2B=-B-2AB$。取 $P_c=[B\ AB\ e_3]$，令 $v=P_c^{-1}x$。能控性分解得到
+\[
+    \dot v=\begin{bmatrix}0&-1&-1\\1&-2&-2\\0&0&-1\end{bmatrix}v+
+          \begin{bmatrix}1\\0\\0\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}1&-1&-2\end{bmatrix}v .
+\]
+能控块的输出组合为 $v_1-v_2$，取 $w=[v_1-v_2\ \ v_2\ \ v_3]^\top$。计算得
+\[
+    \dot w=\begin{bmatrix}-1&0&1\\1&-1&-2\\0&0&-1\end{bmatrix}w+
+          \begin{bmatrix}1\\0\\0\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}1&0&-2\end{bmatrix}w.
+\]
+$u$ 可达的子空间是 $w_3=0$。在此平面内，$w_1$ 进入输出，$w_2$ 无法影响输出；能观的两维子系统由 $w_1,w_3$ 构成，其能观阵为 $\begin{bmatrix}1&-2\\-1&3\end{bmatrix}$，行列式为 $1$。因此 $w_1$ 对应能控能观部分，$w_2$ 对应能控不能观部分，$w_3$ 对应不能控能观部分。不能控又不能观部分的维数为零。保留 $w_1$ 得最小实现 $\dot w_1=-w_1+u,\ y=w_1$，即 $G(s)=1/(s+1)$。
 }
 
-\ex{习题6\quad 能控规范 I 形和 II 形}{
-将下列状态方程分别化为能控规范 I 形和 II 形。
+\ex{讲义例 4-14\quad 零极点相消}{
+判断下列系统的传递函数是否有零极点相消，并求出约分结果。
 \[
-    \dot x=\begin{bmatrix}1&-2\\3&4\end{bmatrix}x+
-                \begin{bmatrix}1\\1\end{bmatrix}u .
+    \dot x=\begin{bmatrix}3&1\\2&2\end{bmatrix}x+
+        \begin{bmatrix}1\\1\end{bmatrix}u,\qquad y=[1\ 0]x .
 \]
 }
-\nt{\textbf{知识点}\quad 用 $Q_c$ 及其逆矩阵的末行构造规范形变换，特征多项式决定友矩阵中的系数。}
+\nt{\textbf{知识点}\quad 利用未约分的 $\det(sI-A)$ 定位被相消极点，用能控秩解释消去原因。}
 \sol{
-
-先算特征多项式与能控矩阵。
+$AB=4B$，故 $Q_c$ 只有一维，$4$ 是唯一能控模态的特征值。$A$ 的特征多项式为 $(s-4)(s-1)$。直接用逆矩阵的第一行计算得到
 \[
-    \det(sI-A)=s^2-5s+10,\quad
-    Q_c=\begin{bmatrix}1&-1\\1&7\end{bmatrix},\quad
-    Q_c^{-1}=\frac{1}{8}\begin{bmatrix}7&1\\-1&1\end{bmatrix}.
+    G(s)=\frac{[s-2\ \ 1]\,[1\ 1]^\top}{(s-4)(s-1)}
+        =\frac{s-1}{(s-4)(s-1)}=\frac{1}{s-4}.
 \]
-$Q_c$ 可逆，可以进行两种变换。
-
-\textbf{I 形}取 $x=Q_c z$。因为 $Ab$ 是 $Q_c$ 的第二列，且由特征多项式有 $A^2b=-10b+5Ab$，
-\[
-    \dot z=\begin{bmatrix}0&-10\\1&5\end{bmatrix}z
-               +\begin{bmatrix}1\\0\end{bmatrix}u .
-\]
-
-\textbf{II 形}取 $\ell=\frac18[-1\ 1]$、$\ell A=\frac18[2\ 6]$，令 $w_1=\ell x,\ w_2=\ell Ax$。由于 $\ell b=0$、$\ell Ab=1$，可写出 $\dot w_1=w_2$ 与 $\dot w_2=-10w_1+5w_2+u$，即
-\[
-    \dot w=\begin{bmatrix}0&1\\-10&5\end{bmatrix}w
-               +\begin{bmatrix}0\\1\end{bmatrix}u .
-\]
-}
-
-\ex{习题7\quad 能观规范 I 形和 II 形}{
-将下列系统分别化为能观规范 I 形和 II 形。
-\[
-    \dot x=\begin{bmatrix}1&-1\\1&1\end{bmatrix}x+
-                \begin{bmatrix}2\\1\end{bmatrix}u,\qquad
-    y=\begin{bmatrix}-1&1\end{bmatrix}x .
-\]
-}
-\nt{\textbf{知识点}\quad 能观规范形的坐标变换，变换时对 $B$ 和 $C$ 同时换坐标。}
-\sol{
-
-由 $CA=[0\ 2]$ 可得 $Q_o=\begin{bmatrix}-1&1\\0&2\end{bmatrix}$，行列式为 $-2$，能观。原矩阵的特征多项式为 $s^2-2s+2$。
-
-\textbf{I 形}取 $z=Q_o x$。其中 $CB=-1$、$CAB=2$，再由 $A^2=-2I+2A$ 得
-\[
-    \dot z=\begin{bmatrix}0&1\\-2&2\end{bmatrix}z+
-                \begin{bmatrix}-1\\2\end{bmatrix}u,\qquad
-    y=\begin{bmatrix}1&0\end{bmatrix}z .
-\]
-
-\textbf{II 形}先用 $Q_o r=[0\ 1]^\top$ 解得 $r=[\tfrac12\ \tfrac12]^\top$，继而 $Ar=[0\ 1]^\top$。取 $x=Pw$，其中
-\[
-    P=[r\ Ar]=\begin{bmatrix}\tfrac12&0\\\tfrac12&1\end{bmatrix},\qquad
-    P^{-1}=\begin{bmatrix}2&0\\-1&1\end{bmatrix}.
-\]
-应用 $P^{-1}AP,\ P^{-1}B,\ CP$，得到
-\[
-    \dot w=\begin{bmatrix}0&-2\\1&2\end{bmatrix}w+
-                \begin{bmatrix}4\\-1\end{bmatrix}u,\qquad
-    y=\begin{bmatrix}0&1\end{bmatrix}w .
-\]
-}
-
-\ex{习题8\quad 传递函数的规范形实现}{
-已知 $G(s)=\dfrac{s+4}{s^3+6s^2+11s+6}$，分别建立能控规范形和能观规范形实现。
-}
-\nt{\textbf{知识点}\quad 从分母构造友矩阵，按升幂排列严格真部分的分子系数，用对偶性得到能观形式。}
-\sol{
-
-分母按升幂的系数为 $6,11,6,1$，分子按升幂的系数为 $4,1,0$。$G$ 严格真，所以 $D=0$。能控 II 形为
-\[
-    A_c=\begin{bmatrix}0&1&0\\0&0&1\\-6&-11&-6\end{bmatrix},\quad
-    B_c=\begin{bmatrix}0\\0\\1\end{bmatrix},\quad
-    C_c=\begin{bmatrix}4&1&0\end{bmatrix}.
-\]
-令 $(sI-A_c)v=B_c$，前两行给出 $v_2=sv_1,\ v_3=s^2v_1$。第三行给出 $v_1=1/(s^3+6s^2+11s+6)$，于是 $C_cv=G(s)$。
-
-将能控 II 形转置取对偶，得到能观 II 形
-\[
-    A_o=\begin{bmatrix}0&0&-6\\1&0&-11\\0&1&-6\end{bmatrix},\quad
-    B_o=\begin{bmatrix}4\\1\\0\end{bmatrix},\quad
-    C_o=\begin{bmatrix}0&0&1\end{bmatrix}.
-\]
-取对偶后传递函数转置，SISO 的传递函数仍为 $G(s)$。
-
-若要求 I 形，可对上面的能控实现取 $P=[B_c\ A_cB_c\ A_c^2B_c]$，算得 $C_cP=[0\ 1\ {-2}]$。因此能控 I 形取 $(A_o,e_1,[0\ 1\ {-2}],0)$，其对偶 $(A_c,[0\ 1\ {-2}]^\top,e_1^\top,0)$ 即为能观 I 形。
-}
-
-\ex{习题9\quad 传递矩阵的最小实现}{
-设
-\[
-    G(s)=\begin{bmatrix}
-      \dfrac{2(s+3)}{(s+1)(s+2)} & \dfrac{4(s+4)}{s+5}
-    \end{bmatrix}.
-\]
-求该系统的最小实现。
-}
-\nt{\textbf{知识点}\quad 提取直接传递项，单输出系统的能观规范 II 形实现，利用极点证明阶数最小。}
-\sol{
-
-第二个通道可写为 $4-4/(s+5)$。提取 $D=[0\ 4]$ 后通分，得
-\[
-\begin{aligned}
-    a(s)&=(s+1)(s+2)(s+5)=s^3+8s^2+17s+10,\\
-    G(s)-D&=\frac{[2s^2+16s+30\quad -4s^2-12s-8]}{a(s)} .
-\end{aligned}
-\]
-按分子系数从常数项至二次项排 $B$ 的两列，得
-\[
-    A=\begin{bmatrix}0&0&-10\\1&0&-17\\0&1&-8\end{bmatrix},\quad
-    B=\begin{bmatrix}30&-8\\16&-12\\2&-4\end{bmatrix},\quad
-    C=\begin{bmatrix}0&0&1\end{bmatrix},\quad
-    D=\begin{bmatrix}0&4\end{bmatrix}.
-\]
-其传递矩阵为题设 $G(s)$，因为 $C(sI-A)^{-1}=[1\ s\ s^2]/a(s)$。三个互异的极点 $-1,-2,-5$ 均在至少一个约分后的通道出现。任意实现中，每个通道的极点都是 $\det(sI-A)$ 的根，所以状态维数至少为 $3$。以上实现恰有三个状态，故为\textbf{最小实现}。
-}
-
-\subsection{纸质练习}
-
-以下题号对应《纸质练习答案》第 2 至 4 页。
-
-\ex{纸质练习四\quad 最小实现}{
-求传递矩阵
-\[
-    G(s)=\begin{bmatrix}
-    \dfrac{s+1}{(s+2)(s+3)}&\dfrac{5s+4}{s+5}
-    \end{bmatrix}
-\]
-的最小实现。
-}
-\nt{\textbf{知识点}\quad 先做多项式除法，再通分并按升幂排列分子系数。}
-\sol{
-
-由 $\dfrac{5s+4}{s+5}=5-\dfrac{21}{s+5}$，先取 $D=[0\ 5]$。两通道严格真部分的公分母为 $a(s)=(s+2)(s+3)(s+5)=s^3+10s^2+31s+30$。第一通道的分子为 $(s+1)(s+5)=s^2+6s+5$，第二通道为 $-21(s+2)(s+3)=-21s^2-105s-126$。因此能观规范 II 形实现为
-\[
-    A=\begin{bmatrix}0&0&-30\\1&0&-31\\0&1&-10\end{bmatrix},\quad
-    B=\begin{bmatrix}5&-126\\6&-105\\1&-21\end{bmatrix},\quad
-    C=\begin{bmatrix}0&0&1\end{bmatrix},\quad
-    D=\begin{bmatrix}0&5\end{bmatrix}.
-\]
-将 $B$ 左乘 $C(sI-A)^{-1}=[1\ s\ s^2]/a(s)$ 即得两通道的严格真部分。两个通道合计有三个互异的实际极点 $-2,-3,-5$，从而任何实现至少三阶。此实现为三阶，达到最小维数。
+相消的极点为 $s=1$。全状态自由响应仍可能包含 $e^t$ 项。
 }
 
 \ex{纸质练习七\quad 串联系统的能控性、能观性和稳定性}{
@@ -435,3 +543,246 @@ $z_3=x_2-x_{11}$ 满足 $\dot z_3=-2z_3$。该差值由初态决定，并在输�
 \]
 输入输出通道中的 $-2$ 极点被相消。其冲激响应 $g(t)=\frac12(e^{-t}-e^{-3t})$ 在 $t\ge 0$ 上绝对可积，所以系统也\textbf{BIBO 稳定}。
 }
+
+\section{能控规范形和能观规范形}
+
+设 $A$ 的特征多项式为 $s^n+a_{n-1}s^{n-1}+\cdots+a_0$。记 $F$ 为上超对角线为 $1$、末行为 $[-a_0\ \cdots\ -a_{n-1}]$ 的友矩阵，其余元素均为 $0$。记 $e_i$ 为第 $i$ 个单位列向量。本课所用四种形式为
+\[
+\begin{array}{c|c|c}
+    & \text{I 形} & \text{II 形}\\ \hline
+    (A_c,B_c) & (F^\top,e_1)&(F,e_n)\\
+    (A_o,C_o) & (F,e_1^\top)&(F^\top,e_n^\top)
+\end{array}
+\]
+对单输入能控系统，I 形可取 $P=Q_c$。求 II 形时，取 $\ell=e_n^\top Q_c^{-1}$，用 $\ell,\ell A,\ldots,\ell A^{n-1}$ 作为 $P^{-1}$ 的各行。对单输出能观系统，I 形可取 $P^{-1}=Q_o$。求 II 形时，取 $r=Q_o^{-1}e_n$，用 $r,Ar,\ldots,A^{n-1}r$ 作为 $P$ 的各列。
+
+\ex{讲义例 4-15\quad 能控规范 I、II 形的变换}{
+将 $\dot x=\begin{bmatrix}1&0\\-1&2\end{bmatrix}x+
+\begin{bmatrix}-1\\1\end{bmatrix}u$ 分别化为能控规范 I 形和 II 形。
+}
+\nt{\textbf{知识点}\quad I 形用能控矩阵作基；II 形用 $Q_c^{-1}$ 的末行构造新坐标。}
+\sol{
+特征多项式为 $s^2-3s+2$，且 $Q_c=\begin{bmatrix}-1&-1\\1&3\end{bmatrix}$ 可逆。I 形取 $z=Q_c^{-1}x$。在基 $B,AB$ 中，$A B$ 的坐标为 $[0\ 1]^\top$，$A^2B=-2B+3AB$，所以
+\[
+    \dot z=\begin{bmatrix}0&-2\\1&3\end{bmatrix}z+
+           \begin{bmatrix}1\\0\end{bmatrix}u .
+\]
+II 形取 $w_1=\ell x,\ w_2=\ell A x$，其中 $\ell=[1/2\ 1/2]$ 是 $Q_c^{-1}$ 的末行，且 $\ell A=[0\ 1]$。利用 $\ell B=0$、$\ell AB=1$，可得
+\[
+    \dot w=\begin{bmatrix}0&1\\-2&3\end{bmatrix}w+
+           \begin{bmatrix}0\\1\end{bmatrix}u .
+\]
+}
+
+\ex{讲义例 4-16\quad 能观规范 I、II 形的变换}{
+将 $\dot x=\begin{bmatrix}1&-1\\0&2\end{bmatrix}x,\ y=[-1\ {-1/2}]x$
+分别化为能观规范 I 形和 II 形。
+}
+\nt{\textbf{知识点}\quad I 形取 $z=Q_ox$；II 形用 $Q_o^{-1}$ 的末列构造变换矩阵。}
+\sol{
+$CA=[-1\ 0]$，$Q_o=\begin{bmatrix}-1&-1/2\\-1&0\end{bmatrix}$ 满秩，特征多项式为 $s^2-3s+2$。I 形中 $z_1=y$、$z_2=CAx$，$\dot z_1=z_2$，$\dot z_2=-2z_1+3z_2$，所以
+\[
+    \dot z=\begin{bmatrix}0&1\\-2&3\end{bmatrix}z,\qquad y=[1\ 0]z .
+\]
+II 形中，由 $Q_or=e_2$ 得 $r=[-1\ 2]^\top$，$Ar=[-3\ 4]^\top$。令 $x=[r\ Ar]w$。因为 $Cr=0$、$CAr=1$、$A^2r=-2r+3Ar$，于是
+\[
+    \dot w=\begin{bmatrix}0&-2\\1&3\end{bmatrix}w,\qquad y=[0\ 1]w .
+\]
+}
+
+\ex{习题课 6\quad 能控规范 I 形和 II 形}{
+将下列状态方程分别化为能控规范 I 形和 II 形。
+\[
+    \dot x=\begin{bmatrix}1&-2\\3&4\end{bmatrix}x+
+                \begin{bmatrix}1\\1\end{bmatrix}u .
+\]
+}
+\nt{\textbf{知识点}\quad 用 $Q_c$ 及其逆矩阵的末行构造规范形变换，特征多项式决定友矩阵中的系数。}
+\sol{
+
+先算特征多项式与能控矩阵。
+\[
+    \det(sI-A)=s^2-5s+10,\quad
+    Q_c=\begin{bmatrix}1&-1\\1&7\end{bmatrix},\quad
+    Q_c^{-1}=\frac{1}{8}\begin{bmatrix}7&1\\-1&1\end{bmatrix}.
+\]
+$Q_c$ 可逆，可以进行两种变换。
+
+\textbf{I 形}取 $x=Q_c z$。因为 $Ab$ 是 $Q_c$ 的第二列，且由特征多项式有 $A^2b=-10b+5Ab$，
+\[
+    \dot z=\begin{bmatrix}0&-10\\1&5\end{bmatrix}z
+               +\begin{bmatrix}1\\0\end{bmatrix}u .
+\]
+
+\textbf{II 形}取 $\ell=\frac18[-1\ 1]$、$\ell A=\frac18[2\ 6]$，令 $w_1=\ell x,\ w_2=\ell Ax$。由于 $\ell b=0$、$\ell Ab=1$，可写出 $\dot w_1=w_2$ 与 $\dot w_2=-10w_1+5w_2+u$，即
+\[
+    \dot w=\begin{bmatrix}0&1\\-10&5\end{bmatrix}w
+               +\begin{bmatrix}0\\1\end{bmatrix}u .
+\]
+}
+
+\ex{习题课 7\quad 能观规范 I 形和 II 形}{
+将下列系统分别化为能观规范 I 形和 II 形。
+\[
+    \dot x=\begin{bmatrix}1&-1\\1&1\end{bmatrix}x+
+                \begin{bmatrix}2\\1\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}-1&1\end{bmatrix}x .
+\]
+}
+\nt{\textbf{知识点}\quad 能观规范形的坐标变换，变换时对 $B$ 和 $C$ 同时换坐标。}
+\sol{
+
+由 $CA=[0\ 2]$ 可得 $Q_o=\begin{bmatrix}-1&1\\0&2\end{bmatrix}$，行列式为 $-2$，能观。原矩阵的特征多项式为 $s^2-2s+2$。
+
+\textbf{I 形}取 $z=Q_o x$。其中 $CB=-1$、$CAB=2$，再由 $A^2=-2I+2A$ 得
+\[
+    \dot z=\begin{bmatrix}0&1\\-2&2\end{bmatrix}z+
+                \begin{bmatrix}-1\\2\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}1&0\end{bmatrix}z .
+\]
+
+\textbf{II 形}先用 $Q_o r=[0\ 1]^\top$ 解得 $r=[\tfrac12\ \tfrac12]^\top$，继而 $Ar=[0\ 1]^\top$。取 $x=Pw$，其中
+\[
+    P=[r\ Ar]=\begin{bmatrix}\tfrac12&0\\\tfrac12&1\end{bmatrix},\qquad
+    P^{-1}=\begin{bmatrix}2&0\\-1&1\end{bmatrix}.
+\]
+应用 $P^{-1}AP,\ P^{-1}B,\ CP$，得到
+\[
+    \dot w=\begin{bmatrix}0&-2\\1&2\end{bmatrix}w+
+                \begin{bmatrix}4\\-1\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}0&1\end{bmatrix}w .
+\]
+}
+
+\section{传递函数矩阵的实现与最小实现}
+
+由传递函数建立实现时，先通过多项式除法分离 $D$。若严格真部分为 $(b_0+b_1s+\cdots+b_{n-1}s^{n-1})/a(s)$，能控 II 形取 $C=[b_0\ b_1\ \cdots\ b_{n-1}]$。能观 II 形由其对偶得到，即将 $A$ 转置并交换 $B$ 与 $C$ 的转置。对传递矩阵，先将各通道的严格真部分化为同一分母，再用各阶分子系数矩阵构造分块规范形。
+
+对真有理矩阵 $G(s)$，可用 $D=\lim_{s\to\infty}G(s)$ 求直接传递项。若严格真部分写为
+\[
+    \frac{B_0+B_1 s+\cdots+B_{n-1}s^{n-1}}{a(s)},\qquad
+    a(s)=s^n+a_{n-1}s^{n-1}+\cdots+a_0 ,
+\]
+其中 $G$ 有 $p$ 个输出、$m$ 个输入，则 $B_i\in\mathbb R^{p\times m}$。构造能控 II 形时，按 $m$ 阶单位阵分块，状态维数为 $nm$。构造能观 II 形时，按 $p$ 阶单位阵分块，状态维数为 $np$。选择维数较小的构造后，还要验证另一项结构性质，或用独立的阶数下界证明最小性。
+
+\ex{讲义例 4-17\quad 有直接传递项的 SISO 规范形实现}{
+求
+\[
+    G(s)=\frac{2s^3+14s^2+26s+17}{s^3+6s^2+11s+6}
+\]
+的能控规范 I、II 形实现，并写出讲义用同一传递函数给出的能观规范 I、II 形实现。
+}
+\nt{\textbf{知识点}\quad 分出 $D$，用调换基底求 I 形，再由对偶性得到能观实现。}
+\sol{
+先做除法得到 $G(s)=2+(2s^2+4s+5)/a(s)$，其中 $a(s)=s^3+6s^2+11s+6$，因此四种形式的 $D=2$。记
+$F=\begin{bmatrix}0&1&0\\0&0&1\\-6&-11&-6\end{bmatrix}$，$E=[5\ 4\ 2]$。能控 II 形为 $(F,e_3,E,2)$。取其能控矩阵 $P=[e_3\ Fe_3\ F^2e_3]$ 作变换，有
+\[
+    P=\begin{bmatrix}0&0&1\\0&1&-6\\1&-6&25\end{bmatrix},\qquad
+    EP=[2\ {-8}\ 31].
+\]
+在该新基下，$P^{-1}FP=F^\top$，故能控 I 形为 $(F^\top,e_1,EP,2)$。由对偶性，能观 I 形为 $(F,(EP)^\top,e_1^\top,2)$，能观 II 形为 $(F^\top,E^\top,e_3^\top,2)$。
+}
+
+\ex{讲义例 4-18\quad 两输入一输出传递矩阵的最小实现}{
+求
+\[
+    G(s)=\begin{bmatrix}\dfrac{1}{(s+1)(s+2)}&
+                         \dfrac{1}{(s+2)(s+3)}\end{bmatrix}
+\]
+的最小实现。
+}
+\nt{\textbf{知识点}\quad 按输出数构造能观 II 形，利用跨通道出现的互异极点确定最小维数。}
+\sol{
+两个通道均严格真，$D=[0\ 0]$。公分母 $a(s)=(s+1)(s+2)(s+3)$，两个分子分别为 $s+3$ 和 $s+1$。取
+\[
+    A=\begin{bmatrix}0&0&-6\\1&0&-11\\0&1&-6\end{bmatrix},\quad
+    B=\begin{bmatrix}3&1\\1&1\\0&0\end{bmatrix},\quad C=[0\ 0\ 1].
+\]
+由于 $C(sI-A)^{-1}=[1\ s\ s^2]/a(s)$，该实现复原了两个通道。$B$ 的前两列已张成前两个坐标的平面，而 $AB$ 的第一列含非零第三分量，故完全能控；能观 II 形本身完全能观。还可以由实际极点检验最小性：$-1,-2,-3$ 各自在至少一个通道出现，任何实现的特征多项式都须含这三个因子。
+
+若分别实现两个二阶通道，同一极点 $-2$ 会被重复计入状态。公共分母的能观 II 形允许两路输入共享实现中的动态。
+}
+
+\ex{习题课 8\quad 传递函数的规范形实现}{
+已知 $G(s)=\dfrac{s+4}{s^3+6s^2+11s+6}$，分别建立能控规范形和能观规范形实现。
+}
+\nt{\textbf{知识点}\quad 从分母构造友矩阵，按升幂排列严格真部分的分子系数，用对偶性得到能观形式。}
+\sol{
+
+分母按升幂的系数为 $6,11,6,1$，分子按升幂的系数为 $4,1,0$。$G$ 严格真，所以 $D=0$。能控 II 形为
+\[
+    A_c=\begin{bmatrix}0&1&0\\0&0&1\\-6&-11&-6\end{bmatrix},\quad
+    B_c=\begin{bmatrix}0\\0\\1\end{bmatrix},\quad
+    C_c=\begin{bmatrix}4&1&0\end{bmatrix}.
+\]
+令 $(sI-A_c)v=B_c$，前两行给出 $v_2=sv_1,\ v_3=s^2v_1$。第三行给出 $v_1=1/(s^3+6s^2+11s+6)$，于是 $C_cv=G(s)$。
+
+将能控 II 形转置取对偶，得到能观 II 形
+\[
+    A_o=\begin{bmatrix}0&0&-6\\1&0&-11\\0&1&-6\end{bmatrix},\quad
+    B_o=\begin{bmatrix}4\\1\\0\end{bmatrix},\quad
+    C_o=\begin{bmatrix}0&0&1\end{bmatrix}.
+\]
+取对偶后传递函数转置，SISO 的传递函数仍为 $G(s)$。
+
+若要求 I 形，可对上面的能控实现取 $P=[B_c\ A_cB_c\ A_c^2B_c]$，算得 $C_cP=[0\ 1\ {-2}]$。因此能控 I 形取 $(A_o,e_1,[0\ 1\ {-2}],0)$，其对偶 $(A_c,[0\ 1\ {-2}]^\top,e_1^\top,0)$ 即为能观 I 形。
+}
+
+\ex{习题课 9\quad 传递矩阵的最小实现}{
+设
+\[
+    G(s)=\begin{bmatrix}
+      \dfrac{2(s+3)}{(s+1)(s+2)} & \dfrac{4(s+4)}{s+5}
+    \end{bmatrix}.
+\]
+求该系统的最小实现。
+}
+\nt{\textbf{知识点}\quad 提取直接传递项，单输出系统的能观规范 II 形实现，利用极点证明阶数最小。}
+\sol{
+
+第二个通道可写为 $4-4/(s+5)$。提取 $D=[0\ 4]$ 后通分，得
+\[
+\begin{aligned}
+    a(s)&=(s+1)(s+2)(s+5)=s^3+8s^2+17s+10,\\
+    G(s)-D&=\frac{[2s^2+16s+30\quad -4s^2-12s-8]}{a(s)} .
+\end{aligned}
+\]
+按分子系数从常数项至二次项排 $B$ 的两列，得
+\[
+    A=\begin{bmatrix}0&0&-10\\1&0&-17\\0&1&-8\end{bmatrix},\quad
+    B=\begin{bmatrix}30&-8\\16&-12\\2&-4\end{bmatrix},\quad
+    C=\begin{bmatrix}0&0&1\end{bmatrix},\quad
+    D=\begin{bmatrix}0&4\end{bmatrix}.
+\]
+其传递矩阵为题设 $G(s)$，因为 $C(sI-A)^{-1}=[1\ s\ s^2]/a(s)$。三个互异的极点 $-1,-2,-5$ 均在至少一个约分后的通道出现。任意实现中，每个通道的极点都是 $\det(sI-A)$ 的根，所以状态维数至少为 $3$。以上实现恰有三个状态，故为\textbf{最小实现}。
+}
+
+\ex{纸质练习四\quad 最小实现}{
+求传递矩阵
+\[
+    G(s)=\begin{bmatrix}
+    \dfrac{s+1}{(s+2)(s+3)}&\dfrac{5s+4}{s+5}
+    \end{bmatrix}
+\]
+的最小实现。
+}
+\nt{\textbf{知识点}\quad 先做多项式除法，再通分并按升幂排列分子系数。}
+\sol{
+
+由 $\dfrac{5s+4}{s+5}=5-\dfrac{21}{s+5}$，先取 $D=[0\ 5]$。两通道严格真部分的公分母为 $a(s)=(s+2)(s+3)(s+5)=s^3+10s^2+31s+30$。第一通道的分子为 $(s+1)(s+5)=s^2+6s+5$，第二通道为 $-21(s+2)(s+3)=-21s^2-105s-126$。因此能观规范 II 形实现为
+\[
+    A=\begin{bmatrix}0&0&-30\\1&0&-31\\0&1&-10\end{bmatrix},\quad
+    B=\begin{bmatrix}5&-126\\6&-105\\1&-21\end{bmatrix},\quad
+    C=\begin{bmatrix}0&0&1\end{bmatrix},\quad
+    D=\begin{bmatrix}0&5\end{bmatrix}.
+\]
+将 $B$ 左乘 $C(sI-A)^{-1}=[1\ s\ s^2]/a(s)$ 即得两通道的严格真部分。两个通道合计有三个互异的实际极点 $-2,-3,-5$，从而任何实现至少三阶。此实现为三阶，达到最小维数。
+}
+
+\section{MATLAB 验算}
+
+用 \texttt{rank(ctrb(A,B))}、\texttt{rank(obsv(A,C))} 得到能控矩阵和能观矩阵的秩，分别与 \texttt{size(A,1)} 比较。用 \texttt{minreal(ss(A,B,C,D))} 求消去冗余动态后的实现。数值秩和约简结果受容差影响，含参数或接近秩亏的题目可用符号运算复核。
+
+\Needspace{8\baselineskip}
+
+\input{chapters/04-lecture-matlab}
