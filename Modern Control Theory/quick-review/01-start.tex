@@ -1,0 +1,60 @@
+\chapter{考前定位与反馈题}
+
+先看题目要求的量。每种题型按下表定位，找到同类题以后盖住解答，先写出第一步应该算的量，再对照中间式检查自己的符号、矩阵顺序和最终答案。题号沿用原讲义、习题课和纸质练习。
+
+\begin{center}
+\begin{tabular}{@{}p{4.0cm}p{8.3cm}p{2.0cm}@{}}
+\toprule
+题目在问什么 & 下笔先写什么 & 跳转 \\
+\midrule
+列状态方程，求 $G(s)$，换规范形
+& 电路列 KCL/KVL。方程降阶先选状态。已知 $A,B,C,D$ 求 $G$，先解 $(sI-A)v=B$，最后乘 $C$ 加 $D$。
+& \hyperlink{chapter.2}{第2章} \\[2pt]
+求 $\Phi$、$x(t)$ 或 $y(t)$
+& 标出 $t_0,x(t_0),u(t)$。先分别求 $\Phi x(t_0)$ 和输入积分，再相加并算 $Cx+Du$。
+& \hyperlink{chapter.3}{第3章} \\[2pt]
+判断能控与能观，做分解或最小实现
+& 逐列算 $B,AB,\ldots$ 或逐行算 $C,CA,\ldots$。秩亏时标出独立列、行或零空间。
+& \hyperlink{chapter.4}{第4章} \\[2pt]
+判平衡点、二次型、李雅普诺夫稳定性
+& 先令 $\dot x=0$。题目指定第一法就算 $J(x_e)$，指定第二法就选 $V$ 并实际代入 $\dot V$。
+& \hyperlink{chapter.5}{第5章} \\[2pt]
+配反馈或观测器的极点，做解耦
+& 用 $(s-\lambda_i)$ 相乘写目标多项式。反馈算 $A-BK$，观测器算 $A-LC$，然后按同次幂对齐系数。
+& \hyperlink{chapter.6}{第6章} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{负反馈框图怎么答}
+
+\ex{第1章讲义思考1、2\quad 反馈、偏差和控制器设计}{
+自动控制中常用的关键手段是什么？在图示负反馈系统中，经典控制用什么信号产生控制量？分析与设计各要解决什么问题？设 $K(s),G(s),H(s)$ 分别为控制器、对象和测量环节，试写出参考输入到输出的闭环传递函数。
+\begin{center}
+\begin{tikzpicture}[>=Stealth,
+    block/.style={draw=myb,fill=mytheorembg,minimum width=12mm,minimum height=6mm},
+    sum/.style={draw,circle,minimum size=5mm,inner sep=0pt}]
+    \node[sum] (sum) at (0,0) {$\scriptstyle\sum$};
+    \node[block] (controller) at (1.55,0) {$K$};
+    \node[block] (plant) at (3.2,0) {$G$};
+    \node[block] (sensor) at (2.35,-.76) {$H$};
+    \draw[->] (-1.14,0) node[left] {$r$} -- node[pos=.75,above] {$+$} (sum);
+    \draw[->] (sum) -- node[above] {$e$} (controller);
+    \draw[->] (controller) -- node[above] {$u$} (plant);
+    \draw[->] (plant) -- (4.7,0) node[right] {$y$};
+    \fill (4.24,0) circle[radius=1.1pt];
+    \draw[->] (4.24,0) |- (sensor.east);
+    \draw[->] (sensor.west) -| node[pos=.43,above] {$b$}
+        node[pos=.9,left] {$-$} (sum.south);
+\end{tikzpicture}
+\end{center}
+}
+
+\nt{\textbf{解题顺序}\quad 看反馈进入哪个端口 $\to$ 从求和点写 $e$ $\to$ 沿正向通道写 $u,y$ $\to$ 消去中间量。}
+
+\sol
+\begin{enumerate}[leftmargin=*]
+    \item 简答写“反馈”。负反馈把测得的输出信息送回求和点，得到偏差 $e=r-b$。控制器用偏差生成 $u$。
+    \item 求传递函数时，先写 $B=HY,\ E=R-B,\ U=KE,\ Y=GU$。将前三式逐条代入最后一式，得到 $Y=GK(R-HY)$。把含 $Y$ 的两项移到同一边，得 $(1+GKH)Y=GKR$，所以 $Y/R=GK/(1+GKH)$。单位反馈直接代 $H=1$。
+    \item 分析题给定控制器，要求判断稳定性和响应指标。设计题给定指标，要求选择控制器以满足稳定性、响应速度、超调量或稳态精度等条件。
+\end{enumerate}

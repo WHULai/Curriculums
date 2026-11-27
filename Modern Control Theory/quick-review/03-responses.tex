@@ -1,0 +1,380 @@
+\chapter{状态方程的响应}
+
+\section{由自由响应反推矩阵}
+
+\ex{习题1（习题课第1页）\quad 由两组自由响应反求系统矩阵}{
+未知常矩阵 $A$ 的大小为 $2\times2$，已知 $\dot x=Ax$ 的两组响应为
+\[
+x(0)=\begin{bmatrix}1\\-1\end{bmatrix}
+\ \Longrightarrow\ 
+x(t)=\mathrm e^{-2t}\begin{bmatrix}1\\-1\end{bmatrix},\qquad
+x(0)=\begin{bmatrix}2\\-1\end{bmatrix}
+\ \Longrightarrow\ 
+x(t)=\mathrm e^{-t}\begin{bmatrix}2\\-1\end{bmatrix}.
+\]
+求状态转移矩阵 $\Phi(t)$ 和系统矩阵 $A$。}
+
+\nt{\textbf{解题顺序}\quad 用两组初值作 $P$ 的列、用两组响应作 $X(t)$ 的列。由 $\Phi P=X$ 求 $\Phi$，再对各项求导并取 $t=0$。}
+
+\sol 将两个初始向量并排组成 $P$，将两组响应并排组成 $X(t)$。由于 $X(t)=\Phi(t)P$ 且 $\det P=1$，所以
+\[
+P=\begin{bmatrix}1&2\\-1&-1\end{bmatrix},\qquad
+\Phi(t)=
+\begin{bmatrix}\mathrm e^{-2t}&2\mathrm e^{-t}\\-\mathrm e^{-2t}&-\mathrm e^{-t}\end{bmatrix}
+\begin{bmatrix}-1&-2\\1&1\end{bmatrix}.
+\]
+乘开得
+\[
+\Phi(t)=\begin{bmatrix}
+2\mathrm e^{-t}-\mathrm e^{-2t} & 2\mathrm e^{-t}-2\mathrm e^{-2t}\\
+\mathrm e^{-2t}-\mathrm e^{-t} & 2\mathrm e^{-2t}-\mathrm e^{-t}
+\end{bmatrix}.
+\]
+检查 $\Phi(0)=I$。对四项分别在 $t=0$ 求导，
+\[
+A=\dot\Phi(0)=\begin{bmatrix}-2+2&-2+4\\-2+1&-4+1\end{bmatrix}
+=\begin{bmatrix}0&2\\-1&-3\end{bmatrix}.
+\]
+也可从两组响应读出 $Av_1=-2v_1,\ Av_2=-v_2$，所以 $A=P\operatorname{diag}(-2,-1)P^{-1}$。
+
+\ex{纸质练习二\quad 对角化与齐次状态方程}{
+已知
+\[
+    \dot x=Ax,\qquad A=\begin{bmatrix}1&-1&0\\-1&1&0\\0&0&1\end{bmatrix}.
+\]
+通过线性变换化为对角规范型，并求初始条件 $x(0)=[1\ \ 1\ \ 1]^T$ 下的状态响应。
+}
+
+\nt{\textbf{解题顺序}\quad 找三个特征值与对应向量，取 $x=Pz$。把给定初值变到 $z$ 坐标，分量乘指数后再乘 $P$。}
+
+\sol 先把左上二阶块的行列式展开，
+\[
+    \det(sI-A)=(s-1)\bigl((s-1)^2-1\bigr)
+              =s(s-1)(s-2).
+\]
+对 $\lambda=0,1,2$ 分别取特征向量 $[1\ \ 1\ \ 0]^T$、$[0\ \ 0\ \ 1]^T$、$[1\ \ {-1}\ \ 0]^T$，按此顺序组成
+\[
+    P=\begin{bmatrix}1&0&1\\1&0&-1\\0&1&0\end{bmatrix},\qquad
+    P^{-1}=\begin{bmatrix}1/2&1/2&0\\0&0&1\\1/2&-1/2&0\end{bmatrix}.
+\]
+取 $x=Pz$，则 $\dot z=\operatorname{diag}(0,1,2)z$，且
+$z(0)=P^{-1}x(0)=[1\ \ 1\ \ 0]^T$。各分量分别乘以相应的指数，得
+\[
+    z(t)=\begin{bmatrix}1\\e^t\\0\end{bmatrix},\qquad
+    \boxed{x(t)=Pz(t)=\begin{bmatrix}1\\1\\e^t\end{bmatrix}.}
+\]
+一般初值下，原坐标的状态转移矩阵为
+\[
+    e^{At}=P\operatorname{diag}(1,e^t,e^{2t})P^{-1}
+    =\begin{bmatrix}
+    (1+e^{2t})/2&(1-e^{2t})/2&0\\
+    (1-e^{2t})/2&(1+e^{2t})/2&0\\
+    0&0&e^t
+    \end{bmatrix}.
+\]
+本题初值在 $\lambda=2$ 的方向上投影为零，所以响应中没有 $e^{2t}$ 项。
+
+\noindent\textbf{验算}\quad 检查各组初值是否独立。求 $A$ 时对 $\Phi(t)$ 求导，再代 $t=0$。
+
+\section{定常系统的阶跃响应}
+
+\ex{习题2（习题课第4页）\quad 单位阶跃响应}{
+已知
+\[
+\dot x(t)=\begin{bmatrix}0&1\\-3&4\end{bmatrix}x(t)+
+\begin{bmatrix}1\\1\end{bmatrix}u(t),\qquad
+y(t)=\begin{bmatrix}1&1\end{bmatrix}x(t).
+\]
+在零初始状态下，求单位阶跃响应。}
+
+\nt{\textbf{解题顺序}\quad 先检查 $AB$ 是否为 $B$ 的倍数，从而简算 $\mathrm e^{A\sigma}B$。再积阶跃响应并左乘 $C$。}
+
+\sol 令 $u(t)=1$（$t\ge0$），由 $x(0)=0$，
+\[
+x(t)=\int_0^t \mathrm e^{A(t-\tau)}B\,\mathrm d\tau .
+\]
+计算 $AB=[0+1,-3+4]^{\mathsf T}=B$，于是 $\mathrm e^{A\sigma}B=\mathrm e^\sigma B$。令 $\sigma=t-\tau$，积分即
+\[
+\int_0^t \mathrm e^{\sigma}B\,\mathrm d\sigma
+=\left[\mathrm e^{\sigma}\right]_0^t B=(\mathrm e^t-1)B.
+\]
+因此
+\[
+x(t)=(\mathrm e^t-1)\begin{bmatrix}1\\1\end{bmatrix},\qquad
+\boxed{y(t)=2(\mathrm e^t-1)},\quad t\ge0.
+\]
+验算 $\dot y(0^+)=CB=2$。
+
+\ex{讲义例3-3（第34--35页）\quad 非零初值下的单位阶跃}{
+已知线性定常系统
+\[
+\dot x=\begin{bmatrix}0&1\\-2&-3\end{bmatrix}x+
+\begin{bmatrix}0\\1\end{bmatrix}u,\qquad
+x(0)=\begin{bmatrix}1\\2\end{bmatrix}.
+\]
+求 $u(t)=1(t)$ 时的状态。}
+
+\nt{\textbf{解题顺序}\quad 从 $(sI-A)^{-1}$ 反变换得到 $\Phi$。分别算 $\Phi x(0)$ 与 $\int_0^t\Phi(\sigma)B\,\mathrm d\sigma$，最后相加。}
+
+\sol 预解矩阵的分母为 $(s+1)(s+2)$。记 $F=\mathrm e^{-t}, H=\mathrm e^{-2t}$，按元素拆分得到
+\[
+(sI-A)^{-1}=\frac{1}{s+1}\begin{bmatrix}2&1\\-2&-1\end{bmatrix}
++\frac{1}{s+2}\begin{bmatrix}-1&-1\\2&2\end{bmatrix},
+\qquad
+\Phi(t)=\begin{bmatrix}2F-H&F-H\\-2F+2H&-F+2H\end{bmatrix}.
+\]
+初值项为 $[4F-3H,\ -4F+6H]^{\mathsf T}$。输入项是 $\Phi(\sigma)$ 的第二列积分，
+\[
+\int_0^t\begin{bmatrix}\mathrm e^{-\sigma}-\mathrm e^{-2\sigma}\\
+-\mathrm e^{-\sigma}+2\mathrm e^{-2\sigma}\end{bmatrix}\mathrm d\sigma
+=\begin{bmatrix}(1-F)-(1-H)/2\\-(1-F)+(1-H)\end{bmatrix}.
+\]
+两项相加得 $x(t)=[\frac12+3F-\frac52 H,\ -3F+5H]^{\mathsf T}$。代 $t=0$ 得 $x(0)=[1,2]^{\mathsf T}$。
+
+\ex{纸质练习三\quad 对角实现与零状态阶跃响应}{
+已知 $a,b,c$ 为实数，输入 $u$ 与输出 $y$ 满足
+\[
+    \ddot y+(a+b)\dot y+aby=\dot u+cu.
+\]
+\begin{enumerate}
+    \item 求系统的对角规范型状态空间表达式。
+    \item 求单位阶跃输入 $u(t)=1(t)$ 作用下的零初值状态响应。
+\end{enumerate}
+}
+
+\nt{\textbf{解题顺序}\quad 先求 $G=Y/U$，按根是否互异选择对角实现或重根分支。对每个状态解阶跃，最后检查零初值。}
+
+\sol 在零初始条件下，
+\[
+    G(s)=\frac{Y(s)}{U(s)}=\frac{s+c}{(s+a)(s+b)}.
+\]
+当 $a\ne b$ 时，分别乘 $s+a$ 和 $s+b$，再令 $s=-a,-b$，可得
+\[
+    G(s)=\frac{\alpha}{s+a}+\frac{\beta}{s+b},\qquad
+    \alpha=\frac{c-a}{b-a},\qquad \beta=\frac{c-b}{a-b}.
+\]
+让每个一阶支路由同一输入驱动，再按留数作加权，即
+\[
+    \boxed{
+    A=\begin{bmatrix}-a&0\\0&-b\end{bmatrix},\quad
+    B=\begin{bmatrix}1\\1\end{bmatrix},\quad
+    C=\begin{bmatrix}\alpha&\beta\end{bmatrix},\quad D=0.}
+\]
+由 $e^{At}=\operatorname{diag}(e^{-at},e^{-bt})$，对阶跃输入直接积分。定义
+\[
+    F_d(t)=\int_0^t e^{-d\tau}\,d\tau
+    =\begin{cases}
+        (1-e^{-dt})/d,& d\ne 0,\\
+        t,& d=0.
+    \end{cases}
+\]
+于是
+\[
+    \boxed{x(t)=\begin{bmatrix}F_a(t)\\F_b(t)\end{bmatrix}},\qquad
+    y(t)=\alpha F_a(t)+\beta F_b(t),\qquad t\geq0.
+\]
+逐支路检查可得 $F_d(0)=0$、$\dot F_d=-dF_d+1$，满足初值和状态方程。
+
+\textbf{重根情形。} 若 $a=b$，先写成
+\[
+    G(s)=\frac{1}{s+a}+\frac{c-a}{(s+a)^2}.
+\]
+若 $c=a$，约去公因子后，$A=-a$、$B=C=1$、$D=0$ 是一阶对角实现，阶跃下 $x(t)=F_a(t)$。若要求保留二阶，可取 $A=-aI_2$、$B=[1,0]^{\mathsf T}$、$C=[1,0]$，阶跃下 $x(t)=[F_a(t),0]^{\mathsf T}$。若 $c\ne a$，传递函数含二阶极点。对角矩阵的预解式只有一阶极点，因此此时应采用二阶约当块，
+\[
+    A=\begin{bmatrix}-a&1\\0&-a\end{bmatrix},\quad
+    B=\begin{bmatrix}0\\1\end{bmatrix},\quad
+    C=\begin{bmatrix}c-a&1\end{bmatrix},\quad D=0.
+\]
+由 $e^{A\tau}B=e^{-a\tau}[\tau\ \ 1]^T$，此实现的阶跃状态为
+\[
+    x(t)=\begin{bmatrix}H_a(t)\\F_a(t)\end{bmatrix},\qquad
+    H_a(t)=\int_0^t \tau e^{-a\tau}\,d\tau
+    =\begin{cases}
+        \bigl[1-(1+at)e^{-at}\bigr]/a^2,&a\ne0,\\
+        t^2/2,&a=0.
+    \end{cases}
+\]
+
+\noindent\textbf{易错}\quad 有初值时加 $\Phi(t)x(0)$。若题目求输出，再用 $y=Cx+Du$。阶跃积分可把 $\tau$ 换成 $\sigma=t-\tau$，同时换积分上下限。
+
+\section{矩阵指数与状态转移矩阵}
+
+\ex{习题3（习题课第6页）\quad 四种结构的矩阵指数}{
+分别计算下列矩阵的 $\mathrm e^{At}$。
+\[
+\begin{aligned}
+(1)\quad A&=\begin{bmatrix}-2&0&0\\0&-2&0\\0&0&-2\end{bmatrix},
+&
+(2)\quad A&=\begin{bmatrix}-2&0&0\\0&-3&1\\0&0&-3\end{bmatrix},\\
+(3)\quad A&=\begin{bmatrix}0&0\\1&0\end{bmatrix},
+&
+(4)\quad A&=\begin{bmatrix}0&-1\\4&0\end{bmatrix}.
+\end{aligned}
+\]}
+
+\nt{\textbf{解题顺序}\quad 先识别结构，再套指数。对角元直接取指数，幂零块级数截断，平方为负倍单位阵时按奇偶幂分组。}
+
+\sol \textbf{(1)} $A=-2I_3$，对角元素各自取自然指数，故 $\mathrm e^{At}=\mathrm e^{-2t}I_3$。
+
+\textbf{(2)} 第一坐标独立，右下角为 $-3I_2+N$，其中 $N=\begin{bmatrix}0&1\\0&0\end{bmatrix}$ 且 $N^2=0$。由 $\mathrm e^{(-3I_2+N)t}=\mathrm e^{-3t}(I_2+tN)$，
+\[
+\mathrm e^{At}=\begin{bmatrix}
+\mathrm e^{-2t}&0&0\\
+0&\mathrm e^{-3t}&t\mathrm e^{-3t}\\
+0&0&\mathrm e^{-3t}
+\end{bmatrix}.
+\]
+
+\textbf{(3)} 此时 $A^2=0$，只保留指数级数的前两项，得 $\mathrm e^{At}=I+tA=\begin{bmatrix}1&0\\ t&1\end{bmatrix}$。也可用下三角解析式 $(sI-A)^{-1}=\begin{bmatrix}1/s&0\\1/s^2&1/s\end{bmatrix}$ 作反变换。
+
+\textbf{(4)} 先乘得 $A^2=-4I$，于是 $A^{2k}=(-4)^kI,\ A^{2k+1}=(-4)^k A$。偶数项是 $[1-(2t)^2/2!+\cdots]I$，奇数项是 $[t-4t^3/3!+\cdots]A$，合起来为 $\cos(2t)I+\tfrac12\sin(2t)A$。所以
+\[
+\mathrm e^{At}=\begin{bmatrix}
+\cos(2t)&-\tfrac12\sin(2t)\\2\sin(2t)&\cos(2t)
+\end{bmatrix}.
+\]
+对右上角和左下角分别在 $t=0$ 求导，得 $-1$ 和 $4$，可检查正弦项的系数及符号。
+
+\ex{习题4（习题课第9页）\quad 分块求状态转移矩阵和齐次解}{
+已知
+\[
+\dot x(t)=\begin{bmatrix}1&0&0\\0&1&0\\0&1&2\end{bmatrix}x(t),
+\qquad
+x(0)=\begin{bmatrix}1\\0\\1\end{bmatrix}.
+\]
+\begin{enumerate}
+    \item 求状态转移矩阵。
+    \item 根据给定初始条件求齐次状态方程的解。
+\end{enumerate}}
+
+\nt{\textbf{解题顺序}\quad 先把单独的第一状态拆开。对右下二阶块求 $(sI-A_2)^{-1}$，分式反变换后拼回原矩阵，再乘 $x(0)$。}
+
+\sol \textbf{(1)} 按第一坐标和后两坐标分块，$A=\operatorname{diag}(1,A_2)$，其中 $A_2=\begin{bmatrix}1&0\\1&2\end{bmatrix}$。第一块的指数是 $\mathrm e^t$。第二块有
+\[
+sI-A_2=\begin{bmatrix}s-1&0\\-1&s-2\end{bmatrix},\qquad
+\det(sI-A_2)=(s-1)(s-2).
+\]
+其逆矩阵为
+\[
+(sI-A_2)^{-1}
+=\begin{bmatrix}
+\frac{1}{s-1}&0\\[2pt]
+\frac{1}{(s-1)(s-2)}&\frac{1}{s-2}
+\end{bmatrix}
+\]
+逐元素作拉普拉斯反变换。由于 $(s-1)^{-1}(s-2)^{-1}=(s-2)^{-1}-(s-1)^{-1}$，
+\[
+\Phi(t)=\begin{bmatrix}
+\mathrm e^t&0&0\\
+0&\mathrm e^t&0\\
+0&\mathrm e^{2t}-\mathrm e^t&\mathrm e^{2t}
+\end{bmatrix}.
+\]
+非对角项 $\Phi_{32}(t)$ 体现 $x_2$ 对 $x_3$ 的作用。用 $\dot\Phi_{32}(0)=2-1=1$ 验算这一项。
+
+\textbf{(2)} 用 $\Phi(t)$ 右乘给定初值，得
+\[
+x(t)=\begin{bmatrix}\mathrm e^t\\0\\\mathrm e^{2t}\end{bmatrix}.
+\]
+本题中 $x_2(0)=0$，故 $x_2(t)$ 始终为零，$x_3$ 只保留由自身初值产生的模态。
+
+\ex{习题5（习题课第13页）\quad 用凯莱--哈密顿定理求状态转移矩阵}{
+已知齐次状态方程
+\[
+\dot x(t)=Ax(t),\qquad A=\begin{bmatrix}1&0&0\\0&1&0\\0&1&2\end{bmatrix}.
+\]
+利用凯莱--哈密顿定理求 $\Phi(t)=\mathrm e^{At}$。}
+
+\nt{\textbf{解题顺序}\quad 写二次多项式 $q_t$，在两个特征值处令函数值与指数相等，二重根处再匹配一次导数。解系数后代回 $q_t(A)$。}
+
+\sol $p_A(\lambda)=(\lambda-1)^2(\lambda-2)$。设 $q_t(\lambda)=\alpha_0+\alpha_1\lambda+\alpha_2\lambda^2$。在 $\lambda=1$ 匹配函数值和一阶导数，在 $\lambda=2$ 匹配函数值，得
+\[
+\begin{cases}
+\alpha_0+\alpha_1+\alpha_2=\mathrm e^t,\\
+\alpha_1+2\alpha_2=t\mathrm e^t,\\
+\alpha_0+2\alpha_1+4\alpha_2=\mathrm e^{2t}.
+\end{cases}
+\]
+用第三式减第一式得 $\alpha_1+3\alpha_2=\mathrm e^{2t}-\mathrm e^t$。再减第二式求出 $\alpha_2$，依次回代第二式和第一式，得到
+\[
+\alpha_2=\mathrm e^{2t}-(1+t)\mathrm e^t,\quad
+\alpha_1=(2+3t)\mathrm e^t-2\mathrm e^{2t},\quad
+\alpha_0=\mathrm e^{2t}-2t\mathrm e^t.
+\]
+这里 $A^2=\begin{bmatrix}1&0&0\\0&1&0\\0&3&4\end{bmatrix}$。将它与 $A,I$ 组合，主对角项按 $q_t(1),q_t(1),q_t(2)$ 读取，第 $(3,2)$ 项是 $\alpha_1+3\alpha_2=\mathrm e^{2t}-\mathrm e^t$，故
+\[
+\mathrm e^{At}=q_t(A)=\begin{bmatrix}
+\mathrm e^t&0&0\\0&\mathrm e^t&0\\0&\mathrm e^{2t}-\mathrm e^t&\mathrm e^{2t}
+\end{bmatrix}.
+\]
+检验 $t=0$ 时得到 $I$；再检查 $\dot\Phi_{32}(0)=1$。
+
+\ex{讲义例3-6（第53--54页）\quad 用约旦块求指数}{
+求 $A=\begin{bmatrix}0&1&0\\0&0&1\\2&3&0\end{bmatrix}$ 的矩阵指数。}
+
+\nt{\textbf{解题顺序}\quad 找 $\lambda=-1$ 的长度 2 的链与 $\lambda=2$ 的特征向量，写出两个指数块，用 $P$ 和 $P^{-1}$ 变回原坐标。}
+
+\sol 特征多项式为 $(\lambda-2)(\lambda+1)^2$。取 $\lambda=-1$ 的链 $v=[1,-1,1]^{\mathsf T},\ w=[1,0,-1]^{\mathsf T}$，满足 $(A+I)w=v$、$(A+I)v=0$，再取 $\lambda=2$ 的向量 $q=[1,2,4]^{\mathsf T}$。则 $P=[v,w,q]$，且 $P^{-1}AP=\operatorname{diag}(J_2(-1),2)$。据此
+\[
+\mathrm e^{At}=\frac19
+\begin{bmatrix}1&1&1\\-1&0&2\\1&-1&4\end{bmatrix}
+\begin{bmatrix}\mathrm e^{-t}&t\mathrm e^{-t}&0\\0&\mathrm e^{-t}&0\\0&0&\mathrm e^{2t}\end{bmatrix}
+\begin{bmatrix}2&-5&2\\6&3&-3\\1&2&1\end{bmatrix}.
+\]
+例如第 $(1,1)$ 元为 $\bigl((8+6t)\mathrm e^{-t}+\mathrm e^{2t}\bigr)/9$，在 $t=0$ 为 1 且导数为 0，和 $A_{11}$ 一致。
+
+\noindent\textbf{验算}\quad $\Phi(0)=I,\quad \dot\Phi(0)=A$。约旦块的 $t\mathrm e^{\lambda t}$ 出现在约旦块的超对角位置。
+
+\section{时变状态方程}
+
+\ex{习题6（习题课第16页）\quad 线性时变齐次状态方程}{
+已知
+\[
+\dot x(t)=\begin{bmatrix}0&t^2\\0&0\end{bmatrix}x(t),
+\qquad t_0=1,\qquad x(1)=\begin{bmatrix}1\\1\end{bmatrix}.
+\]
+求状态方程的解。}
+
+\nt{\textbf{解题顺序}\quad 将 $A(t)$ 写成标量函数乘固定幂零矩阵。积分下限取 $1$，先写 $\Phi(t,1)$，再乘初态。}
+
+\sol 写成 $A(t)=t^2N$，其中 $N=\begin{bmatrix}0&1\\0&0\end{bmatrix}$。对任意 $t_1,t_2$，两个乘积 $A(t_1)A(t_2)$ 和 $A(t_2)A(t_1)$ 均为零。因此可在积分后取矩阵指数。由 $N^2=0$，
+\[
+\Phi(t,1)=\exp\left(\int_1^t\tau^2N\,\mathrm d\tau\right)
+=I+\frac{t^3-1}{3}N
+=\begin{bmatrix}1&(t^3-1)/3\\0&1\end{bmatrix}.
+\]
+所以
+\[
+\boxed{x(t)=\begin{bmatrix}(t^3+2)/3\\1\end{bmatrix}} .
+\]
+验算 $x(1)=[1,1]^{\mathsf T}$；$\dot x_1(t)=t^2=t^2x_2(t)$。
+
+\ex{讲义例3-9和例3-10（第83--85、97--98页）\quad 时变状态转移与阶跃响应}{
+已知 $A(t)=\begin{bmatrix}0&(t+1)^{-2}\\0&0\end{bmatrix}$，在 $t>-1$ 考察系统。
+\begin{enumerate}
+    \item 求 $\dot x=A(t)x$ 的状态转移矩阵 $\Phi(t,t_0)$。
+    \item 对 $\dot x=A(t)x+[0,\ t+1]^{\mathsf T}u(t)$，在 $x(0)=[1,1]^{\mathsf T}$、$u(t)=1(t)$ 下求状态响应。
+\end{enumerate}
+}
+
+\nt{\textbf{解题顺序}\quad 先算 $\Phi(t,t_0)$，再把 $t_0$ 换成积分变量 $\tau$ 与 $B(\tau)$ 相乘。初值项从给定时刻 $0$ 转移，输入项逐分量积分。}
+
+\sol \textbf{(1)} 写 $A(t)=(t+1)^{-2}N$，$N=\begin{bmatrix}0&1\\0&0\end{bmatrix}$。$N^2=0$，所以不同时刻的任意两个 $A$ 相乘都为零，转移矩阵可直接由指数得到
+\[
+\Phi(t,t_0)=I+\left(\frac{1}{t_0+1}-\frac{1}{t+1}\right)N
+=\begin{bmatrix}
+1 & \dfrac{t-t_0}{(t+1)(t_0+1)}\\
+0 & 1
+\end{bmatrix}.
+\]
+\textbf{(2)} 初值项等于 $[\,1+t/(t+1),\ 1\,]^{\mathsf T}$；输入项的被积向量为 $\Phi(t,\tau)B(\tau)=[(t-\tau)/(t+1),\ \tau+1]^{\mathsf T}$。逐分量积分并相加得
+\[
+x(t)=
+\begin{bmatrix}1+t/(t+1)\\1\end{bmatrix}+
+\begin{bmatrix}t^2/[2(t+1)]\\t+t^2/2\end{bmatrix}
+=
+\begin{bmatrix}(t^2+4t+2)/[2(t+1)]\\(t^2+2t+2)/2\end{bmatrix}.
+\]
+可另由第二行积分 $\dot x_2=t+1$，再验证结果满足 $\dot x_1=x_2/(t+1)^2$。
+
+\noindent\textbf{易错}\quad 只有确认可交换才能直接写 $\Phi(t,t_0)=\exp(\int_{t_0}^{t}A(\tau)\,\mathrm d\tau)$。检查 $\Phi(t_0,t_0)=I$。

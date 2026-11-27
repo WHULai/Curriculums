@@ -1,0 +1,41 @@
+\documentclass[a4paper]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{needspace}
+\usepackage[europeanresistors]{circuitikz}
+\graphicspath{{img/}}
+
+\hypersetup{pdftitle={《现代控制理论》考前速记册}}
+\title{\includegraphics[width=7cm]{whu-logo.png}\\[1.1em]
+       \Huge{《现代控制理论》考前速记册}}
+\author{}
+\date{}
+
+\renewcommand{\ex}[2]{%
+    \begin{Example*}[breakable=false]{#1}#2\end{Example*}%
+}
+\renewcommand{\sol}{%
+    \par\Needspace{3\baselineskip}%
+    \noindent\textbf{解题过程}\enspace\ignorespaces
+}
+\allowdisplaybreaks[1]
+
+\begin{document}
+
+\maketitle
+\setstretch{1.20}
+\setlength{\parindent}{2em}
+\pdfbookmark[section]{\contentsname}{toc}
+\setcounter{tocdepth}{1}
+{\setstretch{1.08}\tableofcontents\clearpage}
+
+\input{quick-review/01-start}
+\input{quick-review/02-models}
+\input{quick-review/03-responses}
+\input{quick-review/04-structure}
+\input{quick-review/05-stability}
+\input{quick-review/06-design}
+
+\end{document}

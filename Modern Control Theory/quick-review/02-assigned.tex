@@ -1,0 +1,78 @@
+\section{讲义指定题：读三积分器与构造约旦链}
+
+\ex{教材图1.7(b)（讲义第26页）\quad 三积分器带负反馈}{
+正向通道依次为 $K_1/(T_1s+1)$、$K_2/(T_2s+1)$、$K_3/(T_3s)$。输出经 $K_4$ 反馈到第一个求和点的负端。按图从左到右把各环节的输出取为 $x_3,x_2,x_1$，求状态方程和输出方程。
+\begin{center}
+\begin{tikzpicture}[>=Stealth,
+    block/.style={draw=myb,fill=mytheorembg,minimum width=15mm,minimum height=8mm},
+    sum/.style={draw,circle,minimum size=5mm,inner sep=0pt}]
+    \node[sum] (sum) at (0,0) {$\scriptstyle\sum$};
+    \node[block] (one) at (1.7,0) {$\dfrac{K_1}{T_1s+1}$};
+    \node[block] (two) at (4.05,0) {$\dfrac{K_2}{T_2s+1}$};
+    \node[block] (three) at (6.45,0) {$\dfrac{K_3}{T_3s}$};
+    \node[block] (four) at (4.05,-.96) {$K_4$};
+    \draw[->] (-1.04,0) node[left] {$u$} -- node[pos=.68,above] {$+$} (sum);
+    \draw[->] (sum) -- node[above] {$e$} (one);
+    \draw[->] (one) -- node[above] {$x_3$} (two);
+    \draw[->] (two) -- node[above] {$x_2$} (three);
+    \draw[->] (three) -- (8.1,0) node[right] {$y$};
+    \fill (7.5,0) circle[radius=1.1pt] node[above] {$x_1$};
+    \draw[->] (7.5,0) |- (four);
+    \draw[->] (four) -| node[pos=.93,left] {$-$} (sum.south);
+\end{tikzpicture}
+\end{center}
+}
+
+\nt{\textbf{解题顺序}\quad 先写求和结果，再把三个分式逐个交叉相乘，按 $x=[x_1,x_2,x_3]^{\mathsf T}$ 重新排序。}
+
+\sol 求和点的输出是 $e=u-K_4x_1$。三个环节由左到右分别给出
+\[
+\begin{aligned}
+T_1\dot x_3+x_3&=K_1 e=K_1u-K_1K_4x_1,\\
+T_2\dot x_2+x_2&=K_2x_3,\\
+T_3\dot x_1&=K_3x_2 .
+\end{aligned}
+\]
+按 $\dot x_1,\dot x_2,\dot x_3$ 排列，三行依次除以 $T_3,T_2,T_1$，得到
+\[
+\dot x=
+\begin{bmatrix}
+0&K_3/T_3&0\\
+0&-1/T_2&K_2/T_2\\
+-K_1K_4/T_1&0&-1/T_1
+\end{bmatrix}x+
+\begin{bmatrix}0\\0\\K_1/T_1\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0&0\end{bmatrix}x.
+\]
+\textbf{验算。} $u$ 只进入第三行，$K_4$ 只乘 $x_1$，第一行的积分器没有 $x_1$ 自反馈。
+
+\ex{教材例1-11（讲义第119、175页）\quad 两重根的约旦规范形}{
+已知
+\[
+\dot x=\begin{bmatrix}0&1&0\\0&0&1\\2&3&0\end{bmatrix}x+
+\begin{bmatrix}0\\0\\1\end{bmatrix}u,\qquad
+y=\begin{bmatrix}1&0&0\end{bmatrix}x.
+\]
+求一个约旦规范形的状态空间模型，并检查所用的变换。
+}
+
+\nt{\textbf{解题顺序}\quad 找特征根 $\to$ 先求特征向量 $v$ $\to$ 再解广义向量 $(A+I)w=v$ $\to$ 用 $P=[v\ w\ q]$ 换算 $A,B,C$。}
+
+\sol
+\begin{enumerate}[leftmargin=*,nosep]
+    \item 从伴随矩阵末行读出特征多项式 $\lambda^3-3\lambda-2=(\lambda+1)^2(\lambda-2)$。先处理二重根 $-1$。
+    \item 写
+    \[
+       A+I=\begin{bmatrix}1&1&0\\0&1&1\\2&3&1\end{bmatrix}.
+    \]
+    解 $(A+I)v=0$ 时，前两行给出 $v_2=-v_1$、$v_3=-v_2$，取 $v_1=1$ 得 $v=[1,-1,1]^{\mathsf T}$。第三行代入为 $2-3+1=0$。
+    \item 解 $(A+I)w=v$。三行是 $w_1+w_2=1$、$w_2+w_3=-1$、$2w_1+3w_2+w_3=1$。取 $w_2=0$，得到 $w=[1,0,-1]^{\mathsf T}$。第三行检查为 $2-1=1$。
+    \item 对 $\lambda=2$，解 $(A-2I)q=0$。前两行依次给出 $q_2=2q_1$、$q_3=2q_2$，取 $q_1=1$ 得 $q=[1,2,4]^{\mathsf T}$。按 $[v\ w\ q]$ 排列得
+    \[
+      P=\begin{bmatrix}1&1&1\\-1&0&2\\1&-1&4\end{bmatrix},\qquad
+      J=\begin{bmatrix}-1&1&0\\0&-1&0\\0&0&2\end{bmatrix}.
+    \]
+    由于 $Av=-v$、$Aw=v-w$、$Aq=2q$，三列逐个检查便得到 $AP=PJ$。
+    \item 取 $x=Pz$，解 $Pb=B$。第一行给出 $b_2=-b_1-b_3$，第二行给出 $b_1=2b_3$，故 $b_2=-3b_3$。代入第三行 $b_1-b_2+4b_3=1$，得 $9b_3=1$。
+    新模型为 $\dot z=Jz+bu$，其中 $b=[2/9,\,-1/3,\,1/9]^{\mathsf T}$。$CP$ 是 $P$ 的第一行，故 $y=z_1+z_2+z_3$。
+\end{enumerate}

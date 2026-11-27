@@ -1,0 +1,442 @@
+\chapter{线性系统综合}
+
+\section{由状态方程或传递函数配闭环极点}
+
+\ex{习题1\quad 三阶系统的状态反馈}{%
+    已知系统为
+    \[
+    \begin{cases}
+        \dot x_1=x_2,\\
+        \dot x_2=x_3,\\
+        \dot x_3=-x_1-x_2-x_3+3u.
+    \end{cases}
+    \]
+    试确定状态反馈控制律，使闭环极点均为 $-3$，并画出闭环系统结构图。
+    \par\smallskip\hfill{\footnotesize 《第六章 习题》第 1 页}
+}
+
+\nt{\textbf{解题顺序}\quad 列 $A,B$ 并算能控矩阵 $\to$ 用 $A-BK$ 写闭环特征式 $\to$ 按 $(s+3)^3$ 匹配系数 $\to$ 标出积分链和两个反馈求和点。第三行的控制增益为 $3$，系数差应除以 $3$。}
+
+\sol\textbf{1. 写出开环矩阵并判断能控性。}
+\[
+    A=\begin{bmatrix}0&1&0\\0&0&1\\-1&-1&-1\end{bmatrix},
+    \qquad B=\begin{bmatrix}0\\0\\3\end{bmatrix}.
+\]
+计算 $AB=[0,3,-3]^{\mathsf T}$、$A^2B=[3,-3,0]^{\mathsf T}$，得
+\[
+    \mathcal C=\begin{bmatrix}B&AB&A^2B\end{bmatrix}
+    =\begin{bmatrix}0&0&3\\0&3&-3\\3&-3&0\end{bmatrix},
+    \qquad \det\mathcal C=-27 .
+\]
+所以系统完全能控，可以任意配置闭环极点。
+
+\textbf{2. 代入反馈律并比较多项式系数。}设 $u=v-Kx$，$K=[k_1,k_2,k_3]$。因 $B$ 只有第三行非零，反馈只改变 $A$ 的最后一行，
+\[
+    A-BK=\begin{bmatrix}
+        0&1&0\\0&0&1\\
+        -1-3k_1&-1-3k_2&-1-3k_3
+    \end{bmatrix}.
+\]
+展开 $sI-(A-BK)$ 的行列式，
+\[
+    p_K(s)=s^3+(1+3k_3)s^2+(1+3k_2)s+(1+3k_1).
+\]
+三重极点 $-3$ 给出 $p^\ast(s)=(s+3)^3=s^3+9s^2+27s+27$。按常数项、一次项、二次项的顺序，得到
+\[
+    1+3k_1=27,\qquad 1+3k_2=27,\qquad 1+3k_3=9.
+\]
+因此
+\[
+    \boxed{K=\begin{bmatrix}26/3&26/3&8/3\end{bmatrix}},
+    \qquad
+    u=v-\frac{26}{3}x_1-\frac{26}{3}x_2-\frac{8}{3}x_3 .
+\]
+取 $v=0$ 即为原点镇定控制律。回代后第三行是 $[-27,-27,-9]$，所对应的特征多项式为 $(s+3)^3$。
+
+\textbf{3. 画出闭环结构图。}三个积分器依次给出 $x_3$、$x_2$、$x_1$。对象原有的 $-x_1-x_2-x_3$ 在第二个求和点接入。新增的 $-Kx$ 在第一个求和点接入，再经过输入增益 $3$。
+
+\begin{center}
+\begin{tikzpicture}[
+    >=Latex,
+    block/.style={draw, rectangle, minimum height=0.66cm, minimum width=0.86cm},
+    sum/.style={draw, circle, minimum size=0.43cm, inner sep=0pt}
+]
+    \node (ref) at (0,0) {$v$};
+    \node[sum] (controlsum) at (1.35,0) {$\scriptstyle\Sigma$};
+    \node[block] (gain) at (2.65,0) {$3$};
+    \node[sum] (plantsum) at (3.88,0) {$\scriptstyle\Sigma$};
+    \node[block] (int3) at (5.45,0) {$\int$};
+    \node[block] (int2) at (7.6,0) {$\int$};
+    \node[block] (int1) at (9.75,0) {$\int$};
+    \coordinate (state3) at (6.53,0);
+    \coordinate (state2) at (8.68,0);
+    \coordinate (state1) at (10.83,0);
+    \coordinate (rightend) at (11.38,0);
+    \node[block, minimum width=5.34cm] (stack) at (8.68,-1.15)
+        {$x=[x_1\;\; x_2\;\; x_3]^{\mathsf T}$};
+    \node[block] (plantfeed) at (5.6,-2.2) {$[1\;\;1\;\;1]$};
+    \node[block] (controlfeed) at (4.6,-3.38)
+        {$K=[26/3\;\;26/3\;\;8/3]$};
+
+    \draw[->] (ref) -- (controlsum) node[pos=0.68,above] {$+$};
+    \draw[->] (controlsum) -- (gain) node[midway,above] {$u$};
+    \draw[->] (gain) -- (plantsum) node[midway,above] {$+$};
+    \draw[->] (plantsum) -- (int3) node[midway,above] {$\dot x_3$};
+    \draw[->] (int3) -- (int2);
+    \draw[->] (int2) -- (int1);
+    \draw[->] (int1) -- (rightend);
+    \foreach \state/\index in {state3/3,state2/2,state1/1} {
+        \draw[->] (\state) -- (\state |- stack.north);
+        \fill (\state) circle[radius=1.2pt] node[above] {$x_\index$};
+    }
+    \coordinate (branch) at (stack.south |- plantfeed.east);
+    \draw[->] (stack.south) |- (plantfeed.east);
+    \draw[->] (branch) |- (controlfeed.east);
+    \fill (branch) circle[radius=1.2pt];
+    \draw[->] (plantfeed.west) -| (plantsum.south)
+        node[pos=0.94,right] {$-$};
+    \draw[->] (controlfeed.west) -| (controlsum.south)
+        node[pos=0.96,left] {$-$};
+\end{tikzpicture}
+\end{center}
+
+\ex{纸质练习六\quad 由传递函数设计状态反馈}{
+给定 $G(s)=1/[s(s+4)(s+8)]$，求线性状态反馈控制律，使闭环极点为 $-2,-4,-7$。
+\par\smallskip\hfill{\footnotesize 《纸质练习答案》第 3 页}
+}
+
+\nt{\textbf{解题顺序}\quad 展开原分母 $\to$ 取 $x=[y\ \ \dot y\ \ \ddot y]^{\mathsf T}$ 写伴随矩阵 $\to$ 比较开、闭环分母 $\to$ 回代验算。在这个状态顺序下，$K$ 的元素对应常数项至二次项。}
+
+\sol 原分母为 $s^3+12s^2+32s$。取 $x=[y\ \ \dot y\ \ \ddot y]^T$，则 $C=[1\ \ 0\ \ 0]$、$D=0$，其余系统矩阵及能控矩阵为
+\[
+    A=\begin{bmatrix}0&1&0\\0&0&1\\0&-32&-12\end{bmatrix},\qquad
+    B=\begin{bmatrix}0\\0\\1\end{bmatrix},\qquad
+    [B\ AB\ A^2B]=\begin{bmatrix}
+    0&0&1\\0&1&-12\\1&-12&112
+    \end{bmatrix}.
+\]
+能控矩阵的行列式为 $-1$，故系统完全能控。取 $u=-Kx$、$K=[k_1\ \ k_2\ \ k_3]$，则 $A-BK$ 的最后一行为 $[-k_1,\,-32-k_2,\,-12-k_3]$。比较实际与期望的特征多项式，
+\[
+    \begin{aligned}
+    \det(sI-A+BK)&=s^3+(12+k_3)s^2+(32+k_2)s+k_1,\\
+    (s+2)(s+4)(s+7)&=s^3+13s^2+50s+56 .
+    \end{aligned}
+\]
+比较得到 $12+k_3=13$、$32+k_2=50$、$k_1=56$，所以 $k_3=1$、$k_2=18$。在上述状态坐标中，
+\[
+    \boxed{u=-\begin{bmatrix}56&18&1\end{bmatrix}x.}
+\]
+代回得到末行 $[-56\ \ {-50}\ \ {-13}]$，特征多项式分解为 $(s+2)(s+4)(s+7)$。
+
+\ex{例6-2\quad 配置一对共轭复极点}{
+    已知
+    \[
+       \dot x=\begin{bmatrix}-1&-2\\-1&-3\end{bmatrix}x
+             +\begin{bmatrix}2\\1\end{bmatrix}u .
+    \]
+    求状态反馈增益 $K$，使闭环极点为 $-1\pm 2\mathrm j$。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 31–35 页}
+}
+
+\nt{\textbf{解题顺序}\quad 查能控性 $\to$ 将共轭极点乘成实多项式 $\to$ 展开 $\det(sI-A+BK)$ 并解联立方程 $\to$ 回代极点。若先化规范形，记得用 $K=\widetilde K T^{-1}$ 换回原坐标。}
+
+\sol 开环的能控矩阵和特征多项式为
+\[
+    Q_c=[B\ AB]=\begin{bmatrix}2&-4\\1&-5\end{bmatrix},\quad
+    \det Q_c=-6,\quad p(s)=s^2+4s+1 .
+\]
+系统完全能控，而 $p^\ast(s)=(s+1)^2+4=s^2+2s+5$。设 $K=[k_1\ k_2]$，则
+\[
+\begin{aligned}
+    A-BK&=\begin{bmatrix}-1-2k_1&-2-2k_2\\-1-k_1&-3-k_2\end{bmatrix},\\
+    \det(sI-A+BK)&=s^2+(4+2k_1+k_2)s+(1+4k_1-k_2).
+\end{aligned}
+\]
+故 $2k_1+k_2=-2$、$4k_1-k_2=4$。相加得 $6k_1=2$，再代回第一式，得到
+\[
+    \boxed{K=\begin{bmatrix}1/3&-8/3\end{bmatrix}},\qquad
+    u=v-\frac{x_1}{3}+\frac{8x_2}{3}.
+\]
+代入后，闭环一次项系数为 $4+2/3-8/3=2$，常数项为 $1+4/3+8/3=5$。解 $s^2+2s+5=0$，得到 $s=-1\pm2\mathrm j$。
+也可在能控规范 II 型中求解同一道题。由 $\ell=[0\ \ 1]Q_c^{-1}=[1\ \ {-2}]/6$，
+\[
+    z=T^{-1}x,\qquad T^{-1}=\begin{bmatrix}\ell\\ \ell A\end{bmatrix}
+          =\frac16\begin{bmatrix}1&-2\\1&4\end{bmatrix}.
+\]
+此时 $\widetilde B=[0\ \ 1]^{\mathsf T}$，$\widetilde A$ 的末行为 $[-1\ \ {-4}]$。由目标多项式得到 $\widetilde K=[4\ \ {-2}]$，乘上 $T^{-1}$ 后得到相同的 $K$。
+
+\section{用超调量、调节时间和稳态值反推控制律}
+
+\ex{讲义 6.2.3 例\quad 弹簧、质量块和阻尼器的控制}{
+    如图，小车质量 $m=20$，阻尼系数 $f=2$，刚度 $k=500$。输入为图示施力，输出 $y$ 为小车的位移。讲义给出的归一化模型为
+    \[
+       G(s)=\frac{1}{s^2+(f/m)s+k/m}.
+    \]
+    参考输入为单位阶跃。设计状态反馈，使超调量降至 $20\%$、调节时间为 $4\,\mathrm{s}$，并保持输出稳态值。
+    \begin{center}
+    \begin{tikzpicture}[>=Latex,thick]
+        \draw (0,1.35) -- (0,0) -- (8,0) -- (8,1.35);
+        \draw (3.1,0.35) rectangle (5.2,1.6);
+        \node at (4.15,0.96) {$m$};
+        \draw (3.64,0.175) circle (0.175) (4.66,0.175) circle (0.175);
+        \draw (0,0.97) -- (0.85,0.97) -- (0.99,1.15) -- (1.17,0.79)
+            -- (1.35,1.15) -- (1.53,0.79) -- (1.71,1.15) -- (1.89,0.79)
+            -- (2.07,1.15) -- (2.21,0.97) -- (3.1,0.97);
+        \node[below] at (1.53,0.75) {$k$};
+        \draw (5.2,0.97) -- (6.1,0.97) (6.1,0.71) -- (6.1,1.23);
+        \draw (5.89,0.66) -- (6.46,0.66) -- (6.46,1.28) -- (5.89,1.28);
+        \draw (6.46,0.97) -- (8,0.97);
+        \node[below] at (6.2,0.58) {$f$};
+        \draw[->] (2.13,1.46) -- (3.1,1.46) node[pos=0.4,above] {$F$};
+        \draw[->] (5.2,1.78) -- (6.5,1.78) node[above] {$y$};
+    \end{tikzpicture}
+    \end{center}
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 42–48 页}
+}
+
+\nt{\textbf{解题顺序}\quad 用超调量、调节时间算极点 $\to$ 按目标分母求 $K$ $\to$ 单独用直流增益求参考输入系数 $N$ $\to$ 验算三项指标。题给传递函数对应归一化施力 $u=F/m$。}
+
+\sol \textbf{1. 建立模型并求原系统的阶跃指标。}
+由 $m\ddot y+f\dot y+ky=F$，取 $x=[y\ \ \dot y]^{\mathsf T}$，以 $u=F/m$ 为输入，得
+\[
+    A=\begin{bmatrix}0&1\\-25&-0.1\end{bmatrix},\quad
+    B=\begin{bmatrix}0\\1\end{bmatrix},\quad C=\begin{bmatrix}1&0\end{bmatrix}.
+\]
+$[B\ AB]=\begin{bmatrix}0&1\\1&-0.1\end{bmatrix}$ 的行列式为 $-1$，系统完全能控。
+原分母 $s^2+0.1s+25$ 给出 $\omega_n=5$、$\zeta=0.01$，超调约为 $96.91\%$，按 $2\%$ 公式估计调节时间约为 $80\,\mathrm{s}$。原归一化输入的单位阶跃稳态值为 $G(0)=1/25$。
+
+\textbf{2. 由指标确定目标多项式。}
+设目标极点为 $-\sigma\pm\mathrm j\omega_d$，有
+\[
+    \sigma=\zeta\omega_n,\quad
+    \omega_d=\omega_n\sqrt{1-\zeta^2},\quad
+    M_p=e^{-\pi\sigma/\omega_d}.
+\]
+取 $t_s\approx 4/\sigma=4\,\mathrm{s}$，得 $\sigma=1$。由 $M_p=0.2$ 得 $\omega_d=\pi/\ln 5\approx1.952$、$\zeta\approx0.456$。所以目标多项式为
+\[
+    p^\ast(s)=s^2+2s+a_0^\ast,\qquad
+    a_0^\ast=1+(\pi/\ln 5)^2\approx4.810 .
+\]
+讲义中的 $4.8$ 是常数项 $\omega_n^2$ 的近似值。
+
+\textbf{3. 配极点并保持稳态值。}
+取 $u=Nv-k_1x_1-k_2x_2$，闭环分母为 $s^2+(0.1+k_2)s+(25+k_1)$，故 $k_1=a_0^\ast-25$、$k_2=1.9$。
+参考输入到位移的传递函数为 $N/p^\ast(s)$。比较单位阶跃的稳态值，要求 $N/a_0^\ast=1/25$，于是
+\[
+    \boxed{K\approx[-20.190\ \ 1.900],\qquad N\approx0.19241}.
+\]
+若参考输入 $v_F$ 按实际力的单位给定，控制律写为 $F=Nv_F-mKx$，单位力阶跃的原稳态值和闭环稳态值均为 $1/k$。
+
+\textbf{4. 验算。} 阻尼实部 $\sigma=1$ 给出常用近似 $t_s\approx 4/\sigma=4\,\mathrm{s}$，且 $e^{-\pi/\omega_d}=0.2$、$N/a_0^\ast=1/25$。若题目按 $2\%$ 误差带精确要求 $4\,\mathrm{s}$，先用归一化响应
+\[
+    y(t)/y_\infty=1-e^{-t}\left(\cos\omega_dt+\frac{\sin\omega_dt}{\omega_d}\right)
+\]
+求得 $t_s=3.797\,\mathrm{s}$。将 $\sigma,\omega_d$ 同乘 $3.797/4$ 后，$K\approx[-20.666\ \ 1.798]$、$N\approx0.17336$。
+
+\section{多输入多输出系统解耦}
+
+\ex{例6-5\quad 双输入双输出系统的前馈解耦}{
+    双输入双输出单位负反馈系统如图。写出对象的开环与闭环传递矩阵，求前馈补偿器使参考输入 $v$ 到输出 $y$ 的传递矩阵为
+    \[
+        G_d(s)=\operatorname{diag}\left(\frac{1}{s+1},\,\frac{1}{5s+1}\right),
+    \]
+    并用 Simulink 验证解耦结果。
+    \begin{center}
+    \begin{tikzpicture}[
+        >=Latex,
+        box/.style={draw,minimum width=1.3cm,minimum height=0.73cm},
+        sum/.style={draw,circle,minimum size=0.44cm,inner sep=0pt}
+    ]
+        \node (u1) at (0,1.3) {$u_1$};
+        \node (u2) at (0,-1.3) {$u_2$};
+        \node[sum] (s1) at (1.3,1.3) {$\scriptstyle\Sigma$};
+        \node[sum] (s2) at (1.3,-1.3) {$\scriptstyle\Sigma$};
+        \node[box] (g1) at (4,1.3) {$\dfrac{1}{2s+1}$};
+        \node[box] (g2) at (4,-1.3) {$\dfrac{1}{s+1}$};
+        \node[box] (g21) at (5.6,0) {$1$};
+        \node[sum] (out2sum) at (7,-1.3) {$\scriptstyle\Sigma$};
+        \coordinate (tap1) at (2.3,1.3);
+        \coordinate (out1) at (8.1,1.3);
+        \coordinate (out2) at (8.1,-1.3);
+        \draw[->] (u1) -- (s1) node[midway,above] {$+$};
+        \draw[->] (u2) -- (s2) node[midway,above] {$+$};
+        \draw[->] (s1) -- (g1) node[pos=0.15,above] {$e_1$};
+        \draw[->] (s2) -- (g2) node[midway,above] {$e_2$};
+        \draw[->] (tap1) |- (g21);
+        \draw[->] (g21.east) -| (out2sum.north) node[pos=0.78,right] {$+$};
+        \draw[->] (g2) -- (out2sum) node[pos=0.72,above] {$+$};
+        \draw[->] (g1) -- (9,1.3) node[right] {$y_1$};
+        \draw[->] (out2sum) -- (9,-1.3) node[right] {$y_2$};
+        \draw[->] (out1) -- (8.1,2.0) -| (s1.north) node[pos=0.93,left] {$-$};
+        \draw[->] (out2) -- (8.1,-2.0) -| (s2.south) node[pos=0.93,left] {$-$};
+        \foreach \point in {tap1,out1,out2}
+          \fill (\point) circle (1.15pt);
+    \end{tikzpicture}
+    \end{center}
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 53–56 页}
+}
+
+\nt{\textbf{解题顺序}\quad 沿框图写 $Y=P E$ $\to$ 代 $E=U-Y$ 求 $G_0$ $\to$ 令 $U=G_cV$ 逐路解 $G_c$ $\to$ 乘回 $G_0G_c$。前馈补偿器在乘积右侧。}
+
+\sol \textbf{1. 写出开环与闭环传递矩阵。}
+切开两条反馈线后，$Y_1=E_1/(2s+1)$、$Y_2=E_1+E_2/(s+1)$，故从误差信号 $e$ 到输出的开环传递矩阵为
+\[
+    P(s)=\begin{bmatrix}1/(2s+1)&0\\1&1/(s+1)\end{bmatrix}.
+\]
+闭合反馈后 $E_i=U_i-Y_i$，由第一路得 $Y_1=U_1/[2(s+1)]$，故 $E_1=(2s+1)U_1/[2(s+1)]$。第二路满足 $(s+2)Y_2=(s+1)E_1+U_2$。整理为
+\[
+    G_0(s)=\begin{bmatrix}
+        1/[2(s+1)]&0\\
+        (2s+1)/[2(s+2)]&1/(s+2)
+    \end{bmatrix}.
+\]
+矩阵形式的计算等价于 $Y=P(U-Y)$，即 $G_0=(I+P)^{-1}P$。
+
+\textbf{2. 求前馈补偿器。}
+令 $U=G_cV$。由第一路 $Y_1=V_1/(s+1)$ 得 $U_1=2V_1$；要求第二路 $Y_2=V_2/(5s+1)$，代入 $U_1$ 得 $U_2=-(2s+1)V_1+(s+2)V_2/(5s+1)$。因此
+\[
+    G_c(s)=\begin{bmatrix}
+        2&0\\
+        -(2s+1)&(s+2)/(5s+1)
+    \end{bmatrix}.
+\]
+回乘 $G_0G_c$，其 $(2,1)$ 元素为 $(2s+1)/(s+2)-(2s+1)/(s+2)=0$，两个对角元素恰为要求的传递函数。
+
+\textbf{3. 核对两路输出。} 将 $v_1(t)=1-(1+t)e^{-t}$、$v_2(t)=1(t)$ 代入所得对角传递矩阵，给出
+\[
+    y_1(t)=1-\left(1+t+\frac{t^2}{2}\right)e^{-t},\qquad y_2(t)=1-e^{-t/5}.
+\]
+这组零初值响应已用 Simulink 验证。若沿用讲义带滤波的微分支路 $-(2s+1)/(1+\varepsilon s)$，则交叉通道为 $\varepsilon s(2s+1)/[(s+2)(1+\varepsilon s)]$，其中 $\varepsilon=0.001$。
+
+\ex{例6-6\quad 双输入双输出系统的状态反馈解耦}{
+    设 $\dot x=Ax+Bu$、$y=Cx$，其中
+    \[
+        A=\begin{bmatrix}-1/2&0\\0&-1\end{bmatrix},\qquad
+        B=\begin{bmatrix}1/2&0\\0&1\end{bmatrix},\qquad
+        C=\begin{bmatrix}1&1\\2&1\end{bmatrix}.
+    \]
+    利用状态反馈解耦此系统。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 60–61 页}
+}
+
+\nt{\textbf{解题顺序}\quad 逐行算 $c_iB$ 确定输出求导阶数 $\to$ 构造 $E,L$ 并检查 $E$ 可逆 $\to$ 求 $K=E^{-1}L,F=E^{-1}$ $\to$ 代回输出方程。本题两路输出求一次导数即可。}
+
+\sol 原传递矩阵含有非零的非对角元素，
+\[
+    G(s)=\begin{bmatrix}
+        (1/2)/(s+1/2)&1/(s+1)\\
+        1/(s+1/2)&1/(s+1)
+    \end{bmatrix}.
+\]
+计算 $c_1B=[1/2\ \ 1]$、$c_2B=[1\ \ 1]$，两行均非零，故 $d_1=d_2=0$。两路输出均在一次求导时显含 $u$，即 $\dot y=CAx+CBu$。令
+\[
+    E=CB=\begin{bmatrix}1/2&1\\1&1\end{bmatrix},\qquad
+    L=CA=\begin{bmatrix}-1/2&-1\\-1&-1\end{bmatrix}.
+\]
+$\det E=-1/2$，$E$ 可逆。于是取
+\[
+    K=E^{-1}L=-I_2,\qquad F=E^{-1}=\begin{bmatrix}-2&2\\2&-1\end{bmatrix},
+    \qquad u=Fv-Kx .
+\]
+代回得到 $\dot y=(L-EK)x+EFv=v$，零初始条件下的闭环传递矩阵为 $\operatorname{diag}(1/s,1/s)$。
+若同时要求通道稳定，可指定 $\Lambda=\operatorname{diag}(2,3)$，使 $\dot y=-\Lambda y+v$。保持上面的 $F$，改取
+\[
+    K_\Lambda=E^{-1}(L+\Lambda C)
+             =\begin{bmatrix}7&2\\-2&0\end{bmatrix}.
+\]
+由 $C$ 可逆，$y=Cx$ 给出全部闭环状态的等价坐标，闭环极点为 $-2,-3$，传递矩阵为 $\operatorname{diag}(1/(s+2),1/(s+3))$。
+
+\section{设计全维状态观测器}
+
+\ex{习题2\quad 渐近状态观测器}{%
+    已知系统为
+    \[
+        \dot x=\begin{bmatrix}1&2\\0&-1\end{bmatrix}x
+        +\begin{bmatrix}0\\1\end{bmatrix}u,\qquad y=\begin{bmatrix}1&0\end{bmatrix}x.
+    \]
+    设计渐近状态观测器，要求观测器的极点为 $-5$、$-6$，求观测器增益矩阵 $G$。
+    \par\smallskip\hfill{\footnotesize 《第六章 习题》第 3 页}
+}
+
+\nt{\textbf{解题顺序}\quad 叠起 $C$ 和 $CA$ 查能观性 $\to$ 写 $A-GC$ $\to$ 按目标多项式比较系数 $\to$ 写完整观测器。两个状态、一个输出，故 $G$ 是 $2\times1$ 的列向量。}
+
+\sol\textbf{1. 判断系统的能观性。}输出 $y=x_1$。由第一行状态方程得 $\dot y=x_1+2x_2$，因此 $x_2$ 也能由输出及其导数确定。按矩阵判据计算，
+\[
+    \mathcal O=\begin{bmatrix}C\\CA\end{bmatrix}
+    =\begin{bmatrix}1&0\\1&2\end{bmatrix},
+    \qquad \det\mathcal O=2 .
+\]
+系统完全能观，可以任意配置观测器极点。
+
+\textbf{2. 建立误差方程并求增益。}
+取 $G=[g_1,g_2]^{\mathsf T}$，观测器采用 $\dot{\hat x}=A\hat x+Bu+G(y-C\hat x)$。从对象方程中减去观测器方程，公共输入项 $Bu$ 抵消，有
+\[
+    \dot e=(A-GC)e,\qquad
+    A-GC=\begin{bmatrix}1-g_1&2\\-g_2&-1\end{bmatrix}.
+\]
+误差系统的特征多项式为
+\[
+\begin{aligned}
+    \det(sI-A+GC)&=(s-1+g_1)(s+1)+2g_2\\
+                 &=s^2+g_1 s+g_1+2g_2-1.
+\end{aligned}
+\]
+期望多项式为 $(s+5)(s+6)=s^2+11s+30$。比较系数得 $g_1=11$、$g_1+2g_2-1=30$，所以
+\[
+    \boxed{G=\begin{bmatrix}11\\10\end{bmatrix}} .
+\]
+
+\textbf{3. 写出观测器并校验。}
+\[
+    \dot{\hat x}=\begin{bmatrix}-10&2\\-10&-1\end{bmatrix}\hat x
+       +\begin{bmatrix}0\\1\end{bmatrix}u
+       +\begin{bmatrix}11\\10\end{bmatrix}y .
+\]
+回代得迹为 $-11$、行列式为 $30$，特征值确为 $-5$ 和 $-6$。两个特征值均在左半平面，因此任意初始估计误差均趋于零。
+
+\ex{例6-7\quad 三阶渐近状态观测器}{
+    已知
+    \[
+        \dot x=\begin{bmatrix}1&0&0\\3&-1&1\\0&2&0\end{bmatrix}x
+               +\begin{bmatrix}2\\1\\1\end{bmatrix}u,\qquad
+        y=\begin{bmatrix}0&0&1\end{bmatrix}x .
+    \]
+    设计渐近状态观测器，使其极点为 $-3,-4,-5$。
+    \par\smallskip\hfill{\footnotesize 第六章讲义第 78–84 页}
+}
+
+\nt{\textbf{解题顺序}\quad 查能观性 $\to$ 写 $A-GC$ 并逐项比较 $\to$ 回代极点。用对偶法时，对 $(A^{\mathsf T},C^{\mathsf T})$ 做状态反馈，再换回原坐标并转置。}
+
+\sol 建立能观矩阵
+\[
+   Q_o=\begin{bmatrix}C\\CA\\CA^2\end{bmatrix}
+      =\begin{bmatrix}0&0&1\\0&2&0\\6&-2&2\end{bmatrix},
+   \qquad \det Q_o=-12 .
+\]
+原系统完全能观。令 $G=[g_1\ \ g_2\ \ g_3]^{\mathsf T}$，则
+\[
+\begin{aligned}
+    A-GC&=\begin{bmatrix}1&0&-g_1\\3&-1&1-g_2\\0&2&-g_3\end{bmatrix},\\
+    \det(sI-A+GC)&=s^3+g_3s^2+(2g_2-3)s+(6g_1-2g_2-g_3+2).
+\end{aligned}
+\]
+目标多项式 $(s+3)(s+4)(s+5)=s^3+12s^2+47s+60$。由二次项得 $g_3=12$，由一次项得 $g_2=25$，再由常数项得 $g_1=20$。于是
+\[
+\begin{aligned}
+    \dot{\hat x}
+       &=\begin{bmatrix}1&0&-20\\3&-1&-24\\0&2&-12\end{bmatrix}\hat x
+          +\begin{bmatrix}2\\1\\1\end{bmatrix}u
+          +\begin{bmatrix}20\\25\\12\end{bmatrix}y,\qquad
+     \hat y=\hat x_3 .
+\end{aligned}
+\]
+回代特征多项式得到所给的三个负实极点，因此任意初始估计误差均渐近消失。
+
+讲义的另外两种算法可用一组互为对偶的坐标变换核对。对偶系统 $(A^{\mathsf T},C^{\mathsf T})$ 的能控矩阵为 $Q_o^{\mathsf T}$。取 $\ell=e_3^{\mathsf T}(Q_o^{\mathsf T})^{-1}$，将 $\ell,\ell A^{\mathsf T},\ell(A^{\mathsf T})^2$ 依次叠成 $T_d^{-1}$。对偶系统和原系统的能观 II 型变换分别为
+\[
+    T_d^{-1}=\frac16\begin{bmatrix}1&0&0\\1&3&0\\1&0&6\end{bmatrix},
+    \qquad T_o=(T_d^{-1})^{\mathsf T}.
+\]
+由开环多项式 $s^3-3s+2$ 与目标多项式的低次到高次系数之差得 $\widetilde G=[58\ \ 50\ \ 12]^{\mathsf T}$。左乘 $T_o$ 即得 $G=[20\ \ 25\ \ 12]^{\mathsf T}$。同理先计算对偶系统的反馈增益 $\widetilde G^{\mathsf T}T_d^{-1}$ 再转置，也得到该列向量。
+
+\Needspace{30\baselineskip}
