@@ -1,0 +1,577 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,12pt,fontset=fandol]{ctexart}
+
+\usepackage[left=22mm,right=22mm,top=23mm,bottom=23mm,headheight=25pt,headsep=9pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem,fancyhdr}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref,bookmark}
+
+\definecolor{ink}{HTML}{182C3F}
+\definecolor{teal}{HTML}{166267}
+\definecolor{muted}{HTML}{516476}
+\definecolor{panel}{HTML}{EDF5F5}
+\definecolor{ruleink}{HTML}{CBD8DF}
+\hypersetup{pdftitle={现代控制理论｜能控性、能观性、规范形与最小实现手册},
+  colorlinks,linkcolor=teal,urlcolor=teal,bookmarksnumbered}
+\ctexset{
+  section={format=\Large\bfseries\color{ink}\raggedright,beforeskip=0pt,afterskip=7pt},
+  subsection={format=\large\bfseries\color{teal},beforeskip=9pt,afterskip=3pt}
+}
+\setcounter{secnumdepth}{1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt}
+\setlist[enumerate]{leftmargin=2em,label=\arabic*.,itemsep=2pt,topsep=3pt,parsep=0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{muted}现代控制理论}
+\fancyhead[R]{\small\color{muted}能控性、能观性、规范形与最小实现}
+\fancyfoot[R]{\small\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{ruleink}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{opening}{
+  \fancyhf{}
+  \fancyfoot[R]{\small\color{muted}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\newtcolorbox{keybox}{colback=panel,colframe=ruleink,boxrule=0.5pt,arc=1mm,
+  left=2mm,right=2mm,top=1.2mm,bottom=1.2mm,before skip=5pt,after skip=5pt}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\im}{im}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\begin{document}
+\color{ink}
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 1pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 1pt}
+\setlength{\abovedisplayshortskip}{5pt plus 1pt}
+\setlength{\belowdisplayshortskip}{5pt plus 1pt}
+\thispagestyle{opening}
+\pdfbookmark[0]{公式速查}{formula-index}
+
+{\large\color{teal}现代控制理论 · 第 4 章\par}
+\vspace{5pt}
+{\fontsize{26}{33}\selectfont\bfseries 能控性、能观性、\\规范形与最小实现手册\par}
+\vspace{5pt}
+{\large\bfseries 公式速查\par}
+
+\[
+  \dot x=Ax+Bu,\quad y=Cx+Du,\qquad
+  G(s)=C(sI-A)^{-1}B+D,\quad f(s)=\det(sI-A).
+\]
+本册讨论连续时间线性定常系统。用 $n,m,p$ 分别表示状态、输入和输出的维数。
+做题时先识别给定量是状态空间模型 $(A,B,C,D)$，还是传递函数（矩阵）$G(s)$。
+
+\begingroup
+\setlength{\extrarowheight}{6pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{35mm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{题型} & \textbf{公式和操作} \\
+\midrule
+\hyperref[sec:tests]{判能控、能观} &
+  $Q_c=[B\quad AB\quad\cdots\quad A^{n-1}B]$，行满秩 $n$。\\
+& $Q_o$ 由 $C,CA,\ldots,CA^{n-1}$ 纵向堆叠，列满秩 $n$。\\
+\hyperref[sec:decomp]{做结构分解} &
+  能控从 $Q_c$ 选列并补列成 $T$，取 $x=Tz$；能观从 $Q_o$ 选行并补行成 $P$，取 $z=Px$。\\
+\hyperref[sec:kalman]{求联合分解的阶数} &
+  $r_c=\rank Q_c$，$r_o=\rank Q_o$，$k=\rank(Q_oQ_c)$。
+  能控能观、能控不能观、不能控能观、不能控不能观依次为 $k,\ r_c-k,\ r_o-k,\ n-r_c-r_o+k$。\\
+\hyperref[sec:canonical]{求I 形、II 形} &
+  由 $f(s)$ 写出友矩阵 $F$，其超对角线为 $1$、末行为 $[-a_0\ \cdots\ {-a_{n-1}}]$。
+  再按下表确定 $B$ 或 $C$，按题意计算变换矩阵。\\
+\hyperref[sec:realization]{由 $G(s)$ 写实现} &
+  先求 $D=\lim_{s\to\infty}G(s)$，动态部分用 $G(s)-D$。
+  SISO 能控 II 形取 $B=e_n$、$C=[b_0\ \cdots\ b_{n-1}]$，$b_i$ 为严格真部分在分母首一时的分子系数。\\
+\hyperref[sec:minimal]{求最小实现} &
+  已有实现时，保留能控能观部分，$n_{\min}=\rank(Q_oQ_c)$。
+  单输入单输出时先约分。传递矩阵若只有简单实极点，可对各留数矩阵的秩求和。\\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\begin{keybox}
+\centering
+\renewcommand{\arraystretch}{1.18}
+\begin{tabular}{@{}lll@{}}
+ & \textbf{I 形} & \textbf{II 形} \\
+能控 $(A,B)$ & $(F^\top,e_1)$ & $(F,e_n)$ \\
+能观 $(A,C)$ & $(F,e_1^\top)$ & $(F^\top,e_n^\top)$
+\end{tabular}\par
+\smallskip
+$e_i$ 为第 $i$ 个单位列向量。 I 形直接用判据矩阵， II 形先解逆矩阵的末行或末列。
+\end{keybox}
+
+\hfill\hyperref[sec:practice]{自测与答案}
+
+\newpage
+\section{状态空间公式与能控、能观判据}\label{sec:tests}
+状态、输入、输出依次为 $x\in\mathbb R^n$、$u\in\mathbb R^m$、$y\in\mathbb R^p$，
+故 $A,B,C,D$ 的尺寸依次为 $n\times n,\ n\times m,\ p\times n,\ p\times m$。
+由零初态求得的传递矩阵是 $G(s)=C(sI-A)^{-1}B+D$。
+
+\subsection*{坐标变换}
+\[
+\begin{aligned}
+ x=Tz&\quad\Longrightarrow\quad(\bar A,\bar B,\bar C,\bar D)=(T^{-1}AT,T^{-1}B,CT,D),\\
+ z=Px&\quad\Longrightarrow\quad(\bar A,\bar B,\bar C,\bar D)=(PAP^{-1},PB,CP^{-1},D).
+\end{aligned}
+\]
+$T$、$P$ 均须可逆，同一变换下 $P=T^{-1}$。
+例如 $x=Tz$ 给出 $\bar Q_c=T^{-1}Q_c$、$\bar Q_o=Q_oT$，所以两秩与乘积 $\bar Q_o\bar Q_c=Q_oQ_c$ 均保持。
+相似变换也保持阶数、特征多项式和传递矩阵。
+
+\subsection*{卡尔曼秩判据与 PBH 判据}
+完整状态能控指可用输入到达任意终态，状态能观指已知输入和区间输出可唯一确定初态。
+\[
+\begin{aligned}
+ Q_c&=[B\quad AB\quad\cdots\quad A^{n-1}B]\in\mathbb R^{n\times nm},
+ &\text{完全能控}&\iff\rank Q_c=n,\\
+ Q_o&=\left[\begin{smallmatrix}C\\CA\\\vdots\\CA^{n-1}\end{smallmatrix}\right]\in\mathbb R^{np\times n},
+ &\text{完全能观}&\iff\rank Q_o=n.
+\end{aligned}
+\]
+PBH 要求对 $A$ 的每个特征值 $\lambda$（含复根）在 $\mathbb C$ 上检查
+\[
+ \rank[\lambda I-A\quad B]=n\quad(\text{能控}),\qquad
+ \rank\begin{bmatrix}\lambda I-A\\ C\end{bmatrix}=n\quad(\text{能观}).
+\]
+能控秩亏时有非零左特征行 $w^\top$ 满足 $w^\top B=0$；能观秩亏时有非零右特征列 $v$ 满足 $Cv=0$。
+若只要求到达任意终端输出，且终端输入可自由选取，检查 $\rank[CQ_c\quad D]=p$。
+
+\subsection*{Gramian 和导数关系}
+任取区间长度 $h>0$，以下 Gramian 的正定性分别等价于完全能控、完全能观。
+\[
+  W_c(h)=\int_0^h e^{At}BB^\top e^{A^\top t}\dd t,\qquad
+  W_o(h)=\int_0^h e^{A^\top t}C^\top C e^{At}\dd t.
+\]
+$e^{At}B$、$Ce^{At}$ 在 $t=0$ 的 $k$ 阶导数分别为 $A^kB$、$CA^k$，恰好给出卡尔曼矩阵的相应块。
+
+\textbf{例 1｜二阶系统的能控性与能观性。}
+设 $A=\operatorname{diag}(1,2)$、$B=[1\ \ 0]^\top$、$C=[1\ \ 1]$。
+\[
+ Q_c=\begin{bmatrix}1&1\\0&0\end{bmatrix},\qquad
+ Q_o=\begin{bmatrix}1&1\\1&2\end{bmatrix},\qquad
+ W_c(h)=\operatorname{diag}\bigl((e^{2h}-1)/2,0\bigr).
+\]
+$\rank Q_c=1$、$\rank Q_o=2$。结合 PBH，$\lambda=2$ 的左特征行 $[0\ \ 1]$ 无法接收输入，系统不完全能控且完全能观。
+\newpage
+\section{能控与能观结构分解}\label{sec:decomp}
+
+记能控子空间为 $\mathcal R=\im Q_c$，不能观子空间为
+$\mathcal N=\ker Q_o$。两者都对 $A$ 不变。
+Cayley--Hamilton 定理保证 $A^nB$ 的列仍在 $\mathcal R$ 中，
+也保证对任意 $v\in\mathcal N$ 有 $CA^nv=0$，从而 $Av\in\mathcal N$。
+
+\subsection*{能控性分解｜从 $Q_c$ 选列}
+设 $r_c=\rank Q_c$。从 $Q_c$ 的原矩阵取 $r_c$ 个独立列，
+放在 $T$ 的前 $r_c$ 列，再补齐为可逆矩阵。令
+$x=Tz$，按 $(z_c,z_{\bar c})$ 排列状态，则
+\[
+  T^{-1}AT=\begin{bmatrix}A_c&A_{12}\\0&A_{\bar c}\end{bmatrix},
+  \qquad T^{-1}B=\begin{bmatrix}B_c\\0\end{bmatrix},
+  \qquad CT=[C_c\quad C_{\bar c}].
+\]
+$\mathcal R$ 对应 $z_{\bar c}=0$。$A\mathcal R\subseteq\mathcal R$ 使左下块为零，
+$\im B\subseteq\mathcal R$ 使输入矩阵下块为零。
+$\dot z_{\bar c}=A_{\bar c}z_{\bar c}$ 由初态独立决定，
+它可以经 $A_{12}$ 影响能控块。令 $z_{\bar c}(0)=0$，得到能控子系统
+\[
+  \dot z_c=A_c z_c+B_cu,\qquad y_c=C_cz_c+Du .
+\]
+
+\subsection*{能观性分解｜从 $Q_o$ 选行}
+设 $r_o=\rank Q_o$。从 $Q_o$ 的原矩阵取 $r_o$ 个独立行，
+放在 $P$ 的前 $r_o$ 行，再补齐为可逆矩阵。令
+$z=Px$，按 $(z_o,z_{\bar o})$ 排列状态，则
+\[
+   PAP^{-1}=\begin{bmatrix}A_o&0\\A_{21}&A_{\bar o}\end{bmatrix},
+   \qquad PB=\begin{bmatrix}B_o\\B_{\bar o}\end{bmatrix},
+   \qquad CP^{-1}=[C_o\quad0].
+\]
+$\mathcal N$ 对应 $z_o=0$。$A\mathcal N\subseteq\mathcal N$ 使右上块为零，
+$\mathcal N\subseteq\ker C$ 使输出矩阵右块为零。
+能观子系统以原初态的前 $r_o$ 个变换坐标为初值，即可计算任意原初态下的输出
+\[
+  \dot z_o=A_o z_o+B_ou,\qquad y=C_oz_o+Du .
+\]
+
+\begin{keybox}
+能控分解选列、补列，令 $x=Tz$，$\bar A$ 的左下块为零。
+能观分解选行、补行，令 $z=Px$，$\bar A$ 的右上块为零。
+补齐时可优先试用单位向量。若使用消元选列，应回到原 $Q_c$ 取对应列。
+\end{keybox}
+
+\newpage
+\subsection*{贯穿例题｜对同一个三阶系统作两种分解}
+参考例题 2--4（课程习题课 5、讲义例 4-13）采用
+\[
+ A=\begin{bmatrix}0&0&-1\\1&0&-3\\0&1&-3\end{bmatrix},\qquad
+ B=\begin{bmatrix}1\\1\\0\end{bmatrix},\qquad C=[0\quad1\quad-2],\qquad D=0 .
+\]
+由 $A^2B=-B-2AB$、$CA^2=-C-2CA$，得到两个秩均为 $2$：
+\[
+ Q_c=\begin{bmatrix}1&0&-1\\1&1&-3\\0&1&-2\end{bmatrix},
+ \qquad Q_o=\begin{bmatrix}0&1&-2\\1&-2&3\\-2&3&-4\end{bmatrix}.
+\]
+
+\subsection*{能控分解}
+选 $B,AB$ 作前两列，补 $e_3$，令 $x=T\xi$。
+\[
+ T=[B\quad AB\quad e_3]=\begin{bmatrix}1&0&0\\1&1&0\\0&1&1\end{bmatrix},
+ \qquad T^{-1}=\begin{bmatrix}1&0&0\\-1&1&0\\1&-1&1\end{bmatrix}.
+\]
+\[
+ A_\xi=\begin{bmatrix}0&-1&-1\\1&-2&-2\\0&0&-1\end{bmatrix},
+ \qquad B_\xi=\begin{bmatrix}1\\0\\0\end{bmatrix},
+ \qquad C_\xi=[1\quad-1\quad-2].
+\]
+由于 $\dot\xi_3=-\xi_3$，取 $\xi_3(0)=0$ 后保留前两维，得到
+\[
+ (A_c,B_c,C_c)=
+ \left(\begin{bmatrix}0&-1\\1&-2\end{bmatrix},
+       \begin{bmatrix}1\\0\end{bmatrix},[1\quad-1]\right).
+\]
+
+\subsection*{能观分解}
+选 $C,CA$ 作前两行，补 $e_3^\top$，令 $z=Px$。
+\[
+ P=\begin{bmatrix}0&1&-2\\1&-2&3\\0&0&1\end{bmatrix},
+ \qquad P^{-1}=\begin{bmatrix}2&1&1\\1&0&2\\0&0&1\end{bmatrix}.
+\]
+\[
+ A_z=\begin{bmatrix}0&1&0\\-1&-2&0\\1&0&-1\end{bmatrix},
+ \qquad B_z=\begin{bmatrix}1\\-1\\0\end{bmatrix},
+ \qquad C_z=[1\quad0\quad0].
+\]
+前两个坐标的方程与输出均不含 $z_3$，因此能观子系统是
+\[
+ (A_o,B_o,C_o)=
+ \left(\begin{bmatrix}0&1\\-1&-2\end{bmatrix},
+       \begin{bmatrix}1\\-1\end{bmatrix},[1\quad0]\right).
+\]
+两种分解及其子系统均沿用 $D=0$。
+
+\newpage
+\section{联合结构分解}\label{sec:kalman}
+
+\subsection*{用三个秩确定四块维数}
+设 $k=\rank(Q_oQ_c)$。$Q_o$ 在 $\mathcal R$ 上的像为 $\im(Q_oQ_c)$，
+核为 $\mathcal R\cap\mathcal N$，所以
+$\dim(\mathcal R\cap\mathcal N)=r_c-k$。结合 $\dim\mathcal N=n-r_o$ 得
+\[
+\begin{array}{c|cccc}
+ \text{分块} & \text{能控能观} & \text{能控不能观} & \text{不能控能观} & \text{不能控不能观}\\
+ \hline
+ \text{维数} & k & r_c-k & r_o-k & n-r_c-r_o+k
+\end{array}
+\]
+
+先取 $\mathcal R\cap\mathcal N$ 的基（第 2 块），分别补成 $\mathcal R$ 的基（添第 1 块）和
+$\mathcal N$ 的基（添第 4 块），最后补齐全空间（添第 3 块）。
+按上表顺序排列。由 $\mathcal R$、$\mathcal N$ 对 $A$ 不变，
+可得下列零块；若某块维数为零，省去对应行列。
+\[
+  \bar A=\begin{bmatrix}
+  A_{11}&0&A_{13}&0\\
+  A_{21}&A_{22}&A_{23}&A_{24}\\
+  0&0&A_{33}&0\\
+  0&0&A_{43}&A_{44}
+  \end{bmatrix},\qquad
+  \bar B=\begin{bmatrix}B_1\\B_2\\0\\0\end{bmatrix},\qquad
+  \bar C=[C_1\quad0\quad C_3\quad0].
+\]
+零初态时第 3、4 块保持为零，第 2 块不进入第 1 块或输出。
+保留 $(A_{11},B_1,C_1,D)$ 即得同一传递函数的最小实现，阶数为 $k$。
+
+\subsection*{续例｜写出联合坐标与最小实现}
+前例中 $r_c=r_o=2$。$Q_oQ_c$ 的首行为 $[1\ {-1}\ 1]$，
+第二行为首行的相反数，第三行与首行相同，故 $k=1$，四块维数为 $(1,1,1,0)$。
+从上一页的能观坐标出发，取 $w_1=z_1$、$w_2=z_3$、$w_3=z_1+z_2$，
+即取下列可逆变换和系统矩阵
+\[
+ w=\begin{bmatrix}0&1&-2\\0&0&1\\1&-1&1\end{bmatrix}x,\qquad
+ A_w=\begin{bmatrix}-1&0&1\\1&-1&0\\0&0&-1\end{bmatrix},
+ \qquad B_w=\begin{bmatrix}1\\0\\0\end{bmatrix},
+ \qquad C_w=[1\quad0\quad0].
+\]
+$\dot w_3=-w_3$，所以可达子空间为 $w_3=0$（$B_w,A_wB_w$ 张成该平面）。
+由于 $y=w_1$ 且 $\dot w_1=-w_1+w_3+u$，输出与已知输入可区分 $w_1,w_3$
+的初值，$w_2$ 则不影响两者。因此按联合分解顺序，$w_1$ 能控能观，
+$w_2$ 能控不能观，$w_3$ 不能控能观。最小实现为
+\[
+ \dot w_1=-w_1+u,\qquad y=w_1,\qquad D=0,\qquad G(s)=\frac{1}{s+1}.
+\]
+\newpage
+\section{能控与能观规范形}\label{sec:canonical}
+
+\subsection*{四种规范形的矩阵结构}
+
+设线性定常系统的特征多项式为
+$f(s)=\det(sI-A)=s^n+a_{n-1}s^{n-1}+\cdots+a_1s+a_0$。
+记 $e_i$ 为第 $i$ 个单位列向量。友矩阵 $F$ 的上超对角线为 $1$，末行按常数项到 $s^{n-1}$ 项排列系数的相反数。
+\[
+  F=\begin{bmatrix}
+    0&1&0&\cdots&0\\
+    0&0&1&\cdots&0\\
+    \vdots&\vdots&\ddots&\ddots&\vdots\\
+    0&0&\cdots&0&1\\
+    -a_0&-a_1&\cdots&-a_{n-2}&-a_{n-1}
+  \end{bmatrix}.
+\]
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}llll@{}}
+\toprule
+规范形 & 适用条件 & 标准矩阵 & 变换与坐标关系 \\
+\midrule
+能控 I 形 & 单输入、完全能控 & $(A_z,B_z)=(F^\top,e_1)$ & $T=Q_c$，$x=Tz$ \\
+能控 II 形 & 单输入、完全能控 & $(A_z,B_z)=(F,e_n)$ & $P$ 堆叠 $\ell A^k$，$z=Px$ \\
+能观 I 形 & 单输出、完全能观 & $(A_z,C_z)=(F,e_1^\top)$ & $P=Q_o$，$z=Px$ \\
+能观 II 形 & 单输出、完全能观 & $(A_z,C_z)=(F^\top,e_n^\top)$ & $T$ 拼接 $A^k v$，$x=Tz$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+单输入单输出系统同时完全能控、完全能观时，四种变换均适用。
+
+\subsection*{ II 形取逆矩阵的末行或末列}
+
+\[
+\begin{aligned}
+  \text{能控 II 形}\qquad
+  &\ell=e_n^\top Q_c^{-1}, &
+  P&=\begin{bmatrix}\ell\\\ell A\\\vdots\\\ell A^{n-1}\end{bmatrix},\\[4pt]
+  \text{能观 II 形}\qquad
+  &v=Q_o^{-1}e_n, &
+  T&=\begin{bmatrix}v&Av&\cdots&A^{n-1}v\end{bmatrix}.
+\end{aligned}
+\]
+
+能控 I 形以 $B,AB,\ldots,A^{n-1}B$ 为基，$A$ 把每个基向量推到下一列，最后一列由 $f(A)=0$ 求出。
+能控 II 形中 $\ell Q_c=e_n^\top$，故 $PB=e_n$；由 $f(A)=0$ 得 $PA=FP$。
+能观两种形式可由对偶系统 $\bigl(A^\top,C^\top,B^\top,D^\top\bigr)$ 的对应能控形式转置得到。
+
+\begin{keybox}
+先检验秩，再求特征多项式，最后按坐标方向变换全部矩阵。
+若 $x=Tz$，则 $(A_z,B_z,C_z)=(T^{-1}AT,T^{-1}B,CT)$；
+若 $z=Px$，则 $(A_z,B_z,C_z)=(PAP^{-1},PB,CP^{-1})$。两种写法均有 $D_z=D$。
+\end{keybox}
+
+\newpage
+\subsection*{例 5、6｜同一系统的四种规范形}
+
+例 5 采用讲义例 4-15 的 $A,B$；例 6 沿用该状态方程，增设 $C$ 练习能观规范形。设 $D=0$，求四种形式的完整实现。
+\[
+  A=\begin{bmatrix}1&0\\-1&2\end{bmatrix},\qquad
+  B=\begin{bmatrix}-1\\1\end{bmatrix},\qquad C=\begin{bmatrix}0&1\end{bmatrix}.
+\]
+
+先算 $AB=[-1\ \ 3]^\top$、$CA=[-1\ \ 2]$。由 $\det Q_c=-2$、$\det Q_o=1$ 知系统完全能控且完全能观。
+\[
+  Q_c=\begin{bmatrix}-1&-1\\1&3\end{bmatrix},\qquad
+  Q_o=\begin{bmatrix}0&1\\-1&2\end{bmatrix},\qquad
+  f(s)=s^2-3s+2,\qquad F=\begin{bmatrix}0&1\\-2&3\end{bmatrix}.
+\]
+
+\textbf{能控 I 形}\quad 取 $x=Tz$，$T=Q_c$，故 $C_z=CT=[1\ \ 3]$。
+
+\textbf{能控 II 形}\quad 从 $Q_c^{-1}$ 取末行 $\ell=[\tfrac12\ \ \tfrac12]$，得到 $\ell A=[0\ \ 1]$。
+取 $z=Px$，于是
+\[
+  P=\begin{bmatrix}\tfrac12&\tfrac12\\0&1\end{bmatrix},\qquad
+  PB=\begin{bmatrix}0\\1\end{bmatrix},\qquad CP^{-1}=\begin{bmatrix}0&1\end{bmatrix}.
+\]
+
+\textbf{能观 I 形}\quad 取 $z=Px$，$P=Q_o$，故 $B_z=PB=[1\ \ 3]^\top$。
+
+\textbf{能观 II 形}\quad 由 $Q_ov=e_2$ 得 $v=[-1\ \ 0]^\top$、$Av=[-1\ \ 1]^\top$。
+取 $x=Tz$，于是
+\[
+  T=\begin{bmatrix}-1&-1\\0&1\end{bmatrix},\qquad
+  T^{-1}B=\begin{bmatrix}0\\1\end{bmatrix},\qquad CT=\begin{bmatrix}0&1\end{bmatrix}.
+\]
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+规范形 & $A_z$ & $B_z$ & $C_z$ & $D_z$ \\
+\midrule
+能控 I 形 & $F^\top$ & $[1\ \ 0]^\top$ & $[1\ \ 3]$ & $0$ \\
+能控 II 形 & $F$ & $[0\ \ 1]^\top$ & $[0\ \ 1]$ & $0$ \\
+能观 I 形 & $F$ & $[1\ \ 3]^\top$ & $[1\ \ 0]$ & $0$ \\
+能观 II 形 & $F^\top$ & $[0\ \ 1]^\top$ & $[0\ \ 1]$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+四种坐标下的传递函数均为 $G(s)=s/(s^2-3s+2)$，可用来核对 $B_z,C_z$ 的变换。
+\newpage
+\section{从传递函数构造实现}\label{sec:realization}
+
+零初态下，$G(s)=C(sI-A)^{-1}B+D$。标准有限维实现要求 $G$ 为真有理矩阵，即每个通道的分子次数至多等于分母次数。
+先求 $D=\lim_{s\to\infty}G(s)$，再实现严格真部分 $G-D$。$D$ 是常数矩阵，始终沿用。
+SISO 中分母首一且分子同阶时，$D$ 等于原分子的最高阶系数。
+
+\subsection*{SISO 的四种构造}
+设 $a(s)=s^n+a_{n-1}s^{n-1}+\cdots+a_0$，$G(s)-D=(b_0+b_1s+\cdots+b_{n-1}s^{n-1})/a(s)$。
+取本课的友矩阵 $F$（上超对角线为 $1$、末行为 $[-a_0\ \cdots\ -a_{n-1}]$），并令 $b=[b_0\ \cdots\ b_{n-1}]$。
+\begin{keybox}
+\[
+\begin{array}{c|cc}
+  (A,B,C)&\text{I 形}&\text{II 形}\\ \hline
+  \text{能控}&(F^\top,e_1,c)&(F,e_n,b)\\
+  \text{能观}&(F,c^\top,e_1^\top)&(F^\top,b^\top,e_n^\top)
+\end{array}
+\]
+能控 II 形直接填入严格真部分的分子系数，按升幂排列，缺项补零。
+因为 $(sI-F)^{-1}e_n=[1\ s\ \cdots\ s^{n-1}]^\top/a(s)$，乘上 $b$ 即得 $G-D$。
+能观形由对偶 $ (A^\top,C^\top,B^\top,D)$ 得到。
+\end{keybox}
+
+I 形的系数 $c=[c_0\ \cdots\ c_{n-1}]$ 可由 $c=b[e_n\ Fe_n\ \cdots\ F^{n-1}e_n]$ 得到。
+手算可用 $s^{-1}$ 展开系数的递推，直接从已知分子、分母求 $c$。
+\[
+ c_j=b_{n-1-j}-\sum_{\ell=1}^{j}a_{n-\ell}c_{j-\ell}
+ \quad (j=0,\ldots,n-1).
+\]
+例如三阶时 $c_0=b_2$、$c_1=b_1-a_2c_0$、$c_2=b_0-a_2c_1-a_1c_0$。
+
+\subsection*{参考例 7（习题课 8）｜从严格真传递函数写四形}
+给定 $G(s)=(s+4)/(s^3+6s^2+11s+6)$。由上式求得
+$b=[4\ 1\ 0]$、$c=[0\ 1\ {-2}]$。四种实现如下，均取 $D=0$。
+\[
+  F=\begin{bmatrix}0&1&0\\0&0&1\\-6&-11&-6\end{bmatrix},\qquad
+  \begin{array}{c@{\quad}ccc}
+    \toprule
+    \text{规范形} & A & B & C\\
+    \midrule
+    \text{能控 I 形} & F^\top & e_1 & [0\ 1\ {-2}]\\
+    \text{能控 II 形} & F & e_3 & [4\ 1\ 0]\\
+    \text{能观 I 形} & F & [0\ 1\ {-2}]^\top & e_1^\top\\
+    \text{能观 II 形} & F^\top & [4\ 1\ 0]^\top & e_3^\top\\
+    \bottomrule
+  \end{array}
+\]
+
+\subsection*{参考例 8｜分离直接传递项}
+$G(s)=(4s+16)/(s+5)=4-4/(s+5)$，故一阶实现是
+$\dot x=-5x+u$、$y=-4x+4u$，即 $(A,B,C,D)=(-5,1,-4,4)$。
+
+\newpage
+\section{最小实现}\label{sec:minimal}
+
+同一个传递矩阵可以有多种实现。最小实现使用最少的状态维数。
+\begin{keybox}
+\[
+ \text{最小实现}\iff \rank Q_c=\rank Q_o=n,
+ \qquad n_{\min}=\rank(Q_oQ_c).
+\]
+对任一给定实现，$Q_o$ 在可达子空间 $\im Q_c$ 上的核为 $\im Q_c\cap\ker Q_o$。
+因此 $\rank(Q_oQ_c)$ 等于可达空间维数减去其中不可观的维数。
+\end{keybox}
+
+\subsection*{单输入单输出}
+先约去分子与分母的公因子，既约分母的次数就是最小阶数。分离 $D$ 后可直接套用规范形。
+纯常数传递函数只需 $D$，最小阶数为零。
+
+\textbf{参考例 9｜约分后再构造。}
+\[
+ G(s)=\frac{s+2}{(s+1)(s+2)(s+3)}
+     =\frac{1}{s^2+4s+3},\qquad n_{\min}=2 .
+\]
+用能控 II 形得到
+\[
+ A=\begin{bmatrix}0&1\\-3&-4\end{bmatrix},\qquad
+ B=\begin{bmatrix}0\\1\end{bmatrix},\qquad C=[1\ 0],\qquad D=0 .
+\]
+
+\subsection*{多输入多输出｜先构造，再查秩}
+可逐通道构造并联实现。也可先取首一公分母 $a(s)$，写出
+$G(s)-D=(H_0+H_1s+\cdots+H_{\nu-1}s^{\nu-1})/a(s)$，
+其中 $\nu=\deg a(s)$，$H_i\in\mathbb R^{p\times m}$。由 $a(s)$ 写出 $\nu$ 阶友矩阵 $F$。
+\[
+\begin{aligned}
+ \text{能控 II 形}\quad &(A,B,C)=(F\otimes I_m,\ e_\nu\otimes I_m,\ [H_0\ \cdots\ H_{\nu-1}]),\\
+ \text{能观 II 形}\quad &(A,B,C)=\left(F^\top\otimes I_p,
+       \begin{bmatrix} H_0\\ \vdots\\ H_{\nu-1}\end{bmatrix},\ e_\nu^\top\otimes I_p\right).
+\end{aligned}
+\]
+两种构造的状态维数分别为 $\nu m$、$\nu p$。构造后可以检查能控、能观性，或按联合结构分解保留能控能观部分；有重极点时也可采用这个流程。
+
+\newpage
+\subsection*{多输入多输出｜简单实极点的留数法}
+
+若 $G(s)$ 的极点均为互异的简单实极点 $\lambda_i$，则
+\[
+ G(s)=D+\sum_i\frac{R_i}{s-\lambda_i},\qquad
+ R_i=\lim_{s\to\lambda_i}(s-\lambda_i)[G(s)-D],\qquad
+ \boxed{n_{\min}=\sum_i\rank R_i.}
+\]
+令 $r_i=\rank R_i$，进行满秩分解 $R_i=C_i B_i$，其中 $C_i$ 有 $r_i$ 列、$B_i$ 有 $r_i$ 行。
+将 $\lambda_i I_{r_i}$ 作为 $A$ 的各对角块，纵向堆叠 $B_i$、横向拼接 $C_i$，即可构造最小实现。
+对任意实现，$\lambda_i$ 处的留数为 $CP_iB$，其中 $P_i$ 是对应广义特征子空间的谱投影。
+所以该子空间维数至少为 $r_i$，给出最小阶数的下界。
+
+\textbf{公共极点。}
+$[1\ 2]/(s+1)$ 的留数秩为 $1$，两路输入共享一维状态，
+可取 $(A,B,C,D)=(-1,[1\ 2],1,[0\ 0])$。
+$I_2/(s+1)$ 的留数秩为 $2$，同一极点需要两个状态。
+
+\subsection*{参考例 10｜双输入、单输出的最小实现}
+\[
+ G(s)=\begin{bmatrix}\dfrac{2(s+3)}{(s+1)(s+2)}&
+                      \dfrac{4(s+4)}{s+5}\end{bmatrix}
+     =\begin{bmatrix}\dfrac{4}{s+1}-\dfrac{2}{s+2}&
+                       4-\dfrac{4}{s+5}\end{bmatrix}.
+\]
+三个极点的留数分别为 $[4\ 0]$、$[-2\ 0]$、$[0\ {-4}]$，秩均为 $1$。
+将 $u_1$ 接入前两维，将 $u_2$ 接入第三维，得到
+\[
+ A=\operatorname{diag}(-1,-2,-5),\quad
+ B=\begin{bmatrix}1&0\\1&0\\0&1\end{bmatrix},\quad
+ C=[4\ {-2}\ {-4}],\quad D=[0\ 4].
+\]
+$-1,-2,-5$ 都在约分后的传递矩阵中出现，任一实现的 $A$ 必须含这三个特征值。
+因此上述三阶实现达到阶数下界。
+\newpage
+\section{自测与答案}\label{sec:practice}
+
+\subsection*{题目}
+\begin{enumerate}
+  \item 已知 $A,B$，写出判断状态完全能控的矩阵及满秩条件。
+  \item 三阶系统有 $\rank Q_o=2$，如何选取能观性分解的变换矩阵 $P$？
+  \item 能控性分解中，能控坐标放在最前面，$\bar A$ 的哪个块一定为零？
+  \item $f(s)=s^3+2s^2-3s+4$，写出能控 II 形的 $A$ 的最后一行。
+  \item 写出 SISO 能控规范形到对应的对偶能观规范形的四个矩阵。
+  \item $G(s)=(3s+5)/(s+2)$，求直接传递项 $D$ 及严格真部分。
+  \item 已知 $n=4$、$r_c=3$、$r_o=2$、$\rank(Q_oQ_c)=2$，求四类阶数与最小阶数。
+  \item 只给 SISO 的 $G(s)$，求能控 II 形需要坐标变换矩阵吗？说明怎样构造。
+\end{enumerate}
+
+\subsection*{答案}
+\begin{enumerate}
+  \item 横向拼接 $Q_c=[B\quad AB\quad\cdots\quad A^{n-1}B]$，要求 $\rank Q_c=n$。
+  \item 从 $Q_o$ 取两个独立行，再补一行使 $P$ 可逆，令 $z=Px$。
+  \item $\bar A$ 的左下块为零，能控子空间在 $A$ 作用下封闭。
+  \item 末行为 $[-4\ \ 3\ \ {-2}]$，按常数项到最高非首项的顺序取负系数。
+  \item $(A^\top,C^\top,B^\top,D^\top)$。对于 SISO，$D^\top=D$。
+  \item $D=3$，因为 $G(s)=3-1/(s+2)$，严格真部分为 $-1/(s+2)$。
+  \item 四类阶数依次为 $2,1,0,1$，最小实现为二阶。
+  \item 直接构造即可。分离 $D$、将分母首项归一，再写 $A=F$、$B=e_n$，用动态分子的升幂系数填 $C$。
+\end{enumerate}
+
+\subsection*{参考资料}
+\small
+用户提供的 \texttt{ref.txt} 与本课程第 4 章讲义、习题课 8、9。
+
+联合分解与最小性参见 MIT 6.241J \href{https://ocw.mit.edu/courses/6-241j-dynamic-systems-and-control-spring-2011/resources/mit6_241js11_chap25/}{第 25 章讲义 \textit{Minimal State-Space Realization}}。
+
+留数矩阵实现参见 E.~G.~Gilbert，
+\href{https://people.duke.edu/~hpgavin/SystemID/References/Gilbert-JSIAM-1963.pdf}{\textit{Controllability and Observability in Multivariable Control Systems}}，1963。
+
+\end{document}

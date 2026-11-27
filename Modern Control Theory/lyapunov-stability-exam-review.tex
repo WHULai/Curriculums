@@ -1,0 +1,757 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,11pt,fontset=fandol]{ctexart}
+
+\usepackage[left=22mm,right=22mm,top=23mm,bottom=23mm,headheight=25pt,headsep=9pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem,fancyhdr}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref,bookmark}
+
+\definecolor{ink}{HTML}{182C3F}
+\definecolor{teal}{HTML}{166267}
+\definecolor{muted}{HTML}{516476}
+\definecolor{panel}{HTML}{EDF5F5}
+\definecolor{ruleink}{HTML}{CBD8DF}
+\hypersetup{pdftitle={现代控制理论｜李雅普诺夫稳定性分析考前解题复习册},
+  colorlinks,linkcolor=teal,urlcolor=teal,bookmarksnumbered}
+\ctexset{
+  section={format=\Large\bfseries\color{ink}\raggedright,beforeskip=0pt,afterskip=7pt},
+  subsection={format=\large\bfseries\color{teal},beforeskip=9pt,afterskip=3pt}
+}
+\setcounter{secnumdepth}{1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt}
+\setlist[enumerate]{leftmargin=2em,label=\arabic*.,itemsep=2pt,topsep=3pt,parsep=0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{muted}现代控制理论}
+\fancyhead[R]{\small\color{muted}第 5 章 · 李雅普诺夫稳定性分析}
+\fancyfoot[R]{\small\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{ruleink}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{opening}{
+  \fancyhf{}
+  \fancyfoot[R]{\small\color{muted}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\newtcolorbox{keybox}{colback=panel,colframe=ruleink,boxrule=0.5pt,arc=1mm,
+  left=2mm,right=2mm,top=1.2mm,bottom=1.2mm,before skip=5pt,after skip=5pt}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\im}{im}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\begin{document}
+\color{ink}
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 1pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 1pt}
+\setlength{\abovedisplayshortskip}{5pt plus 1pt}
+\setlength{\belowdisplayshortskip}{5pt plus 1pt}
+\thispagestyle{opening}
+\pdfbookmark[0]{考前复习路线}{study-plan}
+
+{\large\color{teal}现代控制理论 · 第 5 章\par}
+\vspace{5pt}
+{\fontsize{27}{34}\selectfont\bfseries 李雅普诺夫稳定性分析\par}
+\vspace{4pt}
+{\large\bfseries 考前解题复习册\par}
+
+先把答案盖住，每类挑一道核心题，独立写出计算步骤和最后一句结论。卡在某一步时再对照解析，合上复习册重做。题号与课程 PDF 对应，可由下表跳转。
+
+\subsection*{150 分钟复习路线}
+\begingroup
+\setlength{\extrarowheight}{6pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}p{36mm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{用时} & \textbf{题型} & \textbf{练到能写出什么} \\
+\midrule
+15 分钟 & \hyperref[sec:quadratic]{二次型定号} &
+\hyperref[prob:exercise1]{习题课第 1 题}。把混合项系数除以 $2$ 再填矩阵。用顺序主子式判正定、负定，遇到不定时给出两个相反符号的取值。\\
+20 分钟 & \hyperref[sec:first]{平衡态与第一法} &
+讲义例 5-1、\hyperref[prob:exercise2]{习题课第 2 题}。先解 $f(x_e)=0$，再算 $J(x_e)$ 的特征值，并写明线性化结论适用的范围。\\
+40 分钟 & \hyperref[sec:direct]{第二法} &
+\hyperref[prob:exercise3]{习题课第 3 题}及例 5-3～5-8。细算 $\dot V$，写出整个零导数集合，代回状态方程检查能留在哪些分支。\\
+35 分钟 & \hyperref[sec:linear]{线性矩阵方程} &
+\hyperref[prob:exercise4]{习题课第 4 题}、\hyperref[prob:gain]{例 5-10}。设对称 $P$，逐项比系数，检验 $P>0$。带参数的题单独检查区间端点。\\
+30 分钟 & \hyperref[sec:jacobian]{雅可比矩阵法}、\hyperref[sec:gradient]{变量梯度法} &
+习题课第 5 题与例 5-12。会计算 $J+J^\top$、证明 $V$ 径向无界，以及先求梯度、消去混合项、再分段积分。\\
+10 分钟 & \hyperref[sec:final]{闭卷回查} &
+默写 5 类题的第一步和结论条件，重算刚才错过的一处关键代数。\\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\subsection*{考场看题目要求，选第一步}
+\begin{keybox}
+\textbf{指定第一法}\quad 求 $x_e$，再求 $J(x_e)$。若无右半平面根但有实部为零的根，转用原非线性方程。
+
+\textbf{指定第二法}\quad 把平衡态移到原点，写 $V(0)=0$ 和 $V(x)$ 的符号，再逐项代入求 $\dot V$。如果 $\dot V\le0$，继续核查零导数集合中的轨迹。
+
+\textbf{要求大范围渐近稳定}\quad 写清判号在哪个区域成立，并核验 $V(x)\to\infty$（$\|x\|\to\infty$）。使用线性定常系统的 Hurwitz 判据时，可直接给出大范围结论。
+\end{keybox}
+
+\newpage
+\section{平衡态与第一法}\label{sec:first}
+
+\begin{keybox}
+\textbf{第一法答题顺序}\quad
+由 $f(x_e)=0$ 解出所有待判定的平衡态。求雅可比矩阵 $J(x)$，代入各个 $x_e$ 得到 $A=J(x_e)$。解 $\det(\lambda I-A)=0$，按特征值的\textbf{实部}写出结论。
+\end{keybox}
+
+\subsection*{讲义第 15 页例题｜求全部平衡态}
+
+\textbf{题目}\quad 求自治系统 $\dot x_1=-x_1$、$\dot x_2=x_1+x_2-x_2^3$ 的全部平衡态。
+
+\textbf{1. 同时令两式为零}\quad 由 $-x_1=0$ 得 $x_1=0$，代入第二式。
+\[
+  x_1+x_2-x_2^3=0\quad\Longrightarrow\quad
+  x_2(1-x_2)(1+x_2)=0.
+\]
+\textbf{2. 保留三个因子对应的根}\quad $x_2=0,1,-1$。
+因此全部平衡态为 $(0,0)^\top$、$(0,1)^\top$、$(0,-1)^\top$，三点代回均使两个导数为零。
+因式分解时直接约去 $x_2$ 会丢掉原点。
+
+\subsection*{讲义例 5-1｜含参数的二阶系统（第 40 页）}
+
+\textbf{题目}\quad 已知 $K_1,K_2>0$，用第一法判断下列系统在原点的稳定性。
+\[
+  \dot x_1=x_2,\qquad \dot x_2=K_1(x_1^2-1)x_2-K_2x_1.
+\]
+
+\textbf{1. 确认平衡态}\quad 第一式给出 $x_2=0$，第二式变为 $-K_2x_1=0$，故唯一平衡态为原点。
+
+\textbf{2. 求偏导，再代入原点}\quad 第二式对 $x_1$、$x_2$ 的偏导依次是 $2K_1x_1x_2-K_2$ 和 $K_1(x_1^2-1)$。
+\[
+  J(x)=\begin{bmatrix}0&1\\2K_1x_1x_2-K_2&K_1(x_1^2-1)\end{bmatrix},\qquad
+  A=J(0)=\begin{bmatrix}0&1\\-K_2&-K_1\end{bmatrix}.
+\]
+
+\textbf{3. 展开行列式，按根的实部定性}\quad
+\[
+  \det(\lambda I-A)
+  =\begin{vmatrix}\lambda&-1\\ K_2&\lambda+K_1\end{vmatrix}
+  =\lambda(\lambda+K_1)+K_2.
+\]
+若两根为实数，根积 $K_2>0$ 说明同号，根和 $-K_1<0$ 说明两根均负。
+若两根为共轭复数，实部等于根和的一半 $-K_1/2<0$。
+两种情形均得到\textbf{原非线性系统在原点局部渐近稳定}。
+
+\newpage
+\subsection*{习题课 2｜先排除其他平衡态（第 4--5 页）}\label{prob:exercise2}
+
+\textbf{题目}\quad 用李雅普诺夫第一法判断下列系统在其平衡态是否渐近稳定。
+\[
+  \begin{cases}
+    \dot x_1=-x_1+x_2+x_1(x_1^2+x_2^2),\\
+    \dot x_2=-x_1-x_2+x_2(x_1^2+x_2^2).
+  \end{cases}
+\]
+
+\textbf{1. 把平衡方程写成矩阵形式}\quad 令 $r^2=x_1^2+x_2^2$，合并两式中的同类项。
+\[
+  \begin{bmatrix}r^2-1&1\\-1&r^2-1\end{bmatrix}
+  \begin{bmatrix}x_1\\x_2\end{bmatrix}
+  =\begin{bmatrix}0\\0\end{bmatrix},\qquad
+  \begin{vmatrix}r^2-1&1\\-1&r^2-1\end{vmatrix}=(r^2-1)^2+1>0.
+\]
+每个候选点对应的系数矩阵都可逆，故只能有 $x_1=x_2=0$，原点代回也满足两式。
+
+\textbf{2. 逐项求雅可比矩阵}\quad 展开 $x_1(x_1^2+x_2^2)=x_1^3+x_1x_2^2$、$x_2(x_1^2+x_2^2)=x_1^2x_2+x_2^3$。求偏导时把另一状态分量视为常数。
+\[
+  J(x)=\begin{bmatrix}
+    -1+3x_1^2+x_2^2&1+2x_1x_2\\
+    -1+2x_1x_2&-1+x_1^2+3x_2^2
+  \end{bmatrix},\qquad
+  A=J(0)=\begin{bmatrix}-1&1\\-1&-1\end{bmatrix}.
+\]
+
+\textbf{3. 求特征值并写结论}\quad
+\[
+  \det(\lambda I-A)
+  =\begin{vmatrix}\lambda+1&-1\\ 1&\lambda+1\end{vmatrix}
+  =(\lambda+1)^2+1,
+  \qquad \lambda_{1,2}=-1\pm\mathrm{i}.
+\]
+两根实部均为 $-1$，所以\textbf{原点局部渐近稳定}。
+
+若加问是否全局，取 $r(0)=1$，由两式乘以 $2x_1$、$2x_2$ 后相加，交叉项抵消，得 $\frac{\mathrm d}{\mathrm dt}r^2=2r^2(r^2-1)$。于是该轨迹始终保持 $r(t)=1$，不能趋向原点。
+
+\subsection*{第一法的结论怎么写}
+
+\begin{itemize}
+  \item 所有实部严格小于零，写「该平衡态局部渐近稳定」。
+  \item 至少一个实部严格大于零，写「该平衡态不稳定」。有正实部根时，即使还有零实部根，也能判不稳定。
+  \item 所有实部非正且至少一个为零，写「第一法无法判定」，转用题目要求的其他方法。
+\end{itemize}
+
+\begin{keybox}
+\textbf{二阶验算}\quad 对实 $2\times2$ 矩阵，$\det(\lambda I-A)=\lambda^2-(\operatorname{tr}A)\lambda+\det A$。
+从特征式读出一次项系数和常数项，应分别等于 $-\operatorname{tr}A$ 和 $\det A$。
+题目有多个平衡态时，在各待判点分别代入 $J(x_e)$。
+\end{keybox}
+
+\newpage
+\section{二次型定号}\label{sec:quadratic}
+
+\subsection*{先写对称矩阵，再选定号方法}
+
+把二次型写成 $V(x)=x^\top P x$，其中 $P=P^\top$。
+对角元直接填对应平方项的系数，每个混合项 $x_ix_j$ 的系数平分到 $p_{ij}$、$p_{ji}$ 两处。
+例如 $-8x_1x_2$ 对应 $p_{12}=p_{21}=-4$。
+
+\textbf{顺序主子式}\quad $\Delta_k$ 取 $P$ 左上角 $k\times k$ 子矩阵的行列式。
+\[
+  P>0\iff \Delta_k>0\quad(k=1,\ldots,n),\qquad
+  P<0\iff (-1)^k\Delta_k>0\quad(k=1,\ldots,n).
+\]
+三阶负定时要写清 $\Delta_1<0,\ \Delta_2>0,\ \Delta_3<0$。
+若有零子式，继续检查取值、特征值或作合同变换。用主子式判正半定时，须确认\textbf{全部}主子式均非负。判负半定时，对 $-P$ 做相同检查。
+
+\subsection*{讲义例 5-2｜合同变换（第 57--58 页）}
+
+\textbf{题目}\quad 用合同变换判定实对称矩阵 $P=\begin{bmatrix}1&-1&-1\\-1&3&2\\-1&2&5\end{bmatrix}$ 的定号性。
+
+\textbf{1. 将第 2 行加第 1 行，再将第 2 列加第 1 列}\quad 左上两个非对角元同步变为零。
+\[
+  P\longmapsto
+  \begin{bmatrix}1&0&-1\\0&2&1\\-1&1&5\end{bmatrix}.
+\]
+\textbf{2. 将第 3 行加第 1 行，再将第 3 列加第 1 列}\quad 得到首行、首列仅主对角元非零的对称矩阵。
+\[
+  \begin{bmatrix}1&0&-1\\0&2&1\\-1&1&5\end{bmatrix}
+  \longmapsto
+  \begin{bmatrix}1&0&0\\0&2&1\\0&1&4\end{bmatrix}.
+\]
+\textbf{3. 将第 3 行减去第 2 行的一半，列做同样操作}\quad
+把右下角的交叉项消去，最后一个对角元为 $4-1/2=7/2$。
+\[
+  \begin{bmatrix}1&0&0\\0&2&1\\0&1&4\end{bmatrix}
+  \longmapsto \operatorname{diag}(1,2,7/2).
+\]
+\textbf{4. 看对角元的符号}\quad 变换可逆，非零向量经代换后仍非零。对角矩阵的三个平方项系数都是正数，所以 $x\ne 0$ 时 $x^\top P x>0$，即 $P$ \textbf{正定}。
+可用配方核对三次操作的结果。
+\[
+  x^\top Px=(x_1-x_2-x_3)^2+2(x_2+x_3/2)^2+\tfrac72x_3^2.
+\]
+
+\newpage
+\subsection*{习题课 1｜三种定号结论（第 1--3 页）}\label{prob:exercise1}
+
+\textbf{题目}\quad 判断下列三个二次型的定号性。
+\[
+\begin{aligned}
+  V_1&=2x_1^2+3x_2^2+x_3^2-2x_1x_2+2x_1x_3,\\
+  V_2&=8x_1^2+2x_2^2+x_3^2-8x_1x_2+2x_1x_3-2x_2x_3,\\
+  V_3&=-10x_1^2-4x_2^2-x_3^2-2x_1x_2+2x_2x_3+4x_1x_3.
+\end{aligned}
+\]
+
+\textbf{（1）写矩阵，计算三个顺序主子式}\quad $p_{12}=-1$、$p_{13}=1$、$p_{23}=0$。
+\[
+\begin{aligned}
+  P_1&=\begin{bmatrix}2&-1&1\\-1&3&0\\1&0&1\end{bmatrix},\qquad
+  \Delta_1=2,\qquad \Delta_2=2\cdot3-(-1)^2=5,\\
+  \Delta_3&=2(3\cdot1-0^2)+\bigl((-1)\cdot1-0\bigr)
+                  +\bigl((-1)\cdot0-3\cdot1\bigr)=2.
+\end{aligned}
+\]
+三个顺序主子式均为正，故 $V_1$ \textbf{正定}。
+
+\textbf{（2）主子式出现零，补查一正一负两个取值}\quad $p_{12}=-4$、$p_{13}=1$、$p_{23}=-1$。
+\[
+\begin{aligned}
+  P_2&=\begin{bmatrix}8&-4&1\\-4&2&-1\\1&-1&1\end{bmatrix},\qquad
+  \Delta_1=8,\qquad \Delta_2=8\cdot2-(-4)^2=0,\\
+  \Delta_3&=8(2-1)+4(-4+1)+(4-2)=-2.
+\end{aligned}
+\]
+$V_2(1,0,0)=8>0$。将 $x=(1,2,1)^\top$ 代入得
+$V_2=8+8+1-16+2-4=-1<0$。同一二次型可取正、负两种值，故 $V_2$ \textbf{不定}。
+
+\textbf{（3）按负定要求核对奇、偶阶子式}\quad $p_{12}=-1$、$p_{13}=2$、$p_{23}=1$。
+\[
+\begin{aligned}
+  P_3&=\begin{bmatrix}-10&-1&2\\-1&-4&1\\2&1&-1\end{bmatrix},\qquad
+  \Delta_1=-10,\qquad \Delta_2=(-10)(-4)-(-1)^2=39,\\
+  \Delta_3&=(-10)(4-1)+(1-2)+2(-1+8)=-17.
+\end{aligned}
+\]
+$-P_3$ 的三个顺序主子式依次是 $10,39,17$，均为正，故 $P_3<0$，$V_3$ \textbf{负定}。
+
+\begin{keybox}
+\textbf{验算}\quad 展开三阶行列式首行时按 $+,-,+$ 处理余子式。写 $x^\top Px$ 检查混合项是否恢复原系数。遇到零顺序主子式，先把判定做完再写半定或不定。
+\end{keybox}
+
+\newpage
+\section{第二法与零导数集合}\label{sec:direct}
+
+\subsection*{讲义例 5-3｜三次项使导数负定\hfill{\normalfont\small 讲义 PDF 第 71 页}}
+求下列系统的平衡态并判断稳定性。
+\[
+  \dot x_1=x_2-x_1(x_1^2+x_2^2),\qquad
+  \dot x_2=-x_1-x_2(x_1^2+x_2^2).
+\]
+
+\textbf{选函数并逐项求导。}
+两个线性项 $x_2,-x_1$ 在平方和求导时互相抵消，两个三次项都含因子 $r^2=x_1^2+x_2^2$。取 $V=r^2=\lVert x\rVert^2$，有
+\[
+\begin{aligned}
+ \dot V
+ &=2x_1(x_2-x_1r^2)+2x_2(-x_1-x_2r^2)\\
+ &=\underbrace{2x_1x_2-2x_1x_2}_{0}
+       -2r^2(x_1^2+x_2^2)
+ =-2r^4 .
+\end{aligned}
+\]
+原点满足两式右端都为零。任何平衡态上都必须有 $\dot V=0$，而 $-2r^4=0$ 只能推出 $r=0$，所以原点是唯一平衡态。
+
+\textbf{写明适用范围。}
+$V>0$ 与 $\dot V<0$ 对所有 $x\ne0$ 成立，且 $\lVert x\rVert\to\infty$ 时 $V\to\infty$。
+任意初态的解留在闭圆盘 $V\le V(x(t_0))$ 内，故可向前延拓。若 $V_0=V(x(t_0))>0$，也可直接积分 $\dot V=-2V^2$ 得
+\[
+ V(x(t))=\frac{V_0}{1+2V_0(t-t_0)}\ \longrightarrow\ 0
+ \qquad (t\to\infty).
+\]
+
+\textbf{答题结论}\quad 原点大范围渐近稳定。
+
+\subsection*{讲义例 5-4｜初步判定负半定导数\hfill{\normalfont\small 讲义 PDF 第 73 页}}
+求 $\dot x_1=x_2,\ \dot x_2=-x_1-x_2$ 的平衡态并判断稳定性。
+
+令 $\dot x_1=0$ 得 $x_2=0$，再令 $\dot x_2=0$ 得 $x_1=0$。
+为使两项 $2x_1x_2$ 与 $-2x_1x_2$ 抵消，仍取 $V=x_1^2+x_2^2$。于是
+\[
+  \dot V=2x_1x_2+2x_2(-x_1-x_2)=-2x_2^2\le0 .
+\]
+一方面，$\lVert x(t)\rVert^2=V(x(t))\le V(x(t_0))=\lVert x(t_0)\rVert^2$，所以任意 $\varepsilon>0$ 可取 $\delta=\varepsilon$，原点稳定。
+另一方面，$\dot V$ 在直线 $x_2=0$ 上均为零。要判断是否渐近稳定，继续查这条直线能否容纳始终留在其中的非零轨迹。
+
+\textbf{本步结论}\quad 已证原点稳定，渐近性由例 5-5 判定。
+
+\newpage
+\subsection*{讲义例 5-5｜续查例 5-4 的零导数集合\hfill{\normalfont\small 讲义 PDF 第 76--78 页}}
+对 $\dot x_1=x_2,\ \dot x_2=-x_1-x_2$，沿用 $V=x_1^2+x_2^2$。其零导数集合为 $E=\{x:x_2=0\}$。
+若某条轨迹始终留在 $E$ 中，则 $x_2(t)\equiv0$，
+继而 $0\equiv\dot x_2=-x_1$，故 $x_1(t)\equiv0$。
+从 $(a,0)$ 出发时，若 $a\ne0$，则 $\dot x_2=-a\ne0$，轨迹立刻离开该直线。
+
+对任意初值，圆盘 $V\le V(x(t_0))$ 紧致且正向不变。其内 $E$ 的最大不变集仅为原点，故由 LaSalle 不变性原理，任意初值对应的轨迹均趋于原点。
+
+\textbf{答题结论}\quad 原点大范围渐近稳定。
+
+\textbf{讲义的另一种做法。}
+取 $W=\tfrac12[(x_1+x_2)^2+2x_1^2+x_2^2]$。因和变量满足 $\dot x_1+\dot x_2=-x_1$，有
+\[
+\begin{aligned}
+ \dot W
+ &=(x_1+x_2)(\dot x_1+\dot x_2)+2x_1\dot x_1+x_2\dot x_2\\
+ &=-(x_1+x_2)x_1+2x_1x_2+x_2(-x_1-x_2)
+ =-x_1^2-x_2^2 .
+\end{aligned}
+\]
+$W\ge\tfrac12\lVert x\rVert^2$ 且 $\dot W$ 在全空间负定，也能得到同一结论。
+
+\subsection*{习题课第 3 题｜两条零导数直线\hfill{\normalfont\small 习题课 PDF 第 6--7 页}}\label{prob:exercise3}
+用第二法判断系统 $\dot x_1=x_2,\ \dot x_2=-x_1-(1+x_2)^2x_2$ 的平衡态稳定性。
+
+由第一式得平衡时 $x_2=0$，代入第二式得 $x_1=0$。取 $V=x_1^2+x_2^2$，则
+\[
+ \dot V=2x_1x_2+2x_2[-x_1-(1+x_2)^2x_2]
+       =-2x_2^2(1+x_2)^2\le0 .
+\]
+所以原点稳定。零导数集合为 $\{x_2=0\}\cup\{x_2=-1\}$。轨迹连续，若始终在这个并集中，$x_2$ 必须恒取其中一个值。
+\begin{enumerate}
+  \item $x_2\equiv0$ 时，$0\equiv\dot x_2=-x_1$，故只能是原点。
+  \item $x_2\equiv-1$ 时，$0\equiv\dot x_2=-x_1$ 同样要求 $x_1\equiv0$，但 $\dot x_1=x_2=-1$，矛盾。即使从 $(0,-1)$ 出发、瞬时有 $\dot x_2=0$，也无法一直留在该直线上。
+\end{enumerate}
+任意初值对应的 $V$ 子水平集紧致、正向不变，解可向前延拓。
+零导数集合内的最大不变集只有原点，故由 LaSalle 不变性原理，所有初值的轨迹均趋于原点。
+
+\textbf{答题结论}\quad 原点大范围渐近稳定。
+
+\newpage
+\subsection*{讲义例 5-6｜导数恒为零的闭轨道\hfill{\normalfont\small 讲义 PDF 第 79--80 页}}
+判断 $\dot x_1=kx_2,\ \dot x_2=-x_1$（$k>0$）的平衡态稳定性。
+
+令两个右端为零得唯一平衡态 $(0,0)$。试取 $V=\alpha x_1^2+\beta x_2^2$，则 $\dot V=2(\alpha k-\beta)x_1x_2$。选 $\alpha=1,\ \beta=k$，得到
+\[
+ V=x_1^2+kx_2^2,\qquad
+ \dot V=2kx_1x_2-2kx_1x_2=0 .
+\]
+令 $m_k=\min\{1,k\}$、$M_k=\max\{1,k\}$，则
+$m_k\lVert x(t)\rVert^2\le V(x(t))=V(x(t_0))\le M_k\lVert x(t_0)\rVert^2$，
+于是对任意 $\varepsilon>0$，可取 $\delta=\varepsilon\sqrt{m_k/M_k}$，原点稳定。任意非零初始状态对应 $V(x(t_0))>0$，轨迹若趋于原点则 $V$ 必趋于零，与恒等式矛盾。
+
+\textbf{相图与讲义算例。}
+非零轨迹位于椭圆 $x_1^2+kx_2^2=V(x(t_0))$ 上。在正 $x_1$ 轴有 $\dot x_2<0$，故轨迹顺时针。
+由 $\ddot x_1=-kx_1$ 得周期 $2\pi/\sqrt{k}$。取讲义的 $k=2,\ x(0)=(2,4)^\top$，相轨线为 $x_1^2+2x_2^2=36$。
+令 $\theta=\sqrt2\,t$，由 $x_1(0)=2$、$\dot x_1(0)=8$ 得
+\[
+\begin{aligned}
+ x_1&=2\cos\theta+4\sqrt2\sin\theta,\qquad x_2=\dot x_1/2=4\cos\theta-\sqrt2\sin\theta,\\
+ y&=x_1+x_2=6\cos\theta+3\sqrt2\sin\theta.
+\end{aligned}
+\]
+
+\textbf{答题结论}\quad 原点在李雅普诺夫意义下稳定，非渐近稳定。
+
+\subsection*{讲义例 5-7｜用严格增长证明不稳定\hfill{\normalfont\small 讲义 PDF 第 82 页}}
+判断 $\dot x_1=x_2,\ \dot x_2=-x_1+x_2$ 的平衡态稳定性。
+
+令两右端为零得唯一平衡态为原点。取 $V=x_1^2+x_2^2$，交叉项仍抵消，得
+$2x_1x_2+2x_2(-x_1+x_2)=2x_2^2=\dot V\ge0$。
+如果 $\dot V$ 沿轨迹恒为零，则 $x_2\equiv0$，并由 $\dot x_2=-x_1$ 得 $x_1\equiv0$。
+
+\textbf{给出明确的增长证据。}
+在平方和中加入混合项 $-x_1x_2$，取
+$W=x_1^2+x_2^2-x_1x_2=\tfrac12[(x_1-x_2)^2+x_1^2+x_2^2]$。
+它正定，且
+\[
+ \dot W=2x_2^2-\bigl[x_2^2+x_1(-x_1+x_2)\bigr]
+       =x_1^2+x_2^2-x_1x_2=W.
+\]
+因此 $W(x(t))=e^{t-t_0}W(x(t_0))$。由 $W\le\tfrac32\lVert x\rVert^2$，
+任意小的非零初值对应的解最终也会离开固定的原点邻域。
+
+\textbf{答题结论}\quad 原点不稳定。
+
+\newpage
+\subsection*{讲义例 5-8｜第一象限内的时变系统\hfill{\normalfont\small 讲义 PDF 第 83--84 页}}
+在 $x_1\ge0,\ x_2\ge0$ 的第一象限内，判断下列系统的原点稳定性。
+\[
+ \begin{cases}
+ \dot x_1=x_1\sin^2 t+x_2e^t,\\
+ \dot x_2=x_1e^t+x_2\cos^2 t .
+ \end{cases}
+\]
+原点是平衡态。沿用讲义的 $V(x,t)=2e^{-t}x_1x_2$。它在象限内部为正，在两条坐标轴上为零。计算全导数时，显含时间的因子也要求导。
+\[
+\begin{aligned}
+ \dot V
+ &=-2e^{-t}x_1x_2+2e^{-t}(\dot x_1x_2+x_1\dot x_2)\\
+ &=-2e^{-t}x_1x_2
+   +2e^{-t}x_1x_2(\sin^2 t+\cos^2 t)+2(x_1^2+x_2^2)\\
+ &=2(x_1^2+x_2^2).
+\end{aligned}
+\]
+
+\textbf{让任意小的象限内初值离开固定邻域。}
+固定任意初始时刻 $t_0$ 和半径 $\varepsilon=1$。给定任意 $\delta>0$，选
+\[
+ x(t_0)=(\eta,\eta)^\top,\qquad
+ 0<\eta<\frac{\min\{\delta,1\}}{\sqrt2}.
+\]
+在象限内两分量的导数都非负。若轨迹第一次触及坐标轴，则此前两分量一直不减，均仍至少为 $\eta$，矛盾。
+所以所选解始终留在象限内部。系数在每个有限时间区间上连续，线性方程的解可向前延拓至所有 $t\ge t_0$。
+
+令 $s=x_1+x_2$，则
+\[
+ \dot s=e^t s+x_1\sin^2 t+x_2\cos^2 t\ge e^t s,
+ \qquad s(t_0)=2\eta>0 .
+\]
+对 $\dot s/s$ 积分，并用 $x_1+x_2\le\sqrt2\lVert x\rVert$，得
+\[
+ \lVert x(t)\rVert
+ \ \ge\ \frac{s(t)}{\sqrt2}
+ \ \ge\ \sqrt2\,\eta\,\exp(e^t-e^{t_0}) .
+\]
+右端随 $t\to\infty$ 发散。对所有 $\delta>0$，都已构造一个 $\lVert x(t_0)\rVert<\delta$ 的允许初态，其轨迹最终满足 $\lVert x(t)\rVert>1$。
+
+\textbf{答题结论}\quad 原点在题定第一象限内已不稳定。
+
+\newpage
+\section{线性系统的李雅普诺夫方程}\label{sec:linear}
+
+\begin{keybox}
+做题顺序是先由 $Ax=0$ 确定平衡态，再选 $Q$（通常取 $I$），设 $P=P^\top$，
+解 $A^\top P+PA=-Q$。矩阵等式只需比较上三角含对角线的元素。
+用顺序主子式检验 $P>0$，再检查 $V=x^\top Px$ 的正定性、径向无界性及
+$\dot V=-x^\top Qx$ 的定号。若题目选用半正定的 $Q$，还要检查 $\dot V=0$ 的最大不变集。
+\end{keybox}
+
+\subsection*{讲义例 5-9｜解二阶矩阵方程}
+用李雅普诺夫第二法判定下列系统的平衡态稳定性（讲义 PDF 第 97--100 页）。
+\[
+   \dot x=Ax,\qquad A=\begin{bmatrix}0&1\\-1&-1\end{bmatrix}.
+\]
+
+\textbf{确定平衡态。} 由 $\det A=1$，得唯一平衡态 $x=0$。取
+$Q=I_2$、$P=\begin{bmatrix}a&b\\b&c\end{bmatrix}$。
+
+\textbf{相乘、比较系数。} 先算 $PA$，由 $P$ 对称可知 $A^\top P=(PA)^\top$。
+\[
+   PA=\begin{bmatrix}-b&a-b\\-c&b-c\end{bmatrix},\qquad
+   A^\top P+PA
+   =\begin{bmatrix}-2b&a-b-c\\a-b-c&2b-2c\end{bmatrix}=-I_2 .
+\]
+比较 $(1,1),(1,2),(2,2)$ 三项，依次解出
+\[
+ \begin{aligned}
+   -2b=-1          &\quad\Longrightarrow\quad b=\tfrac12,\\
+   2b-2c=-1        &\quad\Longrightarrow\quad c=b+\tfrac12=1,\\
+   a-b-c=0         &\quad\Longrightarrow\quad a=b+c=\tfrac32 .
+ \end{aligned}
+\]
+
+\textbf{检验正定、写结论。}
+\[
+   P=\frac12\begin{bmatrix}3&1\\1&2\end{bmatrix},
+   \qquad \Delta_1=\frac32>0,\qquad
+   \Delta_2=\frac{3\cdot2-1}{4}=\frac54>0 .
+\]
+故 $P>0$，从而当 $x\ne 0$ 时，
+\[
+ V(x)=\tfrac12(3x_1^2+2x_1x_2+2x_2^2)>0,\qquad
+ \dot V(x)=-(x_1^2+x_2^2)<0 .
+\]
+又因 $V(x)\ge\lambda_{\min}(P)\lVert x\rVert^2$ 且 $\lambda_{\min}(P)>0$，
+$V$ 径向无界，故原点\textbf{大范围渐近稳定}。
+
+\newpage
+\subsection*{讲义例 5-10｜求负反馈系统的渐近稳定增益}\label{prob:gain}
+下列三个环节依次串联，输出 $x_1$ 作单位负反馈。求零输入闭环系统渐近稳定时
+实数增益 $k$ 的取值范围（讲义 PDF 第 101--104 页）。
+\[
+  -x_1 \xrightarrow{\ \,k/(s+1)\, \ } x_3
+  \xrightarrow{\ \,1/(s+2)\, \ } x_2
+  \xrightarrow{\ \,1/s\, \ } x_1 .
+\]
+\textbf{由方块读状态方程。}
+三个环节分别给出 $\dot x_3+x_3=-kx_1$、$\dot x_2+2x_2=x_3$、$\dot x_1=x_2$。
+按 $(x_1,x_2,x_3)$ 排列，
+\[
+   A=\begin{bmatrix}0&1&0\\0&-2&1\\-k&0&-1\end{bmatrix},\qquad
+   \det A=-k .
+\]
+$k\ne0$ 时原点是唯一平衡态。$k=0$ 时 $(x_1,0,0)$ 均为平衡态，任意小的非零平衡初态都保持原值，因此排除。
+
+\textbf{设对称矩阵、逐项求解。} 取 $Q=\operatorname{diag}(0,0,1)$，则
+\[
+   P=\begin{bmatrix}a&b&c\\b&d&e\\c&e&f\end{bmatrix},\qquad
+   PA=\begin{bmatrix}
+   -kc&a-2b&b-c\\
+   -ke&b-2d&d-e\\
+   -kf&c-2e&e-f
+   \end{bmatrix}.
+\]
+将 $PA+(PA)^\top=-Q$ 的六项各自对应起来
+\[
+ \begin{aligned}
+   (1,1):\;-2kc&=0, & (1,2):\; a-2b-ke&=0, & (1,3):\; b-c-kf&=0,\\
+   (2,2):\;2b-4d&=0, & (2,3):\;c+d-3e&=0, & (3,3):\;2e-2f&=-1 .
+ \end{aligned}
+\]
+由 $k\ne0$ 得 $c=0$。依次代入可得
+$b=kf$、$d=b/2=kf/2$、$e=d/3=kf/6$。
+末式给出 $(6-k)f=3$，所以 $k=6$ 时方程无解。其余情形下，
+$f=3/(6-k)$、$a=2b+ke=(2k+k^2/6)f$，
+\[
+  P=\frac{M}{2(6-k)},\qquad
+  M=\begin{bmatrix}k^2+12k&6k&0\\6k&3k&k\\0&k&6\end{bmatrix}.
+\]
+
+\textbf{逐个检验顺序主子式。}
+\[
+\begin{aligned}
+ \Delta_1(P)&=\frac{k(k+12)}{2(6-k)},\\
+ \Delta_2(P)&=\frac{3k(k^2+12k)-(6k)^2}{4(6-k)^2}
+             =\frac{3k^3}{4(6-k)^2},\\
+ \Delta_3(P)&=\frac{(k^2+12k)(18k-k^2)-6(6k)^2}{8(6-k)^3}
+             =\frac{k^3}{8(6-k)^2}.
+\end{aligned}
+\]
+$\Delta_2>0$ 要求 $k>0$，此时 $\Delta_1>0$ 要求 $k<6$。
+在 $0<k<6$ 时，三个子式均为正，$V=x^\top Px$ 正定且径向无界。
+
+\textbf{检查零导数集合并验算边界。}
+$\dot V=-x_3^2$。若轨线始终满足 $x_3=0$，第三式给出 $kx_1=0$，
+再由 $\dot x_1=x_2$ 得 $x_2=0$，所以最大不变集只有原点，原点大范围渐近稳定。
+验算时，闭环特征多项式为 $s(s+1)(s+2)+k=s^3+3s^2+2s+k$，
+劳斯表首列为 $1,3,(6-k)/3,k$，全正也恰好要求 $\boxed{0<k<6}$。
+$k=0$ 有零根，$k=6$ 时多项式为 $(s+3)(s^2+2)$，两个边界都没有渐近稳定性。
+
+\newpage
+\subsection*{习题课第 4 题｜用第二法判定大范围渐近稳定}\label{prob:exercise4}
+利用李雅普诺夫第二法判断下列系统是否为大范围渐近稳定（习题课 PDF 第 8--10 页）。
+\[
+   \dot x=Ax,\qquad A=\begin{bmatrix}-1&1\\2&-3\end{bmatrix}.
+\]
+
+\textbf{找平衡态、列方程。} 由 $\det A=3-2=1$，得原点是唯一平衡态。
+取 $Q=I_2$、$P=\begin{bmatrix}a&b\\b&c\end{bmatrix}$，先算
+\[
+ PA=\begin{bmatrix}-a+2b&a-3b\\-b+2c&b-3c\end{bmatrix},\qquad
+ A^\top P+PA
+ =\begin{bmatrix}-2a+4b&a-4b+2c\\a-4b+2c&2b-6c\end{bmatrix}.
+\]
+令该矩阵等于 $-I_2$，比较三个独立位置
+\[
+    -2a+4b=-1,\qquad a-4b+2c=0,\qquad 2b-6c=-1 .
+\]
+
+\textbf{代入消元。}
+第一、三式分别给出 $a=\tfrac12+2b$ 和 $c=\tfrac16+\tfrac13 b$。
+代入中间式得到
+\[
+    \left(\tfrac12+2b\right)-4b+2\left(\tfrac16+\tfrac13 b\right)
+    =\tfrac56-\tfrac43 b=0 .
+\]
+于是 $b=\tfrac58$，回代得
+\[
+ \begin{aligned}
+   a&=\tfrac12+2\cdot\tfrac58=\tfrac74,\qquad
+   c=\tfrac16+\tfrac13\cdot\tfrac58=\tfrac38,\\
+   P&=\frac18\begin{bmatrix}14&5\\5&3\end{bmatrix},\qquad
+   \Delta_1=\frac74>0,\qquad
+   \Delta_2=\frac{14\cdot3-5^2}{64}=\frac{17}{64}>0 .
+ \end{aligned}
+\]
+
+\textbf{交代全局条件。} 由于 $P>0$，当 $x\ne0$ 时有
+\[
+   V(x)=\tfrac18(14x_1^2+10x_1x_2+3x_2^2)>0,\qquad
+   \dot V(x)=-x_1^2-x_2^2<0.
+\]
+由 $V(x)\ge\lambda_{\min}(P)\lVert x\rVert^2$，得 $\lVert x\rVert\to\infty$ 时
+$V(x)\to\infty$。故原点\textbf{大范围渐近稳定}。
+
+\newpage
+\section{雅可比矩阵法}\label{sec:jacobian}
+
+\subsection*{讲义例 5-11（第 120～121 页）与习题课第 5 题（第 11～12 页）}
+用雅可比矩阵法判定下列系统在平衡态的稳定性。
+\[
+ \dot x_1=-3x_1+a x_2,\qquad \dot x_2=x_1-x_2-x_2^3
+\]
+讲义例 5-11 取 $a=1$，习题课第 5 题取 $a=2$。后面所有计算分别代入这两个值。
+
+\textbf{第 1 步｜求平衡态，确定 $V$ 的零点。}
+$f_1=0$ 给出 $x_1=\frac a3x_2$，代入 $f_2=0$ 得
+\[
+ 0=\tfrac a3x_2-x_2-x_2^3=-x_2\bigl(1-\tfrac a3+x_2^2\bigr).
+\]
+括号在两题中都严格为正，故 $x_2=0$、$x_1=0$。取
+$V=f^\top f=(-3x_1+a x_2)^2+(x_1-x_2-x_2^3)^2$。
+平方和为零等价于两个分量同时为零，故 $V$ 在全空间正定。
+
+\textbf{第 2 步｜先求 $J(x)$，再逐项相加得到对称矩阵。}
+\[
+ J(x)=\begin{bmatrix}-3&a\\1&-1-3x_2^2\end{bmatrix},\qquad
+ S(x)=J(x)+J(x)^\top=\begin{bmatrix}-6&a+1\\a+1&-2-6x_2^2\end{bmatrix}.
+\]
+例如右下角来自 $\partial f_2/\partial x_2=-1-3x_2^2$ 加上它自身，非对角元是 $a+1$。
+顺序主子式按 $\Delta_1=S_{11}$、$\Delta_2=S_{11}S_{22}-S_{12}^2$ 计算：
+\[
+\begin{array}{c@{\quad}c@{\quad}l}
+ \toprule
+  &\Delta_1&\Delta_2\\
+ \midrule
+ \text{例 5-11}\ (a=1)&-6&12+36x_2^2-2^2=8+36x_2^2>0\\
+ \text{习题 5}\ (a=2)&-6&12+36x_2^2-3^2=3+36x_2^2>0\\
+ \bottomrule
+\end{array}
+\]
+两题都满足二阶负定条件 $\Delta_1<0,\ \Delta_2>0$，且对所有 $x$ 成立。沿轨迹 $\dot f=J(x)f$，故
+$\dot V=\dot f^\top f+f^\top\dot f=f^\top S f<0$（$x\ne0$），原点渐近稳定。
+
+\textbf{第 3 步｜补齐大范围判定。}
+直接展开 $-x^\top f=3x_1^2-(a+1)x_1x_2+x_2^2+x_2^4$。
+由 $\bigl(\sqrt{5/2}\,|x_1|-3|x_2|/\sqrt{10}\bigr)^2\ge0$，
+得 $3|x_1x_2|\le\frac52x_1^2+\frac9{10}x_2^2$。于是两题均有
+\[
+ \|x\|\|f(x)\|\ \ge\ -x^\top f(x)
+ \ \ge\ \tfrac12x_1^2+\tfrac1{10}x_2^2+x_2^4
+ \ \ge\ \tfrac1{10}\|x\|^2 .
+\]
+故 $V=\|f(x)\|^2\ge\|x\|^2/100\to\infty$。两题原点均为\textbf{大范围渐近稳定}。
+
+\begin{keybox}
+第一法代入平衡态，读 $J(x_e)$ 的特征值。题目指定本页的雅可比矩阵法时，保留 $x$，判 $J(x)+J(x)^\top$ 在所考察区域内的定号。
+\end{keybox}
+
+\newpage
+\section{变量梯度法}\label{sec:gradient}
+
+\subsection*{讲义例 5-12（第 128～131 页）｜由 $\dot V$ 倒推梯度}
+用变量梯度法判定 $\dot x_1=x_2,\ \dot x_2=-x_2-x_1^3$ 在平衡态的稳定性。先令 $x_2=0$，再由 $-x_1^3=0$ 得唯一平衡态为原点。
+
+\textbf{第 1 步｜设待定梯度，提前留出消项的位置。}
+令 $g=(g_1,g_2)^\top$ 为候选梯度，取
+\[
+ g_1=a x_1+b x_1^3+c x_2,\qquad g_2=e x_1+d x_2 .
+\]
+第二个分量的 $d x_2$ 乘上 $\dot x_2$ 会出现 $-d x_1^3x_2$，因此在 $g_1$ 中留出 $b x_1^3$ 来消掉它。为使 $g$ 可积，核对交叉偏导
+$\partial g_1/\partial x_2=c$、$\partial g_2/\partial x_1=e$，所以 $e=c$。
+
+\textbf{第 2 步｜把 $g^\top f$ 全展开，按四类单项式收集。}
+\[
+\begin{aligned}
+ g^\top f
+  &=(a x_1+b x_1^3+c x_2)x_2
+       +(c x_1+d x_2)(-x_2-x_1^3)\\
+  &=a x_1x_2+b x_1^3x_2+c x_2^2
+       -c x_1x_2-d x_2^2-c x_1^4-d x_1^3x_2\\
+  &=(a-c)x_1x_2+(b-d)x_1^3x_2+(c-d)x_2^2-c x_1^4 .
+\end{aligned}
+\]
+令 $a=c,b=d$ 消去两项混合项，取 $0<c<d$ 使余下两个系数均为负。例如 $c=1,d=2$，则
+$g_1=x_1+2x_1^3+x_2$、$g_2=x_1+2x_2$，且 $g^\top f=-x_2^2-x_1^4$。
+
+\textbf{第 3 步｜从原点分两段积分。}
+先沿 $(\xi,0)$ 走到 $(x_1,0)$，再沿 $(x_1,\eta)$ 走到 $(x_1,x_2)$，
+第一段只积 $g_1(\xi,0)$，第二段只积 $g_2(x_1,\eta)$。
+\[
+\begin{aligned}
+ V(x_1,x_2)
+ &=\int_0^{x_1}(\xi+2\xi^3)\dd\xi+\int_0^{x_2}(x_1+2\eta)\dd\eta\\
+ &=\tfrac12x_1^2+\tfrac12x_1^4+x_1x_2+x_2^2\\
+ &=\tfrac12x_1^4+\tfrac12(x_1+x_2)^2+\tfrac12x_2^2 .
+\end{aligned}
+\]
+验算 $\partial V/\partial x_1=x_1+2x_1^3+x_2$、$\partial V/\partial x_2=x_1+2x_2$，与先设的梯度一致。
+
+\textbf{第 4 步｜写清三个判定条件。}
+$V(0)=0$，且配方后的各项只有在原点才同时为零；$\dot V=-x_2^2-x_1^4$ 负定。
+另有 $V\ge(x_1^4+x_2^2)/2\to\infty$（$\|x\|\to\infty$）。因此原点\textbf{大范围渐近稳定}。
+
+\begin{keybox}
+变量梯度题最后必须写出 $V$。从一条偏导直接积分时，要保留另一变量的未知函数。沿两段平行于坐标轴的路径从原点积分，直接得到满足 $V(0)=0$ 的结果。
+\end{keybox}
+
+\newpage
+\section{考前闭卷回查}\label{sec:final}
+
+盖住右栏，逐条写出能拿分的条件。答完若有一项写不全，回对应例题重做那一步。
+
+\begingroup
+\setlength{\extrarowheight}{6pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{43mm}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{看到什么} & \textbf{答卷至少要写出什么}\\
+\midrule
+$x_i x_j$ 的交叉系数 & 在对称矩阵里，两项 $p_{ij}x_ix_j$ 与 $p_{ji}x_jx_i$ 相加，因此每个位置填原系数的一半。判半定要检查全部主子式，或改用配方、特征值。\\
+非线性系统用第一法 & 先逐个求 $x_e$，再算 $J(x_e)$。全为负实部可得局部渐近稳定；有正实部则不稳定；其余临界情形换方法。\\
+$\dot V\le0$，题目问渐近稳定 & 解 $\dot V=0$ 得到每个分支，假设轨迹始终留在零集并代回状态方程。在包含原点邻域的紧致正不变子水平集内，最大不变集仅有原点即可判渐近稳定。\\
+连续 LTI，用矩阵方程 & 写 $A^\top P+PA=-Q$、设 $P=P^\top$、比独立位置、验 $P>0$。$Q$ 仅半正定时，还要检查零导数集合。\\
+问大范围渐近稳定 & 在全空间核验 $V$ 正定、$\dot V$ 负定或零集中只有原点为不变轨迹，并写明径向无界。若已证明连续 LTI 为 Hurwitz，可直接作答。\\
+问变量梯度法 & 写出 $g^\top f$ 的系数方程、交叉偏导等式、积分结果、$V$ 与 $\dot V$ 的定号。\\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\subsection*{若题目改成时变或离散（讲义第 105～110 页）}
+\textbf{连续时变。} 对 $\dot x=A(t)x$ 取 $V=x^\top P(t)x$，计算时保留 $\dot P$：
+\[
+ \dot V=x^\top(A^\top P+\dot P+PA)x=-x^\top Qx .
+\]
+若在整个向前时间区间上有统一常数 $0<m\le M$、$q>0$，使 $mI\preceq P(t)\preceq MI$、$Q(t)\succeq qI$，可写原点全局指数稳定。有限终点的正定解只提供相应有限区间的判号。
+
+\textbf{离散定常。} 对 $x_{k+1}=Ax_k$ 检查 $|\lambda_i(A)|<1$，或取对称正定 $Q$ 并求解 $A^\top PA-P=-Q$。若 $P=P^\top>0$，则 $V_{k+1}-V_k=-x_k^\top Qx_k$ 严格下降，得全局渐近稳定。若 $A$ 随 $k$ 变化，方程左侧改为 $A_k^\top P_{k+1}A_k-P_k$，还需核对 $P_k,Q_k$ 的一致界。
+
+\subsection*{资料与题号}
+\small
+讲义《第五章 李雅普诺夫稳定性分析》与《第五章 习题课》。本册所标页码为各自 PDF 页码。时变矩阵方程的一致界参见 \href{https://www3.nd.edu/~lemmon/courses/EE60550/slide/slide7.pdf}{M.~D.~Lemmon 的线性时变系统讲义}。
+
+\end{document}

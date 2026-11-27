@@ -29,3 +29,36 @@
 xelatex -halt-on-error main.tex
 xelatex -halt-on-error main.tex
 ```
+
+### 能控性与能观性手册
+
+汇总连续线性系统的状态能控性、输出能控性和状态能观性判据，附公式速查、例题与自测。[阅读 PDF](./controllability-observability-handbook.pdf) · [查看 LaTeX 源文件](./controllability-observability-handbook.tex)
+
+在本目录下运行两次 XeLaTeX 编译手册。
+
+```sh
+xelatex -halt-on-error controllability-observability-handbook.tex
+xelatex -halt-on-error controllability-observability-handbook.tex
+```
+
+### 能控性、能观性、规范形与最小实现手册
+
+按第 4 章的记号汇总定常系统的能控与能观判据、结构分解、四种规范形和最小实现。附公式速查、完整例题及自测答案。[阅读 PDF](./state-space-structure-realization-handbook.pdf) · [查看 LaTeX 源文件](./state-space-structure-realization-handbook.tex)
+
+在本目录下运行两次 XeLaTeX 编译手册。
+
+```sh
+xelatex -halt-on-error state-space-structure-realization-handbook.tex
+xelatex -halt-on-error state-space-structure-realization-handbook.tex
+```
+
+### 第 5 章 李雅普诺夫稳定性考前解题复习册
+
+按 150 分钟复习路线组织，逐步解出讲义例 5-1 至 5-12 和习题课第 1 至 5 题。重点是选判据、展开计算、检查零导数集合，以及写出局部或大范围稳定性的结论。[阅读 PDF](./lyapunov-stability-exam-review.pdf) · [查看 LaTeX 源文件](./lyapunov-stability-exam-review.tex)
+
+在本目录下运行两次 XeLaTeX 编译复习册。
+
+```sh
+xelatex -halt-on-error lyapunov-stability-exam-review.tex
+xelatex -halt-on-error lyapunov-stability-exam-review.tex
+```

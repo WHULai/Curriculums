@@ -1,0 +1,407 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,12pt,fontset=fandol]{ctexart}
+
+\usepackage[left=22mm,right=22mm,top=23mm,bottom=23mm,headheight=25pt,headsep=9pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem,fancyhdr}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref,bookmark}
+
+\definecolor{ink}{HTML}{182C3F}
+\definecolor{teal}{HTML}{166267}
+\definecolor{muted}{HTML}{516476}
+\definecolor{panel}{HTML}{EDF5F5}
+\definecolor{ruleink}{HTML}{CBD8DF}
+\hypersetup{pdftitle={现代控制理论｜能控性与能观性公式手册},
+  colorlinks,linkcolor=teal,urlcolor=teal,bookmarksnumbered}
+\ctexset{
+  section={format=\Large\bfseries\color{ink}\raggedright,beforeskip=0pt,afterskip=7pt},
+  subsection={format=\large\bfseries\color{teal},beforeskip=9pt,afterskip=3pt}
+}
+\setcounter{secnumdepth}{1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt}
+\setlist[enumerate]{leftmargin=2em,label=\arabic*.,itemsep=2pt,topsep=3pt,parsep=0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{muted}现代控制理论}
+\fancyhead[R]{\small\color{muted}能控性与能观性公式手册}
+\fancyfoot[R]{\small\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{ruleink}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{opening}{
+  \fancyhf{}
+  \fancyfoot[R]{\small\color{muted}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\newtcolorbox{keybox}{colback=panel,colframe=ruleink,boxrule=0.5pt,arc=1mm,
+  left=2mm,right=2mm,top=1.2mm,bottom=1.2mm,before skip=5pt,after skip=5pt}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\im}{im}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\begin{document}
+\color{ink}
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 1pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 1pt}
+\setlength{\abovedisplayshortskip}{5pt plus 1pt}
+\setlength{\belowdisplayshortskip}{5pt plus 1pt}
+\thispagestyle{opening}
+\pdfbookmark[0]{公式速查}{formula-index}
+
+{\large\color{teal}现代控制理论 · 第 4 章\par}
+\vspace{3pt}
+{\fontsize{28}{35}\selectfont\bfseries 能控性与能观性公式手册\par}
+\vspace{5pt}
+{\large\bfseries 公式速查\par}
+
+\[
+  \dot x=A(t)x+B(t)u,\qquad y=C(t)x+D(t)u,\qquad
+  x\in\mathbb R^n,\quad u\in\mathbb R^p,\quad y\in\mathbb R^q .
+\]
+矩阵尺寸为 $A\colon n\times n$、$B\colon n\times p$、$C\colon q\times n$、$D\colon q\times p$。
+考察固定区间 $[t_0,T]$，其中 $T>t_0$，系数矩阵在该区间上连续。能控性问能否用输入达到任意目标状态或输出。
+状态能观性问能否根据已知输入和整个区间的输出唯一确定初态。
+
+\subsection*{线性定常系统（LTI）}
+\begingroup
+\setlength{\extrarowheight}{5pt}
+\begin{tabularx}{\linewidth}{@{}p{30mm}>{\raggedright\arraybackslash}X l@{}}
+\toprule
+\textbf{性质} & \textbf{矩阵} & \textbf{充要条件} \\
+\midrule
+\hyperref[sec:lti]{状态能控} &
+  $Q_c=[B\quad AB\quad\cdots\quad A^{n-1}B]$ & $\rank Q_c=n$ \\
+\hyperref[sec:lti]{状态能观} &
+  $Q_o=\left[\begin{smallmatrix}C\\ CA\\ \vdots\\ CA^{n-1}\end{smallmatrix}\right]$（纵向堆叠） & $\rank Q_o=n$ \\
+\hyperref[sec:lti]{输出能控} &
+  $Q_y=[CQ_c\quad D]$（参考稿记为 $Q_{cy}$） & $\rank Q_y=q$ \\
+\hyperref[sec:pbh]{PBH 模态判据} &
+  $[\lambda I-A\quad B]$（能控），
+  $\begin{bmatrix}\lambda I-A\\ C\end{bmatrix}$（能观） &
+  对每个 $\lambda\in\sigma(A)$ 满秩 $n$ \\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\subsection*{线性时变系统（LTV）}
+\begingroup
+\setlength{\extrarowheight}{5pt}
+\begin{tabularx}{\linewidth}{@{}p{28mm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{判据} & \textbf{状态能控} & \textbf{状态能观} \\
+\midrule
+\hyperref[sec:diff]{微分} &
+  $M_0=B,\quad M_{k+1}=AM_k-\dot M_k$ &
+  $N_0=C,\quad N_{k+1}=N_kA+\dot N_k$ \\
+\hyperref[sec:gram]{积分} &
+  $W_c=\int_{t_0}^{T}P_cP_c^\top\dd t$ &
+  $W_o=\int_{t_0}^{T}P_o^\top P_o\dd t$ \\
+\hyperref[sec:function]{函数线性无关} &
+  $P_c(t)=\Phi(t_0,t)B(t)$ 的 $n$ 个行函数 &
+  $P_o(t)=C(t)\Phi(t,t_0)$ 的 $n$ 个列函数 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\begin{keybox}
+微分判据在区间内某一点满秩即可给出\textbf{充分条件}。能控块横拼，能观块纵拼，目标秩均为 $n$。
+积分矩阵满秩与对应的函数线性无关均为\textbf{充要条件}，也适用于 LTI。
+\end{keybox}
+
+\textbf{选判据} \quad
+定常题先算卡尔曼矩阵，需要定位模态时用 PBH。
+时变题若系数易求导，先尝试微分法；若状态转移矩阵易求，直接检查函数关系或计算 Gramian。
+
+从 $x,u,y$ 读出 $n,p,q$，核对拼接矩阵的尺寸。非方阵可用消元或非零子式判秩。
+\hfill\hyperref[sec:practice]{自测与答案}
+
+\newpage
+\section{定常系统的三种秩判据}\label{sec:lti}
+
+\subsection*{状态能控性}
+从 $B$ 开始反复左乘 $A$，将所得块横向拼接。
+\[
+  Q_c=[B\quad AB\quad A^2B\quad\cdots\quad A^{n-1}B]
+    \in\mathbb R^{n\times np},
+  \qquad \boxed{\text{状态完全能控}\iff \rank Q_c=n.}
+\]
+输入能引起的终态增量构成 $\im Q_c$。
+由 Cayley--Hamilton 定理，更高次幂的列块已在这个空间中。
+
+\textbf{例 4-1｜三阶友矩阵。}
+\[
+ A=\begin{bmatrix}0&1&0\\0&0&1\\-a_3&-a_2&-a_1\end{bmatrix},
+ \quad B=\begin{bmatrix}0\\0\\1\end{bmatrix},
+ \quad Q_c=\begin{bmatrix}0&0&1\\0&1&-a_1\\1&-a_1&a_1^2-a_2\end{bmatrix}.
+\]
+交换 $Q_c$ 的首列和末列，得到对角线全为 $1$ 的下三角矩阵。
+所以 $\det Q_c=-1$，任意 $a_1,a_2,a_3$ 下均完全能控。
+
+\subsection*{状态能观性}
+从 $C$ 开始反复右乘 $A$，将所得块纵向堆叠。
+\[
+  Q_o=\begin{bmatrix} C\\CA\\\vdots\\CA^{n-1}\end{bmatrix}
+     \in\mathbb R^{nq\times n},
+  \qquad \boxed{\text{状态完全能观}\iff \rank Q_o=n.}
+\]
+相同输入下，若两个初态之差在 $\ker Q_o$ 中，它们的整个输出轨迹相同。
+
+\textbf{例｜只测位置的双积分器。}
+$A=\left[\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right]$、$B=[0\ \ 1]^\top$、$C=[1\ \ 0]$、$D=0$。
+由 $CA=[0\ \ 1]$ 得 $Q_o=I_2$，因此完全能观。理想模型中 $y=x_1$、$\dot y=x_2$，位置随时间的变化提供了速度信息。
+
+\subsection*{输出能控性}
+当终点输入 $u(T)$ 可自由选取时，目标输出的可调方向为 $C\,\im Q_c+\im D$。
+\[
+  Q_y=[CB\quad CAB\quad\cdots\quad CA^{n-1}B\quad D]
+      \in\mathbb R^{q\times (n+1)p},
+  \qquad \boxed{\text{输出完全能控}\iff \rank Q_y=q.}
+\]
+若题目给定 $u(T)$，则 $Du(T)$ 为固定偏移，此时只检查 $CQ_c$ 的行秩。
+
+\textbf{例 4-7｜输出能控性。}
+设 $A=0_{2\times2}$、$B=[1\ \ 1]^\top$、$C=[1\ \ 1]$、$D=0$。
+于是 $Q_y=[2\ \ 0\ \ 0]$ 的秩为 $1=q$，输出完全能控。
+$Q_c=[B\ \ 0]$ 的秩为 $1<2$，且 $x_1-x_2$ 保持恒定，所以状态不完全能控。
+
+\newpage
+\section{PBH 判据与对偶性}\label{sec:pbh}
+
+PBH 判据适用于 LTI 系统。对 $A$ 的每个特征值 $\lambda\in\sigma(A)$（含复特征值）在 $\mathbb C$ 上检查
+\[
+  \text{状态能控}\quad \rank[\lambda I-A\quad B]=n,
+  \qquad\qquad
+  \text{状态能观}\quad \rank\begin{bmatrix}\lambda I-A\\ C\end{bmatrix}=n.
+\]
+每侧的等式对全部特征值成立时，对应性质成立。若已列出特征值，也可用特征向量定位失效模态。
+
+\begin{keybox}
+\textbf{能控看左特征向量。}
+若存在非零行向量 $w^\top$ 满足 $w^\top A=\lambda w^\top$ 且 $w^\top B=0$，
+则 $w^\top x$ 的变化由 $\tfrac{\mathrm d}{\mathrm dt}(w^\top x)=\lambda w^\top x$ 决定。
+
+\textbf{能观看右特征向量。}
+若存在非零列向量 $v$ 满足 $Av=\lambda v$ 且 $Cv=0$，则沿 $v$ 的初态差不会反映到输出中。
+重根对应的特征空间可能有多维，直接查秩即可覆盖其中全部方向。
+\end{keybox}
+
+\subsection*{例｜找出不受输入作用的模态}
+令 $A=\operatorname{diag}(1,2)$、$B=[1\ \ 0]^\top$、$C=[1\ \ 1]$。
+\[
+\begin{array}{c@{\qquad}c@{\qquad}c}
+\toprule
+\lambda & [\lambda I-A\quad B] & \begin{bmatrix}\lambda I-A\\C\end{bmatrix}\\[2pt]
+\midrule
+1 & \begin{bmatrix}0&0&1\\0&-1&0\end{bmatrix}\ (\rank=2)
+  & \begin{bmatrix}0&0\\0&-1\\1&1\end{bmatrix}\ (\rank=2)\\
+\addlinespace[8pt]
+2 & \begin{bmatrix}1&0&1\\0&0&0\end{bmatrix}\ (\rank=1)
+  & \begin{bmatrix}1&0\\0&0\\1&1\end{bmatrix}\ (\rank=2)\\[4pt]
+\bottomrule
+\end{array}
+\]
+$\lambda=2$ 对应的左特征向量 $[0\ \ 1]$ 与 $B$ 相乘为零，所以第二个模态不受输入作用。
+两个 PBH 能观增广矩阵均满列秩，所以状态完全能观。
+
+\subsection*{转置与坐标变换}
+对偶性可直接从卡尔曼矩阵的转置读出。
+\[
+ Q_c(A,B)^\top=Q_o(A^\top,B^\top),
+ \qquad Q_o(A,C)^\top=Q_c(A^\top,C^\top).
+\]
+例如，$(A,B)$ 完全能控当且仅当 $(A^\top,B^\top)$ 完全能观。
+若用可逆矩阵 $S$ 作变换 $x=Sz$，则
+\[
+  A_z=S^{-1}AS,\quad B_z=S^{-1}B,\quad C_z=CS,\quad
+  Q_{c,z}=S^{-1}Q_c,\quad Q_{o,z}=Q_oS .
+\]
+因此，换坐标不改变两个秩。状态能控对应终态增量空间覆盖 $\mathbb R^n$（满射）。
+状态能观对应初态差能被输出唯一辨别（单射）。
+
+\newpage
+\section{时变系统的微分秩判据}\label{sec:diff}
+
+\begin{keybox}
+\[
+\begin{aligned}
+ M_0&=B, & M_{k+1}&=AM_k-\dot M_k, &
+ Q_c^{[k]}(t)&=[M_0(t)\quad \cdots\quad M_k(t)],\\[2pt]
+ N_0&=C, & N_{k+1}&=N_kA+\dot N_k, &
+ Q_o^{[k]}(t)&=\begin{bmatrix} N_0(t)\\ \vdots\\ N_k(t)\end{bmatrix}.
+\end{aligned}
+\]
+能控从 $B$ 出发，左乘 $A$、减导数、横拼。能观从 $C$ 出发，右乘 $A$、加导数、纵拼。
+\end{keybox}
+
+在系数具备所需阶数的光滑性时，若区间内某一点的有限阶拼接矩阵达到秩 $n$，对应的状态能控性或能观性在该区间成立。端点使用区间内的单侧导数。
+先进行符号求导，再代入时刻。所选时刻或阶数秩不足时，可改查区间内的其他点、继续求导，或用积分判据。
+LTV 无统一的 $n-1$ 阶截断；LTI 中导数项消失，得到 $M_k=A^kB$、$N_k=CA^k$。
+
+\subsection*{例 4-6｜起点的低阶能控矩阵秩不足}
+\[
+  A(t)=\begin{bmatrix}0&t\\0&0\end{bmatrix},\qquad
+  M_0=B=\begin{bmatrix}0\\1\end{bmatrix},\qquad
+  M_1=\begin{bmatrix}t\\0\end{bmatrix},\qquad
+  M_2=AM_1-\dot M_1=\begin{bmatrix}-1\\0\end{bmatrix}.
+\]
+在 $t_0=0$，$[M_0\ \ M_1]$ 的秩为 $1$，加入 $M_2$ 后得到
+\[
+   Q_c^{[2]}(0)=\begin{bmatrix}0&0&-1\\1&0&0\end{bmatrix},
+   \qquad \rank Q_c^{[2]}(0)=2 .
+\]
+因此对每个 $T>0$，在 $[0,T]$ 上完全能控。也可在任意 $0<t<T$ 用 $[M_0\ \ M_1]$ 直接判定。
+
+\subsection*{例 4-10｜时变系统在 $t_0=1$ 的能观性}
+\[
+ A(t)=\begin{bmatrix}t&1&0\\0&t&0\\0&0&t^2\end{bmatrix},
+ \qquad N_0=C=[1\quad 0\quad 1].
+\]
+先算 $N_1=[t\ \ 1\ \ t^2]$，再算 $N_2=N_1 A+\dot N_1=[t^2+1\ \ 2t\ \ t^4+2t]$。
+\[
+   Q_o^{[2]}(1)=\begin{bmatrix}1&0&1\\1&1&1\\2&2&3\end{bmatrix},
+   \qquad \det Q_o^{[2]}(1)=1 .
+\]
+三行提供三个独立约束，所以从 $t_0=1$ 出发的任一正长度观测区间上均完全能观。
+
+\newpage
+\section{状态转移矩阵与格拉姆判据}\label{sec:gram}
+
+\subsection*{状态转移矩阵}
+$\Phi(t,s)$ 将 $s$ 时刻的齐次状态传到 $t$ 时刻。
+\[
+\begin{aligned}
+  \partial_t\Phi(t,s)&=A(t)\Phi(t,s), & \Phi(s,s)&=I,\\
+  \Phi(t,r)\Phi(r,s)&=\Phi(t,s), & \Phi(t,s)^{-1}&=\Phi(s,t),\\
+  \partial_s\Phi(t,s)&=-\Phi(t,s)A(s), &
+  \Phi(t,s)\big|_{\mathrm{LTI}}&=e^{A(t-s)} .
+\end{aligned}
+\]
+时变系统可由齐次方程求解。若各时刻的 $A(t)$ 两两可交换，则 $\Phi(t,s)=\exp(\int_s^t A(\tau)\dd\tau)$。
+含输入时的状态解为
+\[
+   x(t)=\Phi(t,t_0)x(t_0)+\int_{t_0}^{t}\Phi(t,\tau)B(\tau)u(\tau)\dd\tau .
+\]
+
+\subsection*{有限区间格拉姆矩阵（Gramian）}
+\begin{keybox}
+\[
+\begin{aligned}
+ P_c(t)&=\Phi(t_0,t)B(t), &
+ W_c(t_0,T)&=\int_{t_0}^{T}P_c(t)P_c(t)^\top\dd t, \\
+ P_o(t)&=C(t)\Phi(t,t_0), &
+ W_o(t_0,T)&=\int_{t_0}^{T}P_o(t)^\top P_o(t)\dd t.
+\end{aligned}
+\]
+两者均为 $n\times n$ 对称半正定矩阵。状态完全能控等价于 $W_c$ 满秩，状态完全能观等价于 $W_o$ 满秩。
+在这里，满秩、正定和行列式为正等价。
+\end{keybox}
+
+按终点坐标定义时，取 $\widehat P_c(t)=\Phi(T,t)B(t)$。由状态转移矩阵的复合性质，
+\[
+  \widehat W_c=\int_{t_0}^{T}\widehat P_c(t)\widehat P_c(t)^\top\dd t
+  =\Phi(T,t_0)W_c\Phi(T,t_0)^\top .
+\]
+该合同变换保留秩，故两个版本给出相同的能控结论。
+
+\subsection*{由 Gramian 求输入或初态}
+若 $W_c$ 可逆，令 $d_c=\Phi(t_0,T)x_f-x(t_0)$，则以下输入使 $x(T)=x_f$。
+\[
+  u(t)=P_c(t)^\top W_c^{-1}d_c .
+\]
+能观性计算先扣除已知输入的影响，得到 $\widetilde y(t)=P_o(t)x(t_0)$。若 $W_o$ 可逆，
+\[
+\begin{aligned}
+ \widetilde y(t)&=y(t)-D(t)u(t)-C(t)\int_{t_0}^{t}\Phi(t,\tau)B(\tau)u(\tau)\dd\tau,\\
+ x(t_0)&=W_o^{-1}\int_{t_0}^{T}P_o(t)^\top\widetilde y(t)\dd t .
+\end{aligned}
+\]
+
+\newpage
+\section{函数线性无关判据}\label{sec:function}
+
+设 $P_c,P_o$ 在 $[t_0,T]$ 上连续。检查对全区间成立的等式中，常系数向量 $v$ 是否只能取零。
+\begin{align*}
+ \text{状态完全能控}
+    &\iff \bigl(v^\top P_c(t)\equiv 0\ \Longrightarrow\ v=0\bigr)
+     &&\text{（$n$ 个行函数线性无关）},\\
+ \text{状态完全能观}
+    &\iff \bigl(P_o(t)v\equiv 0\ \Longrightarrow\ v=0\bigr)
+     &&\text{（$n$ 个列函数线性无关）}.
+\end{align*}
+判据中的系数 $v$ 与时间无关。连续性保证非负的平方范数积分为零时，被积函数在整个区间恒为零。
+\[
+  v^\top W_cv=\int_{t_0}^{T}\lVert P_c(t)^\top v\rVert^2\dd t,
+  \qquad
+  v^\top W_ov=\int_{t_0}^{T}\lVert P_o(t)v\rVert^2\dd t .
+\]
+Gramian 正定由此等价于函数线性无关。进一步对 $P_c,P_o$ 求导可得
+\[
+  P_c^{(k)}(t)=(-1)^k\Phi(t_0,t)M_k(t),
+  \qquad P_o^{(k)}(t)=N_k(t)\Phi(t,t_0) .
+\]
+若存在恒为零的非平凡函数组合，它在检验点的各阶导数也为零。有限阶微分矩阵满秩即可排除这样的组合。
+
+\subsection*{例｜对同一个时变模型用两种方法验算}
+仍取例 4-6 的 $A(t)=\begin{bmatrix}0&t\\0&0\end{bmatrix}$ 和 $B=[0\ \ 1]^\top$，
+并令 $C=[1\ \ 0]$、$D=0$。齐次方程中 $x_2$ 为常数，由 $\dot x_1=tx_2$ 积分得到
+\[
+   \Phi(t,s)=\begin{bmatrix}1&(t^2-s^2)/2\\0&1\end{bmatrix},
+   \quad P_c(t)=\begin{bmatrix}-t^2/2\\1\end{bmatrix},
+   \quad P_o(t)=[1\quad t^2/2]\qquad (t_0=0).
+\]
+
+\textbf{检查函数关系。}
+$-v_1t^2/2+v_2\equiv0$ 和 $v_1+v_2t^2/2\equiv0$ 都要求常数项与二次项系数各自为零。
+因此只要 $T>0$，两个判据都成立。
+
+\textbf{逐元素积分。}
+由 $P_cP_c^\top$ 和 $P_o^\top P_o$ 的各项积分得到
+\[
+  W_c(0,T)=\begin{bmatrix}T^5/20&-T^3/6\\-T^3/6&T\end{bmatrix},
+  \qquad
+  W_o(0,T)=\begin{bmatrix}T&T^3/6\\T^3/6&T^5/20\end{bmatrix}.
+\]
+两者的行列式均为 $T^6/20-T^6/36=T^6/45>0$。在每个 $[0,T]$（$T>0$）上，系统完全能控且完全能观。
+
+\newpage
+\section{自测与答案}\label{sec:practice}
+
+\subsection*{题目}
+\begin{enumerate}
+  \item 五阶、双输入、三输出的定常系统，$Q_c$ 的尺寸和完全能控的秩条件是什么？
+  \item 已知 $A=\operatorname{diag}(1,2)$、$B=[1\quad 1]^\top$，判断状态能控性。
+  \item 已知 $A=\operatorname{diag}(1,2)$、$C=[1\quad 0]$，判断状态能观性。
+  \item 三阶单输出系统有 $Q_y=[0\quad 0\quad 0\quad 2]$，终端输入可选。判断输出能控性。
+  \item 写出时变系统状态能控性微分判据的起始块 $M_0$ 和递推式。
+  \item 写出时变系统状态能观性微分判据的起始块 $N_0$ 和递推式。
+  \item 三阶时变系统在 $t_0$ 有 $\rank[M_0\ M_1\ M_2]=2$。能得出什么结论？
+  \item 已知 $A(t)=\left[\begin{smallmatrix}0&t\\0&0\end{smallmatrix}\right]$、$C=[1\quad 0]$，判断 $[0,T]$ 上的能观性（$T>0$）。
+\end{enumerate}
+
+\subsection*{答案}
+\begin{enumerate}
+  \item $Q_c\in\mathbb R^{5\times10}$，完全能控当且仅当 $\rank Q_c=5$。
+  \item $AB=[1\quad 2]^\top$，故 $\det Q_c=1$，状态完全能控。
+  \item $CA=C$，故 $\rank Q_o=1<2$，状态不完全能观。
+  \item $\rank Q_y=1=q$，输出完全能控。直接传递项 $D=2$ 可调节终端输出。
+  \item $M_0=B$，$M_{k+1}=AM_k-\dot M_k$，所得各块横向拼接。
+  \item $N_0=C$，$N_{k+1}=N_kA+\dot N_k$，所得各块纵向堆叠。
+  \item 暂无法判定。可在区间上换一个时刻、继续求导，或改用格拉姆矩阵判据。
+  \item $P_o(t)=[1\quad t^2/2]$ 的两列在 $[0,T]$ 上线性无关，状态完全能观。
+\end{enumerate}
+
+\subsection*{参考资料}
+\small
+用户提供的 \texttt{ref.txt} 与本课程第 4 章讲义（例 4-1、4-6、4-7、4-10）。
+
+定常秩与格拉姆判据参见 M.~D.~Lemmon，
+\href{https://www3.nd.edu/~lemmon/courses/linear-systems/lecture-book/linsys-book-2024.pdf}{\textit{Lectures on Linear Systems Theory}}，第 4 章。
+
+时变微分判据参见 L.~M.~Silverman 与 H.~E.~Meadows，
+\href{https://doi.org/10.1137/0305005}{\textit{Controllability and Observability in Time-Variable Linear Systems}}，1967。
+
+\end{document}
