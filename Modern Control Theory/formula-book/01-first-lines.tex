@@ -1,0 +1,61 @@
+\formulapage{题干关键词与起手式}
+
+\formula{状态方程 / 输出方程 / 初值}{
+\[
+    \dot x=Ax+Bu,\qquad y=Cx+Du,\qquad
+    (sI-A)X(s)=x(0)+BU(s).
+\]
+}{前两式为连续时间线性定常模型。末式采用单边拉普拉斯变换，初始时刻为 $0$。}
+
+\formula{传递函数 / 传递矩阵 / 直联项}{
+\[
+    G(s)=C(sI-A)^{-1}B+D,\qquad
+    Y(s)=C(sI-A)^{-1}x(0)+G(s)U(s).
+\]
+}{$G(s)$ 对应零初值输入输出关系。$x(0)\ne0$ 时，输出保留初值项。}
+
+\formula{负反馈 / 单位反馈 / 输入端扰动}{
+\[
+    E=R-HY,\qquad Y=G(KE+D_{\mathrm d}),\qquad
+    \frac{Y}{R}=\frac{GK}{1+GKH},\qquad
+    \frac{Y}{D_{\mathrm d}}=\frac{G}{1+GKH}.
+\]
+}{单输入单输出负反馈，闭环互联良定，初值为零。各比值分别将另一输入置零。单位反馈取 $H=1$，$D_{\mathrm d}$ 在对象输入端相加。}
+
+\formula{矩阵指数 / 状态转移 / 给定输入求响应}{
+\[
+    \Phi(t,t_0)=e^{A(t-t_0)},\qquad
+    x(t)=\Phi(t,t_0)x(t_0)+\int_{t_0}^{t}\Phi(t,\tau)Bu(\tau)\,d\tau .
+\]
+}{$A,B$ 为常矩阵，$t\ge t_0$。零输入去掉积分项，零初态去掉初值项。}
+
+\formula{判能控 / 判能观}{
+\[
+    Q_c=[B\ AB\ \cdots\ A^{n-1}B],\qquad
+    Q_o=\begin{bmatrix}C\\CA\\\vdots\\CA^{n-1}\end{bmatrix},\qquad
+    \operatorname{rank}Q_c=n,\quad\operatorname{rank}Q_o=n.
+\]
+}{线性定常系统，$n$ 是状态维数。两个满秩条件分别对应完全能控、完全能观。}
+
+\formula{平衡点 / 李雅普诺夫第一法 / 第二法}{
+\[
+    f(x_e)=0,\qquad J_e=\left.\frac{\partial f}{\partial x}\right|_{x_e},\qquad
+    \dot V(x)=\nabla V(x)^\top f(x).
+\]
+}{自治系统 $\dot x=f(x)$。第一法在平衡点算 $J_e$。第二法取可微函数，正定性以平衡点为中心。}
+
+\formula{配极点 / 状态反馈 / 状态观测器}{
+\[
+    p^\ast(s)=\prod_{i=1}^{n}(s-\lambda_i^\ast),\qquad
+    \det(sI-A+BK)=p^\ast(s),\qquad \det(sI-A+GC)=p^\ast(s).
+\]
+}{第二式对应 $u=-Kx+v$，第三式对应观测器增益 $G$。任意配置分别要求完全能控、完全能观。实矩阵的复极点成共轭对。}
+
+\formula{稳定增益范围 / 二阶、三阶 Routh 条件}{
+\[
+\begin{aligned}
+    s^2+a_1s+a_0:&\quad a_1>0,\quad a_0>0,\\
+    s^3+a_2s^2+a_1s+a_0:&\quad a_2>0,\quad a_1>0,\quad a_0>0,\quad a_2a_1>a_0.
+\end{aligned}
+\]
+}{连续系统的实系数首一特征多项式。各不等式须同时成立，等价于全部根位于开左半平面。}

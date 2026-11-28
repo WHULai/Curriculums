@@ -1,0 +1,218 @@
+\chapter{纸质练习六：由传递函数配置状态反馈极点}
+
+\section{原题}
+
+\ex{纸质练习六\quad 线性状态反馈控制律}{
+系统的传递函数为
+\[
+    G(s)=\frac{1}{s(s+4)(s+8)}.
+\]
+试确定线性状态反馈控制律，使闭环极点为 $-2$、$-4$、$-7$。
+\par\smallskip\hfill{\footnotesize 《纸质练习答案》第 3 页}
+}
+
+\section{详细解答}
+
+\nt{\textbf{解题顺序}\quad 选定状态并写出 $A,B,C,D$ $\to$ 检查 $(A,B)$ 的能控性 $\to$ 写 $A-BK$ $\to$ 比较两个首一多项式的同次项 $\to$ 将 $K$ 和状态定义一起写进答案。}
+
+\subsection{从传递函数选取状态变量}
+
+\sol 题目只给出了输入 $u$ 到输出 $y$ 的传递函数。按零初始条件写 $G(s)=Y(s)/U(s)$。先把分母展开，
+\[
+    (s+4)(s+8)=s^2+12s+32,\qquad
+    s(s+4)(s+8)=s^3+12s^2+32s.
+\]
+于是
+\[
+    (s^3+12s^2+32s)Y(s)=U(s)
+    \quad\Longrightarrow\quad
+    \dddot y+12\ddot y+32\dot y=u .
+\]
+零初值用于传递函数与微分方程之间的转换。完成实现以后，状态方程也可以用来求任意初始状态下的响应。
+
+题目的分子为 $1$，方程右端只有 $u$，因此可选
+\[
+    x=\begin{bmatrix}x_1&x_2&x_3\end{bmatrix}^{\mathsf T}
+     =\begin{bmatrix}y&\dot y&\ddot y\end{bmatrix}^{\mathsf T}.
+\]
+按状态定义，$\dot x_1=x_2$、$\dot x_2=x_3$。由微分方程，$\dot x_3=-32x_2-12x_3+u$。合起来得到
+\[
+    \dot x=Ax+Bu,\qquad y=Cx+Du,
+    \qquad
+    A=\begin{bmatrix}0&1&0\\0&0&1\\0&-32&-12\end{bmatrix},
+    \qquad B=\begin{bmatrix}0\\0\\1\end{bmatrix},
+    \qquad C=\begin{bmatrix}1&0&0\end{bmatrix},\quad D=0.
+\]
+这里 $A$ 的最后一行按常数项、一次项、二次项的顺序，填入开环分母系数的相反数。常数项是 $0$，所以第一列底部为 $0$。也可由这组状态方程反查原题数据。零初始条件下 $X_2=sX_1$、$X_3=s^2X_1$，第三行给出 $(s^3+12s^2+32s)X_1=U$。由 $Y=X_1$ 得到题设的 $G(s)$。
+
+\subsection{检查三个极点能否全部配置}
+
+能控矩阵用 $B$、$AB$、$A^2B$ 作列。由于 $B=e_3$，$AB$ 直接取 $A$ 的第三列。再左乘一次 $A$，
+\[
+\begin{aligned}
+    AB&=\begin{bmatrix}0\\1\\-12\end{bmatrix},&
+    A^2B&=A\begin{bmatrix}0\\1\\-12\end{bmatrix}
+         =\begin{bmatrix}1\\-12\\-32+144\end{bmatrix}
+         =\begin{bmatrix}1\\-12\\112\end{bmatrix}.
+\end{aligned}
+\]
+所以
+\[
+    Q_c=[B\ \ AB\ \ A^2B]
+      =\begin{bmatrix}0&0&1\\0&1&-12\\1&-12&112\end{bmatrix},
+    \qquad
+    \det Q_c
+      =1\cdot\begin{vmatrix}0&1\\1&-12\end{vmatrix}=-1 .
+\]
+$Q_c$ 满秩，三个状态完全能控，可以任意配置三个闭环极点。
+
+\subsection{用负状态反馈写出闭环特征式}
+
+取 $K=[\,k_1\ \ k_2\ \ k_3\,]$，采用 $u=v-Kx$。$v$ 是可选的外部输入，原题的镇定控制律取 $v=0$。代入状态方程可得
+\[
+    \dot x=Ax+B(v-Kx)=(A-BK)x+Bv .
+\]
+$B$ 只有第三个元素非零，故 $BK$ 只改变 $A$ 的第三行，
+\[
+    BK=\begin{bmatrix}0&0&0\\0&0&0\\k_1&k_2&k_3\end{bmatrix},\qquad
+    A_{\mathrm{cl}}=A-BK
+       =\begin{bmatrix}0&1&0\\0&0&1\\-k_1&-32-k_2&-12-k_3\end{bmatrix}.
+\]
+闭环极点是 $A_{\mathrm{cl}}$ 的特征值。把 $sI-A_{\mathrm{cl}}$ 的符号写全，再沿第一行展开，
+\[
+\begin{aligned}
+    p_{\mathrm{cl}}(s)
+       &=\begin{vmatrix}
+           s&-1&0\\0&s&-1\\k_1&32+k_2&s+12+k_3
+         \end{vmatrix}\\
+       &=s\begin{vmatrix}s&-1\\32+k_2&s+12+k_3\end{vmatrix}
+           +\begin{vmatrix}0&-1\\k_1&s+12+k_3\end{vmatrix}\\
+       &=s\bigl[s(s+12+k_3)+(32+k_2)\bigr]+k_1\\
+       &=s^3+(12+k_3)s^2+(32+k_2)s+k_1.
+\end{aligned}
+\]
+第二个子式前的正号来自第一行第二列的元素 $-1$ 与它的代数余子式符号 $-1$ 相乘。这一步确定了常数项为 $k_1$。
+
+\subsection{展开目标多项式并逐项求增益}
+
+极点 $-2$、$-4$、$-7$ 分别对应因子 $s+2$、$s+4$、$s+7$，所以
+\[
+\begin{aligned}
+    p^\ast(s)&=(s+2)(s+4)(s+7)\\
+             &=(s^2+6s+8)(s+7)\\
+             &=s^3+(6+7)s^2+(8+6\cdot7)s+8\cdot7\\
+             &=s^3+13s^2+50s+56 .
+\end{aligned}
+\]
+目标特征式与实际特征式均为首一三次多项式。令同次项系数相等，
+\[
+\begin{array}{c|c|c|c}
+    \text{幂次} & p_{\mathrm{cl}}(s)\ \text{系数}
+                &p^\ast(s)\ \text{系数} &\text{求出的增益}\\ \hline
+    s^2&12+k_3&13&k_3=13-12=1\\
+    s^1&32+k_2&50&k_2=50-32=18\\
+    s^0&k_1&56&k_1=56
+\end{array}
+\]
+若保留新输入，$u=v-56x_1-18x_2-x_3$。原题所求可写成
+\[
+    \boxed{K=[\,56\ \ 18\ \ 1\,],\qquad
+           u=-Kx=-56y-18\dot y-\ddot y.}
+\]
+增益数值与这一组状态相对应。把“$x=[y\ \ \dot y\ \ \ddot y]^{\mathsf T}$”一并写出，即明确了反馈的三个量及其顺序。
+
+\subsection{回代并独立检查特征向量}
+
+把 $u=v-56y-18\dot y-\ddot y$ 代回原方程并移项，
+\[
+   \dddot y+13\ddot y+50\dot y+56y=v .
+\]
+对其取零初值传递函数，$Y/V=1/[(s+2)(s+4)(s+7)]$。分子是常数 $1$，三个分母因子都保留。
+
+还可以直接验算状态矩阵。代入 $K$ 后，
+\[
+    A_{\mathrm{cl}}
+      =\begin{bmatrix}0&1&0\\0&0&1\\-56&-50&-13\end{bmatrix}.
+\]
+对每个候选极点 $p$，取 $r_p=[\,1\ \ p\ \ p^2\,]^{\mathsf T}$。代入 $A_{\mathrm{cl}}r_p$，前两项为 $p,p^2$。逐个核对第三项，
+\[
+\begin{array}{c|rcl|r}
+    p &\multicolumn{3}{c|}{-56-50p-13p^2}&p^3\\ \hline
+    -2& -56+100-52  &=& -8   & -8\\
+    -4& -56+200-208 &=& -64  & -64\\
+    -7& -56+350-637 &=& -343 & -343
+\end{array}
+\]
+三个非零向量分别满足 $A_{\mathrm{cl}}r_p=pr_p$。对应三个互异的特征值，三阶系统的全部闭环极点已经核对。
+
+\section{同类题怎么做}
+
+\subsection{选择实现、变换坐标与处理直联项}
+
+\begin{enumerate}
+    \item \textbf{给出传递函数。}先约分，再取分母首一。若严格真部分的分母为 $s^n+a_{n-1}s^{n-1}+\cdots+a_0$，可选超对角线上为 $1$、末行为 $[-a_0\ \cdots\ {-a_{n-1}}]$ 的能控伴随实现，并取 $B=e_n$。严格真部分的分子系数按 $s^0$ 至 $s^{n-1}$ 排入 $C$。本题分子是 $1$，所以这组伴随状态正好是 $y,\dot y,\ddot y$。
+    \item \textbf{给出状态方程。}先查 $\operatorname{rank}Q_c$。小阶数的非规范模型可以直接展开 $\det(sI-A+BK)$。若先用 $x=Tz$ 化为伴随形，算出的是 $z$ 坐标下的 $\widetilde K$，应写回 $K=\widetilde K T^{-1}$。有可控伴随结构且 $B=\beta e_n$ 时，每项增益等于对应分母系数之差除以 $\beta$。状态矩阵采用别的结构时，应按其闭环行列式比较。
+    \item \textbf{模型有直联项。}对真有理的 $G(s)$，先用多项式除法取 $D=\lim_{s\to\infty}G(s)$，余下严格真部分再做状态空间实现。对状态反馈 $u=v-Kx$，同时代入两式，
+    \[
+        \dot x=(A-BK)x+Bv,\qquad y=(C-DK)x+Dv .
+    \]
+    内部极点仍由 $A-BK$ 决定。若用 $v$ 到 $y$ 的传递函数验算，还应考虑分子与分母的约分。
+\end{enumerate}
+
+\subsection{变式：把同一对象换成非伴随状态坐标}
+
+\ex{变式\quad 在指定的新坐标下求反馈增益}{
+对象仍为 $G(s)=1/[s(s+4)(s+8)]$，规定新状态为
+\[
+   z_1=y,\qquad z_2=\dot y+2y,\qquad z_3=2\ddot y .
+\]
+以 $u=v-\widetilde K z$ 设计负状态反馈，使闭环极点仍为 $-2$、$-4$、$-7$。分别用坐标换算和闭环特征式求 $\widetilde K$。
+}
+
+\nt{\textbf{解题顺序}\quad 先把 $x$ 写成 $z$ 的线性组合 $\to$ 将原控制律换成 $z$ 坐标 $\to$ 由 $\dot z$ 重建模型 $\to$ 直接联立三个系数核对。}
+
+\sol \textbf{用原控制律换算。}从定义反解得
+$x_1=z_1$、$x_2=z_2-2z_1$、$x_3=z_3/2$，即
+\[
+    x=Tz,\qquad
+    T=\begin{bmatrix}1&0&0\\-2&1&0\\0&0&1/2\end{bmatrix},\qquad
+    \det T=\tfrac12.
+\]
+原控制律中的 $56x_1+18x_2+x_3$ 变为
+\[
+    56z_1+18(z_2-2z_1)+\tfrac12 z_3
+    =20z_1+18z_2+\tfrac12 z_3 .
+\]
+所以 $\widetilde K=KT=[\,20\ \ 18\ \ 1/2\,]$。
+
+\textbf{从新模型直接算。}把 $\dot z_1=x_2$、$\dot z_2=x_3+2x_2$、$\dot z_3=2(-32x_2-12x_3+u)$ 逐项改写为 $z$，
+\[
+    \dot z=
+    \begin{bmatrix}
+        -2&1&0\\-4&2&1/2\\128&-64&-12
+    \end{bmatrix}z+
+    \begin{bmatrix}0\\0\\2\end{bmatrix}u,\qquad
+    y=\begin{bmatrix}1&0&0\end{bmatrix}z.
+\]
+例如，$\dot z_3=-64(z_2-2z_1)-24(z_3/2)+2u=128z_1-64z_2-12z_3+2u$。
+$T$ 可逆，坐标改变保持能控矩阵的秩。令 $\widetilde K=[\,\ell_1\ \ \ell_2\ \ \ell_3\,]$，反馈使新状态矩阵的末行为 $[\,128-2\ell_1\ \ {-64-2\ell_2}\ \ {-12-2\ell_3}\,]$。新闭环特征式为
+\[
+\begin{aligned}
+    p_z(s)
+     &=\begin{vmatrix}
+         s+2&-1&0\\
+         4&s-2&-1/2\\
+         -128+2\ell_1&64+2\ell_2&s+12+2\ell_3
+       \end{vmatrix}\\
+     &=(s+2)\bigl[(s-2)(s+12+2\ell_3)+32+\ell_2\bigr]\\
+     &\quad +4(s+12+2\ell_3)-64+\ell_1\\
+     &=s^3+(12+2\ell_3)s^2+(32+\ell_2)s+2\ell_2+\ell_1 .
+\end{aligned}
+\]
+由 $p_z(s)=s^3+13s^2+50s+56$，依次得到
+\[
+    12+2\ell_3=13,\qquad
+    32+\ell_2=50,\qquad
+    2\ell_2+\ell_1=56.
+\]
+因此 $\ell_3=1/2$、$\ell_2=18$、$\ell_1=20$。将它们代回，三项系数为 $12+1=13$、$32+18=50$、$36+20=56$，极点仍为 $-2,-4,-7$。两种方法求得同一组新坐标增益。

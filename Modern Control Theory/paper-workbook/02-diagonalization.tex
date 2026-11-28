@@ -1,0 +1,147 @@
+\chapter{纸质练习二：齐次状态方程的对角化}
+
+\section{原题}
+
+\ex{化为对角规范型并求初值响应}{
+已知系统的齐次状态方程
+\[
+ \dot x=Ax,\qquad
+ A=\begin{bmatrix}
+ 1&-1&0\\
+ -1&1&0\\
+ 0&0&1
+ \end{bmatrix}.
+\]
+通过线性变换将该系统化为对角规范型，并求方程在初始条件 $x(0)=[1,\ 1,\ 1]^{\mathsf T}$ 下的解。
+}
+
+\section{详细解答}
+
+\subsection{第一步　求特征值}
+
+按 $\lambda I-A$ 的第三行展开，因其前两项为零，只需计算左上二阶子式：
+\[
+\begin{aligned}
+ \det(\lambda I-A)
+ &=\begin{vmatrix}\lambda-1&1&0\\1&\lambda-1&0\\0&0&\lambda-1\end{vmatrix}\\
+ &=(\lambda-1)\big[(\lambda-1)^2-1\big]
+ =(\lambda-1)\lambda(\lambda-2).
+\end{aligned}
+\]
+按 $\lambda=0,1,2$ 排列。三根互异，每根可取一条非零特征向量，这三条向量线性无关。
+
+\subsection{第二步　逐根求特征向量}
+
+令 $v=(v_1,v_2,v_3)^{\mathsf T}$，由 $(A-\lambda I)v=0$ 得
+\[
+ (1-\lambda)v_1-v_2=0,\quad
+ -v_1+(1-\lambda)v_2=0,\quad
+ (1-\lambda)v_3=0.
+\]
+分别代入三个根，保留一个自由分量：
+\[
+\begin{array}{c|l|c}
+\lambda&\text{化简后的条件}&\text{所取向量}\\ \hline
+0&v_2=v_1,\quad v_3=0 & p_0=[1,1,0]^{\mathsf T}\\[1pt]
+1&v_1=0,\quad v_2=0,\quad v_3\text{ 自由} & p_1=[0,0,1]^{\mathsf T}\\[1pt]
+2&v_2=-v_1,\quad v_3=0 & p_2=[1,-1,0]^{\mathsf T}
+\end{array}
+\]
+例如在 $\lambda=2$ 处，前两式均化为 $v_1+v_2=0$，取 $v_1=1$ 即可。代回原矩阵，可直接检查 $Ap_0=0$、$Ap_1=p_1$、$Ap_2=2p_2$。
+
+\subsection{第三步　构造变换矩阵并手算逆矩阵}
+
+把特征向量按 $0,1,2$ 排为列，取 $x=Pz$：
+\[
+ P=[p_0,p_1,p_2]=\begin{bmatrix}1&0&1\\1&0&-1\\0&1&0\end{bmatrix},
+ \qquad \det P=2.
+\]
+从 $x=Pz$ 的三个分量读出
+\[
+ x_1=z_1+z_3,\qquad x_2=z_1-z_3,\qquad x_3=z_2.
+\]
+将头两式相加与相减，并保留 $z_2=x_3$，得
+\[
+ z_1=\frac{x_1+x_2}{2},\qquad
+ z_2=x_3,\qquad
+ z_3=\frac{x_1-x_2}{2},\qquad
+ P^{-1}=\begin{bmatrix}1/2&1/2&0\\0&0&1\\1/2&-1/2&0\end{bmatrix}.
+\]
+$P$ 是常矩阵，所以 $\dot x=P\dot z$。由 $AP=[0,p_1,2p_2]$，有 $AP=P\,\operatorname{diag}(0,1,2)$，从而
+\[
+ \boxed{\dot z=P^{-1}APz=\begin{bmatrix}0&0&0\\0&1&0\\0&0&2\end{bmatrix}z.}
+\]
+右端三行分别表示 $\dot z_1=0$、$\dot z_2=z_2$、$\dot z_3=2z_3$。
+
+\subsection{第四步　转换初值、解三个标量方程并换回去}
+
+先将原坐标初值转换到新坐标：
+\[
+ z(0)=\begin{bmatrix}
+ \frac12(1+1)\\1\\\frac12(1-1)
+ \end{bmatrix}=\begin{bmatrix}1\\1\\0\end{bmatrix}.
+\]
+标量方程 $\dot z_i=\lambda_i z_i$ 的解为 $z_i(0)\mathrm e^{\lambda_i t}$。本题因 $z_3(0)=0$，对应 $\lambda=2$ 的第三个分量保持为零。于是
+\[
+ z(t)=\begin{bmatrix}1\\\mathrm e^t\\0\end{bmatrix},\qquad
+ \boxed{x(t)=Pz(t)=\begin{bmatrix}1\\1\\\mathrm e^t\end{bmatrix}.}
+\]
+直接检验有 $x(0)=[1,1,1]^{\mathsf T}$，且 $Ax(t)=[1-1,-1+1,\mathrm e^t]^{\mathsf T}=\dot x(t)$。
+
+\subsection{第五步　写出原坐标的一般状态转移矩阵}
+
+对任意原坐标初值 $x(0)$，先乘 $P^{-1}$，再由各模态的指数传递，最后乘 $P$。因此
+\[
+\begin{aligned}
+ \Phi(t)
+ &=P\,\operatorname{diag}(1,\mathrm e^t,\mathrm e^{2t})\,P^{-1}\\
+ &=\begin{bmatrix}1&0&\mathrm e^{2t}\\1&0&-\mathrm e^{2t}\\0&\mathrm e^t&0\end{bmatrix}
+   \begin{bmatrix}1/2&1/2&0\\0&0&1\\1/2&-1/2&0\end{bmatrix}\\
+ &=\begin{bmatrix}
+ (1+\mathrm e^{2t})/2&(1-\mathrm e^{2t})/2&0\\
+ (1-\mathrm e^{2t})/2&(1+\mathrm e^{2t})/2&0\\
+ 0&0&\mathrm e^t
+ \end{bmatrix}.
+\end{aligned}
+\]
+例如第 $(1,2)$ 元是 $1\cdot(1/2)+\mathrm e^{2t}(-1/2)$，因此两项之间为减号。代 $t=0$ 得 $\Phi(0)=I$，对各元求导再代 $t=0$ 得 $\dot\Phi(0)=A$。任选初始时刻 $t_0$ 时，解为 $x(t)=\Phi(t-t_0)x(t_0)$。
+
+\section{同类题怎么做}
+
+\subsection{按特征向量解齐次状态方程}
+
+\begin{enumerate}
+ \item 求 $\det(\lambda I-A)=0$。看到分块三角结构时，先分别算对角块的特征因子。
+ \item 对每个 $\lambda$ 解 $(A-\lambda I)p=0$。对重根，算 $n-\rank(A-\lambda I)$ 与该根的代数重数进行比较。
+ \item 有完整特征向量组时，取 $P=[p_1,\ldots,p_n]$，让 $\Lambda$ 的根顺序与 $P$ 的列对应。用 $AP=P\Lambda$ 核对。
+ \item 取 $x=Pz$，计算初始分量 $z(t_0)=P^{-1}x(t_0)$。给每个分量乘 $\mathrm e^{\lambda_i(t-t_0)}$，再换回原坐标。
+\end{enumerate}
+
+\nt{\textbf{易错}\quad $\mathrm e^{\Lambda t}$ 在模态坐标中使用，原坐标的状态转移矩阵是 $P\mathrm e^{\Lambda t}P^{-1}$。实矩阵要在实数域对角化，需要有 $n$ 个实线性无关的特征向量。}
+
+\subsection{变式　初值激发了差模态}
+
+保持原题矩阵，改取初值 $x(0)=[2,0,-1]^{\mathsf T}$。按手算逆变换，
+\[
+ z(0)=\begin{bmatrix}(2+0)/2\\-1\\(2-0)/2\end{bmatrix}
+ =\begin{bmatrix}1\\-1\\1\end{bmatrix}.
+\]
+此时第三模态系数为 $1$，于是
+\[
+ z(t)=\begin{bmatrix}1\\-\mathrm e^t\\\mathrm e^{2t}\end{bmatrix},
+ \qquad
+ x(t)=\begin{bmatrix}1+\mathrm e^{2t}\\1-\mathrm e^{2t}\\-\mathrm e^t\end{bmatrix}.
+\]
+对于原题这类交换对称矩阵，也可直接把前两行相加和相减。$x_1+x_2$ 满足导数为零，$x_1-x_2$ 满足 $\frac{\mathrm d}{\mathrm dt}(x_1-x_2)=2(x_1-x_2)$，可用来核对两个模态。原初值 $x_1(0)=x_2(0)$，所以只有上述差模态消失。
+
+\subsection{变式　重根时检查能否对角化}
+
+若 $A=\operatorname{diag}(1,1,2)$，重根 $1$ 有两个独立特征向量，可以对角化。若矩阵改为
+\[
+ A=\begin{bmatrix}1&1\\0&1\end{bmatrix},
+\]
+则 $\det(\lambda I-A)=(\lambda-1)^2$，但 $(A-I)v=0$ 只给出 $v_2=0$，特征空间仅一维。此时用 $A=I+N$、$N^2=0$ 计算
+\[
+ \mathrm e^{At}=\mathrm e^t(I+tN)=\mathrm e^t\begin{bmatrix}1&t\\0&1\end{bmatrix}.
+\]
+例如 $x(0)=[0,1]^{\mathsf T}$ 给出 $x(t)=[t\mathrm e^t,\mathrm e^t]^{\mathsf T}$。重根时先核对特征空间维数，再选择对角化或约旦块。

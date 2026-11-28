@@ -1,0 +1,42 @@
+\documentclass[a4paper]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+\usepackage{needspace}
+\usepackage[europeanresistors]{circuitikz}
+\graphicspath{{img/}}
+
+\hypersetup{pdftitle={《现代控制理论》纸质练习详解}}
+\title{\includegraphics[width=7cm]{whu-logo.png}\\[1em]
+       \Huge{《现代控制理论》纸质练习详解}}
+\author{}
+\date{}
+
+\renewcommand{\ex}[2]{%
+    \begin{Example*}[breakable=false]{#1}#2\end{Example*}%
+}
+\renewcommand{\sol}{%
+    \par\Needspace{3\baselineskip}%
+    \noindent\textbf{解}\enspace\ignorespaces
+}
+\allowdisplaybreaks[1]
+
+\begin{document}
+
+\maketitle
+\setstretch{1.16}
+\setlength{\parindent}{2em}
+\pdfbookmark[section]{\contentsname}{toc}
+\setcounter{tocdepth}{1}
+{\setstretch{1.12}\tableofcontents\clearpage}
+
+\input{paper-workbook/01-model}
+\input{paper-workbook/02-diagonalization}
+\input{paper-workbook/03-step-response}
+\input{paper-workbook/04-minimal-realization}
+\input{paper-workbook/05-global-stability}
+\input{paper-workbook/06-pole-placement}
+\input{paper-workbook/07-cascade}
+
+\end{document}

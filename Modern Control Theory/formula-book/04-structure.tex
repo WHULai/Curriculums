@@ -1,0 +1,153 @@
+\formulapage{能控性与能观性的判定}
+
+\formula{状态能控、能控矩阵}{
+\[
+ Q_c=[B\ AB\ \cdots\ A^{n-1}B],\qquad
+ \text{完全能控}\iff\operatorname{rank}Q_c=n .
+\]
+}{线性定常连续系统，$n=\dim x$。}
+
+\formula{状态能观、能观矩阵}{
+\[
+ Q_o=[C^\top\ (CA)^\top\ \cdots\ (CA^{n-1})^\top]^\top,\qquad
+ \text{完全能观}\iff\operatorname{rank}Q_o=n .
+\]
+}{线性定常连续系统，输入已知。}
+
+\formula{输出能控、直接通道}{
+\[
+ Q_y=[CB\ CAB\ \cdots\ CA^{n-1}B\ D],\qquad
+ \text{输出完全能控}\iff\operatorname{rank}Q_y=p .
+\]
+}{线性定常连续系统 $y=Cx+Du$，$p=\dim y$。}
+
+\formula{PBH 能控、左特征向量}{
+\[
+ \operatorname{rank}[\lambda I-A\ \ B]=n
+ \iff \nexists\, w^\top\ne0:\quad w^\top A=\lambda w^\top,\ w^\top B=0 .
+\]
+}{完全能控须对每个 $\lambda\in\sigma(A)$ 成立。}
+
+\formula{PBH 能观、右特征向量}{
+\[
+ \operatorname{rank}\begin{bmatrix}\lambda I-A\\C\end{bmatrix}=n
+ \iff \nexists\,v\ne0:\quad Av=\lambda v,\ Cv=0 .
+\]
+}{完全能观须对每个 $\lambda\in\sigma(A)$ 成立。}
+
+\formula{约旦模态、对偶}{
+\[
+\begin{aligned}
+ &\text{能控}:\ \operatorname{rank}B_{\lambda,\text{尾}}=g_\lambda,\qquad
+ \text{能观}:\ \operatorname{rank}C_{\lambda,\text{首}}=g_\lambda,\\
+ &Q_o(A^\top,B^\top)=Q_c(A,B)^\top,\quad
+ Q_c(A^\top,C^\top)=Q_o(A,C)^\top .
+\end{aligned}
+\]
+}{$g_\lambda$ 为同一特征值的约旦块数。超对角线为 $1$，取各块的 $B$ 尾行、$C$ 首列。}
+
+\formula{时变能控、格拉姆矩阵}{
+\[
+ W_c=\int_{t_0}^{t_f}\Phi(t_f,\tau) B(\tau) B(\tau)^\top
+            \Phi(t_f,\tau)^\top\,\mathrm d\tau,\quad
+ \text{完全能控}\iff W_c>0 .
+\]
+}{连续时变系统，固定区间 $[t_0,t_f]$。以 $\Phi(t_0,\tau)$ 计算时，正定判据同样适用。}
+
+\formula{时变能观、格拉姆矩阵}{
+\[
+ W_o=\int_{t_0}^{t_f}\Phi(\tau,t_0)^\top C(\tau)^\top C(\tau)
+             \Phi(\tau,t_0)\,\mathrm d\tau,\quad
+ \text{完全能观}\iff W_o>0 .
+\]
+}{连续时变系统，固定区间 $[t_0,t_f]$。}
+
+\formula{时变判秩、导数递推}{
+\[
+\begin{aligned}
+ M_0&=B,\quad M_{j+1}=AM_j-\dot M_j,\quad
+       \operatorname{rank}[M_0\ \cdots\ M_{n-1}]=n ,\\
+ N_0&=C,\quad N_{j+1}=N_jA+\dot N_j,\quad
+       \operatorname{rank}[N_0^\top\ \cdots\ N_{n-1}^\top]^\top=n .
+\end{aligned}
+\]
+}{系数充分光滑，观测或控制区间内某时刻满足。分别为能控、能观的充分条件。}
+
+\formulapage{结构分解、规范形与最小实现}
+
+\formula{换坐标、系统矩阵}{
+\[
+ x=Pz:\quad \bar A=P^{-1}AP,\quad \bar B=P^{-1}B,\quad
+ \bar C=CP,\quad\bar D=D .
+\]
+}{$\det P\ne0$。}
+
+\formula{能控性分解、能控子系统}{
+\[
+ P=[P_c\ P_{*}],\quad \operatorname{im}P_c=\operatorname{im}Q_c,\quad
+ \bar A=\begin{bmatrix}A_c&A_{12}\\0&A_{\bar c}\end{bmatrix},\
+ \bar B=\begin{bmatrix}B_c\\0\end{bmatrix},\
+ \bar C=[C_c\ C_{\bar c}] .
+\]
+}{$P_c$ 为独立列基，$\dim z_c=\operatorname{rank}Q_c$。能控子系统取 $(A_c,B_c,C_c,D)$。}
+
+\formula{能观性分解、能观子系统}{
+\[
+ P^{-1}=\begin{bmatrix}R_o\\R_{*}\end{bmatrix},\quad \ker R_o=\ker Q_o,\quad
+ \bar A=\begin{bmatrix}A_o&0\\A_{21}&A_{\bar o}\end{bmatrix},\
+ \bar B=\begin{bmatrix}B_o\\B_{\bar o}\end{bmatrix},\
+ \bar C=[C_o\ 0] .
+\]
+}{$R_o$ 为独立行基，$\dim z_o=\operatorname{rank}Q_o$。能观子系统取 $(A_o,B_o,C_o,D)$。}
+
+\formula{I 形、II 形、友矩阵}{
+\[
+\begin{aligned}
+ F&=\begin{bmatrix}0_{(n-1)\times1}&I_{n-1}\\-a_0&[-a_1\ \cdots\ -a_{n-1}]\end{bmatrix},
+ \qquad \det(sI-F)=s^n+a_{n-1}s^{n-1}+\cdots+a_0,\\
+ (A_c,B_c)_{\mathrm I/\mathrm{II}}&=(F^\top,e_1)/(F,e_n),\qquad
+ (A_o,C_o)_{\mathrm I/\mathrm{II}}=(F,e_1^\top)/(F^\top,e_n^\top).
+\end{aligned}
+\]
+}{SISO 规范形。$e_i$ 为第 $i$ 个单位列向量。}
+
+\formula{能控规范形、变换矩阵}{
+\[
+ \mathrm I:\ P=Q_c,\qquad
+ \mathrm{II}:\ P^{-1}=[\ell^\top\ (\ell A)^\top\ \cdots\
+                    (\ell A^{n-1})^\top]^\top,\quad \ell=e_n^\top Q_c^{-1}.
+\]
+}{单输入、完全能控，$x=Pz$。}
+
+\formula{能观规范形、变换矩阵}{
+\[
+ \mathrm I:\ P^{-1}=Q_o,\qquad
+ \mathrm{II}:\ P=[r\ Ar\ \cdots\ A^{n-1}r],\quad r=Q_o^{-1} e_n .
+\]
+}{单输出、完全能观，$x=Pz$。}
+
+\formula{SISO 传函实现、直接传递项}{
+\[
+\begin{aligned}
+ &D=\lim_{s\to\infty}G(s),\quad G(s)-D=\frac{b_0+b_1s+\cdots+b_{n-1}s^{n-1}}{a(s)},
+ \quad b=[b_0\ \cdots\ b_{n-1}],\\
+ &\text{能控 II}:\ (F,e_n,b,D),\qquad \text{能观 II}:\ (F^\top,b^\top,e_n^\top,D).
+\end{aligned}
+\]
+}{$G(s)$ 的分子次数不高于分母。$a(s)$ 为首一分母，$F$ 对应 $a(s)$。}
+
+\formula{MIMO 通分、分块 II 形}{
+\[
+\begin{aligned}
+ &(A_c,B_c,C_c)=(F\otimes I_m,\ e_n\otimes I_m,\ [B_0\ \cdots\ B_{n-1}]),\\
+ &(A_o,B_o,C_o)=(F^\top\otimes I_p,\ [B_0^\top\ \cdots\ B_{n-1}^\top]^\top,\ e_n^\top\otimes I_p).
+\end{aligned}
+\]
+}{$m$ 输入、$p$ 输出，$G-D=(\sum_{i=0}^{n-1}B_i s^i)/a(s)$，$B_i\in\mathbb R^{p\times m}$。}
+
+\formula{最小实现、零极点相消}{
+\[
+ G(s)=C(sI-A)^{-1}B+D,\quad n_{\min}=\operatorname{rank}(Q_oQ_c),\quad
+ \text{最小}\iff\operatorname{rank}Q_c=\operatorname{rank}Q_o=n .
+\]
+}{有限维定常实现。SISO 时 $n_{\min}$ 等于约分后的分母次数。}

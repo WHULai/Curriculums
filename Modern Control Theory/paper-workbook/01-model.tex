@@ -1,0 +1,129 @@
+\chapter{纸质练习一：从反馈结构图建模}
+
+\section{原题}
+
+\ex{反馈结构图的状态空间表达式}{
+控制系统的结构如图所示。按图中给出的变量 $x_1,x_2$ 作为系统的状态变量，求系统的状态空间表达式。
+\begin{center}
+\begin{tikzpicture}[>=Stealth,
+  block/.style={draw,minimum width=1.8cm,minimum height=1cm},
+  add/.style={draw,circle,inner sep=0pt,minimum size=6mm}]
+  \node[add] (sum) at (0,0) {$\scriptstyle\times$};
+  \node[block] (plant) at (2.5,0) {$\dfrac{k}{s+2}$};
+  \node[block] (sense) at (2.5,-1.5) {$\dfrac{1}{s+1}$};
+  \draw[thick,->] (-1.65,0) node[above] {$u$} -- (sum.west);
+  \draw[thick,->] (sum.east) -- (plant.west);
+  \draw[thick,->] (plant.east) -- (5.2,0) node[right] {$y$};
+  \fill (4.25,0) circle (1.25pt) node[above] {$x_1$};
+  \draw[thick,->] (4.25,0) |- (sense.east);
+  \draw[thick,->] (sense.west) -|
+    node[pos=.27,above] {$x_2$} node[pos=.84,right] {$-$} (sum.south);
+\end{tikzpicture}
+\end{center}
+}
+
+\section{详细解答}
+
+\subsection{第一步　确定求和点和各环节的输入输出}
+
+令求和点的输出为 $e(t)$。按箭头方向，$u(t)$ 从左侧进入，返回的 $x_2(t)$ 从标有负号的端口进入，故
+\[
+ e(t)=u(t)-x_2(t).
+\]
+从前向方框出口引出的两根线具有同一信号，右边读取 $y$，下边送入反馈环节，故 $x_1(t)=y(t)$。反馈环节的出口位于方框左边，其信号是 $x_2(t)$。因此各方框的对应关系为
+\[
+\begin{array}{c|c|c}
+\text{环节}&\text{输入}&\text{输出}\\ \hline
+k/(s+2)&e&x_1\\
+1/(s+1)&x_1&x_2
+\end{array}
+\]
+
+\subsection{第二步　对每个方框列一阶状态方程}
+
+一阶方框 $Z(s)/V(s)=b/(s+a)$ 表示其零状态输入输出关系。交叉相乘得 $(s+a)Z=bV$，对应 $\dot z+az=bv$。建立模型后，$z(0)$ 可单独赋值。带初值验证时，
+\[
+ (s+a)Z(s)=bV(s)+z(0)
+\]
+正是对该微分方程取单边拉普拉斯变换的结果。
+
+前向方框给出 $(s+2)X_1=kE$，故 $\dot x_1+2x_1=ke$。反馈方框给出 $(s+1)X_2=X_1$，故 $\dot x_2+x_2=x_1$。将 $e=u-x_2$ 代入，按状态编号排列得
+\[
+\begin{aligned}
+ \dot x_1&=-2x_1-kx_2+ku,\\
+ \dot x_2&=x_1-x_2+0u,\\
+ y&=x_1+0x_2+0u.
+\end{aligned}
+\]
+$-kx_2$ 来自求和点负端信号经前向增益 $k$，而 $+x_1$ 来自反馈方框的正增益 $1$。两个符号分别由各自支路决定。
+
+\subsection{第三步　按行读出四个矩阵}
+
+固定 $x=[x_1,x_2]^{\mathsf T}$。$\dot x_1$ 中两状态系数为 $(-2,-k)$，输入系数为 $k$。$\dot x_2$ 中相应系数为 $(1,-1)$ 和 $0$。输出取前向方框的出口，故 $C=[1,0]$。输出没有从 $u$ 直接引入的瞬时项，所以 $D=0$。答案为
+\[
+ \boxed{\begin{aligned}
+ \dot x&=\begin{bmatrix}-2&-k\\1&-1\end{bmatrix}x+
+            \begin{bmatrix}k\\0\end{bmatrix}u,\\
+ y&=\begin{bmatrix}1&0\end{bmatrix}x,\qquad D=0.
+ \end{aligned}}
+\]
+该系统为单输入单输出，$A,B,C,D$ 的尺寸依次为 $2\times2$、$2\times1$、$1\times2$ 和 $1\times1$。
+
+\subsection{第四步　交叉检查反馈符号}
+
+\textbf{由原框图检查。} 零初值时
+\[
+Y=\frac{k}{s+2}(U-X_2),\qquad X_2=\frac{Y}{s+1}.
+\]
+把第二式代入第一式，并把包含 $Y$ 的量移到左边，得到
+\[
+ \frac{Y}{U}=\frac{k(s+1)}{(s+2)(s+1)+k}.
+\]
+框图的反馈负号在移项后变成分母中的 $+k$。如果算出 $-k$，应重新检查求和点与 $A_{12}$。
+
+\textbf{由状态方程检查。} 有
+\[
+ sI-A=\begin{bmatrix}s+2&k\\-1&s+1\end{bmatrix},\qquad
+ (sI-A)^{-1}B
+ =\frac{1}{(s+2)(s+1)+k}
+  \begin{bmatrix}s+1&-k\\1&s+2\end{bmatrix}\!
+  \begin{bmatrix}k\\0\end{bmatrix}
+ =\frac{\begin{bmatrix}k(s+1)\\k\end{bmatrix}}{(s+2)(s+1)+k}.
+\]
+左乘 $C$ 后取第一分量，与从原框图求得的式子一致。$k=0$ 时 $B=0$，外部输入不产生零状态输出，但有初值时仍可能有 $y(t)=x_1(0)\mathrm e^{-2t}$。
+
+\section{同类题怎么做}
+
+\subsection{从方框读到矩阵}
+
+\begin{enumerate}
+ \item 固定题设状态次序，为每个求和点写一个带符号的代数式。
+ \item 对每个一阶方框 $b/(s+a)$ 写 $\dot z=-az+bv$，其中 $v$ 为该方框的输入，$z$ 为该方框的输出。
+ \item 消去中间信号，按 $\dot x_1,\dot x_2,\ldots$ 写 $A,B$ 的各行，再沿 $y$ 的取样位置写 $C,D$。
+ \item 从闭环框图独立算一次 $Y/U$，与 $C(sI-A)^{-1}B+D$ 比较。反馈支路本身有增益时，要同时核对反馈符号和两个方框增益所在的矩阵元素。
+\end{enumerate}
+
+\subsection{变式　回授改为正反馈或改变支路增益}
+
+考虑前向环节 $g/(s+p)$、回授环节 $h/(s+q)$。仍取两方框输出为 $x_1,x_2$，并令求和点为 $u+\sigma x_2$，其中 $\sigma=-1$ 表示负反馈，$\sigma=1$ 表示正反馈。则
+\[
+ A=\begin{bmatrix}-p&\sigma g\\h&-q\end{bmatrix},\quad
+ B=\begin{bmatrix}g\\0\end{bmatrix},\quad C=[1,0],\quad D=0,\qquad
+ G(s)=\frac{g(s+q)}{(s+p)(s+q)-\sigma gh}.
+\]
+例如取 $p=2,q=1,g=3,h=2$ 并改为正反馈，便有
+\[
+ A=\begin{bmatrix}-2&3\\2&-1\end{bmatrix},\qquad
+ \det(sI-A)=(s+2)(s+1)-6=(s+4)(s-1).
+\]
+如果仍用负反馈，同一组增益给出 $\det(sI-A)=s^2+3s+8$。交叉项 $\sigma g$ 和闭环常数项的变化都可以从求和点直接预判。
+
+\subsection{延伸　只观察输出时哪些状态能看见}
+
+回到原题，能控矩阵和能观矩阵分别为
+\[
+ \mathcal C=[B,AB]=\begin{bmatrix}k&-2k\\0&k\end{bmatrix},\qquad
+ \mathcal O=\begin{bmatrix}C\\CA\end{bmatrix}=\begin{bmatrix}1&0\\-2&-k\end{bmatrix}.
+\]
+$k\ne0$ 时两个矩阵都满秩，二阶实现是最小的。$k=0$ 时两个状态均不能被输入驱动，且初始 $x_2$ 的变化不影响 $y$。若追加问内部渐近稳定范围，由
+$p_A(s)=s^2+3s+(2+k)$ 可知 $k>-2$ 时两根都在开左半平面。$k=-2$ 时有一个零根，$k<-2$ 时常数项为负，存在一个正实根。

@@ -1,0 +1,48 @@
+\documentclass[a4paper]{report}
+
+\input{preamble}
+\input{macros}
+\input{letterfonts}
+
+\geometry{left=18mm,right=18mm,top=15mm,bottom=17mm,footskip=8mm}
+\hypersetup{pdftitle={《现代控制理论》公式小册子}}
+
+\newcommand{\formulapage}[1]{%
+    \par\clearpage
+    \pdfbookmark[0]{#1}{formulas.\thepage}%
+    \noindent{\small\bfseries\color{myexampleti}《现代控制理论》公式小册子}\par
+    \smallskip
+    \noindent{\LARGE\bfseries #1}\par
+    \smallskip
+    \noindent\textcolor{whusakura}{\rule{\linewidth}{0.8pt}}\par
+    \smallskip
+}
+
+\newcommand{\formula}[3]{%
+    \begin{tcolorbox}[
+        colback=myexamplebg,colframe=myexamplefr,sharp corners,
+        boxrule=0.35pt,boxsep=0pt,left=2.7mm,right=2.7mm,
+        top=.8mm,bottom=.8mm,before skip=1.05mm,after skip=1.05mm
+    ]
+    \setlength{\parindent}{0pt}%
+    {\bfseries\color{myexampleti}\strut #1}\par
+    {\setlength{\abovedisplayskip}{1.5pt}%
+     \setlength{\belowdisplayskip}{1.5pt}%
+     \setlength{\abovedisplayshortskip}{1.5pt}%
+     \setlength{\belowdisplayshortskip}{1.5pt}%
+     #2\par}%
+    {\small\color{mygr}\textbf{适用条件}\enspace #3\par}%
+    \end{tcolorbox}%
+}
+
+\begin{document}
+\setstretch{1.04}
+
+\input{formula-book/01-first-lines}
+\input{formula-book/02-model}
+\input{formula-book/03-response}
+\input{formula-book/04-structure}
+\input{formula-book/05-stability}
+\input{formula-book/06-design}
+
+\end{document}

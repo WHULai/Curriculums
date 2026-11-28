@@ -1,0 +1,269 @@
+\chapter{纸质练习七：串联系统的结构与稳定性}
+\label{paperwork:07}
+
+\section{原题}
+
+\ex{纸质练习七\quad 串联系统的建模、能控性、能观性与稳定性}{
+已知两个单输入单输出系统 $S_1,S_2$ 的状态方程和输出方程为
+\[
+\begin{aligned}
+  S_1:\quad &\dot{\boldsymbol{x}}_1
+       =\begin{bmatrix}0&1\\-3&-4\end{bmatrix}\boldsymbol{x}_1
+          +\begin{bmatrix}0\\1\end{bmatrix}u_1,\qquad
+          y_1=\begin{bmatrix}2&1\end{bmatrix}\boldsymbol{x}_1,\\
+  S_2:\quad &\dot x_2=-2x_2+u_2,\qquad y_2=x_2 .
+\end{aligned}
+\]
+将两系统按图所示串联，串联后的系统记为 $S$。
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,
+ box/.style={draw=whusakura,fill=whusakura!7,thick,minimum width=2cm,minimum height=9mm}]
+  \node[box] (s1) at (2.4,0) {$S_1$};
+  \node[box] (s2) at (6.8,0) {$S_2$};
+  \draw[->,thick] (0,0) -- node[above] {$u_1$} (s1.west);
+  \draw[->,thick] (s1.east) -- node[above] {$y_1=u_2$} (s2.west);
+  \draw[->,thick] (s2.east) -- node[above] {$y_2$} (9.2,0);
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}
+    \item 求图示串联系统 $S$ 的状态方程和输出方程。
+    \item 分析串联后系统 $S$ 的能控性和能观性。若不完全能控，作能控性分解并写出能控子系统。若不完全能观，作能观性分解并写出能观子系统。
+    \item 分析系统 $S$ 在平衡态 $x_e=0$ 的渐近稳定性与系统的 BIBO 稳定性。
+\end{enumerate}
+}
+
+题目及串联图来源为《纸质练习答案》第 3--4 页。
+
+\nt{\textbf{所用知识点}\quad
+串联接线与块矩阵，能控和能观的秩判据，选能控列构造状态变换，传递函数零极点相消，内部渐近稳定与 BIBO 稳定。}
+
+\section{详细解答}
+
+\subsection{第（1）问：按接线关系写出联合状态模型}
+
+把 $S_1$ 的两个状态分别记为 $x_{11},x_{12}$，即 $\boldsymbol{x}_1=[x_{11}\ x_{12}]^\top$。$S_2$ 的标量状态仍记为 $x_2$。联合状态、外部输入与外部输出选为
+\[
+    x=[x_{11}\ x_{12}\ x_2]^\top,\qquad u=u_1,\qquad y=y_2 .
+\]
+串联端口满足 $u_2=y_1=2x_{11}+x_{12}$。把它代入 $\dot x_2=-2x_2+u_2$，得到
+\[
+\begin{cases}
+    \dot x_{11}=x_{12},\\
+    \dot x_{12}=-3x_{11}-4x_{12}+u,\\
+    \dot x_2=2x_{11}+x_{12}-2x_2,\\
+    y=x_2 .
+\end{cases}
+\]
+前级方程不含后级状态，故 $A$ 的右上 $2\times1$ 块为零。后级从前级接收的状态组合为 $[2\ 1]\boldsymbol x_1$，故 $A$ 的左下块为 $[2\ 1]$。本题前级输出无直接输入项，外部 $u$ 只显式出现在 $\dot x_{12}$ 中。因此
+\[
+    \boxed{\dot x=Ax+Bu,\qquad y=Cx+Du}
+\]
+中的矩阵为
+\[
+    A=\begin{bmatrix}0&1&0\\-3&-4&0\\2&1&-2\end{bmatrix},
+    \quad B=\begin{bmatrix}0\\1\\0\end{bmatrix},
+    \quad C=\begin{bmatrix}0&0&1\end{bmatrix},
+    \quad D=0 .
+\]
+
+\subsection{第（2）问：分别计算能控矩阵和能观矩阵}
+
+\textbf{状态能控性。} 系统有三个状态，构造 $Q_c=[B\ AB\ A^2B]$。因为 $B=e_2$，$AB$ 就是 $A$ 的第二列。把该结果再左乘 $A$，
+\[
+\begin{aligned}
+    AB&=\begin{bmatrix}1\\-4\\1\end{bmatrix},\\
+    A^2B&=\begin{bmatrix}0&1&0\\-3&-4&0\\2&1&-2\end{bmatrix}
+        \begin{bmatrix}1\\-4\\1\end{bmatrix}
+      =\begin{bmatrix}-4\\-3+16\\2-4-2\end{bmatrix}
+      =\begin{bmatrix}-4\\13\\-4\end{bmatrix}.
+\end{aligned}
+\]
+并列三列，
+\[
+    Q_c=\begin{bmatrix}0&1&-4\\1&-4&13\\0&1&-4\end{bmatrix}.
+\]
+第一行与第三行相同，故秩至多为 $2$。左上二阶子式
+$\begin{vmatrix}0&1\\1&-4\end{vmatrix}=-1$ 非零，故 $\rank Q_c=2<3$。也可用明确的列关系
+\[
+    A^2B=-3B-4AB
+\]
+复核。系统\textbf{不完全能控}，能控部分有两维。
+
+\textbf{状态能观性。} $C=e_3^\top$，故 $CA$ 是 $A$ 的第三行 $[2\ 1\ {-2}]$。再右乘一次 $A$，
+\[
+\begin{aligned}
+    CA^2 &=[2\ 1\ {-2}]
+       \begin{bmatrix}0&1&0\\-3&-4&0\\2&1&-2\end{bmatrix}\\
+         &=[0-3-4\quad 2-4-2\quad 4]=[-7\ {-4}\ 4].
+\end{aligned}
+\]
+把三行叠在一起，沿第一行展开行列式，
+\[
+    Q_o=\begin{bmatrix}0&0&1\\2&1&-2\\-7&-4&4\end{bmatrix},
+    \qquad \det Q_o=\begin{vmatrix}2&1\\-7&-4\end{vmatrix}
+             =-8+7=-1 .
+\]
+因此 $\rank Q_o=3$，系统\textbf{完全能观}，题目要求的结构分解只需做能控性分解。
+
+\subsection{第（2）问续：构造 $P_c$，逐块提取能控子系统}
+
+$B,AB$ 线性无关，取它们为 $P_c$ 的前两列。第三列可取 $e_3$，它的第一分量与第三分量不同，而能控子空间内所有向量的这两个分量相同。因此三列独立，
+\[
+    P_c=[B\ AB\ e_3]=\begin{bmatrix}0&1&0\\1&-4&0\\0&1&1\end{bmatrix}.
+\]
+规定旧坐标与新坐标的关系为 $x=P_cz$。逐行读出
+\[
+    x_{11}=z_2,\qquad
+    x_{12}=z_1-4z_2,\qquad
+    x_2=z_2+z_3 .
+\]
+反解得 $z_1=4x_{11}+x_{12},\ z_2=x_{11},\ z_3=x_2-x_{11}$，故
+\[
+    P_c^{-1}=\begin{bmatrix}4&1&0\\1&0&0\\-1&0&1\end{bmatrix}.
+\]
+现在逐列算 $AP_c$。前两列分别是 $AB,A^2B$，第三列是 $Ae_3=-2e_3$，所以
+\[
+    AP_c=\begin{bmatrix}1&-4&0\\-4&13&0\\1&-4&-2\end{bmatrix}.
+\]
+左乘 $P_c^{-1}$ 给出新坐标中的系统矩阵。$B$ 是 $P_c$ 的第一列，所以 $P_c^{-1}B=e_1$。$C$ 取第三分量，所以 $CP_c$ 是 $P_c$ 的最后一行。完整结果为
+\[
+\begin{aligned}
+   \bar A&=P_c^{-1}AP_c
+      =\begin{bmatrix}
+        4-4&-16+13&0\\1&-4&0\\-1+1&4-4&-2
+      \end{bmatrix}
+      =\begin{bmatrix}0&-3&0\\1&-4&0\\0&0&-2\end{bmatrix},\\
+   \bar B&=P_c^{-1}B=\begin{bmatrix}1\\0\\0\end{bmatrix},
+   \qquad \bar C=CP_c=[0\ 1\ 1],\qquad \bar D=0 .
+\end{aligned}
+\]
+把前三个矩阵按前两维与最后一维分块，
+\[
+\begin{aligned}
+    \dot z_c&=\underbrace{\begin{bmatrix}0&-3\\1&-4\end{bmatrix}}_{A_c}z_c
+                   +\underbrace{\begin{bmatrix}1\\0\end{bmatrix}}_{B_c}u,
+      &z_c&=[z_1\ z_2]^\top,\\
+    \dot z_3&=-2z_3,\qquad
+    y=\underbrace{[0\ 1]}_{C_c}z_c+z_3 .
+\end{aligned}
+\]
+本题两块之间的动力学耦合均为零。令 $z_3$ 的初值为零并保留 $z_c$，得到能控子系统
+\[
+    \boxed{\dot z_c=\begin{bmatrix}0&-3\\1&-4\end{bmatrix}z_c
+                          +\begin{bmatrix}1\\0\end{bmatrix}u,\qquad
+            y_c=[0\ 1]z_c .}
+\]
+验算 $[B_c\ A_cB_c]=I_2$。其能观矩阵为
+$\begin{bmatrix}0&1\\1&-4\end{bmatrix}$，行列式为 $-1$，故这个两状态实现也是最小实现。
+
+\subsection{用原变量检查不能控坐标和初值项}
+
+由接线后的标量方程直接相减，
+\[
+   \frac{\mathrm d}{\mathrm dt}(x_2-x_{11})
+   =2x_{11}+x_{12}-2x_2-x_{12}=-2(x_2-x_{11}).
+\]
+因此无论施加什么 $u(t)$，都有
+\[
+    z_3(t)=e^{-2t}\bigl(x_2(0)-x_{11}(0)\bigr),\qquad
+    y(t)=x_{11}(t)+e^{-2t}\bigl(x_2(0)-x_{11}(0)\bigr).
+\]
+初始差值决定这个模态的幅值。它进入输出，因此可被观测。零初态下该项恒为零，因此不会出现在从 $u$ 到 $y$ 的传递函数中。
+
+例如，令 $u=0$、$x(0)=[0\ 0\ 1]^\top$，得到 $x_{11}=x_{12}=0$、$y=e^{-2t}$。这个初态实验可以在输出中看到传递函数已经约掉的 $-2$ 模态。也可以作 PBH 验算。取 $w^\top=[-1\ 0\ 1]$，则
+$w^\top A=[2\ 0\ {-2}]=-2w^\top$，且 $w^\top B=0$。相应的右特征向量可取 $e_3$，因为 $Ae_3=-2e_3$ 且 $Ce_3=1$。同一模态不能控而能观。
+
+\subsection{第（3）问：先判内部稳定，再判 BIBO 稳定}
+
+\textbf{内部渐近稳定。} 沿 $sI-A$ 的第三列展开，
+\[
+\begin{aligned}
+    \det(sI-A)
+     &= (s+2)\begin{vmatrix}s&-1\\3&s+4\end{vmatrix}
+      = (s+2)\bigl[s(s+4)+3\bigr]\\
+     &= (s+2)(s+1)(s+3).
+\end{aligned}
+\]
+特征值 $-1,-2,-3$ 都严格位于开左半平面，故零输入时任意初态都收敛到原点，$x_e=0$ 大范围渐近稳定。显式检验时，令 $u=0$，则
+$\ddot x_{11}+4\dot x_{11}+3x_{11}=0$。记 $a=x_{11}(0),\ b=x_{12}(0),\ c=x_2(0)$，令
+$x_{11}(t)=\alpha e^{-t}+\beta e^{-3t}$。由 $\alpha+\beta=a,\ -\alpha-3\beta=b$ 解得
+\[
+    x_{11}(t)=\frac{3a+b}{2}e^{-t}-\frac{a+b}{2}e^{-3t},
+    \qquad x_2(t)=x_{11}(t)+(c-a)e^{-2t}.
+\]
+$x_{12}=\dot x_{11}$ 也趋于零。
+
+\textbf{BIBO 稳定。} 取零初态，$S_1$ 的状态方程经拉普拉斯变换得到
+\[
+\begin{aligned}
+   sX_{11}&=X_{12},&
+   sX_{12}&=-3X_{11}-4X_{12}+U_1,\\
+   X_{11}&=\frac{U_1}{s^2+4s+3},&
+   Y_1&=(s+2)X_{11}.
+\end{aligned}
+\]
+因此 $G_1(s)=(s+2)/[(s+1)(s+3)]$。$S_2$ 满足 $(s+2)X_2=U_2$ 且 $Y_2=X_2$，所以 $G_2(s)=1/(s+2)$。由 $U_2=Y_1$ 得
+\[
+     G_S(s)=G_2(s)G_1(s)
+       =\frac{1}{s+2}\frac{s+2}{(s+1)(s+3)}
+       =\frac{1}{(s+1)(s+3)}.
+\]
+对本题的能控子系统也可直接算出同一结果。$\dot z_2=z_1-4z_2$ 给出 $Z_1=(s+4)Z_2$，代入
+$sZ_1=-3Z_2+U$ 即得 $Z_2/U=1/[s(s+4)+3]$。$-2$ 模态只影响原系统的初值响应。
+
+约分后的极点 $-1,-3$ 均在开左半平面。进一步用冲激响应核验，
+\[
+    G_S(s)=\tfrac12\left(\frac1{s+1}-\frac1{s+3}\right),\qquad
+    g(t)=\tfrac12(e^{-t}-e^{-3t})\quad(t\ge0).
+\]
+$g(t)\ge0$，且 $\int_0^\infty|g(t)|\,\mathrm dt=\frac12(1-\frac13)=\frac13$。因此对任意有界输入，零初态下
+\[
+    |y(t)|=\left|\int_0^t g(t-\tau)u(\tau)\,\mathrm d\tau\right|
+       \le \frac13\|u\|_\infty .
+\]
+所以原串联系统也 BIBO 稳定。
+
+\section{同类题怎么做}
+
+\subsection{解题顺序与易错检查}
+
+\begin{enumerate}
+    \item 顺着箭头列端口关系。若 $u_2=y_1$ 且两个子系统都有直接项，按 $x=[x_1^\top\ x_2^\top]^\top$ 堆叠时，
+    \[
+       A=\begin{bmatrix}A_1&0\\B_2C_1&A_2\end{bmatrix},\quad
+       B=\begin{bmatrix}B_1\\B_2D_1\end{bmatrix},\quad
+       C=[D_2C_1\ C_2],\quad D=D_2D_1 .
+    \]
+    矩阵乘积的次序与接线方向一致。BIBO 分析对应 $G_2G_1$。
+    \item 先组装再判秩。即使两个子系统各自能控、能观，串联后仍可能因相消出现隐藏模态。本题 $[B_1\ A_1B_1]$ 和 $[C_1^\top\ (C_1A_1)^\top]^\top$ 的行列式均为 $-1$，$S_2$ 的两个一阶判据均为 $1$，但联合的 $Q_c$ 只有秩 $2$。
+    \item 做能控性分解时，从 $Q_c$ 取独立\textbf{列}放入 $P$ 的前几列。做能观性分解时，从 $Q_o$ 取独立\textbf{行}放入 $P^{-1}$ 的前几行。同一题里采用 $x=Pz$ 后，统一使用 $P^{-1}AP,\ P^{-1}B,\ CP$。
+    \item 保留全模型判内部稳定，用最简传递函数判 BIBO 稳定。写最小实现或零初态响应时可以去掉约掉的模态，讨论任意初值时仍须保留其状态和输出贡献。
+\end{enumerate}
+
+\subsection{小变式：相消掉的模态本身不稳定}
+
+\ex{变式\quad 把相消点移到右半平面}{
+保留原题的 $S_1$ 状态方程与串联方向，将前级输出改为 $y_1=-x_{11}+x_{12}$，后级改为 $\dot x_2=x_2+u_2,\ y_2=x_2$。判断串联系统的能控性、能观性、内部渐近稳定性和 BIBO 稳定性。
+}
+
+\sol
+仍用 $u=u_1,\ y=x_2$ 和相同状态顺序。代入 $u_2=-x_{11}+x_{12}$ 得
+\[
+   \widehat A=\begin{bmatrix}0&1&0\\-3&-4&0\\-1&1&1\end{bmatrix},
+   \qquad \widehat B=e_2,\quad \widehat C=e_3^\top,\quad \widehat D=0.
+\]
+$\widehat A\widehat B=[1\ {-4}\ 1]^\top$，$\widehat A^2\widehat B=[-4\ 13\ {-4}]^\top$，所以 $\widehat Q_c$ 与原题相同，秩为 $2$。$\widehat C\widehat A=[-1\ 1\ 1]$，再乘一次 $\widehat A$ 得 $[-4\ {-4}\ 1]$。沿 $\widehat Q_o$ 的首行 $[0\ 0\ 1]$ 展开，
+\[
+    \det\widehat Q_o=\begin{vmatrix}-1&1\\-4&-4\end{vmatrix}=4+4=8 .
+\]
+因此状态不完全能控、完全能观。沿用 $z_3=x_2-x_{11}$，得 $\dot z_3=(x_2-x_{11}+x_{12})-x_{12}=z_3$，且 $y=x_{11}+z_3$。取 $u=0,\ x(0)=[0\ 0\ 1]^\top$，就有 $y=e^t$，因此原点不稳定。
+
+零初态下，前级分子由 $s+2$ 改为 $s-1$，后级新极点为 $+1$，故
+\[
+   \widehat G_S(s)
+     =\frac{1}{s-1}\frac{s-1}{(s+1)(s+3)}
+     =\frac{1}{(s+1)(s+3)} .
+\]
+输入输出传递函数与原题相同，冲激响应仍绝对可积，所以 BIBO 稳定。这个变式的 $e^t$ 只来自不能控模态的非零初值。若只依据约分后的极点判断内部状态，就会漏掉这个模态。

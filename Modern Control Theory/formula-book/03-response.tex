@@ -1,0 +1,85 @@
+\formulapage{状态方程的响应}
+
+\formula{连续定常、状态转移矩阵}{%
+\[
+\Phi(t)=\mathrm e^{At},\qquad
+\Phi(0)=I,\quad \dot\Phi=A\Phi,\quad
+\Phi(t+s)=\Phi(t)\Phi(s),\quad \Phi(t)^{-1}=\Phi(-t).
+\]
+}{定常齐次系统 $\dot x=Ax$。初始时刻为 $t_0$ 时，转移矩阵使用 $\Phi(t-t_0)$。}
+
+\formula{由多组自由响应求 $\Phi$ 和 $A$}{%
+\[
+X(t)=[x^{[1]}(t),\ldots,x^{[n]}(t)],\qquad
+\Phi(t)=X(t)X(0)^{-1},\quad A=\dot\Phi(0).
+\]
+}{定常系统，零输入，$n$ 组初值线性无关。}
+
+\formula{有初值的受迫响应、输出}{%
+\[
+\begin{aligned}
+x(t)&=\mathrm e^{A(t-t_0)}x(t_0)+
+\int_{t_0}^{t}\mathrm e^{A(t-\tau)}Bu(\tau)\,\mathrm d\tau,\\
+y(t)&=Cx(t)+Du(t).
+\end{aligned}
+\]
+}{连续定常。两项分别为零输入与零状态响应。}
+
+\formula{零初值、单位阶跃、单位脉冲}{%
+\[
+\begin{aligned}
+x_{\rm step}(t)&=\int_0^t\mathrm e^{A\sigma}B\,\mathrm d\sigma
+     =A^{-1}(\mathrm e^{At}-I)B \quad(A\text{ 可逆}),\\
+h(t)&=C\mathrm e^{At}B\,1(t)+D\delta(t).
+\end{aligned}
+\]
+}{阶跃与脉冲按输入通道逐列，$t\ge0$。$A$ 奇异时使用积分式。}
+
+\formula{输入列为特征向量、阶跃积分}{%
+\[
+Ab=\lambda b:\quad \mathrm e^{At}b=\mathrm e^{\lambda t}b,\qquad
+x_{\rm step}(t)=
+\begin{cases}
+(\mathrm e^{\lambda t}-1)b/\lambda,&\lambda\ne0,\\
+tb,&\lambda=0 .
+\end{cases}
+\]
+}{$b$ 为受阶跃作用的输入列，初始状态为零，$t\ge0$。}
+
+\formula{指数级数、幂零、平方为负标量阵}{%
+\[
+\begin{aligned}
+\mathrm e^{At}&=\sum_{k=0}^{\infty}\frac{t^kA^k}{k!},\qquad
+\mathrm e^{(\lambda I+N)t}=\mathrm e^{\lambda t}\sum_{k=0}^{q-1}\frac{t^kN^k}{k!}\quad(N^q=0),\\
+\mathrm e^{At}&=I\cos(\omega t)+\frac{A}{\omega}\sin(\omega t)
+                 \qquad(A^2=-\omega^2 I,\ \omega>0).
+\end{aligned}
+\]
+}{幂零时取 $\lambda=0$。$\lambda I+N$ 适用于约旦块。}
+
+\formula{拉普拉斯反变换、相似与分块}{%
+\[
+\mathrm e^{At}=\mathcal L^{-1}\{(sI-A)^{-1}\},\qquad
+\mathrm e^{At}=P\mathrm e^{Jt}P^{-1},\quad
+\mathrm e^{Jt}=\operatorname{diag}(\mathrm e^{J_i t}) .
+\]
+}{$t\ge0$。相似公式取 $J=P^{-1}AP=\operatorname{diag}(J_i)$，$P$ 可逆。}
+
+\formula{凯莱--哈密顿、互异根与重根内插}{%
+\[
+\mathrm e^{At}=q_t(A),\quad \deg q_t<n,\qquad
+q_t^{(k)}(\lambda_i)=t^k\mathrm e^{\lambda_i t},\quad 0\le k<m_i.
+\]
+}{$n$ 阶定常矩阵，$m_i$ 为 $\lambda_i$ 的代数重数。互异根仅取 $k=0$，导数变量为内插自变量。}
+
+\formula{连续时变、基本解矩阵、非齐次解、可交换}{%
+\[
+\begin{aligned}
+\partial_t\Phi(t,t_0)&=A(t)\Phi(t,t_0),\quad
+\Phi(t_0,t_0)=I,\quad \Phi(t,t_0)=F(t)F(t_0)^{-1},\\
+x(t)&=\Phi(t,t_0)x(t_0)+\int_{t_0}^{t}\Phi(t,\tau)B(\tau)u(\tau)\,\mathrm d\tau,\\
+\Phi(t,t_0)&=\exp M(t,t_0),\qquad M(t,t_0)=\int_{t_0}^t A(\tau)\,\mathrm d\tau
+     \quad\big(A(t)M=MA(t)\big).
+\end{aligned}
+\]
+}{$F$ 的列为线性无关的齐次解。末式要求 $A(t)M=MA(t)$ 在区间内成立，任意时刻 $A(t_1),A(t_2)$ 两两交换即可。}

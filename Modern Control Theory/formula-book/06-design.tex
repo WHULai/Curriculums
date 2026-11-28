@@ -1,0 +1,81 @@
+\formulapage{线性系统综合}
+
+\formula{状态反馈／静态输出反馈}
+{\[
+\begin{aligned}
+    u=v-Kx \quad&\Longrightarrow\quad A_K=A-BK,\qquad
+       \operatorname{rank}Q_c(A_K,B)=\operatorname{rank}Q_c(A,B),\\
+    u=v-Hy \quad&\Longrightarrow\quad A_H=A-BHC,\qquad
+       \operatorname{rank}Q_o(A_H,C)=\operatorname{rank}Q_o(A,C).
+\end{aligned}
+\]}
+{连续线性定常，$y=Cx$，负反馈。静态输出反馈对应 $K=HC$。}
+
+\formula{闭环极点配置／能控规范 II 型／增益换回}
+{\[
+\begin{gathered}
+    \det(sI-A+BK)=\prod\nolimits_{i=1}^{n}(s-p_i),\\
+    \widetilde K=\frac{1}{\beta}
+       [\,a_0^\ast-a_0\ \ \cdots\ \ a_{n-1}^\ast-a_{n-1}\,],
+       \qquad K=\widetilde K T^{-1}.
+\end{gathered}
+\]}
+{任意配置要求完全能控，极点按重数计，非实根成共轭对。系数差用于单输入能控 II 型，$x=Tz$，$\widetilde B=\beta e_n$、$\beta\ne0$，$a_i,a_i^\ast$ 为原、目标多项式的 $s^i$ 系数。}
+
+\formula{阶跃稳态值／参考输入增益}
+{\[
+    u=Nv-Kx,\qquad
+    g_K=-C(A-BK)^{-1}B,\qquad N=g_\ast/g_K .
+\]}
+{单输入单输出，$D=0$，$A-BK$ 为 Hurwitz 矩阵，$g_K\ne0$，目标为 $y(\infty)=g_\ast v_0$。}
+
+\formula{超调量／调节时间／二阶目标极点}
+{\[
+\begin{aligned}
+    M_p&=e^{-\pi\zeta/\sqrt{1-\zeta^2}},\qquad t_s\approx4/(\zeta\omega_n),\\
+    \sigma&\approx4/t_s,\quad
+    \omega_d=\pi\sigma/\ln(1/M_p),\quad
+    p_{1,2}=-\sigma\pm\mathrm j\omega_d .
+\end{aligned}
+\]}
+{无零点的典型欠阻尼二阶模型，$0<\zeta<1$，$M_p$ 为比例，调节时间取 $2\%$ 误差带近似。}
+
+\formula{单位负反馈／前馈补偿解耦}
+{\[
+    G_0=(I+P)^{-1}P,\qquad
+    G_c=G_0^{-1}G_d,\qquad G_0G_c=G_d .
+\]}
+{$P$ 为开环传递矩阵，$I+P$ 与方阵 $G_0$ 可逆，$G_d$ 为对角阵。因果实现要求 $G_c$ 各元素分子次数不超过分母次数。}
+
+\formula{输出求导／状态反馈解耦}
+{\[
+\begin{gathered}
+    d_i=\min\{k\ge0:c_iA^kB\ne0\},\quad
+    E_{i,:}=c_iA^{d_i}B,\quad L_{i,:}=c_iA^{d_i+1},\\
+    u=Fv-Kx,\quad F=E^{-1},\quad K=E^{-1}L,\quad
+    G_{yv}(s)=\operatorname{diag}\bigl(s^{-(d_i+1)}\bigr).
+\end{gathered}
+\]}
+{输入、输出维数相同，$D=0$，$c_i$ 为 $C$ 的第 $i$ 行，$E$ 可逆。内部稳定性另验。}
+
+\formula{全维观测器／误差极点／对偶反馈}
+{\[
+\begin{aligned}
+    \dot{\hat x}&=A\hat x+Bu+G(y-C\hat x),&
+    \dot e&=(A-GC)e,\\
+    \det(sI-A+GC)&=\prod\nolimits_{i=1}^{n}(s-q_i),&
+    G&=K_d^{\mathsf T}\quad\text{（对偶对象 }A^{\mathsf T},C^{\mathsf T}\text{）}.
+\end{aligned}
+\]}
+{$e=x-\hat x$，$D=0$。可检测时可使误差渐近收敛，完全能观时可任意配置误差极点。}
+
+\formula{估计状态反馈／分离原理}
+{\[
+\begin{gathered}
+    u=v-K\hat x,\qquad
+    A_{\mathrm{aug}}=\begin{bmatrix}A-BK&BK\\0&A-GC\end{bmatrix},\\
+    \operatorname{spec}(A_{\mathrm{aug}})
+      =\operatorname{spec}(A-BK)\uplus\operatorname{spec}(A-GC).
+\end{gathered}
+\]}
+{坐标 $(x,e)$。$(A,B)$ 可镇定、$(A,C)$ 可检测时，可分别选 $K,G$ 使两块均为 Hurwitz 矩阵。}

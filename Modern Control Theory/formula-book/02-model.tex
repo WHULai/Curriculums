@@ -1,0 +1,85 @@
+\formulapage{状态空间模型}
+
+\formula{物理建模、积分器、线性化}{%
+\[
+\begin{gathered}
+\dot x=Ax+Bu,\quad y=Cx+Du,\qquad
+i_C=C_{\!e}\dot u_C,\quad u_L=L\dot i_L,\\
+m\ddot y+f\dot y+ky=u,\qquad (A,B,C,D)=(f_x,f_u,g_x,g_u)\big\vert_{(x_e,u_e)}.
+\end{gathered}
+\]
+}{独立的电容电压、电感电流、位移与速度可取作状态。线性化取 $f(x_e,u_e)=0$ 处的偏差量。}
+
+\formula{高阶微分方程，右端只有输入}{%
+\[
+\begin{aligned}
+y^{(n)}+a_{n-1}y^{(n-1)}+\cdots+a_0y&=bu,\qquad x_i=y^{(i-1)},\\
+\dot x_i=x_{i+1}\ (i<n),\quad
+\dot x_n&=-a_0x_1-\cdots-a_{n-1}x_n+bu,\qquad y=x_1.
+\end{aligned}
+\]
+}{最高阶输出导数的系数已化为 $1$。友矩阵 $A_c$ 的超对角线为 $1$，末行为 $[-a_0,\ldots,-a_{n-1}]$。}
+
+\formula{右端含输入导数、同阶直联}{%
+\[
+\begin{aligned}
+G(s)=b(s)/a(s),\quad D=b_n,\quad
+b(s)-Da(s)&=c_{n-1}s^{n-1}+\cdots+c_0,\\
+\dot x=A_c x+e_n u,\qquad y&=[c_0,\ldots,c_{n-1}]x+Du .
+\end{aligned}
+\]
+}{零初值实现。$a(s)$ 首一、$\deg b\le n=\deg a$，缺失的 $b_n$ 取零，$e_n$ 为第 $n$ 个单位列向量。}
+
+\formula{右端含输入导数、输出取第一状态}{%
+\[
+\begin{aligned}
+\beta_n&=b_n,\qquad
+\beta_{n-k}=b_{n-k}-{\textstyle\sum_{j=1}^{k}}a_{n-j}\beta_{n-k+j},
+    \quad k=1,\ldots,n,\\
+\dot x&=A_c x+[\beta_{n-1},\ldots,\beta_0]^{\mathsf T}u,\qquad
+y=x_1+\beta_n u.
+\end{aligned}
+\]
+}{$a_j,b_j$ 为上式 $a(s),b(s)$ 的 $s^j$ 系数，$a_n=1$。$b_n=0$ 时 $y=x_1$。}
+
+\formula{互异极点、对角实现}{%
+\[
+G-D={\textstyle\sum_i}\frac{r_i}{s-\lambda_i},\quad
+r_i=\left.(s-\lambda_i)(G-D)\right|_{s=\lambda_i},\quad
+A=\operatorname{diag}(\lambda_i),\ B=\mathbf 1,\ C=[r_1,\ldots,r_n].
+\]
+}{SISO 单极点。分子分母同阶时，先取 $D=G(\infty)$。}
+
+\formula{重极点、约旦实现}{%
+\[
+\begin{aligned}
+G_\lambda(s)&={\textstyle\sum_{k=1}^q}\frac{r_k}{(s-\lambda)^k},\quad
+r_{q-j}=\frac{\big[(s-\lambda)^q(G-D)\big]^{(j)}_{s=\lambda}}{j!},\\
+A_\lambda&=J_q(\lambda),\qquad B_\lambda=e_q,\qquad C_\lambda=[r_q,\ldots,r_1].
+\end{aligned}
+\]
+}{$G_\lambda$ 为 $\lambda$ 极点支路，重数为 $q$，$j=0,\ldots,q-1$。约旦块的超对角线为 $1$。}
+
+\formula{相似变换、特征向量、广义特征向量}{%
+\[
+\begin{aligned}
+x=Pz:\quad \bar A&=P^{-1}AP,\quad \bar B=P^{-1}B,\quad \bar C=CP,\quad\bar D=D,\\
+(A-\lambda I)p_1&=0,\qquad (A-\lambda I)p_{k+1}=p_k .
+\end{aligned}
+\]
+}{按链 $[p_1,p_2,\ldots]$ 排列 $P$ 的列。几何重数 $g_\lambda=n-\operatorname{rank}(A-\lambda I)$。}
+
+\formula{状态空间求传递函数阵、极点}{%
+\[
+G(s)=C(sI-A)^{-1}B+D,\qquad
+(sI-A)^{-1}=\frac{\operatorname{adj}(sI-A)}{\det(sI-A)}.
+\]
+}{$G$ 对应零初值。能控且能观的 SISO 实现中，约分后极点与 $A$ 的特征值按重数对应。}
+
+\formula{并联、串联、负反馈}{%
+\[
+G_{\rm p}=G_1+G_2,\qquad
+G_{\rm s}=G_2G_1,\qquad
+G_{\rm f}=(I+G_1G_2)^{-1}G_1 .
+\]
+}{串联顺序 $u\to G_1\to G_2$。负反馈满足 $y=G_1(u-G_2y)$，所需的逆存在。}

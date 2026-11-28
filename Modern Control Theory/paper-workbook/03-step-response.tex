@@ -1,0 +1,197 @@
+\chapter{纸质练习三：对角实现与单位阶跃响应}
+
+\section{原题}
+
+\ex{由运动方程建立对角规范型并求响应}{
+设系统的运动方程为
+\[
+ \ddot y(t)+(a+b)\dot y(t)+ab\,y(t)=\dot u(t)+c\,u(t),
+\]
+其中 $a,b,c$ 均为实数，$u(t)$ 为系统的输入，$y(t)$ 为系统的输出。
+\begin{enumerate}
+ \item 求系统对角规范型状态空间表达式。
+ \item 当输入为单位阶跃 $u(t)=1(t)$ 时，求上述状态方程在零初始条件下的解。
+\end{enumerate}
+}
+
+\section{详细解答}
+
+\subsection{第一步　求传递函数并检查分母的根}
+
+先求零状态的输入输出关系。以 $0^-$ 为初始时刻，输入和输出此前均为零。对方程取拉普拉斯变换，
+\[
+ \bigl(s^2+(a+b)s+ab\bigr)Y(s)=(s+c)U(s).
+\]
+因此
+\[
+ G(s)=\frac{Y(s)}{U(s)}=\frac{s+c}{(s+a)(s+b)}.
+\]
+分子次数比分母低，故 $D=\lim_{s\to\infty}G(s)=0$。原题右端含 $\dot u$，其影响体现为分子的 $s$ 项。判断能否用两个独立标量状态实现，要先看 $a,b$ 是否相等，以及根在约分后是否保留。
+
+\subsection{第二步　互异根时求对角实现}
+
+写成
+\[
+ \frac{s+c}{(s+a)(s+b)}
+ =\frac{\alpha}{s+a}+\frac{\beta}{s+b}.
+\]
+两端乘 $(s+a)(s+b)$，得 $s+c=\alpha(s+b)+\beta(s+a)$。令 $s=-a$、$s=-b$，分别得到
+\[
+ c-a=\alpha(b-a),\qquad c-b=\beta(a-b).
+\]
+所以
+\[
+ \alpha=\frac{c-a}{b-a},\qquad \beta=\frac{c-b}{a-b}.
+\]
+回代时可先检查 $\alpha+\beta=1$，再检查 $b\alpha+a\beta=c$，它们分别对应分子的 $s$ 项与常数项。
+
+让两个标量支路同时接受同一个输入 $u$，定义零初值时 $X_1/U=1/(s+a)$、$X_2/U=1/(s+b)$。交叉相乘后分别对应
+\[
+ \dot x_1=-ax_1+u,\qquad \dot x_2=-bx_2+u,\qquad
+ y=\alpha x_1+\beta x_2.
+\]
+因此第一问在 $a\ne b$ 时的一个对角实现是
+\[
+ \boxed{
+ A=\begin{bmatrix}-a&0\\0&-b\end{bmatrix},\quad
+ B=\begin{bmatrix}1\\1\end{bmatrix},\quad
+ C=\begin{bmatrix}\dfrac{c-a}{b-a}&\dfrac{c-b}{a-b}\end{bmatrix},\quad D=0.
+ }
+\]
+取 $B=[1,1]^{\mathsf T}$ 时，两支路的留数全部放在 $C$。因为
+\[
+ C(sI-A)^{-1}B+D
+   =[\alpha,\beta]
+     \begin{bmatrix}1/(s+a)&0\\0&1/(s+b)\end{bmatrix}
+     \begin{bmatrix}1\\1\end{bmatrix}
+   =\frac{\alpha}{s+a}+\frac{\beta}{s+b},
+\]
+所以它确实复现题设传递函数。
+
+\subsection{第三步　逐分量求零初值的阶跃响应}
+
+由对角矩阵 $A$ 得
+\[
+ \Phi(t)=\mathrm e^{At}=\begin{bmatrix}\mathrm e^{-at}&0\\0&\mathrm e^{-bt}\end{bmatrix}.
+\]
+因为 $x(0)=0$，且对 $t>0$ 有 $u(t)=1$，只剩下输入积分：
+\[
+\begin{aligned}
+ x(t)
+ &=\int_0^t\Phi(t-\tau)B\,\mathrm d\tau
+ =\int_0^t\begin{bmatrix}\mathrm e^{-a(t-\tau)}\\
+                            \mathrm e^{-b(t-\tau)}\end{bmatrix}\mathrm d\tau\\
+ &=\begin{bmatrix}\displaystyle\int_0^t\mathrm e^{-a\sigma}\,\mathrm d\sigma\\
+                    \displaystyle\int_0^t\mathrm e^{-b\sigma}\,\mathrm d\sigma\end{bmatrix}
+ \qquad(\sigma=t-\tau).
+\end{aligned}
+\]
+换元时，$\tau=0$ 对应 $\sigma=t$，$\tau=t$ 对应 $\sigma=0$，再由 $\mathrm d\tau=-\mathrm d\sigma$ 恢复积分方向。记
+\[
+ F_d(t)=\int_0^t\mathrm e^{-d\sigma}\,\mathrm d\sigma
+ =\begin{cases}
+ \dfrac{1-\mathrm e^{-dt}}{d},& d\ne0,\\[4pt]
+ t,&d=0 .
+ \end{cases}
+\]
+第二问的状态和对应输出可以统一写成
+\[
+ \boxed{x(t)=\begin{bmatrix}F_a(t)\\F_b(t)\end{bmatrix},\qquad
+ y(t)=\alpha F_a(t)+\beta F_b(t),\qquad t\ge0.}
+\]
+例如 $a=0,\ b\ne0$ 时，$x_1=t$、$x_2=(1-\mathrm e^{-bt})/b$，
+\[
+ y(t)=\frac{c}{b}t+\frac{b-c}{b^2}(1-\mathrm e^{-bt}).
+\]
+$b=0,\ a\ne0$ 时交换两支路即可。$F_d(0)=0$ 且 $F_d'=1-dF_d$ 对全部实数 $d$ 都成立，与逐行状态方程一致。若 $a,b>0$，还可用 $y(\infty)=\alpha/a+\beta/b=c/(ab)$ 核对稳态输出。
+
+\subsection{第四步　互异根但有零极点对消}
+
+当 $a\ne b$ 且 $c=a$ 时，$\alpha=0,\ \beta=1$，原传递函数化为 $1/(s+b)$。前面的二阶实现仍然可用，$x_1$ 有响应，但 $y=x_2=F_b(t)$。若要求最小实现，只保留 $\dot x_2=-bx_2+u$。当 $c=b$ 时，$\alpha=1,\ \beta=0$，只保留 $\dot x_1=-ax_1+u$，且 $y=F_a(t)$。
+
+用矩阵也能检查对消。原二阶实现中
+\[
+ [B,AB]=\begin{bmatrix}1&-a\\1&-b\end{bmatrix},\qquad
+ \begin{bmatrix}C\\CA\end{bmatrix}=
+ \begin{bmatrix}\alpha&\beta\\-a\alpha&-b\beta\end{bmatrix}.
+\]
+两矩阵的行列式分别为 $a-b$ 和 $\alpha\beta(a-b)$。互异根时，对消前两个支路都能由输入驱动。$\alpha=0$ 或 $\beta=0$ 时，一个支路从输出中消失。
+
+\subsection{第五步　重根时改用重极点判别}
+
+设 $a=b=d$，直接重写分子：
+\[
+ G(s)=\frac{s+c}{(s+d)^2}
+     =\frac{1}{s+d}+\frac{c-d}{(s+d)^2}.
+\]
+
+\textbf{若 $c=d$。} 二阶项系数为零，传递函数约成 $1/(s+d)$。可取一阶对角实现 $\dot x_1=-dx_1+u,\ y=x_1$，其阶跃解为 $x_1(t)=y(t)=F_d(t)$。若要保留两个对角状态，可取 $A=-dI_2$、$B=[1,0]^{\mathsf T}$、$C=[1,0]$、$D=0$。在零初值下 $x(t)=[F_d(t),0]^{\mathsf T}$。
+
+这两个对角实现满足题设的零初值输入输出关系。若还要重现原二阶方程的任意初值，齐次输出可能含 $t\mathrm e^{-dt}$，应保留二阶约旦块。例如取 $\dot z_1=-dz_1+z_2+u$、$\dot z_2=-dz_2$、$y=z_1$，则 $z_2=\dot y+dy-u$，可以逐一匹配原方程给定的 $y,\dot y$ 初值。零初值时 $z_2$ 一直为零，输入只激发一阶响应。若 $z_2(0)\ne0$，则初值响应中包含 $z_2(0)t\mathrm e^{-dt}$。
+
+\textbf{若 $c\ne d$。} 二阶极点保留，题目要求的对角实现此时不存在。对于任意有限维对角矩阵 $\operatorname{diag}(\lambda_1,\ldots,\lambda_n)$，$C(sI-A)^{-1}B+D$ 只含各项 $C_iB_i/(s-\lambda_i)$。若多个 $\lambda_i$ 相同，同分母的项相加仍只有一次因子，不能产生 $(s+d)^{-2}$。
+
+此时取二阶约旦块，将输入加到第二个状态：
+\[
+ \boxed{
+ A=\begin{bmatrix}-d&1\\0&-d\end{bmatrix},\quad
+ B=\begin{bmatrix}0\\1\end{bmatrix},\quad C=[c-d,1],\quad D=0.
+ }
+\]
+由 $(s+d)X_2=U$、$(s+d)X_1=X_2$ 可见 $X_2/U=(s+d)^{-1}$、$X_1/U=(s+d)^{-2}$。输出取 $y=(c-d)x_1+x_2$，与两项重极点分式逐项对应。
+
+为求阶跃响应，将 $A=-dI+N$，其中 $N^2=0$，于是
+\[
+ \mathrm e^{A\sigma}=\mathrm e^{-d\sigma}
+   \begin{bmatrix}1&\sigma\\0&1\end{bmatrix},\qquad
+ \mathrm e^{A\sigma}B=\mathrm e^{-d\sigma}\begin{bmatrix}\sigma\\1\end{bmatrix}.
+\]
+记 $H_d(t)=\int_0^t\sigma\mathrm e^{-d\sigma}\,\mathrm d\sigma$。当 $d\ne0$，分部积分得
+\[
+ H_d(t)
+ =-\frac{t}{d}\mathrm e^{-dt}+\frac{F_d(t)}{d}
+ =\frac{1-(1+dt)\mathrm e^{-dt}}{d^2}.
+\]
+当 $d=0$ 时直接积分，得 $H_0(t)=t^2/2$。因此重极点保留时
+\[
+ \boxed{x(t)=\begin{bmatrix}H_d(t)\\F_d(t)\end{bmatrix},\qquad
+ y(t)=(c-d)H_d(t)+F_d(t).}
+\]
+$F_d(0)=H_d(0)=0$，且 $\dot H_d=F_d-dH_d$，可分别核对 $\dot x_2=-dx_2+1$ 和 $\dot x_1=-dx_1+x_2$。特别地，当 $a=b=0,c\ne0$ 时，$x(t)=[t^2/2,t]^{\mathsf T}$、$y(t)=t+ct^2/2$。若此时 $c=0$，回到对消分支，$y(t)=t$。
+
+\subsection{第六步　验算阶跃时刻与原运动方程}
+
+单位阶跃在 $t>0$ 的普通导数为零，但在 $t=0$ 的跳变产生冲激 $\dot u=\delta(t)$。若输出 $y$ 在零时刻跳变，其二阶导数会出现 $\delta'(t)$。原方程右侧没有 $\delta'(t)$，所以 $y$ 连续。将原方程从 $0^-$ 积到 $0^+$，得到
+\[
+ \dot y(0^+)-\dot y(0^-)
+ +(a+b)\bigl[y(0^+)-y(0^-)\bigr]=1.
+\]
+零历史给出 $y(0^+)=0$、$\dot y(0^+)=1$。也可在状态空间核对：$D=0$，输入是有界阶跃，$x(0^+)=0$。当 $a\ne b$ 时，$\dot y(0^+)=CB=\alpha+\beta=1$，约旦实现和一阶对消实现都给出相同结果。
+
+对 $t>0$，方程右端等于 $c$。互异根时，$\bigl(\frac{\mathrm d}{\mathrm dt}+a\bigr)F_a=1$，再施加 $\bigl(\frac{\mathrm d}{\mathrm dt}+b\bigr)$ 得 $b$。同理，两个算子作用于 $F_b$ 得 $a$，因此作用于 $y=\alpha F_a+\beta F_b$ 的结果是 $\alpha b+\beta a=c$。若从原微分方程分段求解，应在 $t>0$ 写右端 $c$，同时使用跳变后的初值 $\dot y(0^+)=1$。
+
+\section{同类题怎么做}
+
+\subsection{从分式到状态响应的检查顺序}
+
+\begin{enumerate}
+ \item 先把输出最高阶系数归一化，在零历史条件下写 $Y/U$。若分子与分母同阶，先长除取 $D$，只对余下真分式分解。
+ \item 分解分母，先识别对消与实际极点重数。单极点各用一个标量支路，保留的二重极点用一个二阶约旦块。
+ \item 写状态积分，再左乘 $C$ 并补 $Du$。遇到零参数，把对应指数积分改成 $t$ 或 $t^2/2$。
+ \item 用 $G=C(sI-A)^{-1}B+D$ 核对实现，用 $x(0^+)$、$y(0^+)$ 和右侧导数核对阶跃响应。
+\end{enumerate}
+
+\subsection{变式　分子分母同阶，输出有直联跳变}
+
+设要求对角实现并求零状态阶跃输出，给定
+\[
+ G_{\rm v}(s)=\frac{2s^2+9s+8}{(s+1)(s+3)}
+ =2+\frac{s+2}{(s+1)(s+3)}
+ =2+\frac{1/2}{s+1}+\frac{1/2}{s+3}.
+\]
+长除得 $D=2$，对角实现取 $A=\operatorname{diag}(-1,-3)$、$B=[1,1]^{\mathsf T}$、$C=[1/2,1/2]$。阶跃下 $x=[F_1,F_3]^{\mathsf T}$，故
+\[
+ y(t)=2+\frac{1-\mathrm e^{-t}}{2}+\frac{1-\mathrm e^{-3t}}{6},
+ \qquad t\ge0.
+\]
+这里 $x(0^+)=0$ 而 $y(0^+)=2$，跳变量来自直联项。检查直联可用 $G_{\rm v}(\infty)=2$，检查稳态可用 $G_{\rm v}(0)=8/3$。

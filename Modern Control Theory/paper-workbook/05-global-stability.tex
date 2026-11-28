@@ -1,0 +1,175 @@
+\chapter{纸质练习五：雅可比矩阵法判稳定}
+
+\section{原题}
+
+\ex{判断大范围渐近稳定（原题第3页）}{
+试用雅可比矩阵法判断下列系统是否为大范围渐近稳定：
+\[
+    \dot x_1=-2x_1+x_2,\qquad
+    \dot x_2=x_1-5x_2-x_2^5 .
+\]
+}
+
+\nt{\textbf{本题要核对的三件事}\quad 平衡点是否唯一，雅可比矩阵的对称和是否处处负定，以及所选的李雅普诺夫函数是否径向无界。最后一项决定能否把结论推广到任意初始状态。}
+
+\section{详细解答}
+
+\subsection{先求出全部平衡点}
+
+记 $f(x)=[f_1(x)\ \ f_2(x)]^{\mathsf T}$，其中
+$f_1=-2x_1+x_2$、$f_2=x_1-5x_2-x_2^5$。平衡点满足
+\[
+    f_1=0 \ \Longrightarrow\ x_2=2x_1 \ \Longrightarrow\ x_1=\frac{x_2}{2}.
+\]
+代入 $f_2=0$，整理为
+\[
+    0=\frac{x_2}{2}-5x_2-x_2^5
+      =-\frac92 x_2-x_2^5
+      =-x_2\left(\frac92+x_2^4\right).
+\]
+括号对所有实数 $x_2$ 都严格为正，故 $x_2=0$，再得 $x_1=0$。系统只有原点一个平衡点，所以 $f(x)=0$ 当且仅当 $x=0$。
+
+\subsection{逐项写出雅可比矩阵和对称和}
+
+$J$ 的第 $i$ 行来自第 $i$ 条状态方程。按列对 $x_1,x_2$ 求偏导，
+\[
+    \frac{\partial f_1}{\partial x_1}=-2,\quad
+    \frac{\partial f_1}{\partial x_2}=1,\quad
+    \frac{\partial f_2}{\partial x_1}=1,\quad
+    \frac{\partial f_2}{\partial x_2}=-5-5x_2^4 .
+\]
+于是
+\[
+    J(x)=\begin{bmatrix}-2&1\\1&-5-5x_2^4\end{bmatrix},\qquad
+    S(x)=J(x)+J(x)^{\mathsf T}
+        =\begin{bmatrix}-4&2\\2&-10-10x_2^4\end{bmatrix}.
+\]
+保留 $x_2$，在整个状态空间检查 $S(x)$ 的符号。二阶对称矩阵负定要求左上角为负且行列式为正。本题中
+\[
+    \Delta_1=-4<0,\qquad
+    \Delta_2=(-4)(-10-10x_2^4)-2^2=36+40x_2^4>0 .
+\]
+因此每个 $x$ 处的 $S(x)$ 均严格负定。
+
+\subsection{构造 \(V\) 并把导数算到定号}
+
+按雅可比矩阵法取
+\[
+  V(x)=f(x)^{\mathsf T}f(x)
+       =(-2x_1+x_2)^2+(x_1-5x_2-x_2^5)^2 .
+\]
+两项都是平方，且它们同时为零只可能在原点，因此 $V(0)=0$，$V(x)>0$ 对所有 $x\ne0$ 成立。
+
+沿系统轨迹，链式法则给出 $\dot f=J(x)\dot x=J(x)f$，所以
+\[
+    \dot V=\dot f^{\mathsf T}f+f^{\mathsf T}\dot f
+           =f^{\mathsf T}(J^{\mathsf T}+J)f
+           =f^{\mathsf T}S(x)f .
+\]
+也可以直接乘开再配方，避免漏掉交叉项：
+\[
+\begin{aligned}
+    \dot V
+      &=-4f_1^2+4f_1f_2-(10+10x_2^4)f_2^2\\
+      &=-4\left(f_1-\frac12 f_2\right)^2-(9+10x_2^4)f_2^2 .
+\end{aligned}
+\]
+若 $\dot V=0$，第二项迫使 $f_2=0$，第一项再迫使 $f_1=0$，因此只能是 $x=0$。所以 $x\ne0$ 时 $\dot V<0$。
+
+\subsection{补齐大范围结论：证明 \(V\) 径向无界}
+
+两个平方里都混有 $x_1,x_2$。要证明任意方向上 $\|x\|\to\infty$ 都有 $V\to\infty$，可以先估计标量 $-x^{\mathsf T}f(x)$：
+\[
+\begin{aligned}
+-x^{\mathsf T}f
+   &=-x_1(-2x_1+x_2)-x_2(x_1-5x_2-x_2^5)\\
+   &=2x_1^2-2x_1x_2+5x_2^2+x_2^6\\
+   &\ge x_1^2+4x_2^2+x_2^6
+    \ge x_1^2+x_2^2=\|x\|^2 .
+\end{aligned}
+\]
+第一条不等式用了 $2x_1x_2\le x_1^2+x_2^2$。另一方面，由柯西--施瓦茨不等式，
+\[
+   \|x\|^2\le -x^{\mathsf T}f
+          \le |x^{\mathsf T}f|
+          \le \|x\|\,\|f(x)\|.
+\]
+对 $x\ne0$ 除以 $\|x\|$，得到 $\|f(x)\|\ge\|x\|$。在 $x=0$ 时该式也成立。因此
+\[
+     V(x)=\|f(x)\|^2\ge\|x\|^2
+     \quad\Longrightarrow\quad
+     \lim_{\|x\|\to\infty}V(x)=+\infty .
+\]
+任意初值的轨迹都留在由 $V(x(t_0))$ 决定的有界闭子水平集内。向量场为多项式，在有界范围内解可继续延拓。结合 $V$ 全局正定、$\dot V$ 全局负定及径向无界，得到
+\[
+       \boxed{\text{原点大范围渐近稳定。}}
+\]
+
+\begin{note}
+只代 $x=0$ 求 $J(0)$ 的特征值，是第一法的做法，通常只能判原点附近。本题要求大范围结论，所以写的是 $J(x)$，并对任意 $x$ 检查对称和与径向无界性。
+\end{note}
+
+\section{同类题怎么做}
+
+\subsection{先选一条能写到底的路线}
+
+\begin{enumerate}[leftmargin=*]
+    \item 令 $f(x_e)=0$。如果目标平衡点在 $x_e$，用 $z=x-x_e$ 表示离平衡点的偏差。用 $f^{\mathsf T}f$ 时，要检查在待证明的区域内它是否只在该平衡点取零值。
+    \item 题目指定雅可比矩阵法时，写 $J(x)$、$S=J+J^{\mathsf T}$，计算 $V=f^{\mathsf T}f$ 和 $\dot V=f^{\mathsf T}Sf$。二阶对称矩阵用 $S_{11}<0$、$\det S>0$ 判负定。高阶对称矩阵可用顺序主子式交替变号。
+    \item 要给出全局结论时，再找 $V(x)\ge c\|x\|^p$（$c,p>0$）这样的下界。如果能先得到 $-x^{\mathsf T}f(x)\ge c\|x\|^2$，就可直接推出 $\|f(x)\|\ge c\|x\|$。
+    \item 若对称和只有半定，回到 $\dot V=f^{\mathsf T}Sf$ 继续检查。也可以换用 $W=\tfrac12\|x\|^2$、$x^{\mathsf T}Px$，或在 $\dot V\le0$ 时检查零导数集合的最大不变集。
+\end{enumerate}
+
+\subsection{同一原题的独立验算}
+
+改用 $W=\frac12(x_1^2+x_2^2)$，沿轨迹有
+\[
+    \dot W=x_1\dot x_1+x_2\dot x_2
+          =x^{\mathsf T}f(x)
+          \le -\|x\|^2=-2W .
+\]
+因此 $\frac{d}{dt}\bigl(e^{2(t-t_0)}W(x(t))\bigr)\le0$，从而
+\[
+    W(x(t))\le W(x(t_0))e^{-2(t-t_0)},\qquad
+    \|x(t)\|\le e^{-(t-t_0)}\|x(t_0)\| .
+\]
+这个二次型给出了收敛快慢的保守上界，可用来反查原题的稳定结论。原题答卷仍先写指定的雅可比矩阵法。
+
+\subsection{把数字换成参数：什么时候能直接套？}
+
+考虑同结构的系统
+\[
+    \dot x_1=-ax_1+bx_2,\qquad
+    \dot x_2=bx_1-cx_2-dx_2^{2r+1},
+    \qquad a,c>0,\quad d\ge0,\quad r=1,2,\ldots .
+\]
+其 $S=J+J^{\mathsf T}$ 的左上角为 $-2a$，行列式为
+\[
+    \det S(x)=4\left[ac-b^2+ad(2r+1)x_2^{2r}\right].
+\]
+若 $ac>b^2$，这个行列式处处为正，$S$ 处处严格负定。同时
+\[
+     -x^{\mathsf T}f=x^{\mathsf T}
+      \begin{bmatrix}a&-b\\-b&c\end{bmatrix}x
+      +d x_2^{2r+2}\ge \mu\|x\|^2 ,
+\]
+其中 $\mu>0$ 是该二阶对称矩阵的最小特征值。这个下界保证 $x\ne0$ 时 $f(x)\ne0$，并给出 $\|f(x)\|\ge\mu\|x\|$。于是原题的全局判定可以按同样次序写完。
+
+若 $ac<b^2$，原点的线性化矩阵行列式为负，两个实特征值异号，故原点不稳定。$ac=b^2$ 是需要继续算的临界情况。
+
+\subsection{临界变式：对称和半定时改算能量导数}
+
+例如取 $a=b=c=d=1$、$r=1$：
+\[
+    \dot x_1=-x_1+x_2,\qquad
+    \dot x_2=x_1-x_2-x_2^3 .
+\]
+与原题一样先算 $S$，得到 $S_{11}=-2$、$\det S=12x_2^2$。在 $x_2=0$ 上行列式为零，无法套用“$S$ 处处负定”这条条件。取 $W=\tfrac12(x_1^2+x_2^2)$ 则有
+\[
+\begin{aligned}
+    \dot W&=x_1(-x_1+x_2)+x_2(x_1-x_2-x_2^3)\\
+           &=-x_1^2+2x_1x_2-x_2^2-x_2^4
+            =-(x_1-x_2)^2-x_2^4 .
+\end{aligned}
+\]
+$\dot W=0$ 要求 $x_1=x_2$ 且 $x_2=0$，所以除原点外严格为负。$W$ 又全局正定、径向无界，故变式的原点也大范围渐近稳定。这个变式的关键是把交叉项配成平方，再用 $x_2^4$ 排除那条可能的零导数直线。

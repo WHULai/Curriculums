@@ -1,0 +1,78 @@
+\formulapage{平衡态与李雅普诺夫稳定性}
+
+\formula{平衡点、第一法、线性化}{
+\[
+\begin{aligned}
+  &f(x_e)=0,\quad J_e=\left.\frac{\partial f}{\partial x}\right|_{x_e},\quad
+    \alpha=\max_i\Re\lambda_i(J_e),\\
+  &\alpha<0:\ \text{局部渐近稳定},\quad
+   \alpha=0:\ \text{第一法未定},\quad \alpha>0:\ \text{不稳定}.
+\end{aligned}
+\]
+}{自治系统 $\dot x=f(x)$，$f$ 在平衡点附近连续可微。}
+
+\formula{二次型、顺序主子式、半定}{
+\[
+ V=z^\top Pz,\quad p_{ij}=\tfrac12[z_iz_j]\ (i\ne j),\quad
+ P>0\iff\Delta_j>0\ (\forall j),\quad P<0\iff(-1)^j\Delta_j>0\ (\forall j).
+\]
+}{$P=P^\top$，$[z_iz_j]$ 为交叉项系数，$\Delta_j$ 为顺序主子式。$\pm P\ge0$ 当且仅当 $\pm P$ 的全部特征值非负。}
+
+\formula{第二法、严格定号、全局}{
+\[
+\begin{aligned}
+ &z=x-x_e,\quad \dot V=\nabla V^\top f(x),\quad V(0)=0,\quad V(z)>0\ (z\ne0),\\
+ &\dot V\le0:\ \text{稳定},\quad \dot V<0:\ \text{渐近稳定},\quad \dot V>0:\ \text{不稳定}.
+\end{aligned}
+\]
+}{自治系统。严格负定条件全局成立且 $V(z)\to\infty$（$\|z\|\to\infty$）时为大范围渐近稳定。}
+
+\formula{负半定、LaSalle、最大不变集}{
+\[
+ \dot V\le0,\qquad
+ \operatorname{Inv}\bigl(\{z:\dot V(z)=0\}\cap\Omega\bigr)=\{0\}
+ \ \Longrightarrow\ z(t)\to0 .
+\]
+}{自治系统，$z(0)\in\Omega$，$\Omega$ 为紧致正不变集。$V$ 正定可兼判稳定，径向无界且条件全局成立可兼判大范围渐近稳定。}
+
+\formula{连续定常、离散定常、李雅普诺夫方程}{
+\[
+\begin{aligned}
+ \max_i\Re\lambda_i(A)<0&\iff A^\top P+PA=-Q,\quad \dot V=-z^\top Qz,\\
+ \max_i|\lambda_i(A)|<1&\iff A^\top PA-P=-Q,\quad \Delta V=-z^\top Qz .
+\end{aligned}
+\]
+}{$V=z^\top Pz$。两个等价条件右侧均要求任意给定 $Q>0$ 时存在唯一 $P>0$。}
+
+\formula{时变、矩阵微分方程、矩阵差分方程}{
+\[
+\begin{aligned}
+ &\dot P+A(t)^\top P+PA(t)=-Q(t),\\
+ &A_k^\top P_{k+1}A_k-P_k=-Q_k .
+\end{aligned}
+\]
+}{$P$ 一致正定且有界、$Q$ 一致正定，可判全局指数稳定。}
+
+\formula{雅可比矩阵法、克拉索夫斯基}{
+\[
+ J(x)=\frac{\partial f}{\partial x},\quad V=f^\top f,\qquad
+ \dot V=f^\top(J+J^\top)f .
+\]
+}{孤立平衡点、邻域内 $J+J^\top<0$。若全局负定、平衡点唯一且 $\|f(x)\|\to\infty$，则全局渐近稳定。}
+
+\formula{变量梯度法、可积性}{
+\[
+ \frac{\partial g_i}{\partial z_j}=\frac{\partial g_j}{\partial z_i},
+ \quad V(z)=\int_{0}^{z}g(\xi)^\top\,\mathrm d\xi,\quad
+ \dot V=g^\top f(x).
+\]
+}{单连通区域、$g$ 连续可微。按 $V$ 与 $\dot V$ 的定号性判定。}
+
+\formula{内部稳定、虚轴模态、BIBO 稳定}{
+\[
+\begin{aligned}
+ &\text{Lyapunov 稳定}\iff\Re\lambda_i(A)\le0\quad\text{且各虚轴约旦块均为一阶},\\
+ &\text{BIBO 稳定}\iff \text{$G(s)$ 的实际极点均在开左半平面}.
+\end{aligned}
+\]
+}{连续 LTI。Lyapunov 稳定时，有虚轴根则不渐近。BIBO 判据要求零初态、有理 $G(s)$ 各元素的分子次数不高于分母。最小实现下 BIBO 等价于内部渐近稳定。}
